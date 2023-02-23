@@ -14,7 +14,7 @@ function SearchBar() {
 
   return (
     <div className="w-64 h-100 mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col">
         <input
           type="text"
           className="form-control w-full border border-gray-300 rounded-lg py-2 px-4 mb-4 float-left"
