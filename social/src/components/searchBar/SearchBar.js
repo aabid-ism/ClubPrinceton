@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function SearchBar() {
+function SearchBar(props) {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearchTermChange = (event) => {
@@ -13,7 +13,7 @@ function SearchBar() {
   };
 
   return (
-    <div className="w-64 h-100 mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className="w-${props.width} h-${props.height} mx-auto p-6 bg-white rounded-lg shadow-lg">
       <div className="flex flex-col">
         <input
           type="text"
