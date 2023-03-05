@@ -1,15 +1,27 @@
 import React, { useState } from "react";
+import axios from 'axios';
+
+const url = 'http://localhost:5050/clubs';
 
 function SearchBarChild(props) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [results, setResults] = useState(["ab"]);
 
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
+
+    axios.get(url)
+    .then(response => {
+      const data = response.data;
+      setResults(data)
+    })
+    .catch(error => {
+      console.log('Error occurred: ', error)
+    })
   };
 
   const handleSearchClick = () => {
-    // Perform search logic here
-    console.log(`Searching for: ${searchTerm}`);
+
   };
 
   return (
@@ -34,21 +46,9 @@ function SearchBarChild(props) {
         </button>
       </div>
       <div className="mt-4 bg-gray-200 rounded-lg p-4">
-        <p className="text-gray-700 mb-2 border-b border-gray-300 margin-3p">
-          Result 1
-        </p>
-        <p className="text-gray-700 mb-2 border-b border-gray-300 margin-3p">
-          Result 2
-        </p>
-        <p className="text-gray-700 mb-2 border-b border-gray-300 margin-3p">
-          Result 3
-        </p>
-        <p className="text-gray-700 mb-2 border-b border-gray-300 margin-3p">
-          Result 4
-        </p>
-        <p className="text-gray-700 mb-2 border-b border-gray-300 margin-3p">
-          Result 5
-        </p>
+        {results.map((result) => (
+          <p className="text-gray-700 mb-2 border-b border-gray-300">{result.name}</p>
+        ))};
       </div>
     </div>
   );
