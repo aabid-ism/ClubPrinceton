@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function SearchBar(props) {
+function SearchBarChild(props) {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearchTermChange = (event) => {
@@ -13,7 +13,10 @@ function SearchBar(props) {
   };
 
   return (
-    <div className="w-${props.width} h-${props.height} mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div
+      className="mx-auto p-6 bg-white rounded-lg shadow-lg margin-10p"
+
+    >
       <div className="flex flex-col">
         <input
           type="text"
@@ -31,10 +34,32 @@ function SearchBar(props) {
         </button>
       </div>
       <div className="mt-4 bg-gray-200 rounded-lg p-4">
-        <p className="text-gray-700 mb-2 border-b border-gray-300">Result 1</p>
-        <p className="text-gray-700 mb-2 border-b border-gray-300">Result 2</p>
-        <p className="text-gray-700 mb-2">Result 3</p>
+        <p className="text-gray-700 mb-2 border-b border-gray-300 margin-3p">
+          Result 1
+        </p>
+        <p className="text-gray-700 mb-2 border-b border-gray-300 margin-3p">
+          Result 2
+        </p>
+        <p className="text-gray-700 mb-2 border-b border-gray-300 margin-3p">
+          Result 3
+        </p>
+        <p className="text-gray-700 mb-2 border-b border-gray-300 margin-3p">
+          Result 4
+        </p>
+        <p className="text-gray-700 mb-2 border-b border-gray-300 margin-3p">
+          Result 5
+        </p>
       </div>
+    </div>
+  );
+}
+
+function SearchBar(props) {
+  return (
+    <div
+
+    >
+      <SearchBarChild width={props.width} height={props.height} />
     </div>
   );
 }

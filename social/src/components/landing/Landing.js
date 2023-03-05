@@ -43,7 +43,7 @@ function Landing() {
         >
           Login
         </button>
-        Don't have an account? <a href="#">Sign Up!</a>
+        Don't have an account? <a href="/signup">Sign Up!</a>
       </form>
       <div className="text-base mt-8 text-gray-500 flex flex-col items-center justify-center">
         <p>CAS Authentication Required.  </p>

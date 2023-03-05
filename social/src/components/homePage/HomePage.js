@@ -1,20 +1,24 @@
 import React from "react";
 import SearchBar from "../searchBar/SearchBar";
+import Navigation from "../navigation/Navigation";
+import Landing from "../landing/Landing";
 
 function HomePage() {
   return (
-    <div className="flex h-screen">
-      <div className="absolute top-0 left-0">
-        <SearchBar width="64p" height="120p" />
+    <div className="relative h-screen bg-#fed7aa">
+      <div className="flex flex-col h-full justify-center">
+        <div className="flex items-center justify-center flex-grow">
+          <Landing />
+        </div>
+        <div className="flex items-center justify-center flex-grow">
+          <Landing />
+        </div>
       </div>
-      <div className="absolute top-0 right-0">
-        <SearchBar width="64p" height="120p" />
+      <div className="fixed top-0 left-0  z-10">
+        <SearchBar width="40" height="350" />
       </div>
-      <div className="absolute bottom-0 left-0">
-        <SearchBar width="64p" height="120p" />
-      </div>
-      <div className="absolute bottom-0 right-0">
-        <SearchBar width="64p" height="120p" />
+      <div className="fixed bottom-0 left-0 z-10">
+        <Navigation width="80p" height="360p" />
       </div>
     </div>
   );
