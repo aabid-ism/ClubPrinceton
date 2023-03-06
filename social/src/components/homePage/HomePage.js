@@ -3,8 +3,17 @@ import SearchBar from "../searchBar/SearchBar";
 import Navigation from "../navigation/Navigation";
 import Landing from "../landing/Landing";
 import MainPage from "../mainpage/MainPage";
+import Bubble from "../bubble/Bubble";
 
 function HomePage() {
+  const defaultEventsProps = {width: "40", height: "350", color:"orange-100",
+   eventsProps: {
+    mainEventText: "Big Show!",
+    recruitingText: "Join us!",
+    socialText: "Party on some date or another!",
+    memberText: "Welcome to the club!"
+   }
+  };
   return (
     <div className="relative h-screen bg-#fed7aa">
       <div className="flex flex-col h-full justify-center">
@@ -14,6 +23,9 @@ function HomePage() {
         <div className="flex items-center justify-center flex-grow">
           <MainPage mainDescription={"Hello! This is placeholder \n text"} />
         </div>
+      </div>
+      <div className="fixed top-0 right-0 z-10">
+        <Bubble props={defaultEventsProps}/>
       </div>
       <div className="fixed top-0 left-0  z-10">
         <SearchBar width="40" height="350" />
