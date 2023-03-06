@@ -3,7 +3,7 @@ import SearchBar from "../searchBar/SearchBar";
 import Navigation from "../navigation/Navigation";
 import Landing from "../landing/Landing";
 import MainPage from "../mainpage/MainPage";
-import Bubble from "../bubble/Bubble";
+import Event from "../events/Events";
 
 function HomePage() {
   const defaultEventsProps = {width: "40", height: "350", color:"orange-100",
@@ -25,7 +25,7 @@ function HomePage() {
         </div>
       </div>
       <div className="fixed top-0 right-0 z-10">
-        <Bubble props={defaultEventsProps}/>
+        <Event props={defaultEventsProps}/>
       </div>
       <div className="fixed top-0 left-0  z-10">
         <SearchBar width="40" height="350" />
