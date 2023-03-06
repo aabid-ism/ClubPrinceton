@@ -23,6 +23,9 @@ function ReachOut(){
     <div>
         <Button value={"Contact"}></Button>
     </div>
+    <div>
+        <Button value={"Apply"}></Button>
+    </div>
 </div>);
 }
 
@@ -48,13 +51,27 @@ function InfoNode({fieldName, fieldValue}){
     );
 }
 
-
-export default function MainBubble(){
+function ClubDescription({props}){
     return (
-        <div className="bg-orange-100 mx-auto w-96 rounded-lg">
+        <div className='text-black text-l font-medium'>
+            <p>
+                {props.description}
+            </p>
+        </div>
+    );
+}
+
+
+export default function MainBubble({mainDescription}){
+    const mainBubbleProps = {description: mainDescription}
+    return (
+        <div className="bg-orange-100 mx-auto w-120 rounded-lg">
             <div className="flex flex-col divide-y-2 divide-amber-700 p-3">
                 <InfoPanel></InfoPanel>
                 <ReachOut></ReachOut>
+            </div>
+            <div className='flex flex-col items-center'>
+                <ClubDescription props={mainBubbleProps}/>
             </div>
             
         </div>

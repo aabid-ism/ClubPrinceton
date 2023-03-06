@@ -2,6 +2,7 @@ import React from "react";
 import SearchBar from "../searchBar/SearchBar";
 import Navigation from "../navigation/Navigation";
 import Landing from "../landing/Landing";
+import MainPage from "../mainpage/MainPage";
 
 function HomePage() {
   return (
@@ -11,7 +12,7 @@ function HomePage() {
           <Landing />
         </div>
         <div className="flex items-center justify-center flex-grow">
-          <Landing />
+          <MainPage mainDescription={"Hello! This is placeholder \n text"} />
         </div>
       </div>
       <div className="fixed top-0 left-0  z-10">
