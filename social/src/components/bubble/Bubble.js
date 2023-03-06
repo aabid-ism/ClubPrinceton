@@ -14,7 +14,7 @@ function Events({props}){
 }
 
 function NotificationList({props}){
-    // TODO: Add in the links support 
+    // TODO: Add in the links support -- these objects should be passed top-down as props not constructed here
     const mainEvent = {notificationLabel: "Main Show: ", notificationText: props.mainEventText};
     const recruitEvent = {notificationLabel: "Recruiting Event: ", notificationText: props.recruitingText};
     const socialEvent = {notificationLabel: "Social Event: ", notificationText: props.socialText};
@@ -43,24 +43,32 @@ function Notification({props}){
             <div className="text-black text-l font-medium">
                 <p>{props.notificationLabel}</p>
             </div>
-            <div className="text-gray-700 text-0.5 font-medium">
+            <div className="text-gray-700 text-0.5 font-medium ">
                 <href src={props.eventLink}>{props.notificationText}</href>
             </div>
         </div>
     );
 }
 
+
+// example
 function Bubble({props}){
-    const eventsProps = props.eventsProps;
     return (
         <div className={
-            `flex w-${props.width} h-${props.height} bg-${props.color} mx-auto rounded-lg`
+            `flex w-${props.width} h-${props.height} bg-${props.color} mx-auto rounded-lg shadow-md`
         }>
             <div>
-                <Events props={eventsProps}></Events>
+                {props.component}
             </div>
         </div>
     );
 }
 
-export default Bubble;
+function Event({props}){
+    props.component = <Events props={props.eventsProps}></Events>;
+    return (
+        <Bubble props={props}/>
+    );
+}
+
+export default Event;

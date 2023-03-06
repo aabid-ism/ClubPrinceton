@@ -9,7 +9,7 @@ function HomePage() {
   const defaultEventsProps = {width: "40", height: "350", color:"orange-100",
    eventsProps: {
     mainEventText: "Big Show!",
-    recruitingText: "Join us!",
+    recruitingText: "Join us! Lorum Ipsumthing or other",
     socialText: "Party on some date or another!",
     memberText: "Welcome to the club!"
    }
