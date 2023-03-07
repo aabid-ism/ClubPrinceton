@@ -4,6 +4,7 @@ import Navigation from "../navigation/Navigation";
 import Landing from "../landing/Landing";
 import MainPage from "../mainpage/MainPage";
 import Event from "../events/Events";
+import PostBubble from "../post/Post";
 
 function HomePage() {
   const defaultEventsProps = {width: "40", height: "350", color:"orange-100",
@@ -14,6 +15,12 @@ function HomePage() {
     memberText: "Welcome to the club!"
    }
   };
+  const defaultPostProps = {width: "40", height: "350", color:"slate-100",
+   postProps: {
+    iconImage: "placeholder",
+    content: "bruh moment"
+   }
+  };  
   return (
     <div className="relative h-screen bg-#fed7aa">
       <div className="flex flex-col h-full justify-center">
@@ -22,6 +29,9 @@ function HomePage() {
         </div>
         <div className="flex items-center justify-center flex-grow">
           <MainPage mainDescription={"Hello! This is placeholder \n text"} />
+        </div>
+        <div className="flex items-center justify-center flex-grow">
+          <PostBubble props={defaultPostProps}/>
         </div>
       </div>
       <div className="fixed top-0 right-0 z-10">
