@@ -9,12 +9,13 @@ const conn = require('./db/conn.js');
 
 // middleware
 app.use(cors());
-app.use(express.json());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+// app.use(express.json());
+app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({
+//     extended: true
+// }));
 
-// initial route
+// delcaring initial route-string, and connecting clubs router: localhost:5050/clubs...
 app.use("/clubs", clubs);
 
 // Global error handling
@@ -22,10 +23,11 @@ app.use((err, _req, res, next) => {
     res.status(500).send("Uh oh! An unexpected error occured.")
   })
 
-// Define your routes
+// Defining global routes: localhost:5050/
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
 
 // app.get('/users', (req, res) => {
 //   res.send('List of users');
