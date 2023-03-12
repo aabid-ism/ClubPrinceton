@@ -1,23 +1,17 @@
 import React from "react";
-import Bubble from "../bubble/Bubble";
+import './Post.css'
 
-function Post({ props }){
-    console.log(props.iconImage)
+function Post({ width }){
     return (
-        <div>
-            <ul>
-                <li>Place</li>
-                <li>Holder</li>
-            </ul>
+        <div className='bubble'>
+            <div>
+                <p>Hello! I'm excited to be here! I like coding, especially
+                    when I can do it instead of something else.
+                </p>
+            </div>
+            
         </div>
     );
 }
 
-function PostBubble({props}){
-    props.component = <Post props={props.postProps}/>;
-    return (
-        <Bubble props={props}/>
-    );
-}
-
-export default PostBubble;
+export default Post;

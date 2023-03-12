@@ -1,0 +1,10 @@
+.bubble {
+    color: black;
+    background-color: rgb(255 237 213 / var(--tw-bg-opacity));
+    margin: auto auto;
+    width: 32rem;
+    border-radius: 0.5rem;
+    --tw-bg-opacity: 1;
+    box-shadow: 5px 5px 10px rgb(199, 199, 199);
+    padding: 0.5rem;
+}
