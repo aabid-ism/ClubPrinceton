@@ -25,7 +25,7 @@ router.get("/:name", async (req, res) => {
   });
 
 // Get the existence of a  single club
-router.get("/:name", async (req, res) => {
+router.get("/check/:name", async (req, res) => {
   const collection = await db.collection("clubs");
   const query = {name: req.params.name};
   const result = await collection.findOne(query);
@@ -75,7 +75,7 @@ router.post("/create", async (req,res) => {
   };
   // _id property is automatically assigned by mongodb.
   const result = await collection.insertOne(document);
-  
+
   console.log(result);
   res.send("Club Added").status(200);
 })
