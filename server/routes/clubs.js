@@ -79,4 +79,5 @@ router.post("/create", async (req,res) => {
   console.log(result);
   res.send("Club Added").status(200);
 })
-  module.exports = router;
+
+module.exports = router;
