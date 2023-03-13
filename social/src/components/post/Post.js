@@ -1,6 +1,7 @@
 import React from "react";
 import './Post.css'
-import LOGO from './terry benedict profile pic.png'
+// import LOGO from './terry benedict profile pic.png'
+import LOGO from './shrek.png'
 
 // this should be a separate component for usage in other places maybe?
 function Icon({ image }){
