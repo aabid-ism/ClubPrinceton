@@ -28,10 +28,10 @@ npm run start
 [type here]
 
 # Backend Status
-### Following are endpoints:\
-1. [POST] Creating a new club\
-2. [GET] Getting list of all clubs\
-3. [GET] Getting list of matching club by name (filtering by anagram not implemented yet)\
+### Following are endpoints:
+1. [POST] Creating a new club
+2. [GET] Getting list of all clubs
+3. [GET] Getting list of matching club by name (filtering by anagram not implemented yet)
 4. [GET] Getting a true or false return value if the queried club exists in database or not
 
 TODO:\
