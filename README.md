@@ -10,7 +10,11 @@ npm run start
 
 # Frontend Status
 ### Search Bubble
-[type here]
+##Functionality (almost done)
+- currently, you can start typing a club and the results will showup as a list. axios requests successfully gets autocompleted clubs.
+- TODO: implement setTimeout to avoid requests being send after each key is typed.
+##Front end
+- TODO: does not look like the figma yet
 
 ### Club Profile Bubble
 [type here]
