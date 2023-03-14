@@ -17,11 +17,25 @@ router.get("/", async (req, res) => {
 
 // Get a single club
 router.get("/:name", async (req, res) => {
-    let collection = await db.collection("clubs");
-    const query = {name: req.params.name};
-    const result = await collection.findOne(query);
-    if (!result) res.send("Not found").status(404);
-    else res.send(result).status(200);
+    const db = conn.getDb();
+    const collection = await db.collection("clubs");
+    const query = req.params.name;
+    console.log(query);
+    // const result = await collection.findOne(query);
+
+    const agg = [
+      {$search: {autocomplete: {query: query, path: "name"}}},
+      {$limit: 20},
+      {$project: {_id: 0,name: 1}}
+    ];
+  // run pipeline
+    const result = await collection.aggregate(agg).toArray();
+  // print results
+    // await result.forEach((doc) => console.log(doc));
+
+    console.log(result)
+
+    res.send(result).status(200);
   });
 
 // Get the existence of a  single club
@@ -79,4 +93,6 @@ router.post("/create", async (req,res) => {
   console.log(result);
   res.send("Club Added").status(200);
 })
-  module.exports = router;
+
+
+module.exports = router;

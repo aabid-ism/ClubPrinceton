@@ -5,26 +5,25 @@ import axios from "axios";
 const url = "http://localhost:5050/clubs";
 
 function SearchBar(props) {
-  const [searchTerm, setSearchTerm] = useState("");
-  var [results, setResults] = useState([]);
 
-  const handleSearchTermChange = (event) => {
-    setSearchTerm(event.target.value);
+  const [results, setResults] = useState([]);
+
+  const handleSearchTermChange = async (event) => {
+
+    // setting the correct search term in usestate
+    let searchWord = event.target.value;
+    console.log(searchWord);
+    console.log(`${url}/${searchWord}`);
+
+    axios.get(`${url}/${searchWord}`).then((response) => {
+      const data = response.data;
+      console.log(data);
+      setResults(data);
+    })
+    .catch((error) => {
+      console.log("Error occurred: ", error);
+    });
   };
-
-  const handleSearchClick = () => {
-    axios
-      .get(`${url}?q=${searchTerm}`)
-      .then((response) => {
-        const data = response.data;
-        setResults(data);
-      })
-      .catch((error) => {
-        console.log("Error occurred: ", error);
-      });
-  };
-
-  results=[{name: "test"}, {name: "test2"}, {name: "test3"}];
 
   return (
     <div>
@@ -35,7 +34,7 @@ function SearchBar(props) {
               type="text"
               className="form-control w-full border border-gray-300 rounded-lg py-2 px-4 mb-4 float-left"
               placeholder="Search..."
-              value={searchTerm}
+              // value={searchTerm}
               onChange={handleSearchTermChange}
             />
           </div>
