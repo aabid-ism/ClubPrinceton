@@ -17,30 +17,25 @@ router.get("/", async (req, res) => {
 
 // Get a single club
 router.get("/:name", async (req, res) => {
-    let collection = await db.collection("clubs");
-    const query = {name: req.params.name};
-
+    const db = conn.getDb();
+    const collection = await db.collection("clubs");
+    const query = req.params.name;
+    console.log(query);
     // const result = await collection.findOne(query);
-    const searchresults = await collection.aggregate([
-      {
-        $search: {
-          "autocomplete": {
-            "path": "name",
-            "query": query
-          }
-        }
-      },
-      {
-        $limit: 5
-      },
-      {
-        $project: {
-          "name": 1
-        }
-      }
-    ])
-    
-   res.send(searchresults).status(200);
+
+    const agg = [
+      {$search: {autocomplete: {query: query, path: "name"}}},
+      {$limit: 20},
+      {$project: {_id: 0,name: 1}}
+    ];
+  // run pipeline
+    const result = await collection.aggregate(agg).toArray();
+  // print results
+    // await result.forEach((doc) => console.log(doc));
+
+    console.log(result)
+
+    res.send(result).status(200);
   });
 
 // Get the existence of a  single club
