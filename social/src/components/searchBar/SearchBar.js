@@ -5,7 +5,7 @@ import axios from "axios";
 const url = "http://localhost:5050/clubs";
 
 function SearchBar(props) {
-  const [searchTerm, setSearchTerm] = useState("");
+
   const [results, setResults] = useState([]);
 
   const handleSearchTermChange = async (event) => {
@@ -24,21 +24,6 @@ function SearchBar(props) {
       console.log("Error occurred: ", error);
     });
   };
-
-  const handleSearchClick = () => {
-    // axios
-    //   .get(url + "/" + {searchTerm})
-    //   .then((response) => {
-    //     const data = response.data;
-    //     console.log(response);
-    //     setResults(data);
-    //   })
-    //   .catch((error) => {
-    //     console.log("Error occurred: ", error);
-    //   });
-  };
-
-  // results=[{name: "test"}, {name: "test2"}, {name: "test3"}];
 
   return (
     <div>
