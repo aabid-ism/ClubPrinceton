@@ -1,7 +1,7 @@
 import React from "react";
 import './Post.css'
-// import LOGO from './terry benedict profile pic.png'
 import LOGO from './shrek.png'
+import { FaEllipsisH, FaThumbsUp, FaCommentAlt } from "react-icons/fa";
 
 // this should be a separate component for usage in other places maybe?
 function Icon({ image }){
@@ -12,29 +12,69 @@ function Icon({ image }){
     );
 }
 
+function HeaderInfo({ props }){
+    return (
+        <div className="headerContent">
+            <p>Content</p>
+        </div>
+    );
+}
+
+function OptionButton({ props }){
+    return (
+        <div className="postOption">
+            <button onClick={() => {
+                alert("Button Clicked!");
+            }}>{<FaEllipsisH/>}</button>
+        </div>
+    );
+}
+
 function PostHeader({ props }){
     return (
         <div className="postHeader">
             <Icon image={LOGO}/>
-            <Icon image={LOGO}/>
-            <Icon image={LOGO}/>
+            <HeaderInfo/>
+            <OptionButton/>
         </div>
     );
 }
 
 function PostContent({ props }){
     return (
-        <div className="postContent">
-            <p>Content</p>
+        <div>
+            <div className="postContent">
+                {props.content}
+            </div>
         </div>
+        
     );
 }
 
 // TODO: Current Idea is put all the rating/interaction into this component/sub-components
 function PostComments({ props }){
     return (
-        <div className="postComments">
-            <p>Comments</p>
+        <div className="postMetricBar">
+            <div className="postMetric">
+                <div>
+                    {<FaThumbsUp/>} 
+                </div>
+                <div>
+                    {props.likes}
+                </div>
+                <div>
+                    {<FaCommentAlt/>}
+                </div>
+                <div>
+                    {props.numberOfComments}
+                </div>
+            </div>
+            <div className="comments">
+
+            </div>
+            <div className="your-comment">
+
+            </div>
         </div>
     );
 }
@@ -44,8 +84,8 @@ function Post({ props }){
         <div className='bubble'>
             <div className='post'>
                 <PostHeader/>
-                <PostContent/>
-                <PostComments/>
+                <PostContent props={{content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fringilla est ullamcorper eget nulla facilisi etiam. Morbi blandit cursus risus at ultrices mi. Curabitur gravida arcu ac tortor. Vestibulum lectus mauris ultrices eros in. Elementum integer enim neque volutpat ac tincidunt vitae semper quis. Sed cras ornare arcu dui vivamus arcu felis. Convallis posuere morbi leo urna molestie at. Massa eget egestas purus viverra accumsan in nisl. Et netus et malesuada fames ac. Amet est placerat in egestas erat imperdiet. Ultrices dui sapien eget mi proin sed. Iaculis nunc sed augue lacus viverra vitae congue eu. Urna duis convallis convallis tellus id. Nibh tortor id aliquet lectus proin nibh. Eu feugiat pretium nibh ipsum consequat nisl vel. Aliquam nulla facilisi cras fermentum odio. Tortor id aliquet lectus proin nibh. Ornare lectus sit amet est placerat. Viverra suspendisse potenti nullam ac tortor vitae. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Feugiat pretium nibh ipsum consequat nisl vel. Accumsan sit amet nulla facilisi morbi tempus iaculis urna id. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Ac feugiat sed lectus vestibulum mattis ullamcorper velit. Faucibus turpis in eu mi bibendum neque egestas."}}/>
+                <PostComments props={{likes:120, numberOfComments: 20}}/>
             </div>            
         </div>
     );

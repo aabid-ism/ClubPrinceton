@@ -1,8 +1,8 @@
 .bubble {
     color: black;
-    background-color: rgb(255 237 213 / var(--tw-bg-opacity));
+    background-color: rgb(255 237 213);
     margin: auto auto;
-    width: 32rem;
+    width: 50rem;
     border-radius: 0.5rem;
     --tw-bg-opacity: 1;
     box-shadow: 5px 5px 10px rgb(199, 199, 199);
@@ -10,7 +10,8 @@
 }
 
 .post {
-    background-color: orange;
+    background-color: white;
+    
 }
 
 .postHeader {
@@ -18,8 +19,10 @@
     display:flex;
 }
 
-.postComments {
-    background-color: aqua;
+.postContent {
+    overflow-y: auto;
+    background-color: green;
+    height: 16rem;
 }
 
 .postIcon {
@@ -27,6 +30,16 @@
     max-width: 100px;
 }
 
-.postIcon img{
-    border-radius: 50%;
+.postMetric {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.postMetricBar {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    background-color: rgb(255 237 213);
 }

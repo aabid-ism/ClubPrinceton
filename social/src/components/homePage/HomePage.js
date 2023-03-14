@@ -7,17 +7,17 @@ import Event from "../events/Events";
 import Post from "../post/Post";
 
 function HomePage() {
-  // const defaultEventsProps = {
-  //   width: "40",
-  //   height: "350",
-  //   color: "orange-100",
-  //   eventsProps: {
-  //     mainEventText: "Big Show!",
-  //     recruitingText: "Join us! Lorum Ipsumthing or other",
-  //     socialText: "Party on some date or another!",
-  //     memberText: "Welcome to the club!",
-  //   },
-  // };
+  const defaultEventsProps = {
+    width: "40",
+    height: "350",
+    color: "orange-100",
+    eventsProps: {
+      mainEventText: "Big Show!",
+      recruitingText: "Join us! Lorum Ipsumthing or other",
+      socialText: "Party on some date or another!",
+      memberText: "Welcome to the club!",
+    },
+  };
   // const defaultPostProps = {
   //   width: "40",
   //   height: "350",
