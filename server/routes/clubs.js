@@ -19,9 +19,28 @@ router.get("/", async (req, res) => {
 router.get("/:name", async (req, res) => {
     let collection = await db.collection("clubs");
     const query = {name: req.params.name};
-    const result = await collection.findOne(query);
-    if (!result) res.send("Not found").status(404);
-    else res.send(result).status(200);
+
+    // const result = await collection.findOne(query);
+    const searchresults = await collection.aggregate([
+      {
+        $search: {
+          "autocomplete": {
+            "path": "name",
+            "query": query
+          }
+        }
+      },
+      {
+        $limit: 5
+      },
+      {
+        $project: {
+          "name": 1
+        }
+      }
+    ])
+    
+   res.send(searchresults).status(200);
   });
 
 // Get the existence of a  single club
@@ -79,5 +98,6 @@ router.post("/create", async (req,res) => {
   console.log(result);
   res.send("Club Added").status(200);
 })
+
 
 module.exports = router;
