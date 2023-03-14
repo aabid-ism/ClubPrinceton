@@ -4,6 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 5050;
 const cors = require("cors");
 const clubs = require("./routes/clubs.js");
+const posts = require("./routes/posts.js");
 const bodyParser = require("body-parser");
 const conn = require('./db/conn.js');
 
@@ -17,7 +18,7 @@ app.use(bodyParser.json());
 
 // delcaring initial route-string, and connecting clubs router: localhost:5050/clubs...
 app.use("/clubs", clubs);
-
+app.use("/posts", posts);
 // Global error handling
 app.use((err, _req, res, next) => {
     res.status(500).send("Uh oh! An unexpected error occured.")
