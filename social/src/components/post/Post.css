@@ -2,7 +2,7 @@
     color: black;
     background-color: rgb(255 237 213);
     margin: auto auto;
-    width: 50rem;
+    width: 48rem;
     border-radius: 0.5rem;
     --tw-bg-opacity: 1;
     box-shadow: 5px 5px 10px rgb(199, 199, 199);
@@ -10,8 +10,7 @@
 }
 
 .post {
-    background-color: white;
-    
+    border-radius: 50%;
 }
 
 .postHeader {
@@ -21,8 +20,13 @@
 
 .postContent {
     overflow-y: auto;
-    background-color: green;
     height: 16rem;
+}
+
+.comments {
+    overflow-y: auto;
+    height: 16rem;
+    padding: 20px;
 }
 
 .postIcon {

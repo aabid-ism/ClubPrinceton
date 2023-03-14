@@ -1,0 +1,9 @@
+.commentText {
+    color: black;
+    font-weight: bold;
+}
+
+.comment {
+    display: flex;
+    justify-content: space-between;
+}

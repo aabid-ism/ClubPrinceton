@@ -35,7 +35,6 @@ function HomePage() {
         </div>
         <div>
           <Post/>
-          <Post/>
         </div>
         <div className="fixed top-0 left-0">
           <SearchBar width="80" height="400" color="orange" />
