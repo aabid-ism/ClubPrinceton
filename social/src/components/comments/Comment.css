@@ -7,3 +7,9 @@
     display: flex;
     justify-content: space-between;
 }
+
+.comments {
+    overflow-y: auto;
+    height: 16rem;
+    padding: 20px;
+}

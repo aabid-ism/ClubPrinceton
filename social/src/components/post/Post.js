@@ -101,12 +101,22 @@ function Post({ props }){
             },
             commentsData: {
                 comments: [
-                    {commentText: "I love whatever this is!"},
-                    {commentText: "Comment 2"},
-                    {commentText: "Comment 3"},
-                    {commentText: "Comment 4"},
-                    {commentText: "Zoo-Wee-Mama"},
-                    {commentText: "Comment moment"}
+                    "I love whatever this is!",
+                    "Comment 2",
+                    "Comment 3",
+                    "Comment 4",
+                    "Zoo-Wee-Mama",
+                    "Comment moment",
+                    "Hello",
+                    "More comments hello",
+                    "I love whatever this is!",
+                    "Comment 2",
+                    "Comment 3",
+                    "Comment 4",
+                    "Zoo-Wee-Mama",
+                    "Comment moment",
+                    "Hello",
+                    "More comments hello"
                 ]
             }
         }
