@@ -73,3 +73,33 @@ img {
     font-size: small;
     column-gap: 10px;
 }
+
+.your-comment{
+    display: grid;
+    padding: 20px;
+    grid-template-areas: 
+        "your-icon your-comment-text";
+    grid-template-columns: 1fr 8fr; 
+}
+
+.your-icon{
+    grid-area: your-icon;
+    border-radius: 50%;
+    overflow: hidden;
+    height:60px;
+    width: 60px;
+}
+
+.your-icon img{
+    width: 100%;
+}
+
+.your-comment-text{
+    grid-area: your-comment-text;
+    padding: 10px;
+    border-radius: 1rem;
+    border-color: rgb(120, 104, 104);
+    border-width: 0.1rem;
+    width: 100%;
+    background: transparent;
+}

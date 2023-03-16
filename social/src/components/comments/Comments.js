@@ -2,12 +2,13 @@ import Comment from "./Comment";
 import './Comment.css'
 
 export default function Comments({ props }){
-    const commentInputText = props.commentsData.comments;
+    const comments = props.comments;
     
     return (
         <div className="comments">
-            {commentInputText.map(textObj => (
-                <Comment key={{commentText:textObj.commentText}} props={{commentText:textObj.commentText}}></Comment>
+            {comments.map(comment => (
+                <Comment key={{commentText:comment.commentText}} value={comment.commentText} props={
+                    comment}></Comment>
             ))}
         </div>
     );

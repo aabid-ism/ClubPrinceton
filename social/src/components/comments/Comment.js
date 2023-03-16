@@ -2,6 +2,7 @@ import './Comment.css'
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
 import { useState } from 'react';
 
+// TODO: needs to actually update database with likes
 function Like({ priorLikes, priorLikeStatus }){
     const [isLiked, toggleLike] = useState(priorLikeStatus);
 
@@ -25,7 +26,7 @@ export default function Comment({ props }){
             <div className="commentText">
                 {props.commentText}
             </div>
-            <Like priorLikes={15} priorLikeStatus={false}/>
+            <Like priorLikes={props.priorLikes} priorLikeStatus={props.priorLikeStatus}/>
         </div>
     );
 }
