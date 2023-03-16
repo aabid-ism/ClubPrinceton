@@ -19,6 +19,8 @@ function UserRating(props) {
     // other -> update + discard changes
     // alert for making sure all rows are filled
 
+    // we may have forgot the folder when pushing to git branch
+
     // include the useEffect 
     const [data, setData] = useState({
         goodVibes: 1,
