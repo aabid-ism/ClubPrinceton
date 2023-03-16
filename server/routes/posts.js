@@ -37,8 +37,8 @@ router.post("/create", async (req,res) => {
       { name: clubdocument.name}, [ { $set: { posts: { $concatArrays: [ "$posts", [ post_document_to_insert]  ] } } } ]
     )
 
-    // TODO: pop the last post from the posts property of the club document
- 
+    // TODO: pop the 5th post from the posts property of the club document, if 5 posts exist
+    
     res.send(clubdocument).status(200);
 })
 module.exports = router;

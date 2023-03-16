@@ -1,0 +1,28 @@
+Environment Variables
+
+resource group name = "myResourceGroup"
+blobStorageAccountName = "clubptonblobstorage"
+blobStorageAccountKey=$(az storage account keys list -g myResourceGroup \
+  -n "clubptonblobstorage" --query "[0].value" --output tsv)
+
+
+az group create --name myResourceGroup --location eastus
+
+az storage account create --name "clubptonblobstorage" --location eastus --resource-group myResourceGroup --sku Standard_LRS --kind StorageV2 --access-tier hot
+
+az storage account delete --name "clubptonblobstorage"
+
+az group delete --name myResourceGroup
+
+az resource show -g myResourceGroup -n "clubptonblobstorage" --resource-type "Microsoft.Storage/storageAccounts"
+
+blobStorageAccountKey=$(az storage account keys list -g myResourceGroup \
+  -n "clubptonblobstorage" --query "[0].value" --output tsv)
+
+az storage container create --name images \
+  --account-name clubptonblobstorage \
+  --account-key $blobStorageAccountKey
+
+az storage container create --name thumbnails \
+  --account-name clubptonblobstorage \
+  --account-key $blobStorageAccountKey --public-access container
