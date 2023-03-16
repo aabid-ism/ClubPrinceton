@@ -1,9 +1,31 @@
+
 import React, { useState } from "react";
 import Navigation from "../navigation/Navigation";
 import Landing from "../landing/Landing";
 import SearchBar from "../searchBar/SearchBar";
 
 function HomePage() {
+  // const defaultEventsProps = {
+  //   width: "40",
+  //   height: "350",
+  //   color: "orange-100",
+  //   eventsProps: {
+  //     mainEventText: "Big Show!",
+  //     recruitingText: "Join us! Lorum Ipsumthing or other",
+  //     socialText: "Party on some date or another!",
+  //     memberText: "Welcome to the club!",
+  //   },
+  // };
+  // const defaultPostProps = {
+  //   width: "40",
+  //   height: "350",
+  //   color: "slate-100",
+  //   postProps: {
+  //     iconImage: "placeholder",
+  //     content: "bruh moment",
+  //   },
+  // };
+
   return (
     <div style={{ height: "100vh", backgroundColor: "#FFF8E5" }}>
       <div
