@@ -1,5 +1,4 @@
 import React from "react";
-import Bubble from "../bubble/Bubble";
 
 function Post({ props }){
     console.log(props.iconImage)
@@ -14,9 +13,8 @@ function Post({ props }){
 }
 
 function PostBubble({props}){
-    props.component = <Post props={props.postProps}/>;
     return (
-        <Bubble props={props}/>
+        <Post props={props.postProps}/>
     );
 }
 
