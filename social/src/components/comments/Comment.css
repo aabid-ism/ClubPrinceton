@@ -1,0 +1,24 @@
+.commentText {
+    color: black;
+    font-weight: bold;
+}
+
+.comment {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 0.5rem;
+    border-color: rgb(228, 224, 210);
+    border-width: 0.2rem;
+    padding: 10px;
+}
+
+.comments {
+    overflow-y: auto;
+    height: 20rem;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+

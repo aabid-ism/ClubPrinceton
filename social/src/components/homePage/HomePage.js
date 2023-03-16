@@ -1,32 +1,28 @@
 import React from "react";
 import SearchBar from "../searchBar/SearchBar";
-import Navigation from "../navigation/Navigation";
 import Landing from "../landing/Landing";
-import MainPage from "../mainpage/MainPage";
-import Event from "../events/Events";
-import PostBubble from "../post/Post";
 
 function HomePage() {
-  const defaultEventsProps = {
-    width: "40",
-    height: "350",
-    color: "orange-100",
-    eventsProps: {
-      mainEventText: "Big Show!",
-      recruitingText: "Join us! Lorum Ipsumthing or other",
-      socialText: "Party on some date or another!",
-      memberText: "Welcome to the club!",
-    },
-  };
-  const defaultPostProps = {
-    width: "40",
-    height: "350",
-    color: "slate-100",
-    postProps: {
-      iconImage: "placeholder",
-      content: "bruh moment",
-    },
-  };
+  // const defaultEventsProps = {
+  //   width: "40",
+  //   height: "350",
+  //   color: "orange-100",
+  //   eventsProps: {
+  //     mainEventText: "Big Show!",
+  //     recruitingText: "Join us! Lorum Ipsumthing or other",
+  //     socialText: "Party on some date or another!",
+  //     memberText: "Welcome to the club!",
+  //   },
+  // };
+  // const defaultPostProps = {
+  //   width: "40",
+  //   height: "350",
+  //   color: "slate-100",
+  //   postProps: {
+  //     iconImage: "placeholder",
+  //     content: "bruh moment",
+  //   },
+  // };
   return (
     <div className="relative h-screen bg-#fed7aa">
       <div className="flex flex-col h-full justify-center">
