@@ -12,11 +12,19 @@ function UserRating(props) {
     // the question is now -> how do I set data from the server to client side
     // test on dummy data -> receiving 0,0,0,0 (never rated this club page)
     // 1, 1, 2, 4
+    // the initial rating
+    // have an update rating/cancel button
+    // have a submit button -> when first seeing it
+    // all zeroes rating -> fetching this -> submit button
+    // other -> update + discard changes
+    // alert for making sure all rows are filled
+
+    // include the useEffect 
     const [data, setData] = useState({
-        goodVibes: 0,
-        intensity: 0,
-        popularity: 0,
-        inclusivity: 0,
+        goodVibes: 1,
+        intensity: 2,
+        popularity: 3,
+        inclusivity: 4,
         clubName: 'Triangle Club'
       });
     console.log(data.goodVibes)
@@ -50,10 +58,10 @@ function UserRating(props) {
         });
     };
     
-      function handleSubmit(event) {
-        event.preventDefault();
-        alert(JSON.stringify(data, undefined, 2))
-      }
+    function handleSubmit(event) {
+    event.preventDefault();
+    alert(JSON.stringify(data, undefined, 2))
+    }
     
     return (
         // handle widths?
@@ -68,21 +76,21 @@ function UserRating(props) {
             <br></br>
             <label>
                 <div>Good Vibes</div>
-                <SingleRating passOnRating={storeVibes}></SingleRating>
+                <SingleRating passOnRating={storeVibes} initRating={data.goodVibes}></SingleRating>
             </label>
             <br></br>
             <label>
                 <div>Intensity</div>
-                <SingleRating passOnRating={storeIntensity}></SingleRating>
+                <SingleRating passOnRating={storeIntensity} initRating={data.intensity}></SingleRating>
             </label>
             <br></br>
             <label>
                 <div>Popularity</div>
-                <SingleRating passOnRating={storePopularity}></SingleRating>
+                <SingleRating passOnRating={storePopularity} initRating={data.popularity}></SingleRating>
             </label>
             <br></br>
                 <div>Inclusivity</div>
-                <SingleRating passOnRating={storeInclusivity}></SingleRating>
+                <SingleRating passOnRating={storeInclusivity} initRating={data.inclusivity}></SingleRating>
 
             <button type="submit">Submit Rating</button>
         </form>
