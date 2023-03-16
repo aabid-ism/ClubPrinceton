@@ -1,4 +1,5 @@
 import React from "react";
+
 import './Post.css'
 import LOGO from './blue_man.jpg'
 import {PostHeader, PostCreationInfo, PostTitle, Icon, HeaderInfo, OptionButton} from "./PostHeader.js";
@@ -16,11 +17,14 @@ function PostContent({ props }){
     );
 }
 
+
+
 function PostBubble({ children }){
     return (
         <div className='bubble'>
             {children}        
         </div>
+
     );
     
 }

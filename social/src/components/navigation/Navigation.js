@@ -2,44 +2,62 @@ import React from "react";
 import { FaCog, FaSignOutAlt, FaQuestionCircle } from "react-icons/fa";
 
 function Navigation(props) {
+  const navStyle = {
+    width: `${props.width}px`,
+    height: `${props.height}px`,
+    backgroundColor: "#FFE4CC",
+    borderRadius: "10px",
+    padding: "20px",
+    boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
+  const linkStyle = {
+    display: "flex",
+    alignItems: "center",
+    fontWeight: "bold",
+    color: "black",
+    textDecoration: "none",
+    margin: "10px",
+  };
+
+  const iconStyle = {
+    color: "#999999",
+    marginRight: "10px",
+    fontSize: "24px",
+  };
+
   return (
-    <div
-      className={`w-${props.width} mx-auto p-6 bg-white rounded-lg shadow-lg my-10`}
-      style={{ height: `${props.height}px` }}
-    >
+    <div style={navStyle}>
       <ul className="flex flex-col justify-center items-center h-full">
-        <li className="mb-4">
-          <a href="/" className="font-bold">
+        <li>
+          <a href="/" style={linkStyle}>
             Home
           </a>
         </li>
-        <li className="mb-4">
-          <a href="/" className="font-bold">
+        <li>
+          <a href="/" style={linkStyle}>
             About Club Princeton
           </a>
         </li>
-        <li className="mb-4">
-          <a href="/" className="flex items-center font-bold">
-            <FaCog className="text-gray-600 hover:text-gray-800" size={24} />
-            <span className="ml-2">Settings</span>
-          </a>
-        </li>
-        <li className="mb-4">
-          <a href="/" className="flex items-center font-bold">
-            <FaSignOutAlt
-              className="text-gray-600 hover:text-gray-800"
-              size={24}
-            />
-            <span className="ml-2">Logout</span>
+        <li>
+          <a href="/" style={linkStyle}>
+            <FaCog style={iconStyle} />
+            Settings
           </a>
         </li>
         <li>
-          <a href="/" className="flex items-center font-bold">
-            <FaQuestionCircle
-              className="text-gray-600 hover:text-gray-800"
-              size={24}
-            />
-            <span className="ml-2">FAQ</span>
+          <a href="/" style={linkStyle}>
+            <FaSignOutAlt style={iconStyle} />
+            Logout
+          </a>
+        </li>
+        <li>
+          <a href="/" style={linkStyle}>
+            <FaQuestionCircle style={iconStyle} />
+            FAQ
           </a>
         </li>
       </ul>
