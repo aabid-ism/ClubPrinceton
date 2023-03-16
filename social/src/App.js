@@ -4,11 +4,14 @@ import MainBubble from './components/mainpage/MainPage';
 import SearchBar from './components/searchBar/SearchBar';
 import HomePage from './components/homePage/HomePage';
 import Bubble from './components/bubble/Bubble';
+import RatingStars from './components/ratings/SingleRating';
+import SingleRating from './components/ratings/SingleRating';
+import UserRating from './components/ratings/UserRating';
 
 function App() {
   return (
     <div>
-      <HomePage />
+      <UserRating></UserRating>
     </div>
   );
 }
