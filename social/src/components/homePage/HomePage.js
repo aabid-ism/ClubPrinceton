@@ -35,7 +35,7 @@ function HomePage() {
           height: "100%",
         }}
       >
-        <div
+        {/* <div
           style={{
             flexGrow: 1,
             display: "flex",
@@ -44,7 +44,7 @@ function HomePage() {
           }}
         >
           <Landing />
-        </div>
+        </div> */}
         <div style={{ position: "fixed", top: 0, left: 0 }}>
           <SearchBar width="300" height="400" />
         </div>
