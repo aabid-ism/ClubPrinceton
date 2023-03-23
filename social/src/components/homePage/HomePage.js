@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Navigation from "../navigation/Navigation";
 import Landing from "../landing/Landing";
 import SearchBar from "../searchBar/SearchBar";
-
+import Post from "../post/Post";
 function HomePage() {
   // const defaultEventsProps = {
   //   width: "40",
@@ -27,7 +27,7 @@ function HomePage() {
   // };
 
   return (
-    <div style={{ height: "100vh", backgroundColor: "#FFF8E5" }}>
+    <div style={{ height: "100%", backgroundColor: "#FFF8E5" }}>
       <div
         style={{
           display: "flex",
@@ -41,9 +41,30 @@ function HomePage() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            marginBottom: "20px",
           }}
         >
-          <Landing />
+          <Post />
+        </div>
+        <div
+          style={{
+            flexGrow: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Post />
+        </div>
+        <div
+          style={{
+            flexGrow: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Post />
         </div>
         <div style={{ position: "fixed", top: 0, left: 0 }}>
           <SearchBar width="300" height="400" />

@@ -25,6 +25,20 @@ function SearchBar(props) {
       });
   };
 
+  const handleClubClick = (club) => {
+    console.log(`Clicked on ${club.name}`);
+    axios
+      .get(`${url}/a/${club.name}`)
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        // handle club data
+      })
+      .catch((error) => {
+        console.log("Error occurred: ", error);
+      });
+  };
+
   const searchBarStyle = {
     width: `${props.width}px`,
     height: `${props.height}px`,
@@ -40,6 +54,7 @@ function SearchBar(props) {
   const resultsStyle = {
     marginTop: "20px",
     width: "100%",
+    height: "70%",
     backgroundColor: "#FFE4CC",
     borderRadius: "10px",
     padding: "10px",
@@ -58,14 +73,15 @@ function SearchBar(props) {
       {results.length > 0 && (
         <div style={resultsStyle}>
           {results.map((result, index) => (
-            <p
+            <button
               className={`text-gray-700 mb-2 border-b border-black ${
                 index === results.length - 1 ? "pb-0" : ""
               }`}
               key={result.id}
+              onClick={() => handleClubClick(result)}
             >
               {result.name}
-            </p>
+            </button>
           ))}
         </div>
       )}
