@@ -1,31 +1,12 @@
-
-import React, { useState } from "react";
+import React from "react";
 import Navigation from "../navigation/Navigation";
-import Landing from "../landing/Landing";
 import SearchBar from "../searchBar/SearchBar";
-import Post from "../post/Post";
-function HomePage() {
-  // const defaultEventsProps = {
-  //   width: "40",
-  //   height: "350",
-  //   color: "orange-100",
-  //   eventsProps: {
-  //     mainEventText: "Big Show!",
-  //     recruitingText: "Join us! Lorum Ipsumthing or other",
-  //     socialText: "Party on some date or another!",
-  //     memberText: "Welcome to the club!",
-  //   },
-  // };
-  // const defaultPostProps = {
-  //   width: "40",
-  //   height: "350",
-  //   color: "slate-100",
-  //   postProps: {
-  //     iconImage: "placeholder",
-  //     content: "bruh moment",
-  //   },
-  // };
+import { useSelector } from "react-redux";
 
+function HomePage() {
+  const clubData = useSelector(state => state.clubData);
+
+  console.log('Club data:', clubData);
   return (
     <div style={{ height: "100%", backgroundColor: "#FFF8E5" }}>
       <div
@@ -35,43 +16,18 @@ function HomePage() {
           height: "100%",
         }}
       >
-        <div
-          style={{
-            flexGrow: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: "20px",
-          }}
-        >
-          <Post />
-        </div>
-        <div
-          style={{
-            flexGrow: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Post />
-        </div>
-        <div
-          style={{
-            flexGrow: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Post />
-        </div>
         <div style={{ position: "fixed", top: 0, left: 0 }}>
           <SearchBar width="300" height="400" />
         </div>
         <div style={{ position: "fixed", bottom: 0, left: 0 }}>
           <Navigation width="300" height="400" />
         </div>
+        {clubData.name && (
+          <div style={{ position: "fixed", top: 1, right: 1 }}>
+            <h2>{clubData.name}</h2>
+            <p>{clubData.description}</p>
+          </div>
+        )}
       </div>
     </div>
   );
