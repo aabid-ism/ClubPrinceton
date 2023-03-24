@@ -6,7 +6,7 @@ function ConditionalLink(props) {
     console.log(props.submitSuccess)
     if (props.submitSuccess) return (
     <nav>
-    <Link path="/home">
+    <Link to="/home">
         <button
           type="submit"
           className="mb-2 px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 cursor-pointer"
