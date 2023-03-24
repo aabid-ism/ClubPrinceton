@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import RatingsBubble from "./RatingsBubble";
 import SingleRating from "./SingleRating";
 
-// To-Do: handle case with 
+// To-Do: handle case with constant?
 
 function UserRating(props) {
     // To-DO -> values and setData not used
@@ -29,10 +30,6 @@ function UserRating(props) {
         inclusivity: 4,
         clubName: 'Triangle Club'
       });
-    console.log(data.goodVibes)
-    console.log(data.intensity)
-    console.log(data.popularity)
-    console.log(data.inclusivity)
 
     // does every state need to updated like this to pass data from child to parent?
     // find better alternative later!!! -> once more comfortable with React
@@ -70,32 +67,35 @@ function UserRating(props) {
         // form attributes?
         // need to center title
         // button should change to update rating on click
-        <form 
-            onSubmit={handleSubmit}
-            method="post"
-        >
-            <label>Rating</label>
-            <br></br>
-            <label>
-                <div>Good Vibes</div>
-                <SingleRating passOnRating={storeVibes} initRating={data.goodVibes}></SingleRating>
-            </label>
-            <br></br>
-            <label>
-                <div>Intensity</div>
-                <SingleRating passOnRating={storeIntensity} initRating={data.intensity}></SingleRating>
-            </label>
-            <br></br>
-            <label>
-                <div>Popularity</div>
-                <SingleRating passOnRating={storePopularity} initRating={data.popularity}></SingleRating>
-            </label>
-            <br></br>
-                <div>Inclusivity</div>
-                <SingleRating passOnRating={storeInclusivity} initRating={data.inclusivity}></SingleRating>
+        <RatingsBubble>
+            <form 
+                onSubmit={handleSubmit}
+                method="post"
+                className="rtg-form"
+            >
+                <label>Rating</label>
+                <br></br>
+                <label>
+                    <div>Good Vibes</div>
+                    <SingleRating passOnRating={storeVibes} initRating={data.goodVibes}></SingleRating>
+                </label>
+                <br></br>
+                <label>
+                    <div>Intensity</div>
+                    <SingleRating passOnRating={storeIntensity} initRating={data.intensity}></SingleRating>
+                </label>
+                <br></br>
+                <label>
+                    <div>Popularity</div>
+                    <SingleRating passOnRating={storePopularity} initRating={data.popularity}></SingleRating>
+                </label>
+                <br></br>
+                    <div>Inclusivity</div>
+                    <SingleRating passOnRating={storeInclusivity} initRating={data.inclusivity}></SingleRating>
 
-            <button type="submit">Submit Rating</button>
-        </form>
+                <button type="submit">Submit Rating</button>
+            </form>
+        </RatingsBubble>
     );
 }
 
