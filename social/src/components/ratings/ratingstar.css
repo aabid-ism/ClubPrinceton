@@ -5,8 +5,12 @@ button {
     cursor: pointer;
   }
   .on button{
-    color: #000;
-  }
-  .off {
     color: orange;
   }
+  .off {
+    color: gray;
+  }
+
+.rtg-form {
+  text-align: center;
+}

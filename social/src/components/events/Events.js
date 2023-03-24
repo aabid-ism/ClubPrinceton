@@ -1,5 +1,4 @@
 import React from "react";
-import Bubble from "../bubble/Bubble";
 
 function Events({props}){
     return (
@@ -52,9 +51,8 @@ function Notification({props}){
 }
 
 function Event({props}){
-    props.component = <Events props={props.eventsProps}></Events>;
     return (
-        <Bubble props={props}/>
+        <Events props={props.eventsProps}></Events>
     );
 }
 

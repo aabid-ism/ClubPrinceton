@@ -1,53 +1,90 @@
 import React, { useState } from "react";
-import Bubble from "../bubble/Bubble";
 import axios from "axios";
 
 const url = "http://localhost:5050/clubs";
 
 function SearchBar(props) {
-  const [searchTerm, setSearchTerm] = useState("");
-  var [results, setResults] = useState([]);
+  const [results, setResults] = useState([]);
+  const [numResults, setNumResults] = useState(0);
 
-  const handleSearchTermChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
+  const handleSearchTermChange = async (event) => {
+    let searchWord = event.target.value;
+    console.log(searchWord);
+    console.log(`${url}/${searchWord}`);
 
-  const handleSearchClick = () => {
     axios
-      .get(`${url}?q=${searchTerm}`)
+      .get(`${url}/${searchWord}`)
       .then((response) => {
         const data = response.data;
+        console.log(data);
         setResults(data);
+        setNumResults(data.length);
       })
       .catch((error) => {
         console.log("Error occurred: ", error);
       });
   };
 
-  results=[{name: "test"}, {name: "test2"}, {name: "test3"}];
+  const handleClubClick = (club) => {
+    console.log(`Clicked on ${club.name}`);
+    axios
+      .get(`${url}/a/${club.name}`)
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        // handle club data
+      })
+      .catch((error) => {
+        console.log("Error occurred: ", error);
+      });
+  };
+
+  const searchBarStyle = {
+    width: `${props.width}px`,
+    height: `${props.height}px`,
+    backgroundColor: "#FFE4CC",
+    borderRadius: "10px",
+    boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "20px",
+  };
+
+  const resultsStyle = {
+    marginTop: "20px",
+    width: "100%",
+    height: "70%",
+    backgroundColor: "#FFE4CC",
+    borderRadius: "10px",
+    padding: "10px",
+    overflowY: "auto",
+  };
 
   return (
-    <div>
-      <Bubble width={props.width} height={props.height} color={props.color} className="items-center justify-center flex-grow">
-        <div className="mx-auto p-6 bg-white rounded-lg shadow-lg margin-10p">
-          <div className="flex flex-col">
-            <input
-              type="text"
-              className="form-control w-full border border-gray-300 rounded-lg py-2 px-4 mb-4 float-left"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={handleSearchTermChange}
-            />
-          </div>
-          <div className="mt-4 bg-gray-200 rounded-lg p-4">
-            {results.map((result) => (
-              <p className="text-gray-700 mb-2 border-b border-gray-300">
-                {result.name}
-              </p>
-            ))}
-          </div>
+    <div style={searchBarStyle}>
+      <input
+        type="text"
+        className="form-control w-full border border-gray-300 rounded-lg py-2 px-4 mb-4"
+        placeholder="Search..."
+        onChange={handleSearchTermChange}
+      />
+      <p>{numResults} search results</p>
+      {results.length > 0 && (
+        <div style={resultsStyle}>
+          {results.map((result, index) => (
+            <button
+              className={`text-gray-700 mb-2 border-b border-black ${
+                index === results.length - 1 ? "pb-0" : ""
+              }`}
+              key={result.id}
+              onClick={() => handleClubClick(result)}
+            >
+              {result.name}
+            </button>
+          ))}
         </div>
-      </Bubble>
+      )}
     </div>
   );
 }
