@@ -29,10 +29,6 @@ function UserRating(props) {
         inclusivity: 4,
         clubName: 'Triangle Club'
       });
-    console.log(data.goodVibes)
-    console.log(data.intensity)
-    console.log(data.popularity)
-    console.log(data.inclusivity)
 
     // does every state need to updated like this to pass data from child to parent?
     // find better alternative later!!! -> once more comfortable with React
