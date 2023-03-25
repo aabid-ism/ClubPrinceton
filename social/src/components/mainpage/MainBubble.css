@@ -1,0 +1,64 @@
+
+.button-style {
+    color: #b45309;
+    padding: 0.25rem 1.25rem;
+    background-color: transparent;
+    border: 2px solid #b45309;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-style:hover {
+    background-color: #fde8cd;
+}
+
+.reach-out {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 0.75rem;
+    border-bottom: 2px solid #b45309;
+}
+
+.info-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-size: 1.125rem;
+}
+
+.info-panel-logo {
+    padding: 0.5rem;
+}
+
+.info-node {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-node-text {
+    color: #000;
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+
+.club-description {
+    color: #000;
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+
+.main-bubble {
+    background-color: #fde8cd;
+    margin: 0 auto;
+    border-radius: 0.5rem;
+}
+
+.main-bubble-content {
+    display: flex;
+    flex-direction: column
+}

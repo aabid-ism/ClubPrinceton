@@ -1,79 +1,179 @@
-import logo from './triangle logo.png'
+import logo from "./triangle logo.png";
+import { useSelector } from "react-redux";
 
-function Button({value}){
-    return (
-    <button
-        className="
-            text-amber-700
-            py-1 
-            px-5 
-            hover:bg-orange-200 
-            border-2 
-            border-amber-700 
-            rounded-lg"
-    >{value}</button>
-    )
+function Button({ value }) {
+  const buttonStyle = {
+    color: "#ffc107",
+    padding: "0.25rem 1.25rem",
+    border: "2px solid #ffc107",
+    borderRadius: "0.5rem",
+    ":hover": {
+      backgroundColor: "#ffe082",
+    },
+  };
+  return <button style={buttonStyle}>{value}</button>;
 }
 
-function ReachOut(){
-    return (<div className="flex flex-row justify-evenly p-3 divide-x-2">
-    <div>
-        <Button value={"Follow"}></Button>
+function ReachOut() {
+  const reachOutStyle = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    padding: "0.75rem",
+  };
+
+  const dividerStyle = {
+    borderLeft: "2px solid #ffc107",
+    height: "1.5rem",
+    marginLeft: "0.75rem",
+    marginRight: "0.75rem",
+  };
+
+  const buttonStyle = {
+    color: "#ffc107",
+    padding: "0.25rem 1.25rem",
+    border: "2px solid #ffc107",
+    borderRadius: "0.5rem",
+    ":hover": {
+      backgroundColor: "#ffe082",
+    },
+  };
+
+  return (
+    <div style={reachOutStyle}>
+      <div style={buttonStyle}>
+        <Button value={"Follow"} />
+      </div>
+      <div style={dividerStyle}></div>
+      <div style={buttonStyle}>
+        <Button value={"Contact"} />
+      </div>
+      <div style={dividerStyle}></div>
+      <div style={buttonStyle}>
+        <Button value={"Apply"} />
+      </div>
     </div>
-    <div>
-        <Button value={"Contact"}></Button>
+  );
+}
+
+function InfoPanel() {
+  const clubData = useSelector((state) => state.clubData);
+  const infoPanelStyle = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    fontSize: "1.5rem",
+  };
+
+  const infoNodeStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "0.5rem",
+    color: "#000",
+    fontSize: "1rem",
+    fontWeight: "bold",
+  };
+
+  const logoStyle = {
+    padding: "0.5rem",
+  };
+
+  return (
+    <div style={infoPanelStyle}>
+      <div style={logoStyle}>
+        <img src={logo} alt="" />
+      </div>
+      <div style={infoNodeStyle}>
+        <div>Followers</div>
+        <div>{clubData.stats.Followers}</div>
+      </div>
+      <div style={infoNodeStyle}>
+        <div>Likes</div>
+        <div>{clubData.stats.Likes}</div>
+      </div>
+      <div style={infoNodeStyle}>
+        <div>Posts</div>
+        <div>{clubData.stats.Posts}</div>
+      </div>
     </div>
-    <div>
-        <Button value={"Apply"}></Button>
+  );
+}
+
+function InfoNode({ fieldName, fieldValue }) {
+  const infoNodeStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "0.5rem",
+    color: "#000",
+    fontSize: "1rem",
+    fontWeight: "bold",
+  };
+
+  return (
+    <div style={infoNodeStyle}>
+      <div>{fieldName}</div>
+      <div>{fieldValue}</div>
     </div>
-</div>);
+  );
 }
 
-function InfoPanel(){
-    return (
-        <div className='flex flex-row justify-evenly text-lg'>
-            <div className='p-2'>
-                <img src={logo} alt=""></img>
-            </div>
-            <InfoNode fieldName={"Followers"} fieldValue={100}></InfoNode>
-            <InfoNode fieldName={"Likes"} fieldValue={100}></InfoNode>
-            <InfoNode fieldName={"Posts"} fieldValue={100}></InfoNode>
-        </div>
-    );
+function ClubDescription() {
+  const clubData = useSelector((state) => state.clubData);
+  const clubDescriptionStyle = {
+    color: "#000",
+    fontSize: "1rem",
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: "0.75rem",
+  };
+
+  return (
+    <div style={clubDescriptionStyle}>
+      <p>{clubData.description}</p>
+    </div>
+  );
 }
 
-function InfoNode({fieldName, fieldValue}){
-    return (
-        <div className='flex flex-col p-2 items-center justify-center'>
-            <div className='text-black text-l font-medium'>{fieldName}</div>
-            <div className='text-black text-l font-medium'>{fieldValue}</div>
-        </div>
-    );
-}
+export default function MainBubble(props) {
+  const divStyle = {
+    backgroundColor: "#FFE4CC",
+    margin: "0 auto",
+    width: `${props.width}px`,
+    height: `${props.height}px`,
+    borderRadius: "10px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "2px",
+    padding: "3px",
+  };
 
-function ClubDescription({props}){
-    return (
-        <div className='text-black text-l font-medium'>
-            <p>
-                {props.description}
-            </p>
-        </div>
-    );
-}
-
-
-export default function MainBubble({mainDescription}){
-    const mainBubbleProps = {description: mainDescription}
-    return (
-        <div className="bg-orange-100 mx-auto w-120 rounded-lg">
-            <div className="flex flex-col divide-y-2 divide-amber-700 p-3">
-                <InfoPanel></InfoPanel>
-                <ReachOut></ReachOut>
-            </div>
-            <div className='flex flex-col items-center'>
-                <ClubDescription props={mainBubbleProps}/>
-            </div>
-            
-        </div>
-    );
+  const innerDivStyle = {
+    display: "flex",
+    flexDirection: "column",
+    borderBottom: "2px solid #C05621",
+    padding: "3px",
+  };
+  const clubData = useSelector((state) => state.clubData);
+  return (
+    <div style={divStyle}>
+      <div style={innerDivStyle}>
+        <InfoPanel></InfoPanel>
+        <ReachOut></ReachOut>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h1>{clubData.name}</h1>
+        <ClubDescription />
+      </div>
+    </div>
+  );
 }

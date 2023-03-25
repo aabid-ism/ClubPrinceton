@@ -1,12 +1,11 @@
 import React from "react";
 import Navigation from "../navigation/Navigation";
 import SearchBar from "../searchBar/SearchBar";
+import MainPage from "../mainpage/MainPage";
 import { useSelector } from "react-redux";
-
+import Post from "../post/Post";
 function HomePage() {
   const clubData = useSelector(state => state.clubData);
-
-  console.log('Club data:', clubData);
   return (
     <div style={{ height: "100%", backgroundColor: "#FFF8E5" }}>
       <div
@@ -14,6 +13,7 @@ function HomePage() {
           display: "flex",
           flexDirection: "column",
           height: "100%",
+          backgroundColor: "#FFF8E5"
         }}
       >
         <div style={{ position: "fixed", top: 0, left: 0 }}>
@@ -22,12 +22,29 @@ function HomePage() {
         <div style={{ position: "fixed", bottom: 0, left: 0 }}>
           <Navigation width="300" height="400" />
         </div>
-        {clubData.name && (
-          <div style={{ position: "fixed", top: 1, right: 1 }}>
-            <h2>{clubData.name}</h2>
-            <p>{clubData.description}</p>
-          </div>
-        )}
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          {clubData.name && (
+            <MainPage width="500" height="400" />
+          )}
+        </div>
+
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
+          <Post/>
+        </div>
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
+          <Post/>
+        </div>
+
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
+          <Post/>
+        </div>
+
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
+          <Post/>
+        </div>
+
+
+
       </div>
     </div>
   );
