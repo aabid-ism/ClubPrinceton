@@ -4,6 +4,7 @@ import SearchBar from "../searchBar/SearchBar";
 import MainPage from "../mainpage/MainPage";
 import { useSelector } from "react-redux";
 import Post from "../post/Post";
+import Posts from "../post/Posts";
 function HomePage() {
   const clubData = useSelector(state => state.clubData);
   return (
@@ -28,25 +29,9 @@ function HomePage() {
           )}
         </div>
 
-        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
-          <Post/>
+        <Posts></Posts>
         </div>
-        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
-          <Post/>
-        </div>
-
-        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
-          <Post/>
-        </div>
-
-        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
-          <Post/>
-        </div>
-
-
-
       </div>
-    </div>
   );
 }
 
