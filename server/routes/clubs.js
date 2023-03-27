@@ -16,10 +16,21 @@ router.get("/", async (req, res) => {
 router.get("/a/:name", async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
-  const query = { name: req.params.name };
+  const query = req.params.name;
   console.log(query);
-});
+  // search for a club by name and return the first result with all attributes
 
+  const agg = [
+    { $search: { autocomplete: { query: query, path: "name" } } },
+  ];
+
+  // run pipeline
+  const result = await collection.aggregate(agg).toArray();
+  // print results
+  console.log(result);
+
+  res.send(result).status(200);
+});
 // Get a single club
 router.get("/:name", async (req, res) => {
   const db = conn.getDb();
