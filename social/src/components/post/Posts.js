@@ -11,31 +11,41 @@ export default function Posts({ props }){
     console.log(clubData);
     let posts = []
     const fillPosts = async (event) => {
-        let name = ''
         if (clubData.name !== undefined){
-            name = clubData.name;
-        }
-        axios
-        .get(`${url}/${name}`)
-        .then((response) => {
+            axios
+            .get(`${url}/${clubData.name}`)
+            .then((response) => {
             const data = response.data;
             posts = [
                 ...posts, 
                 data
             ]
-        })
-        .catch((error) => {
+            })
+            .catch((error) => {
             console.log("Error occurred: ", error);
         });
+        } else {
+            axios
+            .get(`${url}/`)
+            .then((response) => {
+            const data = response.data;
+            posts = [
+                ...posts, 
+                data
+            ]
+            })
+            .catch((error) => {
+            console.log("Error occurred: ", error);
+        })
         
+        }
     }
     fillPosts();
     return (
         <div>
             <div className="posts">
                 {posts.map((post) => {
-                    console.log(post);
-                    return(<Post props={post}/>);
+                    return(<Post props={{caption: post.caption}}/>);
                 })}
             </div>
         </div>
