@@ -41,9 +41,4 @@ router.post("/create", async (req,res) => {
  
     res.send(clubdocument).status(200);
 })
-
-// frontend
-router.get("/:name", async (req, res) => {
-  console.log(req.params.name)
-})
 module.exports = router;
