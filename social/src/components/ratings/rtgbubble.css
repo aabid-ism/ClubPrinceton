@@ -2,9 +2,9 @@
 Refactor CSS -> 
 */
 
-.bubble {
+.rtg-bubble {
     color: black;
-    background-color: rgb(214, 131, 48);
+    background-color: #f9cb9c;
     margin: auto auto;
     width: 20rem;
     border-radius: 0.5rem;
@@ -18,5 +18,5 @@ Refactor CSS ->
     /*need to scale the css to occupy a percentage of
     the page */
     /*can also use percentages*/
-    right: 25px; bottom: 25px;
+    right: 5px; bottom: 5px;
 }
