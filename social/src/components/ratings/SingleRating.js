@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '/Users/aditya/Library/CloudStorage/OneDrive-PrincetonUniversity/Computer Science/Spring 2023/COS333/ClubPrinceton/social/src/components/ratings/ratingstar.css';
+import "./ratingstar.css"
 // need to change the dimensions of the star
 // citation?
 const SingleRating = (props) => {

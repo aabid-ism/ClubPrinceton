@@ -5,7 +5,6 @@ import MainPage from "../mainpage/MainPage";
 import { useSelector } from "react-redux";
 import Post from "../post/Post";
 import UserRating from "../ratings/UserRating";
-import Event from "../events/Event";
 
 function HomePage() {
   const clubData = useSelector(state => state.clubData);
@@ -45,9 +44,6 @@ function HomePage() {
         <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
           <Post/>
         </div>
-        {/* <div>
-          <Event></Event>
-        </div> */}
         <div>
           <UserRating></UserRating>
         </div>
