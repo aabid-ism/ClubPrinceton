@@ -1,0 +1,35 @@
+.page {
+    height: 100vh;
+    display: grid;
+    grid-template-areas: "left-sidebar main-bar right-sidebar";
+    grid-template-columns: 1fr 6fr 1fr;
+}
+
+.main {
+    grid-area: main-bar;
+    display: flex;
+    justify-content: center;
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 237 213 / var(--tw-bg-opacity));
+}
+
+.left-sidebar{
+    grid-area: left-sidebar;
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.right-sidebar{
+    grid-area: right-sidebar;
+}
+
+.bubble {
+    color: black;
+    background-color: rgb(255 228 208);
+    margin: auto auto;
+    border-radius: 0.5rem;
+    --tw-bg-opacity: 1;
+    padding: 0.75rem;
+}

@@ -92,7 +92,7 @@ function Post({ props }){
             <PostHeader>
                 <Icon image={defaultPostProps.headerProps.creatorIcon}/>
                 <HeaderInfo>
-                    <PostTitle props={defaultPostProps.headerProps}/>
+                    <PostTitle props={props.caption}/>
                     <PostCreationInfo props={defaultPostProps.headerProps}/>
                 </HeaderInfo>
                 <OptionButton/>
