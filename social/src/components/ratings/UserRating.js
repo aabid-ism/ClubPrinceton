@@ -93,7 +93,7 @@ function UserRating(props) {
                     <div>Inclusivity</div>
                     <SingleRating passOnRating={storeInclusivity} initRating={data.inclusivity}></SingleRating>
 
-                <button type="submit">Submit Rating</button>
+                <button type="submit"><strong>Submit Rating</strong></button>
             </form>
         </RatingsBubble>
     );

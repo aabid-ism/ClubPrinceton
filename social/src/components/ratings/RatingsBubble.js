@@ -3,8 +3,8 @@ import React from "react";
 import './rtgbubble.css';
 function RatingsBubble({ children }){
     return (
-        <div className='bubble'>
-            {children}        
+        <div className="rtg-bubble">
+            {children}
         </div>
 
     );
