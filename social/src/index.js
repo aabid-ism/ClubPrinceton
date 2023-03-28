@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "./tailwind.css"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import AdminInterface from './components/admin/AdminPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,7 +13,7 @@ root.render(
     <Router>
       <Routes>
         <Route path="/" element={<App />} />
-        {/* <Route path="/admin" element={<Admin />} /> */}
+        <Route path="/admin" element={<AdminInterface />} />
       </Routes>
     </Router>
   </React.StrictMode>
