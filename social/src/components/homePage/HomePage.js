@@ -31,24 +31,24 @@ function HomePage() {
         </div>
 
         <Posts></Posts>
-        </div>
-
-
-        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
-          <Post/>
-        </div>
-
-        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
-          <Post/>
-        </div>
-
-        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
-          <Post/>
-        </div>
-        <div>
-          <UserRating></UserRating>
-        </div>
       </div>
+
+      {/* 
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
+          <Post/>
+        </div>
+
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
+          <Post/>
+        </div>
+
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
+          <Post/>
+        </div> */}
+      <div>
+        <UserRating></UserRating>
+      </div>
+    </div>
   );
 }
 
