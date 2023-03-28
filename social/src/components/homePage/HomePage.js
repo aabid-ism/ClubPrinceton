@@ -30,7 +30,7 @@ function HomePage() {
           )}
         </div>
 
-        <Posts></Posts>
+        {/* <Posts></Posts> */}
       </div>
 
       {/* 
