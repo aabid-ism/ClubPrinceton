@@ -8,7 +8,6 @@ const url = "http://localhost:5050/posts";
 
 export default function Posts({ props }){
     const clubData = useSelector(state => state.clubData);
-    // console.log(clubData);
     const [postsData, updatePostsData] = useState([])
     const loadPosts = async (event) => {
         console.log("Attempting to Load Posts!")
@@ -17,31 +16,22 @@ export default function Posts({ props }){
             .get(`${url}/${clubData.name}`)
             .then((response) => {
                 const data = response.data;
-                console.log("Data received")
-                console.log(data);
+                // console.log("Data received")
+                // console.log(data);
+                // console.log(response.status);
                 updatePostsData(data);
             })
             .catch((error) => {
                 console.log("Error occurred: ", error);
             });
-            // axios
-            // .get(`${url}/${clubData.name}`)
-            // .then((response) => {
-            // const data = response.data;
-            // posts = [
-            //     ...posts, 
-            //     data
-            // ]
-            // })
-            // .catch((error) => {
-            // console.log("Error occurred: ", error);
         } else {
             axios
             .get(`${url}/`)
             .then((response) => {
                 const data = response.data;
-                console.log("Data received")
-                console.log(data);
+                // console.log("Data received")
+                // console.log(data);
+                // console.log(response.status);
                 updatePostsData(data);
             })
             .catch((error) => {
