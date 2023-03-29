@@ -9,39 +9,46 @@ const url = "http://localhost:5050/posts";
 export default function Posts({ props }){
     const clubData = useSelector(state => state.clubData);
     // console.log(clubData);
-    let posts = []
-    const fillPosts = async (event) => {
+    const [postsData, updatePostsData] = useState([])
+    const loadPosts = async (event) => {
+        console.log("Attempting to Load Posts!")
         if (clubData.name !== undefined){
             axios
             .get(`${url}/${clubData.name}`)
             .then((response) => {
-            const data = response.data;
-            posts = [
-                ...posts, 
-                data
-            ]
+                const data = response.data;
+                console.log("Data received")
+                console.log(data);
+                updatePostsData(data);
             })
             .catch((error) => {
-            console.log("Error occurred: ", error);
-        });
+                console.log("Error occurred: ", error);
+            });
+            // axios
+            // .get(`${url}/${clubData.name}`)
+            // .then((response) => {
+            // const data = response.data;
+            // posts = [
+            //     ...posts, 
+            //     data
+            // ]
+            // })
+            // .catch((error) => {
+            // console.log("Error occurred: ", error);
         } else {
             axios
             .get(`${url}/`)
             .then((response) => {
-            const data = response.data;
-            posts = [
-                ...posts, 
-                data
-            ]
+                const data = response.data;
+                console.log("Data received")
+                console.log(data);
+                updatePostsData(data);
             })
             .catch((error) => {
-            console.log("Error occurred: ", error);
-        })
-        
+                console.log("Error occurred: ", error);
+            });
         }
-    }
-    // fillPosts();
-    console.log(clubData)
+        }
     return (
         <div>
             <div className="posts">
@@ -53,12 +60,19 @@ export default function Posts({ props }){
                             content: postData.content
                         }
                         return (<Post props={postProps}/>)
-                    }) : <span></span>}
+                    }) : postsData.map((postData) => {
+                        const postProps = {
+                            caption: postData.caption,
+                            creator: postData.netId,
+                            content: postData.content,
+                        }
+                        return (<Post props={postProps} key={postData._id}/>)
+                    })}
+                    <button onClick={loadPosts}>Get More Posts!</button>
+                    {/* <pre>
+                    {JSON.stringify(postsData, null, 2)}
+                    </pre> */}
                 </div>
-                
-                {/* {clubData.posts.map((post) => {
-                    return(<Post props={{caption: post.caption}}/>);
-                })} */}
             </div>
         </div>
     );
