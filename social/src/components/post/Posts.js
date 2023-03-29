@@ -44,11 +44,6 @@ export default function Posts({ props }){
     console.log(clubData)
     return (
         <div>
-            {/* <div className='posts-info'>
-                    <pre>
-                    {JSON.stringify(clubData.posts, null, 2)}
-                    </pre>
-                </div> */}
             <div className="posts">
                 <div>
                     {clubData.posts !== undefined ? clubData.posts.map((postData) => {
