@@ -1,10 +1,15 @@
 .posts {
     display: flex;
-    flex-direction: column;
     row-gap: 20px;
+    justify-content: center;
 }
 
 .test-button {
     display: flex;
     justify-content: center;
+}
+
+.posts-info {
+    justify-content: center;
+    display: flex;
 }

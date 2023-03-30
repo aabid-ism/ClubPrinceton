@@ -86,19 +86,29 @@ function Post({ props }){
                 ]    
             }    
         }    
+    }
+    const headerProps = {
+        creator: props.creator,
+        creatorIcon: LOGO,
+        title: props.caption,
+        createdTime:"03/14/23", 
+        modTime:"03/15/23"
     }    
+    const contentProps = {
+        content: props.content
+    }  
     return (
         <PostBubble>
             <PostHeader>
                 <Icon image={defaultPostProps.headerProps.creatorIcon}/>
                 <HeaderInfo>
-                    <PostTitle props={props.caption}/>
-                    <PostCreationInfo props={defaultPostProps.headerProps}/>
+                    <PostTitle props={headerProps}/>
+                    <PostCreationInfo props={headerProps}/>
                 </HeaderInfo>
                 <OptionButton/>
             </PostHeader>
 
-            <PostContent props={defaultPostProps.contentProps}/>
+            <PostContent props={contentProps}/>
             
             <PostComments>
                 <PostMetrics props={defaultPostProps.commentsProps.postMetrics}/>
