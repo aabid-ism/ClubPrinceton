@@ -58,7 +58,7 @@ export default function Posts({ props }){
                         }
                         return (<Post props={postProps} key={postData._id}/>)
                     })}
-                    <button onClick={loadPosts}>Get More Posts!</button>
+                    <button onClick={loadPosts}>See More Posts</button>
                     {/* <pre>
                     {JSON.stringify(postsData, null, 2)}
                     </pre> */}
