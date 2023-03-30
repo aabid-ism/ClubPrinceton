@@ -87,7 +87,7 @@ function Form(props) {
                                 type="text"
                                 className="form-control"
                                 name="caption"
-                                placeholder="Type your motherfuckin' netId..."
+                                placeholder="Type your netId..."
                                 aria-describedby="text"
                                 onChange={(e) => setUser(e.target.value)}
                             />
