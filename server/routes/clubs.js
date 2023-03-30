@@ -6,6 +6,9 @@ const router = express.Router();
 
 // Get a list of all clubs
 router.get("/", async (req, res) => {
+  process.stdout.write("I'm inside the main page" + "\n");
+  // initially we will do authentication immediately at login
+  // eventually we will switch into unecrypted version and then an encrypted interface
   const db = conn.getDb();
   const collection = await db.collection("clubs");
   const results = await collection.find({}).limit(50).toArray();
