@@ -6,47 +6,48 @@ const express = require('express');
 const router = express.Router();
 
 // endpoint to create a post from the admin page
-router.post("/create", async (req,res) => {
-    const db = conn.getDb();
-    const club_collection = db.collection("clubs");
-    const posts_collection = db.collection("posts");
+router.post("/create", async (req, res) => {
+  const db = conn.getDb();
+  const club_collection = db.collection("clubs");
+  const posts_collection = db.collection("posts");
 
-    // get data from req.body
-    const {netId, club, caption, image_url} = req.body;
+  // get data from req.body
+  const { netId, club, caption, image_url, title } = req.body;
 
-    // create javascript object with the destructured data
-    const post_document_to_insert = {
-        netId, 
-        club, 
-        caption, 
-        image_url
-      };  
- 
-    // TODO: ADD currentdatetime to the post property
+  // create javascript object with the destructured data
+  const post_document_to_insert = {
+    netId,
+    club,
+    title,
+    caption,
+    image_url
+  };
 
-    // add to the posts collection
-    const result = await posts_collection.insertOne(post_document_to_insert);
+  // TODO: ADD currentdatetime to the post property
 
-    // get the club that the post is coming from
-    const clubdocument = await club_collection.findOne(
-      {$expr : {$eq: ["$name", club]}},
-      {_id: 0, name: 1},
-    )
-    // push the post to the posts property of the club document
-    club_collection.updateOne(
-      { name: clubdocument.name}, [ { $set: { posts: { $concatArrays: [ "$posts", [ post_document_to_insert]  ] } } } ]
-    )
+  // add to the posts collection
+  const result = await posts_collection.insertOne(post_document_to_insert);
 
-    // TODO: pop the last post from the posts property of the club document
- 
-    res.send(clubdocument).status(200);
+  // get the club that the post is coming from
+  const clubdocument = await club_collection.findOne(
+    { $expr: { $eq: ["$name", club] } },
+    { _id: 0, name: 1 },
+  )
+  // push the post to the posts property of the club document
+  club_collection.updateOne(
+    { name: clubdocument.name }, [{ $set: { posts: { $concatArrays: ["$posts", [post_document_to_insert]] } } }]
+  )
+
+  // TODO: pop the last post from the posts property of the club document
+
+  res.send(clubdocument).status(200);
 })
 
 // Get a single club's posts
 router.get("/:name", async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("posts");
-  const result = await collection.find({club: {$in: [req.params.name]}}).limit(50).toArray();
+  const result = await collection.find({ club: { $in: [req.params.name] } }).limit(50).toArray();
   console.log(result);
   res.send(result).status(200);
 });
