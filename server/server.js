@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 5050;
 const cors = require("cors");
 const clubs = require("./routes/clubs.js");
 const posts = require("./routes/posts.js");
+const auth = require("./routes/auth.js");
 const bodyParser = require("body-parser");
 const conn = require('./db/conn.js');
 
@@ -21,6 +22,7 @@ app.use(express.json());
 // }));
 
 // delcaring initial route-string, and connecting clubs router: localhost:5050/clubs...
+app.use("/", auth);
 app.use("/clubs", clubs);
 app.use("/posts", posts);
 // Global error handling
@@ -48,6 +50,8 @@ const path = __dirname + '/views/';
 app.use(express.static(path));
 
 app.get('/', function (req, res) {
+  // app.get("/login", auth);
+  process.stdout.write("Im here");
   res.sendFile(path + "index.html");
 });
 
