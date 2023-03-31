@@ -1,62 +1,36 @@
 import React from "react";
 import { FaCog, FaSignOutAlt, FaQuestionCircle } from "react-icons/fa";
+import "./Navigation.css";
 
 function Navigation(props) {
-  const navStyle = {
-    width: `${props.width}px`,
-    height: `${props.height}px`,
-    backgroundColor: "#FFE4CC",
-    borderRadius: "10px",
-    padding: "20px",
-    boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  };
-
-  const linkStyle = {
-    display: "flex",
-    alignItems: "center",
-    fontWeight: "bold",
-    color: "black",
-    textDecoration: "none",
-    margin: "10px",
-  };
-
-  const iconStyle = {
-    color: "#999999",
-    marginRight: "10px",
-    fontSize: "24px",
-  };
-
   return (
-    <div style={navStyle}>
-      <ul className="flex flex-col justify-center items-center h-full">
+    <div className="nav" style={{ width: `${props.width}px`, height: `${props.height}px` }}>
+      <ul className="nav-list">
         <li>
-          <a href="/" style={linkStyle}>
+          <a href="/" className="nav-link">
             Home
           </a>
         </li>
         <li>
-          <a href="/" style={linkStyle}>
+          <a href="/" className="nav-link">
             About Club Princeton
           </a>
         </li>
         <li>
-          <a href="/" style={linkStyle}>
-            <FaCog style={iconStyle} />
+          <a href="/" className="nav-link">
+            <FaCog className="nav-icon" />
             Settings
           </a>
         </li>
         <li>
-          <a href="/" style={linkStyle}>
-            <FaSignOutAlt style={iconStyle} />
+          <a href="/" className="nav-link">
+            <FaSignOutAlt className="nav-icon" />
             Logout
           </a>
         </li>
         <li>
-          <a href="/" style={linkStyle}>
-            <FaQuestionCircle style={iconStyle} />
+          <a href="/" className="nav-link">
+            <FaQuestionCircle className="nav-icon" />
             FAQ
           </a>
         </li>
