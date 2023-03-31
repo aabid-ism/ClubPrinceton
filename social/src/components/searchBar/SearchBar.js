@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux"
 import axios from "axios";
+import "./searchBar.css";
 
 const url = "http://localhost:5050/clubs";
 
@@ -44,61 +45,20 @@ function SearchBar(props) {
       });
   };
 
-  const searchBarStyle = {
-    width: `${props.width}px`,
-    height: `${props.height}px`,
-    backgroundColor: "#FFE4CC",
-    borderRadius: "10px",
-    boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "20px",
-  };
-
-  const resultsStyle = {
-    marginTop: "20px",
-    width: "100%",
-    height: "70%",
-    backgroundColor: "transparent",
-    borderRadius: "10px",
-    padding: "10px",
-    overflowY: "auto",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-  };
-
-  const resultButtonStyle = {
-    backgroundColor: "transparent",
-    border: "none",
-    borderBottom: "1px solid black",
-    color: "black",
-    cursor: "pointer",
-    fontSize: "16px",
-    padding: "5px 0",
-    textAlign: "left",
-    width: "100%",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    maxWidth: "100%",
-  };
 
   return (
-    <div style={searchBarStyle}>
+    <div className="search-bar">
       <input
         type="text"
-        className="form-control w-full border border-gray-300 rounded-lg py-2 px-4 mb-4"
         placeholder="Search..."
         onChange={handleSearchTermChange}
       />
       <p>{numResults} search results</p>
       {results.length > 0 && (
-        <div style={resultsStyle}>
+        <div className="results">
           {results.map((result) => (
             <button
-              style={resultButtonStyle}
+              className="result-button"
               key={result.id}
               onClick={() => handleClubClick(result)}
             >
