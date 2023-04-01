@@ -1,11 +1,13 @@
 import React from "react"
 import './admin.css'
-import { useState } from "react";
+import { useRef } from "react";
 import axios from "axios";
 
-function Form({ state, dispatchFile, dispatchCaption, dispatchTitle }) {
+function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchClearForm }) {
 
     const url = "http://localhost:5050/posts/create"
+    const fileInputRef = useRef(null);
+
     const handleOnSubmit = (e) => {
         e.preventDefault()
         // console.log(`sending post: ${state.title} with caption: ${state.caption} and filename: ${state.image.name}`)
@@ -15,7 +17,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle }) {
             title: state.inputs.title,
             club: state.activeClub,
             caption: state.inputs.caption,
-            image_url: state.inputs.file.name
+            image_url: state.inputs.file[0].name
         };
         axios
             .post(`${url}`, post_request_data)
@@ -29,8 +31,9 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle }) {
             });
 
         // TODO: clear the state's input variables via dispatches and rerender form
+        dispatchClearForm();
+        fileInputRef.current.value = null;
     }
-
     return (
         <>
             <div>
@@ -47,16 +50,18 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle }) {
                                 type="text"
                                 className="form-control"
                                 name="title"
-                                placeholder="Insert Caption..."
+                                value={state.inputs.title}
+                                placeholder="Insert Title..."
                                 aria-describedby="text"
-                                onChange={(e) => dispatchTitle(e)}
+                                onChange={(e) => dispatchTitle(e.target.value)}
                             />
                         </div>
                         {/* CAPTION */}
                         <textarea
                             placeholder="start writing your post..."
                             id="caption" name="post_description"
-                            onChange={(e) => dispatchCaption(e)}
+                            value={state.inputs.caption}
+                            onChange={(e) => dispatchCaption(e.target.value)}
                             rows="6"
                             cols="50" >
                         </textarea>
@@ -68,7 +73,9 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle }) {
                             type="file"
                             className="form-control"
                             name="file"
-                            onChange={(e) => dispatchFile(e)}
+                            // value={state.inputs.file}
+                            ref={fileInputRef}
+                            onChange={(e) => dispatchFile(e.target.files)}
                             accept="image/png, image/jpeg" />
                     </div>
                     {/* SUBMIT BUTTON */}
@@ -81,6 +88,6 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle }) {
             </div>
         </>
     )
-}
 
+}
 export default Form;
