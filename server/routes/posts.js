@@ -20,9 +20,14 @@ router.post("/create", async (req, res) => {
     club,
     title,
     caption,
-    image_url
+    image_url,
+    created_at: new Date()
   };
 
+  if (Object.values(post_document_to_insert).includes("")) {
+    console.log("null property detected in form!");
+    return res.status(404).send("null property detected in form!");
+  }
   // TODO: ADD currentdatetime to the post property
 
   // add to the posts collection
@@ -33,12 +38,27 @@ router.post("/create", async (req, res) => {
     { $expr: { $eq: ["$name", club] } },
     { _id: 0, name: 1 },
   )
+
+  club_post_property = clubdocument.posts || "empty";
+  // console.log(type(clubdocument));
+  console.log(club_post_property);
+  // TODO: pop the last post from the posts property of the club document if it already has 5
+  if (club_post_property.length >= 5) {
+    club_post_property.sort((a, b) => -(a.created_at - b.created_at));
+    club_post_property.pop();
+  }
+
+  club_post_property.unshift(post_document_to_insert);
+
   // push the post to the posts property of the club document
   club_collection.updateOne(
-    { name: clubdocument.name }, [{ $set: { posts: { $concatArrays: ["$posts", [post_document_to_insert]] } } }]
+    { name: clubdocument.name },
+    // [{ $set: { posts: { $concatArrays: ["$posts", [post_document_to_insert]] } } }]
+    [{ $set: { posts: club_post_property } }]
   )
 
-  // TODO: pop the last post from the posts property of the club document
+
+
 
   res.send(clubdocument).status(200);
 })
