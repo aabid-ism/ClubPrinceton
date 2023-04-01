@@ -7,7 +7,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle }) {
 
     const url = "http://localhost:5050/posts/create"
     const handleOnSubmit = (e) => {
-        // e.preventDefault()
+        e.preventDefault()
         // console.log(`sending post: ${state.title} with caption: ${state.caption} and filename: ${state.image.name}`)
         const post_request_data = {
             // TODO: need to change with the correct netID from cookies!!!
@@ -22,10 +22,13 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle }) {
             .then((response) => {
                 const data = response.data;
                 console.log(data);
+                alert('Form submitted successfully!');
             })
             .catch((error) => {
                 console.log("Error occurred: ", error);
             });
+
+        // TODO: clear the state's input variables via dispatches and rerender form
     }
 
     return (
