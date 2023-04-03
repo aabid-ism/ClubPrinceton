@@ -7,17 +7,17 @@ import axios from 'axios';
 const initialState = {
     clubs: [],
     activeClub: "",
-    inputs: { title: null, caption: null, file: null, path: null },
+    inputs: { title: null, caption: null, file: null },
 }
 
-const handleOnChangeFile = (state, e) => {
-    return { ...state.inputs, file: e.target.files[0] }
+const handleOnChangeFile = (state, file) => {
+    return { ...state.inputs, file: file }
 }
-const handleOnChangeCaption = (state, e) => {
-    return { ...state.inputs, caption: e.target.value }
+const handleOnChangeCaption = (state, caption) => {
+    return { ...state.inputs, caption: caption }
 }
-const handleOnChangeTitle = (state, e) => {
-    return { ...state.inputs, title: e.target.value }
+const handleOnChangeTitle = (state, title) => {
+    return { ...state.inputs, title: title }
 }
 
 
@@ -53,6 +53,12 @@ function reducer(state, action) {
                 inputs: handleOnChangeFile(state, action.payload.value)
             }
 
+        case "clear_form":
+            return {
+                ...state,
+                inputs: { title: "", caption: "", file: "" }
+            }
+
         // case 'collapse':
         //     return {
         //         ...state,
@@ -65,10 +71,11 @@ function reducer(state, action) {
 function AdminInterface() {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    const dispatchCaption = (e) => dispatch({ type: 'setCaption', payload: { value: e } })
-    const dispatchTitle = (e) => dispatch({ type: 'setTitle', payload: { value: e } })
-    const dispatchFile = (e) => dispatch({ type: 'setFile', payload: { value: e } })
+    const dispatchCaption = (caption) => dispatch({ type: 'setCaption', payload: { value: caption } })
+    const dispatchTitle = (title) => dispatch({ type: 'setTitle', payload: { value: title } })
+    const dispatchFile = (file) => dispatch({ type: 'setFile', payload: { value: file } })
     const dispatchActiveClub = (club) => dispatch({ type: 'setActiveClub', payload: { value: club } })
+    const dispatchClearForm = () => dispatch({ type: 'clear_form' })
 
     const url = "http://localhost:5050/clubs/admin";
 
@@ -97,7 +104,11 @@ function AdminInterface() {
                     {/* <div style={{width: "18rem"}}>
                 <img src={myImage} />
             </div> */}
-                    <Form state={state} dispatchCaption={dispatchCaption} dispatchFile={dispatchFile} dispatchTitle={dispatchTitle} />
+                    <Form state={state}
+                        dispatchClearForm={dispatchClearForm}
+                        dispatchCaption={dispatchCaption}
+                        dispatchFile={dispatchFile}
+                        dispatchTitle={dispatchTitle} />
                 </div>
             </main>
         </div>

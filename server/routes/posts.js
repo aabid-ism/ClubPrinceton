@@ -24,8 +24,8 @@ router.post("/create", async (req, res) => {
     created_at: new Date()
   };
 
-  if (Object.values(post_document_to_insert).includes("")) {
-    console.log("null property detected in form!");
+  if ((Object.values(post_document_to_insert).includes("")) || (Object.values(post_document_to_insert).includes(null))) {
+    console.log("null or empty property detected in form!");
     return res.status(404).send("null property detected in form!");
   }
 
