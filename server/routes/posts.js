@@ -28,7 +28,6 @@ router.post("/create", async (req, res) => {
     console.log("null property detected in form!");
     return res.status(404).send("null property detected in form!");
   }
-  // TODO: ADD currentdatetime to the post property
 
   // add to the posts collection
   const result = await posts_collection.insertOne(post_document_to_insert);
@@ -42,7 +41,8 @@ router.post("/create", async (req, res) => {
   club_post_property = clubdocument.posts || "empty";
   // console.log(type(clubdocument));
   console.log(club_post_property);
-  // TODO: pop the last post from the posts property of the club document if it already has 5
+
+  // pop the last post from the posts property of the club document if it already has 5
   if (club_post_property.length >= 5) {
     club_post_property.sort((a, b) => -(a.created_at - b.created_at));
     club_post_property.pop();
@@ -56,9 +56,6 @@ router.post("/create", async (req, res) => {
     // [{ $set: { posts: { $concatArrays: ["$posts", [post_document_to_insert]] } } }]
     [{ $set: { posts: club_post_property } }]
   )
-
-
-
 
   res.send(clubdocument).status(200);
 })
