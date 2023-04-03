@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from "react";
 import RatingsBubble from "./RatingsBubble";
-import SingleRating from "./SingleRating";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-
+import "./ratingstar.css";
 const url = "http://localhost:5050/ratings";
 
 function UserRating() {
   const clubData = useSelector((state) => state.clubData);
-
-  const [data, setData] = useState({
-    Clout: 5,
-    Intensity: 5,
-    Vibes: 5,
-    Inclusivity: 5,
-  });
+  const ratings = useSelector((state) => state.ratings);
 
   const dispatch = useDispatch();
 
@@ -25,8 +18,10 @@ function UserRating() {
         .get(`${url}/${clubData.name}`)
         .then((response) => {
           console.log(response.data);
-          setData(response.data);
-          console.log("data was set to: " + data);
+          dispatch({
+            type: "GET_CLUB_RATINGS",
+            payload: { ratings: response.data },
+          });
         })
         .catch((error) => {
           console.error(error);
@@ -34,81 +29,28 @@ function UserRating() {
     }
   }, [clubData]);
 
-  const storeVibes = (rating) => {
-    setData((previousState) => {
-      return { ...previousState, Vibes: rating };
-    });
-  };
-
-  const storeIntensity = (rating) => {
-    setData((previousState) => {
-      return { ...previousState, Intensity: rating };
-    });
-  };
-
-  const storePopularity = (rating) => {
-    setData((previousState) => {
-      return { ...previousState, Clout: rating };
-    });
-  };
-
-  const storeInclusivity = (rating) => {
-    setData((previousState) => {
-      return { ...previousState, Inclusivity: rating };
-    });
-  };
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    axios
-      .post("/api/ratings", data)
-      .then((response) => {
-        dispatch({
-          type: "SET_CLUB_RATINGS",
-          payload: { id: clubData.id, ratings: data },
-        });
-        // TODO: show success message to the user
-      })
-      .catch((error) => {
-        console.error(error);
-        // TODO: show error message to the user
-      });
-  }
-
   return (
     <RatingsBubble>
-      <form onSubmit={handleSubmit} method="post" className="rtg-form">
+      <form className="rtg-form">
         <label>Rating</label>
         <br></br>
         <label>
           <div>Good Vibes</div>
-          <SingleRating
-            passOnRating={storeVibes}
-            initRating={data["Vibes"]}
-          ></SingleRating>
+          <SingleRating type="Vibes"></SingleRating>
         </label>
         <br></br>
         <label>
           <div>Intensity</div>
-          <SingleRating
-            passOnRating={storeIntensity}
-            initRating={data["Intensity"]}
-          ></SingleRating>
+          <SingleRating type="Intensity"></SingleRating>
         </label>
         <br></br>
         <label>
           <div>Popularity</div>
-          <SingleRating
-            passOnRating={storePopularity}
-            initRating={data["Clout"]}
-          ></SingleRating>
+          <SingleRating type="Clout"></SingleRating>
         </label>
         <br></br>
         <div>Inclusivity</div>
-        <SingleRating
-          passOnRating={storeInclusivity}
-          initRating={data["Inclusivity"]}
-        ></SingleRating>
+        <SingleRating type="Inclusivity"></SingleRating>
 
         <button type="submit">
           <strong>Submit Rating</strong>
@@ -117,5 +59,46 @@ function UserRating() {
     </RatingsBubble>
   );
 }
+
+const SingleRating = (props) => {
+  const [hover, setHover] = useState(0);
+  const ratings = useSelector((state) => state.ratings);
+  
+  const type = "" + props.type;
+
+  const [rating, setRating] = useState(ratings[type]);
+
+  useEffect(() => {
+    setRating(ratings[type]);
+  }, [ratings]);
+
+  const dispatch = useDispatch();
+  function handleRating(index) {
+    setRating(index);
+    dispatch({
+      type: "SET_RATING",
+      payload: { type: type, rating: index },
+    });
+  }
+  return (
+    <div className="star-rating">
+      {[...Array(5)].map((star, index) => {
+        index += 1;
+        return (
+          <button
+            type="button"
+            key={index}
+            className={index <= (hover || rating) ? "on" : "off"}
+            onClick={() => handleRating(index)}
+            onMouseEnter={() => setHover(index)}
+            onMouseLeave={() => setHover(rating)}
+          >
+            <span className="star">&#9733;</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+};
 
 export default UserRating;
