@@ -16,9 +16,6 @@ export default function Posts({ props }){
             .get(`${url}/${clubData.name}`)
             .then((response) => {
                 const data = response.data;
-                // console.log("Data received")
-                // console.log(data);
-                // console.log(response.status);
                 updatePostsData(data);
             })
             .catch((error) => {
@@ -29,9 +26,6 @@ export default function Posts({ props }){
             .get(`${url}/`)
             .then((response) => {
                 const data = response.data;
-                // console.log("Data received")
-                // console.log(data);
-                // console.log(response.status);
                 updatePostsData(data);
             })
             .catch((error) => {
@@ -39,6 +33,7 @@ export default function Posts({ props }){
             });
         }
         }
+    // TODO: Pass down the comments array also
     return (
         <div>
             <div className="posts">
@@ -47,21 +42,22 @@ export default function Posts({ props }){
                         const postProps = {
                             caption: postData.caption,
                             creator: postData.netId,
-                            content: postData.content
+                            content: postData.content,
+                            id: postData._id,
+                            preloaded_comments: postData.comments
                         }
-                        return (<Post props={postProps}/>)
+                        return (<Post props={postProps} key={postData._id}/>)
                     }) : postsData.map((postData) => {
                         const postProps = {
                             caption: postData.caption,
                             creator: postData.netId,
                             content: postData.content,
+                            id: postData._id,
+                            preloaded_comments: postData.comments
                         }
                         return (<Post props={postProps} key={postData._id}/>)
                     })}
                     <button onClick={loadPosts}>See More Posts</button>
-                    {/* <pre>
-                    {JSON.stringify(postsData, null, 2)}
-                    </pre> */}
                 </div>
             </div>
         </div>

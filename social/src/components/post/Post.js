@@ -3,7 +3,7 @@ import React from "react";
 import './Post.css'
 import LOGO from './blue_man.jpg'
 import {PostHeader, PostCreationInfo, PostTitle, Icon, HeaderInfo, OptionButton} from "./PostHeader.js";
-import Comments from "../comments/Comments";
+import Comments from "../comments/CommentList";
 import { PostComments, PostMetrics, PersonalComment } from "./PostInteractions";
 
 function PostContent({ props }){
@@ -28,6 +28,8 @@ function PostBubble({ children }){
     );
     
 }
+
+// MAJOR REFACTOR: Comments will now be loaded from the post array AND dynamically
 
 function Post({ props }){
     const defaultPostProps = {
@@ -96,7 +98,15 @@ function Post({ props }){
     }    
     const contentProps = {
         content: props.content
-    }  
+    }
+
+    const commentProps = {
+        postId: props.id,
+        comments: props.preloadedComments
+    };
+
+    // TODO: Add a state array for the comments, and pass down the state update callback to
+    // the PersonalComment
     return (
         <PostBubble>
             <PostHeader>
@@ -112,8 +122,8 @@ function Post({ props }){
             
             <PostComments>
                 <PostMetrics props={defaultPostProps.commentsProps.postMetrics}/>
-                <Comments props={defaultPostProps.commentsProps.commentsData}/>
-                <PersonalComment LOGO={LOGO} />
+                <Comments props={commentProps}/>
+                <PersonalComment LOGO={LOGO} postId={commentProps.postId}/>
             </PostComments>
         </PostBubble>                    
     );

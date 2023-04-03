@@ -1,5 +1,9 @@
 import { FaThumbsUp, FaCommentAlt } from "react-icons/fa";
 
+import axios from "axios";
+
+const url = "http://localhost:5050/comments";
+
 function PostComments({ children }){
     return (
         <div>
@@ -29,12 +33,26 @@ function PostMetrics({props}) {
     );
 }
 
-function PersonalComment({LOGO}) {
+function PersonalComment({LOGO, postId}) {
     function handleKeyDown(event){
         if (event.key === 'Enter'){
-            console.log(event.target.value);
-            // TODO: Actually send this text to the server and create a comment
-            alert("Hello! You just typed: " + event.target.value)
+            if (event.target.value !== ''){
+                const commentData = {
+                    data: event.target.value,
+                    postId: postId
+                }
+                console.log(event.target.value);
+                // TODO: Actually send this text to the server and create a comment
+                axios
+                .post(`${url}/create`, commentData)
+                .then((response) => {
+                    const data = response.data;
+                    console.log(data)
+                })
+                .catch((error) => {
+                    console.log("Error occurred: ", error);
+                });
+            }
         }
     }
     return (
