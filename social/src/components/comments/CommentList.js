@@ -7,6 +7,11 @@ const url = "http://localhost:5050/comments";
 
 export default function Comments({ props }){
     const [commentListData, updateCommentListData] = useState([])
+
+    const loadSubsetComments = () => {
+        console.log(props.comments)
+    }
+
     const loadCommentList = async (event) => {
         console.log("Attempting to Load Comments!");
         // if (props.comments !== undefined){
@@ -51,6 +56,7 @@ export default function Comments({ props }){
         }
         
         }
+    loadSubsetComments();
     // loadCommentList();
     // console.log("Comment List Data at Start")
     // console.log(commentListData)

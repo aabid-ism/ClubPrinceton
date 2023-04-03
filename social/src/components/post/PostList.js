@@ -9,6 +9,10 @@ const url = "http://localhost:5050/posts";
 export default function Posts({ props }){
     const clubData = useSelector(state => state.clubData);
     const [postsData, updatePostsData] = useState([])
+    if (clubData.name !== undefined && postsData === []){
+        updatePostsData(clubData.posts);
+    }
+    
     const loadPosts = async (event) => {
         console.log("Attempting to Load Posts!")
         if (clubData.name !== undefined){
@@ -44,7 +48,7 @@ export default function Posts({ props }){
                             creator: postData.netId,
                             content: postData.content,
                             id: postData._id,
-                            preloaded_comments: postData.comments
+                            subset_comments: postData.comments
                         }
                         return (<Post props={postProps} key={postData._id}/>)
                     }) : postsData.map((postData) => {
@@ -53,7 +57,7 @@ export default function Posts({ props }){
                             creator: postData.netId,
                             content: postData.content,
                             id: postData._id,
-                            preloaded_comments: postData.comments
+                            subset_comments: postData.comments
                         }
                         return (<Post props={postProps} key={postData._id}/>)
                     })}

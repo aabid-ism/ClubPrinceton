@@ -67,7 +67,7 @@ router.post("/create", async (req, res) => {
 router.get("/:name", async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("posts");
-  const result = await collection.find({ club: { $in: [req.params.name] } }).limit(50).toArray();
+  const result = await collection.find({ club: { $eq: req.params.name} }).limit(50).toArray();
   console.log(result);
   res.send(result).status(200);
 });

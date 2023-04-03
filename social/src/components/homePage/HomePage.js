@@ -49,9 +49,9 @@ function HomePage() {
       <div>
         <UserRating></UserRating>
       </div>
-      <div style={{ position: "fixed", top: 0, right: 0 }}>
+      {/* <div style={{ position: "fixed", top: 0, right: 0 }}>
           <Events width="300" height="400" />
-        </div>
+        </div> */}
     </div>
   );
 }

@@ -102,7 +102,7 @@ function Post({ props }){
 
     const commentProps = {
         postId: props.id,
-        comments: props.preloadedComments
+        comments: props.subset_comments
     };
 
     const numPostComments = commentProps.comments !== undefined ? commentProps.comments.length :

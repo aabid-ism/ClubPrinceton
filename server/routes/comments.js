@@ -26,14 +26,23 @@ router.post('/create', async (req, res) => {
     
     // after creating the comment document in the comments collection,
     // check the post whose id matches the postId, and get its comments field
-    console.log(`Attempting to get post ${formattedPostId}`);
-    const post_document = await post_collection.find(
-        { $expr: { $eq: ["$_id", formattedPostId] } },
-        { _id: 0, name: 1 },
-    );
-    post_comment_property = post_document.comments || "empty";
+    // console.log(`Attempting to get post ${formattedPostId}`);
+    // const post_document = await post_collection.find({_id: {$eq: post_comment_to_insert.postId}}).toArray();
+    // post_comment_property = post_document.comments || "empty";
 
-    console.log(post_comment_property);
+    // if (post_comment_property.length >= 5) {
+    //     post_comment_property.sort((a, b) => -(a.created_at - b.created_at));
+    //     post_comment_property.pop();
+    //   }
+    
+    //   post_comment_property.unshift(post_comment_to_insert);
+    // // TODO: This doesn't currently work?
+    // // push the comment to the comments property of the club document
+    // post_collection.updateOne(
+    // { _id: post_comment_to_insert.postId },
+    // [{ $set: { comments: post_comment_property } }]
+    // )
+    // console.log(post_document);
     
     
     res.send("Successfully Received!");
