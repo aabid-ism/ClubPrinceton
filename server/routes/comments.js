@@ -25,11 +25,13 @@ router.post('/create', async (req, res) => {
 });
 
 // Get a single post's comments
-router.get("/:post", async (req, res) => {
-    console.log(req.params.postId);
+router.get("/load/:post", async (req, res) => {
+    console.log("Received Request");
+    console.log(req.params.post);
     const db = conn.getDb();
     const collection = await db.collection("comments");
-    const result = await collection.find({ postId: { $eq: [req.params.post] } }).limit(50).toArray();
+    const result = await collection.find({}).limit(50).toArray();
+    //const result = await collection.find({ postId: { $eq: [req.params.post] } }).limit(50).toArray();
     console.log(result);
     res.send(result).status(200);
 });  

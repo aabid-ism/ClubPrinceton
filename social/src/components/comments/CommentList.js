@@ -8,24 +8,36 @@ const url = "http://localhost:5050/comments";
 export default function Comments({ props }){
     const [commentListData, updateCommentListData] = useState([])
     const loadCommentList = async (event) => {
-        console.log("Attempting to Load Comments!")
-        console.log(props.comments)
-        if (props.comments !== undefined){
-            axios
-            .get(`${url}/${props.id}`)
+        console.log("Attempting to Load Comments!");
+        // if (props.comments !== undefined){
+        //     axios
+        //     .get(`${url}/${props.id}`)
+        //     .then((response) => {
+        //         const data = response.data;
+        //         console.log(data);
+        //         updateCommentListData(data);
+        //     })
+        //     .catch((error) => {
+        //         console.log("Error occurred: ", error);
+        //     });
+        // }
+        console.log(`Request made: ${url}/load/${props.postId}`)
+        axios
+            .get(`${url}/load/${props.postId}`)
             .then((response) => {
                 const data = response.data;
+                console.log("Data Retrieved!");
                 console.log(data);
                 updateCommentListData(data);
+                console.log(commentListData);
             })
             .catch((error) => {
                 console.log("Error occurred: ", error);
             });
         }
-        }
     // loadCommentList();
-    console.log("Comment List Data")
-    console.log(commentListData)
+    // console.log("Comment List Data at Start")
+    // console.log(commentListData)
     return (
         <div className="comments">
             {commentListData.map((commentData) => {

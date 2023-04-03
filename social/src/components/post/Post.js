@@ -3,7 +3,7 @@ import React from "react";
 import './Post.css'
 import LOGO from './blue_man.jpg'
 import {PostHeader, PostCreationInfo, PostTitle, Icon, HeaderInfo, OptionButton} from "./PostHeader.js";
-import Comments from "../comments/CommentList";
+import CommentList from "../comments/CommentList";
 import { PostComments, PostMetrics, PersonalComment } from "./PostInteractions";
 
 function PostContent({ props }){
@@ -122,7 +122,7 @@ function Post({ props }){
             
             <PostComments>
                 <PostMetrics props={defaultPostProps.commentsProps.postMetrics}/>
-                <Comments props={commentProps}/>
+                <CommentList props={commentProps}/>
                 <PersonalComment LOGO={LOGO} postId={commentProps.postId}/>
             </PostComments>
         </PostBubble>                    

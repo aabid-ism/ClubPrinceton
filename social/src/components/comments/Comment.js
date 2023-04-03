@@ -24,9 +24,9 @@ export default function Comment({ props }){
     return (
         <div className='comment'>
             <div className="commentText">
-                {props.commentText}
+                {props.data}
             </div>
-            <Like priorLikes={props.priorLikes} priorLikeStatus={props.priorLikeStatus}/>
+            <Like priorLikes={props.likes} priorLikeStatus={props.priorLikeStatus}/>
         </div>
     );
 }
