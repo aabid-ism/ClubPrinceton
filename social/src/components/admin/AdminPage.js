@@ -7,7 +7,7 @@ import axios from 'axios';
 const initialState = {
     clubs: [],
     activeClub: "",
-    inputs: { title: null, caption: null, file: null },
+    inputs: { title: "", caption: "", file: null },
 }
 
 const handleOnChangeFile = (state, file) => {
