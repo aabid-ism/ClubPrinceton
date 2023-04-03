@@ -7,8 +7,9 @@ const router = express.Router();
 router.post('/create', async (req, res) => {
     // TODO: include user as info
     const {data, postId} = req.body;
+    const formattedPostId = new ObjectId(postId);
     const post_comment_to_insert = {
-        postId: new ObjectId(postId),
+        postId: formattedPostId,
         data,
         likes: 0,
         commenter_netId: 'cspeed',
@@ -16,10 +17,24 @@ router.post('/create', async (req, res) => {
     };
     
     console.log(post_comment_to_insert);
-    
+
     const db = conn.getDb();
     const comment_collection = await db.collection("comments");
+    const post_collection = await db.collection("posts");
     const result = await comment_collection.insertOne(post_comment_to_insert);
+
+    
+    // after creating the comment document in the comments collection,
+    // check the post whose id matches the postId, and get its comments field
+    console.log(`Attempting to get post ${formattedPostId}`);
+    const post_document = await post_collection.find(
+        { $expr: { $eq: ["$_id", formattedPostId] } },
+        { _id: 0, name: 1 },
+    );
+    post_comment_property = post_document.comments || "empty";
+
+    console.log(post_comment_property);
+    
     
     res.send("Successfully Received!");
 });
@@ -27,11 +42,11 @@ router.post('/create', async (req, res) => {
 // Get a single post's comments
 router.get("/load/:post", async (req, res) => {
     console.log("Received Request");
-    console.log(req.params.post);
+    const post = new ObjectId(req.params.post);
+    console.log(post);
     const db = conn.getDb();
     const collection = await db.collection("comments");
-    const result = await collection.find({}).limit(50).toArray();
-    //const result = await collection.find({ postId: { $eq: [req.params.post] } }).limit(50).toArray();
+    const result = await collection.find({postId: { $eq: post}}).toArray();
     console.log(result);
     res.send(result).status(200);
 });  

@@ -20,6 +20,7 @@ function Like({ priorLikes, priorLikeStatus }){
     );
 }
 
+// TODO: Make a request for whether the post was liked by a certain user
 export default function Comment({ props }){
     return (
         <div className='comment'>

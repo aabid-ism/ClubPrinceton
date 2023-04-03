@@ -20,13 +20,13 @@ function PostMetrics({props}) {
                     {<FaThumbsUp />} 
                 </div>
                 <div>
-                    {props.numberOfPostLikes}
+                    {props.numPostLikes}
                 </div>
                 <div>
                     {<FaCommentAlt />}
                 </div>
                 <div>
-                    {props.numberOfPostComments}
+                    {props.numPostComments}
                 </div>
             </div>
         </div>
@@ -42,7 +42,6 @@ function PersonalComment({LOGO, postId}) {
                     postId: postId
                 }
                 console.log(event.target.value);
-                // TODO: Actually send this text to the server and create a comment
                 axios
                 .post(`${url}/create`, commentData)
                 .then((response) => {

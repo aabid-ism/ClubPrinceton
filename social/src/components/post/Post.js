@@ -105,8 +105,12 @@ function Post({ props }){
         comments: props.preloadedComments
     };
 
+    const numPostComments = commentProps.comments !== undefined ? commentProps.comments.length :
+        0;
+
     // TODO: Add a state array for the comments, and pass down the state update callback to
     // the PersonalComment
+    // TODO: The post should be keeping track of how many total comments have been made
     return (
         <PostBubble>
             <PostHeader>
@@ -121,7 +125,7 @@ function Post({ props }){
             <PostContent props={contentProps}/>
             
             <PostComments>
-                <PostMetrics props={defaultPostProps.commentsProps.postMetrics}/>
+                <PostMetrics props={{numPostLikes: 10, numPostComments: numPostComments}}/>
                 <CommentList props={commentProps}/>
                 <PersonalComment LOGO={LOGO} postId={commentProps.postId}/>
             </PostComments>

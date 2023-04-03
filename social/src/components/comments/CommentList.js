@@ -22,7 +22,21 @@ export default function Comments({ props }){
         //     });
         // }
         console.log(`Request made: ${url}/load/${props.postId}`)
-        axios
+        if (commentListData !== undefined){
+            axios
+            .get(`${url}/load/${props.postId}`)
+            .then((response) => {
+                const data = response.data;
+                console.log("Data Retrieved!");
+                console.log(data);
+                updateCommentListData(data); // later, do spread
+                console.log(commentListData);
+            })
+            .catch((error) => {
+                console.log("Error occurred: ", error);
+            });
+        } else {
+            axios
             .get(`${url}/load/${props.postId}`)
             .then((response) => {
                 const data = response.data;
@@ -35,6 +49,8 @@ export default function Comments({ props }){
                 console.log("Error occurred: ", error);
             });
         }
+        
+        }
     // loadCommentList();
     // console.log("Comment List Data at Start")
     // console.log(commentListData)
@@ -44,7 +60,7 @@ export default function Comments({ props }){
                     return (<Comment props={commentData} key={commentData._id}/>)
                 })
             }
-            <button onClick={loadCommentList}>See More Comments!</button>
+            <button onClick={loadCommentList}>See Comments!</button>
         </div>
         
     );
