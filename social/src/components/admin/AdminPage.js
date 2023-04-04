@@ -7,7 +7,13 @@ import axios from 'axios';
 const initialState = {
     clubs: [],
     activeClub: "",
-    inputs: { title: null, caption: null, file: null },
+    inputs: { title: "", caption: "", file: null },
+    missingValues: {
+        title: false,
+        caption: false,
+        image: false
+    },
+    isSubmitted: false
 }
 
 const handleOnChangeFile = (state, file) => {
@@ -52,11 +58,25 @@ function reducer(state, action) {
                 ...state,
                 inputs: handleOnChangeFile(state, action.payload.value)
             }
+        case "setMissingValues":
+            return {
+                ...state,
+                missingValues: {
+                    ...state.missingValues,
+                    [action.payload.key]: action.payload.value,
+                }
+            }
 
         case "clear_form":
             return {
                 ...state,
                 inputs: { title: "", caption: "", file: "" }
+            }
+
+        case "submit":
+            return {
+                ...state,
+                isSubmitted: action.payload.value
             }
 
         // case 'collapse':
@@ -71,11 +91,16 @@ function reducer(state, action) {
 function AdminInterface() {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    const dispatchCaption = (caption) => dispatch({ type: 'setCaption', payload: { value: caption } })
-    const dispatchTitle = (title) => dispatch({ type: 'setTitle', payload: { value: title } })
-    const dispatchFile = (file) => dispatch({ type: 'setFile', payload: { value: file } })
-    const dispatchActiveClub = (club) => dispatch({ type: 'setActiveClub', payload: { value: club } })
-    const dispatchClearForm = () => dispatch({ type: 'clear_form' })
+    const dispatchCaption = (caption) => dispatch({ type: 'setCaption', payload: { value: caption } });
+    const dispatchTitle = (title) => dispatch({ type: 'setTitle', payload: { value: title } });
+    const dispatchFile = (file) => dispatch({ type: 'setFile', payload: { value: file } });
+    const dispatchActiveClub = (club) => dispatch({ type: 'setActiveClub', payload: { value: club } });
+    const dispatchClearForm = () => dispatch({ type: 'clear_form' });
+    const dispatchSubmit = (value) => dispatch({ type: 'submit', payload: { value: value } });
+    const dispatchMissingValues = (missingInputType, missingBool) => dispatch({
+        type: 'setMissingValues',
+        payload: { key: missingInputType, value: missingBool }
+    });
 
     const url = "http://localhost:5050/clubs/admin";
 
@@ -108,7 +133,10 @@ function AdminInterface() {
                         dispatchClearForm={dispatchClearForm}
                         dispatchCaption={dispatchCaption}
                         dispatchFile={dispatchFile}
-                        dispatchTitle={dispatchTitle} />
+                        dispatchTitle={dispatchTitle}
+                        dispatchMissingValues={dispatchMissingValues}
+                        dispatchSubmit={dispatchSubmit}
+                    />
                 </div>
             </main>
         </div>
