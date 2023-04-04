@@ -1,43 +1,41 @@
 import React from "react"
 import './admin.css'
-import { useMemo, useState, useRef } from "react";
+import { useRef } from "react";
 import axios from "axios";
 
-function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchClearForm }) {
+function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchClearForm, dispatchMissingValues, dispatchSubmit }) {
 
     const url = "http://localhost:5050/posts/create"
     const fileInputRef = useRef(null);
-    const [missingCaption, setMissingCaption] = useState(false);
-    const [missingTitle, setMissingTitle] = useState(false);
-    const [missingFile, setMissingFile] = useState(false);
-    
-    const isDisabled = useMemo(() => {
-        return !!Object.values(state.inputs).some(input => !input)
-      }, [inputs])
+
     const handleOnSubmit = (e) => {
         // preventing default refresh of forms
         e.preventDefault()
         // console.log(`sending post: ${state.title} with caption: ${state.caption} and filename: ${state.image.name}`)
 
-        // resetting error fields of input fields
-        setMissingCaption(false);
-        setMissingCaption(false);
-        setMissingCaption(false);
+        // resetting error fields of input fields after a given submission
+        dispatchMissingValues("title", false);
+        dispatchMissingValues("caption", false);
+        dispatchMissingValues("image", false);
+        dispatchSubmit(true);
 
-        // giving user error if form fields are empty
+        // setting error state if an input is missing
+        let earlyreturn = false;
         if (state.inputs.title === null || state.inputs.title === "") {
-            setMissingTitle(true);
+            dispatchMissingValues("title", true)
+            earlyreturn = true;
         }
         if (state.inputs.caption === null || state.inputs.caption === "") {
-            setMissingCaption(true);
+            dispatchMissingValues("caption", true)
+            earlyreturn = true;
         }
         if (state.inputs.file === null || state.inputs.file === "") {
-            setMissingFile(true);
+            dispatchMissingValues("image", true)
+            earlyreturn = true;
         }
 
-        console.log(missingCaption, missingFile, missingTitle);
-        if (missingCaption || missingFile || missingTitle) {
-            console.log("returning!")
+        // do not go through with submission if input is missing
+        if (earlyreturn) {
             return;
         }
 
@@ -75,7 +73,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
             <div className="mb-5 d-flex align-items-center justify-content-center" style={{ margin: " 30 px" }}>
                 {/* <Preview {...inputs} /> */}
                 <form className="mb-2" style={{ margin: "30px", textAlign: "left" }} onSubmit={(e) => handleOnSubmit(e)}>
-                    {!state.inputs.title && <div> <p style={{ color: "red" }}> Please fill in the Title!</p></div>}
+                    {state.isSubmitted && state.missingValues.title && <div> <p style={{ color: "red" }}> Please fill in the Title!</p></div>}
                     <div className="mb-3" >
                         {/* TITLE */}
                         <div className="mb-3">
@@ -90,7 +88,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                             />
                         </div>
                         {/* CAPTION */}
-                        {!state.inputs.caption && <div> <p style={{ color: "red" }}> Please fill in the Caption!</p></div>}
+                        {state.isSubmitted && state.missingValues.caption && <div> <p style={{ color: "red" }}> Please fill in the Caption!</p></div>}
                         <textarea
                             placeholder="start writing your post..."
                             id="caption" name="post_description"
@@ -101,7 +99,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                         </textarea>
                     </div>
                     {/* IMAGE UPLOAD */}
-                    {!state.inputs.file && <div> <p style={{ color: "red" }}> Please upload a file!</p></div>}
+                    {state.isSubmitted && state.missingValues.image && <div> <p style={{ color: "red" }}> Please upload a file!</p></div>}
                     <div className="mb-3">
                         <label for="image_uploads">Choose images to upload (PNG, JPG)</label>
                         <input id="image_uploads"
