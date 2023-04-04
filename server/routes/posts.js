@@ -21,7 +21,8 @@ router.post("/create", async (req, res) => {
     title,
     caption,
     image_url,
-    created_at: new Date()
+    created_at: new Date(),
+    comments: []
   };
 
   if ((Object.values(post_document_to_insert).includes("")) || (Object.values(post_document_to_insert).includes(null))) {
@@ -64,10 +65,11 @@ router.post("/create", async (req, res) => {
 })
 
 // Get a single club's posts
+// TODO: Don't double-load the duplicate data from the subset
 router.get("/:name", async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("posts");
-  const result = await collection.find({ club: { $eq: req.params.name} }).limit(50).toArray();
+  const result = await collection.find({ club: { $eq: req.params.name} }).limit(10).toArray();
   console.log(result);
   res.send(result).status(200);
 });
