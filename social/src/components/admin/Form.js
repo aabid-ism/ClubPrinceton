@@ -1,22 +1,27 @@
 import React from "react"
 import './admin.css'
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 
 function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchClearForm, dispatchMissingValues, dispatchSubmit }) {
 
-    const url = "http://localhost:5050/posts/create"
+    const postUrl = "http://localhost:5050/posts/create"
+    const imageUrl = "http://localhost:5050/image_pipeline/"
     const fileInputRef = useRef(null);
+    const [azureImageBlobName, setAzureImageBlobName] = useState('');
 
-    const handleOnSubmit = (e) => {
+    const handleOnSubmit = async (e) => {
         // preventing default refresh of forms
         e.preventDefault()
-        // console.log(`sending post: ${state.title} with caption: ${state.caption} and filename: ${state.image.name}`)
+        // console.log(`sending post: ${state.title} with caption: 
+        // ${state.caption} and filename: ${state.image.name}`)
 
         // resetting error fields of input fields after a given submission
         dispatchMissingValues("title", false);
         dispatchMissingValues("caption", false);
         dispatchMissingValues("image", false);
+
+        // you can use a usememo to reduce the trigger of this in every render.
         dispatchSubmit(true);
 
         // setting error state if an input is missing
@@ -39,30 +44,54 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
             return;
         }
 
-        // request object to be sent to post endpoint 
-        const post_request_data = {
-            // TODO: need to change with the correct netID from cookies!!!
-            netId: "ai4295",
-            title: state.inputs.title,
-            club: state.activeClub,
-            caption: state.inputs.caption,
-            image_url: state.inputs.file[0].name
-        };
+        // sending image to azure
+        // create a new FormData object
+        const formData = new FormData();
 
-        // sending POST request to post endpoint
-        axios
-            .post(`${url}`, post_request_data)
-            .then((response) => {
-                const data = response.data;
-                console.log(data);
-                alert('Form submitted successfully!');
-                // clearing form fields after successful submission of form
-                dispatchClearForm();
-                fileInputRef.current.value = null;
+        // append the file to the form data object
+        formData.append('file', state.inputs.file[0]);
+
+        // send the file using axios
+        await axios.post(imageUrl, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(response => {
+                console.log(response.data);
+                setAzureImageBlobName(response.data);
+                // request object to be sent to post endpoint 
+                const post_request_data = {
+                    // TODO: need to change with the correct netID from cookies!!!
+                    netId: "ai4295",
+                    title: state.inputs.title,
+                    club: state.activeClub,
+                    caption: state.inputs.caption,
+                    image_url: response.data
+                };
+                console.log(response.data);
+                // sending POST request to post endpoint
+                axios
+                    .post(`${postUrl}`, post_request_data)
+                    .then((response) => {
+                        const data = response.data;
+                        console.log(data);
+                        alert('Form submitted successfully!');
+                        // clearing form fields after successful submission of form
+                        dispatchClearForm();
+                        fileInputRef.current.value = null;
+                    })
+                    .catch((error) => {
+                        console.log("Error occurred: ", error);
+                    });
+
             })
-            .catch((error) => {
-                console.log("Error occurred: ", error);
+            .catch(error => {
+                console.log(error);
+                console.log("Unfortunate. very.")
             });
+
+
     }
     return (
         <>
@@ -72,7 +101,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
             </div>
             <div className="mb-5 d-flex align-items-center justify-content-center" style={{ margin: " 30 px" }}>
                 {/* <Preview {...inputs} /> */}
-                <form className="mb-2" style={{ margin: "30px", textAlign: "left" }} onSubmit={(e) => handleOnSubmit(e)}>
+                <form encType="multipart/form-data" className="mb-2" style={{ margin: "30px", textAlign: "left" }} onSubmit={(e) => handleOnSubmit(e)}>
                     {state.isSubmitted && state.missingValues.title && <div> <p style={{ color: "red" }}> Please fill in the Title!</p></div>}
                     <div className="mb-3" >
                         {/* TITLE */}
@@ -91,7 +120,8 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                         {state.isSubmitted && state.missingValues.caption && <div> <p style={{ color: "red" }}> Please fill in the Caption!</p></div>}
                         <textarea
                             placeholder="start writing your post..."
-                            id="caption" name="post_description"
+                            id="caption"
+                            name="caption"
                             value={state.inputs.caption}
                             onChange={(e) => dispatchCaption(e.target.value)}
                             rows="6"
@@ -101,7 +131,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                     {/* IMAGE UPLOAD */}
                     {state.isSubmitted && state.missingValues.image && <div> <p style={{ color: "red" }}> Please upload a file!</p></div>}
                     <div className="mb-3">
-                        <label for="image_uploads">Choose images to upload (PNG, JPG)</label>
+                        <label htmlFor="image_uploads">Choose images to upload (PNG, JPG)</label>
                         <input id="image_uploads"
                             type="file"
                             className="form-control"
