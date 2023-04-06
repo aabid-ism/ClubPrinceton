@@ -1,6 +1,5 @@
-const conn = require('../db/conn.js');
-const ObjectId = require('mongodb').ObjectId;
-const express = require('express');
+import conn from '../db/conn.js';
+import express from 'express';
 
 
 const router = express.Router();
@@ -38,7 +37,7 @@ router.post("/create", async (req, res) => {
     { _id: 0, name: 1 },
   )
 
-  club_post_property = clubdocument.posts || "empty";
+  const club_post_property = clubdocument.posts || "";
   // console.log(type(clubdocument));
   console.log(club_post_property);
 
@@ -77,4 +76,4 @@ router.get("/", async (req, res) => {
   console.log(result);
   res.send(result).status(200);
 });
-module.exports = router;
+export default router;
