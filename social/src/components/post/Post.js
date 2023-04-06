@@ -100,10 +100,14 @@ function Post({ props }){
         content: props.content
     }
 
+    // TODO: maybe make this a state variable for the comments so that the
+    // PersonalComment component can update it for rendering new comments?
     const commentProps = {
         postId: props.id,
         comments: props.subset_comments
     };
+    // console.log("Subset Comments")
+    // console.log(props.subset_comments);
 
     const numPostComments = commentProps.comments !== undefined ? commentProps.comments.length :
         0;

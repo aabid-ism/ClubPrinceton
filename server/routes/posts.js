@@ -64,12 +64,33 @@ router.post("/create", async (req, res) => {
   res.send(clubdocument).status(200);
 })
 
-// Get a single club's posts
-// TODO: Don't double-load the duplicate data from the subset
+// Get more NEW posts for a club
 router.get("/:name", async (req, res) => {
+  // no posts in the subset or dynamic? this might be buggy
+  if (req.query.oldestTime === ''){
+    res.send([]);
+    return;
+  }
+
+  const floorTime = new Date(req.query.oldestTime);
+  console.log(floorTime);
   const db = conn.getDb();
   const collection = await db.collection("posts");
-  const result = await collection.find({ club: { $eq: req.params.name} }).limit(10).toArray();
+  
+  const result = await collection.aggregate([
+    {
+      $match: { 
+        club: req.params.name,
+        created_at:{$lt:floorTime}
+      }
+    }, 
+    {
+      $sort: {created_at: -1}
+    },
+    {
+      $limit: 5
+    }
+  ]).toArray();
   console.log(result);
   res.send(result).status(200);
 });

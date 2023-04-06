@@ -22,30 +22,25 @@ router.post('/create', async (req, res) => {
     const comment_collection = await db.collection("comments");
     const post_collection = await db.collection("posts");
     const result = await comment_collection.insertOne(post_comment_to_insert);
+    console.log(formattedPostId)
+
+    const post = await post_collection.findOne({_id: {$eq: formattedPostId}});
+    const post_comments = post.comments !== undefined ? post.comments : [];
+    //console.log(post_comments);
+    // does this need to sort again?
+    if (post_comments.length >= 5){
+        post_comments.pop();
+    }
+
+    post_comments.unshift(post_comment_to_insert);
+    //console.log(post_comments);
+    post_collection.updateOne(
+        {_id: formattedPostId},
+        [{$set: {comments: post_comments}}]
+    );  
 
     
-    // after creating the comment document in the comments collection,
-    // check the post whose id matches the postId, and get its comments field
-    // console.log(`Attempting to get post ${formattedPostId}`);
-    // const post_document = await post_collection.find({_id: {$eq: post_comment_to_insert.postId}}).toArray();
-    // post_comment_property = post_document.comments || "empty";
-
-    // if (post_comment_property.length >= 5) {
-    //     post_comment_property.sort((a, b) => -(a.created_at - b.created_at));
-    //     post_comment_property.pop();
-    //   }
-    
-    //   post_comment_property.unshift(post_comment_to_insert);
-    // // TODO: This doesn't currently work?
-    // // push the comment to the comments property of the club document
-    // post_collection.updateOne(
-    // { _id: post_comment_to_insert.postId },
-    // [{ $set: { comments: post_comment_property } }]
-    // )
-    // console.log(post_document);
-    
-    
-    res.send("Successfully Received!");
+    res.send(post_comment_to_insert).status(200);
 });
 
 // Get a single post's comments
@@ -53,6 +48,7 @@ router.get("/load/:post", async (req, res) => {
     console.log("Received Request");
     const post = new ObjectId(req.params.post);
     console.log(post);
+    console.log(req.query.oldestTime)
     const db = conn.getDb();
     const collection = await db.collection("comments");
     const result = await collection.find({postId: { $eq: post}}).toArray();
