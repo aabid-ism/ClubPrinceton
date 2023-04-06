@@ -7,7 +7,7 @@ const clubs = require("./routes/clubs.js");
 const posts = require("./routes/posts.js");
 const bodyParser = require("body-parser");
 const conn = require('./db/conn.js');
-
+const ratings = require("./routes/ratings.js");
 // middleware
 app.use(cors());
 app.use(express.json());
@@ -19,6 +19,7 @@ app.use(express.json());
 // delcaring initial route-string, and connecting clubs router: localhost:5050/clubs...
 app.use("/clubs", clubs);
 app.use("/posts", posts);
+app.use("/ratings", ratings);
 // Global error handling
 app.use((err, _req, res, next) => {
     res.status(500).send("Uh oh! An unexpected error occured.")

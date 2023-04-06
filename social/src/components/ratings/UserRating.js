@@ -10,7 +10,7 @@ function UserRating() {
   const ratings = useSelector((state) => state.ratings);
 
   const dispatch = useDispatch();
-
+  const [previousRating, setPreviousRating] = useState(ratings);
   useEffect(() => {
     if (clubData.name) {
       console.log("axios was called clubData.name: " + clubData.name);
@@ -23,6 +23,16 @@ function UserRating() {
             type: "GET_CLUB_RATINGS",
             payload: { ratings: data },
           });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      axios
+        .get(`${url}/${clubData.name}/roy`)
+        .then((response) => {
+          console.log(response.data);
+          const data = response.data;
+          setPreviousRating(data);
         })
         .catch((error) => {
           console.error(error);
@@ -46,7 +56,7 @@ function UserRating() {
 
   return (
     <RatingsBubble>
-      <form className="rtg-form" >
+      <form className="rtg-form">
         <label>Rating</label>
         <br></br>
         <label>
@@ -66,10 +76,11 @@ function UserRating() {
         <br></br>
         <div>Inclusivity</div>
         <SingleRating type="Inclusivity"></SingleRating>
-
-
+        {previousRating ? (
+          <strong>Update Rating</strong>
+        ) : (
           <strong onClick={handleSubmitRating}>Submit Rating</strong>
-        
+        )}
       </form>
     </RatingsBubble>
   );
