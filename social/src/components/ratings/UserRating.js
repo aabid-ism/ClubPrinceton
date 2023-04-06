@@ -31,9 +31,9 @@ function UserRating() {
   }, [clubData]);
 
   function handleSubmitRating(event) {
-    event.preventDefault();
     console.log("submitting rating");
     console.log(ratings);
+    ratings["club"] = clubData.name;
     axios
       .post(`${url}/${clubData.name}`, ratings)
       .then((response) => {
@@ -46,7 +46,7 @@ function UserRating() {
 
   return (
     <RatingsBubble>
-      <form className="rtg-form" onClick={handleSubmitRating}>
+      <form className="rtg-form" >
         <label>Rating</label>
         <br></br>
         <label>
@@ -67,9 +67,9 @@ function UserRating() {
         <div>Inclusivity</div>
         <SingleRating type="Inclusivity"></SingleRating>
 
-        <button type="submit">
-          <strong>Submit Rating</strong>
-        </button>
+
+          <strong onClick={handleSubmitRating}>Submit Rating</strong>
+        
       </form>
     </RatingsBubble>
   );
@@ -78,7 +78,6 @@ function UserRating() {
 const SingleRating = (props) => {
   const [hover, setHover] = useState(0);
   const ratings = useSelector((state) => state.ratings);
-  
   const type = "" + props.type;
 
   const [rating, setRating] = useState(5);
