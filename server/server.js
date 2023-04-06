@@ -8,6 +8,13 @@ const posts = require("./routes/posts.js");
 const auth = require("./routes/auth.js");
 const bodyParser = require("body-parser");
 const conn = require('./db/conn.js');
+// needs to be a constant?
+// I don't think we need to define a cookie-session just
+// looking at request/result should be enough -> b/c session
+// data stored somewhere in computer
+let cookieSession = require('cookie-session');
+
+// cookie session
 
 // middleware
 let corsOptions = {
@@ -21,14 +28,17 @@ app.use(express.json());
 //     extended: true
 // }));
 
+app.use(cookieSession({name:'session', keys: ['key1', 'key2'],}));
+
 // delcaring initial route-string, and connecting clubs router: localhost:5050/clubs...
 app.use("/", auth);
 app.use("/clubs", clubs);
 app.use("/posts", posts);
+
 // Global error handling
 app.use((err, _req, res, next) => {
     res.status(500).send("Uh oh! An unexpected error occured.")
-  })
+  });
 
 // Defining global routes: localhost:5050/
 
@@ -46,12 +56,12 @@ app.use((err, _req, res, next) => {
 //   res.send(`User with ID ${req.params.id}`);
 // });
 
+
+
 const path = __dirname + '/views/';
 app.use(express.static(path));
 
 app.get('/', function (req, res) {
-  // app.get("/login", auth);
-  process.stdout.write("Im here");
   res.sendFile(path + "index.html");
 });
 
