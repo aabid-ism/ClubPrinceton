@@ -4,7 +4,7 @@ import SearchBar from "../searchBar/SearchBar";
 import MainPage from "../mainpage/MainPage";
 import { useSelector } from "react-redux";
 import Post from "../post/Post";
-import Posts from "../post/Posts";
+import PostList from "../post/PostList";
 import UserRating from "../ratings/UserRating";
 import Events from "../events/Events";
 function HomePage() {
@@ -33,7 +33,7 @@ function HomePage() {
 
         
       </div>
-      <Posts></Posts>
+      <PostList></PostList>
       {/* 
         <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
           <Post/>
@@ -49,9 +49,9 @@ function HomePage() {
       <div>
         <UserRating></UserRating>
       </div>
-      <div style={{ position: "fixed", top: 0, right: 0 }}>
+      {/* <div style={{ position: "fixed", top: 0, right: 0 }}>
           <Events width="300" height="400" />
-        </div>
+        </div> */}
     </div>
   );
 }
