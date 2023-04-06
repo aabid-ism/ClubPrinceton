@@ -44,7 +44,8 @@ app.use((err, _req, res, next) => {
 //   res.send(`User with ID ${req.params.id}`);
 // });
 
-const path = __dirname + '/views/';
+const socialPath = __dirname.replace('server', 'social');
+const path = socialPath + '/build/';
 app.use(express.static(path));
 
 app.get('/', function (req, res) {
