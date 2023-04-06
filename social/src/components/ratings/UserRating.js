@@ -12,15 +12,16 @@ function UserRating() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (clubData) {
+    if (clubData.name) {
       console.log("axios was called clubData.name: " + clubData.name);
       axios
         .get(`${url}/${clubData.name}`)
         .then((response) => {
           console.log(response.data);
+          const data = response.data["rating"];
           dispatch({
             type: "GET_CLUB_RATINGS",
-            payload: { ratings: response.data },
+            payload: { ratings: data },
           });
         })
         .catch((error) => {
@@ -29,9 +30,23 @@ function UserRating() {
     }
   }, [clubData]);
 
+  function handleSubmitRating(event) {
+    event.preventDefault();
+    console.log("submitting rating");
+    console.log(ratings);
+    axios
+      .post(`${url}/${clubData.name}`, ratings)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   return (
     <RatingsBubble>
-      <form className="rtg-form">
+      <form className="rtg-form" onClick={handleSubmitRating}>
         <label>Rating</label>
         <br></br>
         <label>
@@ -66,13 +81,14 @@ const SingleRating = (props) => {
   
   const type = "" + props.type;
 
-  const [rating, setRating] = useState(ratings[type]);
+  const [rating, setRating] = useState(5);
 
   useEffect(() => {
     setRating(ratings[type]);
   }, [ratings]);
 
   const dispatch = useDispatch();
+
   function handleRating(index) {
     setRating(index);
     dispatch({
@@ -80,6 +96,7 @@ const SingleRating = (props) => {
       payload: { type: type, rating: index },
     });
   }
+
   return (
     <div className="star-rating">
       {[...Array(5)].map((star, index) => {
