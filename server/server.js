@@ -9,7 +9,12 @@ const bodyParser = require("body-parser");
 const conn = require('./db/conn.js');
 
 // middleware
-app.use(cors());
+let corsOptions = {
+  origin: "http://localhost:5050"
+};
+
+// middleware
+app.use(cors(corsOptions));
 app.use(express.json());
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({
@@ -24,10 +29,19 @@ app.use((err, _req, res, next) => {
     res.status(500).send("Uh oh! An unexpected error occured.")
   })
 
-// Defining global routes: localhost:5050/
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+
+const socialPath = __dirname.replace('server', 'social');
+const path = socialPath + '/build/';
+app.use(express.static(path));
+
+app.get('/', function (req, res) {
+  res.sendFile(path + "index.html");
 });
+
+// Defining global routes: localhost:5050/
+// app.get('/', (req, res) => {
+//   res.send('Hello World!');
+// });
 
 
 // app.get('/users', (req, res) => {
