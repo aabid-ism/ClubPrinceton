@@ -1,15 +1,25 @@
-require("./loadEnvironment.js");
-const express = require('express');
+import("./loadEnvironment.js");
+import express from 'express';
 const app = express();
 const PORT = process.env.PORT || 5050;
-const cors = require("cors");
-const clubs = require("./routes/clubs.js");
-const posts = require("./routes/posts.js");
-const bodyParser = require("body-parser");
-const conn = require('./db/conn.js');
-const ratings = require("./routes/ratings.js");
-// middleware
+
+
+
+import cors from "cors";
+import clubs from "./routes/clubs.js";
+import posts from "./routes/posts.js";
+import image_pipeline from "./routes/image_pipeline.js";
+import bodyParser from "body-parser";
+import conn from './db/conn.js';
+
+
+// // middleware
+// let corsOptions = {
+//   origin: "http://localhost:5050"
+// };
 app.use(cors());
+// // middleware
+// app.use(cors(corsOptions));
 app.use(express.json());
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({
@@ -19,16 +29,31 @@ app.use(express.json());
 // delcaring initial route-string, and connecting clubs router: localhost:5050/clubs...
 app.use("/clubs", clubs);
 app.use("/posts", posts);
+
 app.use("/ratings", ratings);
+
+app.use("/image_pipeline", image_pipeline);
+
+app.use("/comments", comments)
+
 // Global error handling
 app.use((err, _req, res, next) => {
-    res.status(500).send("Uh oh! An unexpected error occured.")
-  })
+  res.status(500).send("Uh oh! An unexpected error occured.")
+})
+
+
+// const socialPath = __dirname.replace('server', 'social');
+// const path = socialPath + '/build/';
+// app.use(express.static(path));
+
+// app.get('/', function (req, res) {
+//   res.sendFile(path + "index.html");
+// });
 
 // Defining global routes: localhost:5050/
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+// app.get('/', (req, res) => {
+//   res.send('Hello World!');
+// });
 
 
 // app.get('/users', (req, res) => {

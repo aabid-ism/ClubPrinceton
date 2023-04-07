@@ -3,7 +3,7 @@ import React from "react";
 import './Post.css'
 import LOGO from './blue_man.jpg'
 import {PostHeader, PostCreationInfo, PostTitle, Icon, HeaderInfo, OptionButton} from "./PostHeader.js";
-import Comments from "../comments/Comments";
+import CommentList from "../comments/CommentList";
 import { PostComments, PostMetrics, PersonalComment } from "./PostInteractions";
 
 function PostContent({ props }){
@@ -28,6 +28,8 @@ function PostBubble({ children }){
     );
     
 }
+
+// MAJOR REFACTOR: Comments will now be loaded from the post array AND dynamically
 
 function Post({ props }){
     const defaultPostProps = {
@@ -96,7 +98,23 @@ function Post({ props }){
     }    
     const contentProps = {
         content: props.content
-    }  
+    }
+
+    // TODO: maybe make this a state variable for the comments so that the
+    // PersonalComment component can update it for rendering new comments?
+    const commentProps = {
+        postId: props.id,
+        comments: props.subset_comments
+    };
+    // console.log("Subset Comments")
+    // console.log(props.subset_comments);
+
+    const numPostComments = commentProps.comments !== undefined ? commentProps.comments.length :
+        0;
+
+    // TODO: Add a state array for the comments, and pass down the state update callback to
+    // the PersonalComment
+    // TODO: The post should be keeping track of how many total comments have been made
     return (
         <PostBubble>
             <PostHeader>
@@ -111,9 +129,9 @@ function Post({ props }){
             <PostContent props={contentProps}/>
             
             <PostComments>
-                <PostMetrics props={defaultPostProps.commentsProps.postMetrics}/>
-                <Comments props={defaultPostProps.commentsProps.commentsData}/>
-                <PersonalComment LOGO={LOGO} />
+                <PostMetrics props={{numPostLikes: 10, numPostComments: numPostComments}}/>
+                <CommentList props={commentProps}/>
+                <PersonalComment LOGO={LOGO} postId={commentProps.postId}/>
             </PostComments>
         </PostBubble>                    
     );

@@ -1,23 +1,18 @@
 import './admin.css'
 import React from 'react';
 
-
-
-
-function Sidebar(props) {
-
-  console.log(props.clubs);
+function Sidebar({ state, dispatchActiveClub }) {
 
   return (
     <div className="sidebar">
       {/* render club list using clubs that the netid is an admin of */}
       <ul>
         {/* <li>Hi </li> */}
-        {props.clubs?.map((club, index) => (
+        {state.clubs?.map((club, index) => (
           <button
             key={index}
             className="text-gray-700 mb-2 border-b border-gray-300"
-            onClick={() => { props.setActiveClub(club) }}
+            onClick={(e) => dispatchActiveClub(club)}
           >
             {club}
           </button>

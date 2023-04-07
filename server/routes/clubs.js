@@ -1,6 +1,6 @@
-const conn = require("../db/conn.js");
-const ObjectId = require("mongodb").ObjectId;
-const express = require("express");
+import conn from "../db/conn.js";
+
+import express from "express";
 
 const router = express.Router();
 
@@ -119,4 +119,4 @@ router.get("/admin/:user", async (req, res) => {
   res.send(response).status(200);
 });
 
-module.exports = router;
+export default router;

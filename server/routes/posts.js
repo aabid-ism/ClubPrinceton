@@ -1,6 +1,5 @@
-const conn = require('../db/conn.js');
-const ObjectId = require('mongodb').ObjectId;
-const express = require('express');
+import conn from '../db/conn.js';
+import express from 'express';
 
 
 const router = express.Router();
@@ -20,10 +19,15 @@ router.post("/create", async (req, res) => {
     club,
     title,
     caption,
-    image_url
+    image_url,
+    created_at: new Date(),
+    comments: []
   };
 
-  // TODO: ADD currentdatetime to the post property
+  if ((Object.values(post_document_to_insert).includes("")) || (Object.values(post_document_to_insert).includes(null))) {
+    console.log("null or empty property detected in form!");
+    return res.status(404).send("null property detected in form!");
+  }
 
   // add to the posts collection
   const result = await posts_collection.insertOne(post_document_to_insert);
@@ -33,21 +37,56 @@ router.post("/create", async (req, res) => {
     { $expr: { $eq: ["$name", club] } },
     { _id: 0, name: 1 },
   )
+
+  const club_post_property = clubdocument.posts || "";
+  // console.log(type(clubdocument));
+  console.log(club_post_property);
+
+  // pop the last post from the posts property of the club document if it already has 5
+  if (club_post_property.length >= 5) {
+    club_post_property.sort((a, b) => -(a.created_at - b.created_at));
+    club_post_property.pop();
+  }
+
+  club_post_property.unshift(post_document_to_insert);
+
   // push the post to the posts property of the club document
   club_collection.updateOne(
-    { name: clubdocument.name }, [{ $set: { posts: { $concatArrays: ["$posts", [post_document_to_insert]] } } }]
+    { name: clubdocument.name },
+    // [{ $set: { posts: { $concatArrays: ["$posts", [post_document_to_insert]] } } }]
+    [{ $set: { posts: club_post_property } }]
   )
-
-  // TODO: pop the last post from the posts property of the club document
 
   res.send(clubdocument).status(200);
 })
 
-// Get a single club's posts
+// Get more NEW posts for a club
 router.get("/:name", async (req, res) => {
+  // no posts in the subset or dynamic? this might be buggy
+  if (req.query.oldestTime === ''){
+    res.send([]);
+    return;
+  }
+
+  const floorTime = new Date(req.query.oldestTime);
+  console.log(floorTime);
   const db = conn.getDb();
   const collection = await db.collection("posts");
-  const result = await collection.find({ club: { $in: [req.params.name] } }).limit(50).toArray();
+  
+  const result = await collection.aggregate([
+    {
+      $match: { 
+        club: req.params.name,
+        created_at:{$lt:floorTime}
+      }
+    }, 
+    {
+      $sort: {created_at: -1}
+    },
+    {
+      $limit: 5
+    }
+  ]).toArray();
   console.log(result);
   res.send(result).status(200);
 });
@@ -60,4 +99,4 @@ router.get("/", async (req, res) => {
   console.log(result);
   res.send(result).status(200);
 });
-module.exports = router;
+export default router;
