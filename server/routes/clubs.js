@@ -27,7 +27,7 @@ router.get("/a/:name", async (req, res) => {
   // run pipeline
   const result = await collection.aggregate(agg).toArray();
   // print results
-  console.log(result);
+
 
   res.send(result).status(200);
 });
@@ -48,8 +48,6 @@ router.get("/:name", async (req, res) => {
   const result = await collection.aggregate(agg).toArray();
   // print results
   // await result.forEach((doc) => console.log(doc));
-
-  console.log(result);
 
   res.send(result).status(200);
 });

@@ -1,102 +1,131 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import RatingsBubble from "./RatingsBubble";
-import SingleRating from "./SingleRating";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import "./ratingstar.css";
+const url = "http://localhost:5050/ratings";
 
-// To-Do: handle case with constant?
+function UserRating() {
+  const clubData = useSelector((state) => state.clubData);
+  const ratings = useSelector((state) => state.ratings);
 
-function UserRating(props) {
-    // To-DO -> values and setData not used
-    // need to preserve the state of the ratings
-    // rerender -> with previous ratings of user if available -> if not set with all zeroes
-    // take adv -> of the initialization stage
-    // do error handling
-    // the question is now -> how do I set data from the server to client side
-    // test on dummy data -> receiving 0,0,0,0 (never rated this club page)
-    // 1, 1, 2, 4
-    // the initial rating
-    // have an update rating/cancel button
-    // have a submit button -> when first seeing it
-    // all zeroes rating -> fetching this -> submit button
-    // other -> update + discard changes
-    // alert for making sure all rows are filled
-
-    // we may have forgot the folder when pushing to git branch
-
-    // include the useEffect 
-    const [data, setData] = useState({
-        goodVibes: 1,
-        intensity: 2,
-        popularity: 3,
-        inclusivity: 4,
-        clubName: 'Triangle Club'
-      });
-
-    // does every state need to updated like this to pass data from child to parent?
-    // find better alternative later!!! -> once more comfortable with React
-    const storeVibes = (rating) => {
-        setData(previousState => {
-            return { ...previousState, goodVibes: rating }
+  const dispatch = useDispatch();
+  const [previousRating, setPreviousRating] = useState(ratings);
+  useEffect(() => {
+    if (clubData.name) {
+      console.log("axios was called clubData.name: " + clubData.name);
+      axios
+        .get(`${url}/${clubData.name}`)
+        .then((response) => {
+          console.log(response.data);
+          const data = response.data["rating"];
+          dispatch({
+            type: "GET_CLUB_RATINGS",
+            payload: { ratings: data },
+          });
+        })
+        .catch((error) => {
+          console.error(error);
         });
-    };
-
-    const storeIntensity = (rating) => {
-        setData(previousState => {
-            return { ...previousState, intensity: rating }
+      axios
+        .get(`${url}/${clubData.name}/roy`)
+        .then((response) => {
+          console.log(response.data);
+          const data = response.data;
+          setPreviousRating(data);
+        })
+        .catch((error) => {
+          console.error(error);
         });
-    };
-
-    const storePopularity = (rating) => {
-        setData(previousState => {
-            return { ...previousState, popularity: rating }
-        });
-    };
-
-    const storeInclusivity = (rating) => {
-        setData(previousState => {
-            return { ...previousState, inclusivity: rating }
-        });
-    };
-    
-    function handleSubmit(event) {
-    event.preventDefault();
-    alert(JSON.stringify(data, undefined, 2))
     }
-    
-    return (
-        // handle widths?
-        // form attributes?
-        // need to center title
-        // button should change to update rating on click
-        <RatingsBubble>
-            <form 
-                onSubmit={handleSubmit}
-                method="post"
-                className="rtg-form"
-            >
-                <label>Rating</label>
-                <br></br>
-                <label>
-                    <div>Good Vibes</div>
-                    <SingleRating passOnRating={storeVibes} initRating={data.goodVibes}></SingleRating>
-                </label>
-                <br></br>
-                <label>
-                    <div>Intensity</div>
-                    <SingleRating passOnRating={storeIntensity} initRating={data.intensity}></SingleRating>
-                </label>
-                <br></br>
-                <label>
-                    <div>Popularity</div>
-                    <SingleRating passOnRating={storePopularity} initRating={data.popularity}></SingleRating>
-                </label>
-                <br></br>
-                    <div>Inclusivity</div>
-                    <SingleRating passOnRating={storeInclusivity} initRating={data.inclusivity}></SingleRating>
+  }, [clubData]);
 
-                <button type="submit"><strong>Submit Rating</strong></button>
-            </form>
-        </RatingsBubble>
-    );
+  function handleSubmitRating(event) {
+    console.log("submitting rating");
+    console.log(ratings);
+    ratings["club"] = clubData.name;
+    axios
+      .post(`${url}/${clubData.name}`, ratings)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  return (
+    <RatingsBubble>
+      <form className="rtg-form">
+        <label>Rating</label>
+        <br></br>
+        <label>
+          <div>Good Vibes</div>
+          <SingleRating type="Vibes"></SingleRating>
+        </label>
+        <br></br>
+        <label>
+          <div>Intensity</div>
+          <SingleRating type="Intensity"></SingleRating>
+        </label>
+        <br></br>
+        <label>
+          <div>Popularity</div>
+          <SingleRating type="Clout"></SingleRating>
+        </label>
+        <br></br>
+        <div>Inclusivity</div>
+        <SingleRating type="Inclusivity"></SingleRating>
+        {previousRating ? (
+          <strong>Update Rating</strong>
+        ) : (
+          <strong onClick={handleSubmitRating}>Submit Rating</strong>
+        )}
+      </form>
+    </RatingsBubble>
+  );
 }
+
+const SingleRating = (props) => {
+  const [hover, setHover] = useState(0);
+  const ratings = useSelector((state) => state.ratings);
+  const type = "" + props.type;
+
+  const [rating, setRating] = useState(5);
+
+  useEffect(() => {
+    setRating(ratings[type]);
+  }, [ratings]);
+
+  const dispatch = useDispatch();
+
+  function handleRating(index) {
+    setRating(index);
+    dispatch({
+      type: "SET_RATING",
+      payload: { type: type, rating: index },
+    });
+  }
+
+  return (
+    <div className="star-rating">
+      {[...Array(5)].map((star, index) => {
+        index += 1;
+        return (
+          <button
+            type="button"
+            key={index}
+            className={index <= (hover || rating) ? "on" : "off"}
+            onClick={() => handleRating(index)}
+            onMouseEnter={() => setHover(index)}
+            onMouseLeave={() => setHover(rating)}
+          >
+            <span className="star">&#9733;</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+};
 
 export default UserRating;

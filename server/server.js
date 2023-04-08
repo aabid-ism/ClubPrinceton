@@ -3,6 +3,8 @@ import express from 'express';
 const app = express();
 const PORT = process.env.PORT || 5050;
 
+
+
 import cors from "cors";
 import clubs from "./routes/clubs.js";
 import posts from "./routes/posts.js";
@@ -27,6 +29,8 @@ app.use(express.json());
 // delcaring initial route-string, and connecting clubs router: localhost:5050/clubs...
 app.use("/clubs", clubs);
 app.use("/posts", posts);
+
+app.use("/ratings", ratings);
 
 app.use("/image_pipeline", image_pipeline);
 

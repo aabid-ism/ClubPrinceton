@@ -6,6 +6,7 @@ const initialState = {
   results: [],
   numResults: 0,
   clubData: {},
+  ratings: { Clout: 5, Intensity: 5, Vibes: 5, Inclusivity: 5 },
 };
 
 const reducer = (state = initialState, action) => {
@@ -21,6 +22,19 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         clubData: action.payload.clubData,
+      };
+    case "SET_RATING":
+      return {
+        ...state,
+        ratings: {
+          ...state.ratings,
+          [action.payload.type]: action.payload.rating,
+        },
+      };
+    case "GET_CLUB_RATINGS":
+      return {
+        ...state,
+        ratings: action.payload.ratings,
       };
     default:
       return state;
