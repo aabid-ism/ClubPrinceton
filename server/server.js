@@ -11,7 +11,7 @@ import posts from "./routes/posts.js";
 import image_pipeline from "./routes/image_pipeline.js";
 import bodyParser from "body-parser";
 import conn from './db/conn.js';
-
+import path from "path";
 
 // // middleware
 // let corsOptions = {
@@ -25,7 +25,7 @@ app.use(express.json());
 // app.use(bodyParser.urlencoded({
 //     extended: true
 // }));
-
+app.use(express.static(path.join("../social/", 'build')));
 // delcaring initial route-string, and connecting clubs router: localhost:5050/clubs...
 app.use("/clubs", clubs);
 app.use("/posts", posts);
@@ -36,10 +36,18 @@ app.use("/image_pipeline", image_pipeline);
 
 app.use("/comments", comments)
 
+
+
 // Global error handling
 app.use((err, _req, res, next) => {
   res.status(500).send("Uh oh! An unexpected error occured.")
 })
+
+// routing all routes to index.html because client does all the routing!
+app.get('*', function (req, res) {
+  res.sendFile('index.html', { root: path.join("../", 'social/build/') });
+});
+
 
 
 // const socialPath = __dirname.replace('server', 'social');
