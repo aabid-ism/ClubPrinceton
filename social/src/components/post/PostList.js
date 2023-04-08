@@ -54,9 +54,10 @@ export default function Posts({ props }){
                     const postProps = {
                         caption: postData.caption,
                         creator: postData.netId,
-                        content: postData.content,
+                        content: postData.title,
                         id: postData._id,
-                        subset_comments: postData.comments
+                        subset_comments: postData.comments,
+                        createdTime: new Date(postData.created_at).toLocaleDateString()
                     }
                     return (<Post props={postProps} key={postData._id}/>)
                     // return (<pre key={postData._id}>{JSON.stringify(postData, null, 2)}</pre>)

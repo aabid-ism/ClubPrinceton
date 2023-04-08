@@ -93,7 +93,7 @@ function Post({ props }){
         creator: props.creator,
         creatorIcon: LOGO,
         title: props.caption,
-        createdTime:"03/14/23", 
+        createdTime: props.createdTime, 
         modTime:"03/15/23"
     }    
     const contentProps = {
