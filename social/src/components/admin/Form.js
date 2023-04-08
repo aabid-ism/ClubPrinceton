@@ -34,64 +34,64 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
             dispatchMissingValues("caption", true)
             earlyreturn = true;
         }
-        if (state.inputs.file === null || state.inputs.file === "") {
-            dispatchMissingValues("image", true)
-            earlyreturn = true;
-        }
 
         // do not go through with submission if input is missing
         if (earlyreturn) {
             return;
         }
+        // if image exists, send image to azure blob storage and 
+        // update state variable
+        if (state.inputs.file !== null && state.inputs.file !== "") {
+            // sending image to azure
+            // create a new FormData object
+            const formData = new FormData();
 
-        // sending image to azure
-        // create a new FormData object
-        const formData = new FormData();
+            // append the file to the form data object
+            formData.append('file', state.inputs.file[0]);
 
-        // append the file to the form data object
-        formData.append('file', state.inputs.file[0]);
-
-        // send the file using axios
-        await axios.post(imageUrl, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then(response => {
+            // send the file using axios
+            await axios.post(imageUrl, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(response => {
                 console.log(response.data);
                 setAzureImageBlobName(response.data);
-                // request object to be sent to post endpoint 
-                const post_request_data = {
-                    // TODO: need to change with the correct netID from cookies!!!
-                    netId: "ai4295",
-                    title: state.inputs.title,
-                    club: state.activeClub,
-                    caption: state.inputs.caption,
-                    image_url: response.data
-                };
-                console.log(response.data);
-                // sending POST request to post endpoint
-                axios
-                    .post(`${postUrl}`, post_request_data)
-                    .then((response) => {
-                        const data = response.data;
-                        console.log(data);
-                        alert('Form submitted successfully!');
-                        // clearing form fields after successful submission of form
-                        dispatchClearForm();
-                        fileInputRef.current.value = null;
-                    })
-                    .catch((error) => {
-                        console.log("Error occurred: ", error);
-                    });
-
             })
-            .catch(error => {
-                console.log(error);
-                console.log("Unfortunate. very.")
+                .catch(error => {
+                    console.log(error);
+                    console.log("Unfortunate. very.")
+                });
+        }
+
+
+
+
+        // request object to be sent to post endpoint 
+        const post_request_data = {
+            // TODO: need to change with the correct netID from cookies!!!
+            netId: "ai4295",
+            title: state.inputs.title,
+            club: state.activeClub,
+            caption: state.inputs.caption,
+            image_url: azureImageBlobName
+        };
+
+        // sending POST request to post endpoint
+        await axios
+            .post(`${postUrl}`, post_request_data)
+            .then((response) => {
+                const data = response.data;
+                console.log(data);
+                alert('Form submitted successfully!');
+                // clearing form fields after successful submission of form
+                dispatchClearForm();
+                fileInputRef.current.value = null;
+            })
+            .catch((error) => {
+                console.log("Error occurred: ", error);
+                alert("Oops! Something went wrong. Please contact site administrator")
             });
-
-
     }
     return (
         <>
@@ -129,7 +129,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                         </textarea>
                     </div>
                     {/* IMAGE UPLOAD */}
-                    {state.isSubmitted && state.missingValues.image && <div> <p style={{ color: "red" }}> Please upload a file!</p></div>}
+                    {/* {state.isSubmitted && state.missingValues.image && <div> <p style={{ color: "red" }}> Please upload a file!</p></div>} */}
                     <div className="mb-3">
                         <label htmlFor="image_uploads">Choose images to upload (PNG, JPG)</label>
                         <input id="image_uploads"

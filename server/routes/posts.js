@@ -19,9 +19,9 @@ router.post("/create", async (req, res) => {
     club,
     title,
     caption,
-    image_url,
     created_at: new Date(),
-    comments: []
+    // image_url
+    // comments: []
   };
 
   if ((Object.values(post_document_to_insert).includes("")) || (Object.values(post_document_to_insert).includes(null))) {
@@ -29,6 +29,8 @@ router.post("/create", async (req, res) => {
     return res.status(404).send("null property detected in form!");
   }
 
+  post_document_to_insert.comments = [];
+  post_document_to_insert.image_url = image_url;
   // add to the posts collection
   const result = await posts_collection.insertOne(post_document_to_insert);
 
@@ -63,7 +65,7 @@ router.post("/create", async (req, res) => {
 // Get more NEW posts for a club
 router.get("/:name", async (req, res) => {
   // no posts in the subset or dynamic? this might be buggy
-  if (req.query.oldestTime === ''){
+  if (req.query.oldestTime === '') {
     res.send([]);
     return;
   }
@@ -72,16 +74,16 @@ router.get("/:name", async (req, res) => {
   console.log(floorTime);
   const db = conn.getDb();
   const collection = await db.collection("posts");
-  
+
   const result = await collection.aggregate([
     {
-      $match: { 
+      $match: {
         club: req.params.name,
-        created_at:{$lt:floorTime}
+        created_at: { $lt: floorTime }
       }
-    }, 
+    },
     {
-      $sort: {created_at: -1}
+      $sort: { created_at: -1 }
     },
     {
       $limit: 5
