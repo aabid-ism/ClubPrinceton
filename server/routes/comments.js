@@ -1,5 +1,5 @@
 import conn from '../db/conn.js';
-import ObjectId from 'mongodb';
+import {ObjectId} from 'mongodb';
 import express from 'express';
 
 const router = express.Router();
