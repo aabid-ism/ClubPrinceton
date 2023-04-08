@@ -3,10 +3,10 @@ import express from 'express';
 const app = express();
 const PORT = process.env.PORT || 5050;
 
-
-
 import cors from "cors";
 import clubs from "./routes/clubs.js";
+import ratings from "./routes/ratings.js";
+import comments from "./routes/comments.js";
 import posts from "./routes/posts.js";
 import image_pipeline from "./routes/image_pipeline.js";
 import bodyParser from "body-parser";

@@ -1,6 +1,5 @@
-const conn = require("../db/conn.js");
-const ObjectId = require("mongodb").ObjectId;
-const express = require("express");
+import conn from "../db/conn.js";
+import express from "express";
 
 const router = express.Router();
 
@@ -47,7 +46,7 @@ router.post("/:name", async (req, res) => {
   const result = await collection.insertOne(data);
 
   // update the rating of the club
-  const ag = [  
+  const ag = [
     {
       $match: { club: req.params.name } // match clubs with the given name
     },
@@ -70,11 +69,11 @@ router.post("/:name", async (req, res) => {
   }
 
   const avgRating = allRatings[0];
-  
+
   // update only the rating field of the club
   const clubCollection = await db.collection("clubs");
   console.log(avgRating)
-  const clubResult = await clubCollection.updateOne({name: req.params.name}, {$set: {rating: avgRating}});
+  const clubResult = await clubCollection.updateOne({ name: req.params.name }, { $set: { rating: avgRating } });
   console.log(clubResult);
 
   res.status(200).send(clubResult);
@@ -105,4 +104,4 @@ router.get("/:club/:username", async (req, res) => {
   res.send(result[0]).status(200);
 });
 
-module.exports = router;
+export default router;
