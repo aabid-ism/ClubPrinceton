@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useSelector } from "react-redux";
+import OvrRtgBubble from "./OvrRtgBubble";
 
 const URL = "http://localhost:5050/ovrrtg";
 
@@ -15,7 +16,7 @@ export function OvrRtg() {
 
     // make an axios request using clubData.name to get the overall rating
 
-    const ovrRating = 4.7;
+    const ovrRating = 1.0;
 
     const MAX_RTG = 5;
     // MIN rating 1 or 0? -> EDGE CASE
@@ -23,12 +24,15 @@ export function OvrRtg() {
     const DIFF_RTG = 4;
 
     // magic number
-    const RED = Math.round(255 * (ovrRating - MIN_RTG)) / DIFF_RTG;
-    const GREEN = Math.round(255 * (MAX_RTG - ovrRating)) / DIFF_RTG;
-    const BLUE = 0;
+    let red = Math.round(255 * (MAX_RTG - ovrRating)) / DIFF_RTG;
+    let green = Math.round(255 * (ovrRating - MIN_RTG)) / DIFF_RTG;
 
     // do we capitalize?
-    const COLOR = 'rgb(${RED}, ${GREEN})';
+    return (
+        <OvrRtgBubble redColor={red} greenColor={green}>
+            <div>{ovrRating}</div>
+        </OvrRtgBubble>
+    );
 
 
 }
