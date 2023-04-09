@@ -33,6 +33,7 @@ function HomePage() {
 
         
       </div>
+      
       <PostList></PostList>
       {/* 
         <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
