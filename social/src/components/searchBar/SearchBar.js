@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import "./searchBar.css";
 
-const url = "http://clubprinceton.azurewebsites.net/clubs";
+const url = "https://clubprinceton.azurewebsites.net/clubs";
 
 function SearchBar(props) {
   const dispatch = useDispatch();

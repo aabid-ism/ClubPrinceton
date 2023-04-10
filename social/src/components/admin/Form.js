@@ -5,8 +5,8 @@ import axios from "axios";
 
 function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchClearForm, dispatchMissingValues, dispatchSubmit }) {
 
-    const postUrl = "http://clubprinceton.azurewebsites.net/create"
-    const imageUrl = "http://clubprinceton.azurewebsites.net/image_pipeline/"
+    const postUrl = "https://clubprinceton.azurewebsites.net/posts/create"
+    const imageUrl = "https://clubprinceton.azurewebsites.net/image_pipeline/"
     const fileInputRef = useRef(null);
     const [azureImageBlobName, setAzureImageBlobName] = useState('');
 

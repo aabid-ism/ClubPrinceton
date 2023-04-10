@@ -4,7 +4,7 @@ import './Posts.css'
 import axios from 'axios'
 import { useSelector } from "react-redux";
 
-const url = "http://clubprinceton.azurewebsites.net/posts";
+const url = "https://clubprinceton.azurewebsites.net/posts";
 
 export default function Posts({ props }) {
     const clubData = useSelector(state => state.clubData);

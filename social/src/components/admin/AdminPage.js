@@ -102,7 +102,7 @@ function AdminInterface() {
         payload: { key: missingInputType, value: missingBool }
     });
 
-    const url = "http://clubprinceton.azurewebsites.net/admin";
+    const url = "https://clubprinceton.azurewebsites.net/clubs/admin";
 
     // at start time, get a list of clubs that the user is an admin for
     useEffect(() => {

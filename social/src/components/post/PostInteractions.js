@@ -2,7 +2,7 @@ import { FaThumbsUp, FaCommentAlt } from "react-icons/fa";
 
 import axios from "axios";
 
-const url = "http://clubprinceton.azurewebsites.net/comments";
+const url = "https://clubprinceton.azurewebsites.net/comments";
 
 function PostComments({ children }) {
     return (

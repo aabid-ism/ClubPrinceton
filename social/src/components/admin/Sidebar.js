@@ -6,9 +6,10 @@ function Sidebar({ state, dispatchActiveClub }) {
   return (
     <div className="sidebar">
       {/* render club list using clubs that the netid is an admin of */}
-      <ul>
+
+      {Boolean(state.clubs) && <ul>
         {/* <li>Hi </li> */}
-        {state.clubs?.map((club, index) => (
+        {state.clubs.map((club, index) => (
           <button
             key={index}
             className="text-gray-700 mb-2 border-b border-gray-300"
@@ -17,7 +18,7 @@ function Sidebar({ state, dispatchActiveClub }) {
             {club}
           </button>
         ))}
-      </ul>
+      </ul>}
     </div>
   );
 }
