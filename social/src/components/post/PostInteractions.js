@@ -2,22 +2,22 @@ import { FaThumbsUp, FaCommentAlt } from "react-icons/fa";
 
 import axios from "axios";
 
-const url = "http://localhost:5050/comments";
+const url = "http://clubprinceton.azurewebsites.net/comments";
 
-function PostComments({ children }){
+function PostComments({ children }) {
     return (
         <div>
             {children}
         </div>
     );
-}    
+}
 
-function PostMetrics({props}) {
+function PostMetrics({ props }) {
     return (
         <div className="postMetricBar">
             <div className="postMetric">
                 <div>
-                    {<FaThumbsUp />} 
+                    {<FaThumbsUp />}
                 </div>
                 <div>
                     {props.numPostLikes}
@@ -33,24 +33,24 @@ function PostMetrics({props}) {
     );
 }
 
-function PersonalComment({LOGO, postId}) {
-    function handleKeyDown(event){
-        if (event.key === 'Enter'){
-            if (event.target.value !== ''){
+function PersonalComment({ LOGO, postId }) {
+    function handleKeyDown(event) {
+        if (event.key === 'Enter') {
+            if (event.target.value !== '') {
                 const commentData = {
                     data: event.target.value,
                     postId: postId
                 }
                 console.log(event.target.value);
                 axios
-                .post(`${url}/create`, commentData)
-                .then((response) => {
-                    const data = response.data;
-                    console.log(data)
-                })
-                .catch((error) => {
-                    console.log("Error occurred: ", error);
-                });
+                    .post(`${url}/create`, commentData)
+                    .then((response) => {
+                        const data = response.data;
+                        console.log(data)
+                    })
+                    .catch((error) => {
+                        console.log("Error occurred: ", error);
+                    });
             }
         }
     }
@@ -60,14 +60,14 @@ function PersonalComment({LOGO, postId}) {
                 <img src={LOGO} alt=""></img>
             </div>
             <div>
-                <input 
-                    type="text" 
-                    className="your-comment-text" 
-                    placeholder="Add a Comment..." 
+                <input
+                    type="text"
+                    className="your-comment-text"
+                    placeholder="Add a Comment..."
                     onKeyDown={handleKeyDown}
                 ></input>
             </div>
         </div>);
 }
 
-export {PersonalComment, PostComments, PostMetrics}
+export { PersonalComment, PostComments, PostMetrics }

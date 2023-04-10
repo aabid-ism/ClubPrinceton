@@ -3,7 +3,7 @@ import './Comment.css'
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const url = "http://localhost:5050/comments";
+const url = "http://clubprinceton.azurewebsites.net/comments";
 
 export default function Comments({ props }){
     const [commentListData, setCommentListData] = useState([])

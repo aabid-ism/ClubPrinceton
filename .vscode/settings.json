@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/d30e56d0-959b-4eec-a61e-1dbea58b9204/resourceGroups/tigerclubs/providers/Microsoft.Web/sites/tigerclubs",
+    "appService.deploySubpath": "server"
+}

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import "./searchBar.css";
 
-const url = "http://localhost:5050/clubs";
+const url = "http://clubprinceton.azurewebsites.net/clubs";
 
 function SearchBar(props) {
   const dispatch = useDispatch();
@@ -16,19 +16,19 @@ function SearchBar(props) {
     console.log(searchWord);
     console.log(`${url}/${searchWord}`);
     if (searchWord != "") {
-    axios
-      .get(`${url}/${searchWord}`)
-      .then((response) => {
-        const data = response.data;
-        console.log(data);
-        dispatch({
-          type: "SET_RESULTS",
-          payload: { results: data, numResults: data.length },
+      axios
+        .get(`${url}/${searchWord}`)
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          dispatch({
+            type: "SET_RESULTS",
+            payload: { results: data, numResults: data.length },
+          });
+        })
+        .catch((error) => {
+          console.log("Error occurred: ", error);
         });
-      })
-      .catch((error) => {
-        console.log("Error occurred: ", error);
-      });
     }
   };
 
