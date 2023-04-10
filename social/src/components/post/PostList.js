@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Post from "./Post";
 import './Posts.css'
 import axios from 'axios'
@@ -14,7 +14,7 @@ export default function Posts({ props }){
     useEffect(() => {
         if (clubData.name !== undefined){
             setPostListData(clubData.posts);
-            console.log(clubData.posts);
+            // console.log(clubData.posts);
         }
     }, [setPostListData, clubData]);
 
@@ -50,7 +50,7 @@ export default function Posts({ props }){
     return (
         <div className="posts">
             <div>
-                {(clubData !== undefined) ? postListData.map((postData) => {
+                { postListData.map((postData) => {
                     const postProps = {
                         caption: postData.caption,
                         creator: postData.netId,
@@ -61,37 +61,10 @@ export default function Posts({ props }){
                     }
                     return (<Post props={postProps} key={postData._id}/>)
                     // return (<pre key={postData._id}>{JSON.stringify(postData, null, 2)}</pre>)
-                }) : <div></div>}
+                    })}
+
                 <button onClick={loadPosts}>See More Posts</button>
             </div>
         </div>
     );
-    // return (
-    //     <div>
-    //         <div className="posts">
-    //             <div>
-    //                 {clubData.posts !== undefined ? clubData.posts.map((postData) => {
-    //                     const postProps = {
-    //                         caption: postData.caption,
-    //                         creator: postData.netId,
-    //                         content: postData.content,
-    //                         id: postData._id,
-    //                         subset_comments: postData.comments
-    //                     }
-    //                     return (<Post props={postProps} key={postData._id}/>)
-    //                 }) : postsData.map((postData) => {
-    //                     const postProps = {
-    //                         caption: postData.caption,
-    //                         creator: postData.netId,
-    //                         content: postData.content,
-    //                         id: postData._id,
-    //                         subset_comments: postData.comments
-    //                     }
-    //                     return (<Post props={postProps} key={postData._id}/>)
-    //                 })}
-    //                 <button onClick={loadPosts}>See More Posts</button>
-    //             </div>
-    //         </div>
-    //     </div>
-    // );
 }

@@ -21,7 +21,7 @@ router.post('/create', async (req, res) => {
     const db = conn.getDb();
     const comment_collection = await db.collection("comments");
     const post_collection = await db.collection("posts");
-    const result = await comment_collection.insertOne(post_comment_to_insert);
+    // const result = await comment_collection.insertOne(post_comment_to_insert);
     console.log(formattedPostId)
 
     const post = await post_collection.findOne({ _id: { $eq: formattedPostId } });
@@ -33,11 +33,18 @@ router.post('/create', async (req, res) => {
     }
 
     post_comments.unshift(post_comment_to_insert);
-    //console.log(post_comments);
-    post_collection.updateOne(
-        { _id: formattedPostId },
-        [{ $set: { comments: post_comments } }]
-    );
+    // post_collection.updateOne(
+    //     { _id: formattedPostId },
+    //     [{ $set: { comments: post_comments } }]
+    // );
+
+    // update the duplicate within the subset comments in the post
+    const club_collection = await db.collection("clubs")
+    const subset_post = await club_collection.findOne({
+        "posts._id" : formattedPostId
+    });
+    console.log("This is the subset version")
+    console.log(subset_post)
 
 
     res.send(post_comment_to_insert).status(200);

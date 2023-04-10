@@ -70,4 +70,4 @@ function PersonalComment({LOGO, postId}) {
         </div>);
 }
 
-export {PersonalComment, PostComments, PostMetrics}
+export {PostComments, PostMetrics}
