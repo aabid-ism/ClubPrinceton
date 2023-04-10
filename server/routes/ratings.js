@@ -8,23 +8,20 @@ router.get("/:name", async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
   const query = req.params.name;
-  console.log(query);
   // search for a club by name and return the first ratings in
   //result with all attributes
   const agg = [
     {
-      $match: { name: query } // match clubs with the given name
+      $match: { name: query }, // match clubs with the given name
     },
     {
-      $project: { _id: 0, rating: 1 } // return only the "rating" field
-    }
+      $project: { _id: 0, rating: 1 }, // return only the "rating" field
+    },
   ];
-
 
   // run pipeline
   const result = await collection.aggregate(agg).toArray();
   // print results
-  console.log(result[0]);
 
   res.send(result[0]).status(200);
 });
@@ -35,12 +32,8 @@ router.post("/:name", async (req, res) => {
   const collection = await db.collection("ratings");
   // get data from request body
   const data = req.body;
-  console.log(data);
   // add a timestamp to the data
   data["lastupdated"] = new Date();
-
-  // add username
-  data["username"] = "roy";
 
   // insert data into database
   const result = await collection.insertOne(data);
@@ -48,7 +41,7 @@ router.post("/:name", async (req, res) => {
   // update the rating of the club
   const ag = [
     {
-      $match: { club: req.params.name } // match clubs with the given name
+      $match: { club: req.params.name }, // match clubs with the given name
     },
     {
       $group: {
@@ -56,9 +49,9 @@ router.post("/:name", async (req, res) => {
         Vibes: { $avg: "$Vibes" },
         Clout: { $avg: "$Clout" },
         Inclusivity: { $avg: "$Inclusivity" },
-        Intensity: { $avg: "$Intensity" }
-      }
-    }
+        Intensity: { $avg: "$Intensity" },
+      },
+    },
   ];
 
   const allRatings = await collection.aggregate(ag).toArray();
@@ -72,8 +65,11 @@ router.post("/:name", async (req, res) => {
 
   // update only the rating field of the club
   const clubCollection = await db.collection("clubs");
-  console.log(avgRating)
-  const clubResult = await clubCollection.updateOne({ name: req.params.name }, { $set: { rating: avgRating } });
+  console.log(avgRating);
+  const clubResult = await clubCollection.updateOne(
+    { name: req.params.name },
+    { $set: { rating: avgRating } }
+  );
   console.log(clubResult);
 
   res.status(200).send(clubResult);
@@ -84,24 +80,35 @@ router.get("/:club/:username", async (req, res) => {
   const collection = await db.collection("ratings");
   const query = req.params.club;
   const username = req.params.username;
-  console.log(query);
   // search for a club by name and return the first ratings in
   //result with all attributes
   const agg = [
     {
-      $match: { club: query, username: username } // match clubs with the given name
+      $match: { club: query, username: username }, // match clubs with the given name
     },
     {
-      $project: { _id: 0, rating: 1 } // return only the "rating" field
-    }
+      $project: {
+        _id: 0,
+        Vibes: 1,
+        Clout: 1,
+        Inclusivity: 1,
+        Intensity: 1,
+      }, // return only the "rating" field
+    },
   ];
 
   // run pipeline
-  const result = await collection.aggregate(agg).toArray();
+  var result = await collection.aggregate(agg).toArray();
   // print results
-  console.log(result[0]);
+  console.log(result);
+  result = result[0];
 
-  res.send(result[0]).status(200);
+  if (result == {} || result == [] || result == null || result == undefined) {
+    result = { Vibes: 0, Clout: 0, Inclusivity: 0, Intensity: 0 };
+  }
+
+  console.log(result);
+  res.send(result).status(200);
 });
 
 export default router;
