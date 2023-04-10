@@ -21,7 +21,7 @@ router.post('/create', async (req, res) => {
     const db = conn.getDb();
     const comment_collection = await db.collection("comments");
     const post_collection = await db.collection("posts");
-    // const result = await comment_collection.insertOne(post_comment_to_insert);
+    const result = await comment_collection.insertOne(post_comment_to_insert);
     console.log(formattedPostId)
 
     const post = await post_collection.findOne({ _id: { $eq: formattedPostId } });
@@ -67,10 +67,11 @@ router.post('/create', async (req, res) => {
 
 // Get more NEW comments for a post
 router.get("/load/:post", async (req, res) => {
-    console.log("Received Request");
+    console.log("Received Request for more comments");
     const post = new ObjectId(req.params.post);
-    //console.log(post);
+    console.log(post);
     const floorTime = new Date(req.query.oldestTime);
+    console.log(floorTime)
     const db = conn.getDb();
     const collection = await db.collection("comments");
     const result = await collection.aggregate([

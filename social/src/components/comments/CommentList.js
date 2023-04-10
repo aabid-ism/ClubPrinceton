@@ -14,7 +14,7 @@ export default function CommentList({ props }){
             setCommentListData(props.comments);
         }
     }, [setCommentListData, props])
-    
+    console.log(commentListData)
 
     const loadCommentList = async (event) => {
         console.log("Attempting to Load Comments!");
@@ -100,7 +100,9 @@ function PersonalComment({LOGO, postId, list}) {
                 .post(`${url}/create`, commentData)
                 .then((response) => {
                     const data = response.data;
-                    console.log(data)
+                    console.log(data) // the returned comment
+                    // could refactor to be slightly more sus
+                    updateListData([data, ...listData])
                 })
                 .catch((error) => {
                     console.log("Error occurred: ", error);
