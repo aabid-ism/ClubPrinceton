@@ -33,5 +33,5 @@ export default function Comment({ props }){
         
             <Like priorLikes={props.likes} priorLikeStatus={props.priorLikeStatus}/>
         </div>
-);
+    );
 }
