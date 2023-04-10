@@ -5,14 +5,16 @@ import axios from "axios";
 
 const url = "http://localhost:5050/comments";
 
-export default function Comments({ props }){
+export default function CommentList({ props }){
+    // this state array should be modifiable via context or passing down when PersonalComment edits
     const [commentListData, setCommentListData] = useState([])
-    console.log(props.comments)
+    // console.log(props)
     useEffect(() => {
         if (props.comments !== undefined){
             setCommentListData(props.comments);
         }
     }, [setCommentListData, props])
+    console.log(commentListData)
 
     const loadCommentList = async (event) => {
         console.log("Attempting to Load Comments!");
@@ -67,16 +69,61 @@ export default function Comments({ props }){
     // console.log("Comment List Data at Start")
     // console.log(commentListData)
     return (
-        <div className="comments">
-            {commentListData.map((commentData) => {
-                    // return (<pre key={commentData._id}>{JSON.stringify(commentData, null, 2)}</pre>)
-                    return (<Comment props={commentData} key={commentData._id}/>)
-                })
-            }
-            <button onClick={loadCommentList}>See Comments!</button>
+        <div>
+            <div className="comments">
+                {
+                commentListData.map((commentData) => {
+                        // return (<pre key={commentData._id}>{JSON.stringify(commentData, null, 2)}</pre>)
+                        return (<Comment props={commentData} key={commentData._id}/>)
+                    })
+                }
+                <button onClick={loadCommentList}>See Comments!</button>
+                
+            </div>
+            <PersonalComment LOGO={props.commenterLogo} postId={props.postId} list={[commentListData, setCommentListData]}/>
         </div>
-        
     );
+}
+
+function PersonalComment({LOGO, postId, list}) {
+    const [listData, updateListData] = list;
+    function handleKeyDown(event){
+        if (event.key === 'Enter'){
+            if (event.target.value !== ''){
+                
+                const commentData = {
+                    data: event.target.value,
+                    postId: postId
+                }
+                console.log(event.target.value);
+                axios
+                .post(`${url}/create`, commentData)
+                .then((response) => {
+                    const data = response.data;
+                    console.log(data) // the returned comment
+                    // could refactor to be slightly more sus
+                    updateListData([data, ...listData])
+                })
+                .catch((error) => {
+                    console.log("Error occurred: ", error);
+                });
+            }
+        }
+    }
+    return (
+        <div className="your-comment">
+            <div className="your-icon">
+                <img src={LOGO} alt=""></img>
+            </div>
+            <div>
+                <input 
+                    type="text" 
+                    className="your-comment-text" 
+                    placeholder="Add a Comment..." 
+                    onKeyDown={handleKeyDown}
+                ></input>
+            </div>
+        </div>);
 }
 
 // import Comment from "./Comment";

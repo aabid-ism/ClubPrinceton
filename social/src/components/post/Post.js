@@ -93,8 +93,8 @@ function Post({ props }){
         creator: props.creator,
         creatorIcon: LOGO,
         title: props.caption,
-        createdTime:"03/14/23", 
-        modTime:"03/15/23"
+        createdTime: props.createdTime, 
+        modTime:"Edits: None!"
     }    
     const contentProps = {
         content: props.content
@@ -104,7 +104,8 @@ function Post({ props }){
     // PersonalComment component can update it for rendering new comments?
     const commentProps = {
         postId: props.id,
-        comments: props.subset_comments
+        comments: props.subset_comments,
+        commenterLogo: LOGO
     };
     // console.log("Subset Comments")
     // console.log(props.subset_comments);
@@ -131,7 +132,6 @@ function Post({ props }){
             <PostComments>
                 <PostMetrics props={{numPostLikes: 10, numPostComments: numPostComments}}/>
                 <CommentList props={commentProps}/>
-                <PersonalComment LOGO={LOGO} postId={commentProps.postId}/>
             </PostComments>
         </PostBubble>                    
     );
