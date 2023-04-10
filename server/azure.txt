@@ -1,0 +1,3 @@
+Account name = clubhub-server
+Database name = clubhub-database
+AZURE_COSMOS_CONNECTIONSTRING=mongodb://clubhub-server:NkJUoecacwsRFbgYJqeLQ9dqcoJNG2dSoIIlVulfrzprCTPzt82heCou6X796iQ0BQ3Sb2f89v40ACDbPTSkxg==@clubhub-server.mongo.cosmos.azure.com:10255/clubhub-database?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@clubhub-server@

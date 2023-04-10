@@ -23,14 +23,16 @@ const ONE_MEGABYTE = 1024 * 1024;
 const uploadOptions = { bufferSize: 4 * ONE_MEGABYTE, maxBuffers: 20 };
 
 // azure variables
+const AZURE_STORAGE_ACCOUNT_NAME = "clubptonblobstorage"
+const AZURE_STORAGE_ACCOUNT_ACCESS_KEY = "NKA4aKYTizqmcB5hrWNwce0Mvqbkgq01BRQRIe/bZZ91mlsODJACrdBv7aXlGlTqb+xK4jeJFfYD+AStoy6UzQ=="
 const sharedKeyCredential = new StorageSharedKeyCredential(
-    process.env.AZURE_STORAGE_ACCOUNT_NAME,
-    process.env.AZURE_STORAGE_ACCOUNT_ACCESS_KEY);
+    AZURE_STORAGE_ACCOUNT_NAME,
+    AZURE_STORAGE_ACCOUNT_ACCESS_KEY);
 
 const pipeline = newPipeline(sharedKeyCredential);
 
 const blobServiceClient = new BlobServiceClient(
-    `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`,
+    `https://${AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`,
     pipeline
 );
 

@@ -17,7 +17,12 @@ import path from "path";
 // let corsOptions = {
 //   origin: "http://localhost:5050"
 // };
-app.use(cors());
+
+const corsOptions = {
+  origin: '*',
+};
+
+app.use(cors(corsOptions));
 // // middleware
 // app.use(cors(corsOptions));
 app.use(express.json());
@@ -25,7 +30,7 @@ app.use(express.json());
 // app.use(bodyParser.urlencoded({
 //     extended: true
 // }));
-app.use(express.static(path.join("../social/", 'build')));
+app.use(express.static(path.join("./", 'build')));
 // delcaring initial route-string, and connecting clubs router: localhost:5050/clubs...
 app.use("/clubs", clubs);
 app.use("/posts", posts);
@@ -45,7 +50,7 @@ app.use((err, _req, res, next) => {
 
 // routing all routes to index.html because client does all the routing!
 app.get('*', function (req, res) {
-  res.sendFile('index.html', { root: path.join("../", 'social/build/') });
+  res.sendFile('index.html', { root: path.join("./", 'build/') });
 });
 
 

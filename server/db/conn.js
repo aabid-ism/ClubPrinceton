@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 let db;
 
-const uri = process.env.ATLAS_URI || "";
+const uri = "mongodb+srv://9projectideas:EfhEWYlNTIYAb8gr@clubprincetoncluster.8gzl1pl.mongodb.net/?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri,
   {
