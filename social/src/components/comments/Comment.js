@@ -24,10 +24,14 @@ function Like({ priorLikes, priorLikeStatus }){
 export default function Comment({ props }){
     return (
         <div className='comment'>
-            <div className="commentText">
+            <div>
+                {props.commenter_netId}:
+                <div className="commentText">
                 {props.data}
+                </div>
             </div>
+        
             <Like priorLikes={props.likes} priorLikeStatus={props.priorLikeStatus}/>
         </div>
-    );
+);
 }
