@@ -78,7 +78,7 @@ app.get('*', function (req, res) {
 // });
 
 // Start the server
-app.listen(PORT, async () => {
+app.listen(PORT, '0.0.0.0', async () => {
   await conn.connectToServer();
   console.log(`Server listening on port ${PORT}`);
 });
