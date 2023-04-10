@@ -1,0 +1,18 @@
+.announce-bubble {
+    color: black;
+    background-color: #f9cb9c;
+    margin: auto auto;
+    width: 20rem;
+    border-radius: 0.5rem;
+    --tw-bg-opacity: 1;
+    box-shadow: 5px 5px 10px rgb(199, 199, 199);
+    padding: 0.75rem;
+
+    /*this is for positioning the ratings bubble
+    in bottom right of page*/
+    position: fixed;
+    /*need to scale the css to occupy a percentage of
+    the page */
+    /*can also use percentages*/
+    right: 5px; bottom: 5px;
+}

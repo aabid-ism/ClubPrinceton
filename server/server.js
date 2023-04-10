@@ -8,6 +8,7 @@ import clubs from "./routes/clubs.js";
 import ratings from "./routes/ratings.js";
 import comments from "./routes/comments.js";
 import posts from "./routes/posts.js";
+import announcement from "./routes/announcement.js";
 import image_pipeline from "./routes/image_pipeline.js";
 import bodyParser from "body-parser";
 import conn from './db/conn.js';
@@ -29,6 +30,7 @@ app.use(express.static(path.join("../social/", 'build')));
 // delcaring initial route-string, and connecting clubs router: localhost:5050/clubs...
 app.use("/clubs", clubs);
 app.use("/posts", posts);
+app.use("/announcement", announcement);
 
 app.use("/ratings", ratings);
 
