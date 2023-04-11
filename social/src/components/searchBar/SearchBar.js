@@ -41,6 +41,9 @@ function SearchBar(props) {
         console.log("data was recieved: " + data);
         // handle club data
         dispatch({
+          type: "RESET_RATINGS",
+        });
+        dispatch({
           type: "SET_CLUB_DATA",
           payload: { clubData: data[0] },
         });
