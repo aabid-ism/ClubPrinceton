@@ -41,7 +41,7 @@ function UserRating() {
           console.error(error);
         });
     }
-  }, [clubData]);
+  }, [clubData, currentlyRating, currentRatings]);
 
   function handleSubmitRating(event) {
     console.log("submitting rating");
@@ -128,7 +128,11 @@ function UserRating() {
             Submit Your Rating
           </strong>
         )}
-        {currentlyRating && <strong onClick={discard}>Discard </strong>}
+        {currentlyRating && (
+          <strong style={{ padding: "12px" }} onClick={discard}>
+            Discard
+          </strong>
+        )}
       </form>
     </RatingsBubble>
   );
@@ -136,6 +140,7 @@ function UserRating() {
 
 const SingleRating = (props) => {
   const [hover, setHover] = useState(0);
+  const clubData = useSelector((state) => state.clubData);
   const currentRatings = useSelector((state) => state.currentRatings);
   const globalRatings = useSelector((state) => state.globalRatings);
   const previousRatings = useSelector((state) => state.previousRatings);
@@ -143,8 +148,7 @@ const SingleRating = (props) => {
 
   const type = "" + props.type;
 
-  const [rating, setRating] = useState(5);
-
+  const [rating, setRating] = useState(globalRatings[type]);
   useEffect(() => {
     if (globalRatings[type] > 0 && !currentlyRating) {
       setRating(globalRatings[type]);
@@ -156,17 +160,28 @@ const SingleRating = (props) => {
       currentRatings[type] == 0
     ) {
       setRating(previousRatings[type]);
-    } else if (currentlyRating && currentRatings[type] == 0) {
+    } else if (
+      currentlyRating &&
+      currentRatings[type] == 0 &&
+      previousRatings[type] == 0
+    ) {
       setRating(0);
     } else if (currentlyRating && currentRatings[type] > 0) {
       setRating(currentRatings[type]);
     }
     setHover(rating);
-  }, [globalRatings, currentRatings, currentlyRating]);
+  }, [
+    clubData,
+    globalRatings,
+    currentRatings,
+    currentlyRating,
+    previousRatings,
+  ]);
 
   const dispatch = useDispatch();
 
   function handleRating(index) {
+    setRating(index);
     if (currentlyRating) {
       dispatch({
         type: "SET_CURRENT_RATINGS",
