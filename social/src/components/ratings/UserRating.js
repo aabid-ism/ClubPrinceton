@@ -3,8 +3,7 @@ import RatingsBubble from "./RatingsBubble";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import "./ratingstar.css";
-const url = "http://localhost:5050/ratings";
-
+const url = `${process.env.REACT_APP_SERVER_URL}/ratings`;
 function UserRating() {
   const clubData = useSelector((state) => state.clubData);
   const currentRatings = useSelector((state) => state.currentRatings);

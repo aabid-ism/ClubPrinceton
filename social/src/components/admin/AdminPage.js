@@ -102,8 +102,7 @@ function AdminInterface() {
         payload: { key: missingInputType, value: missingBool }
     });
 
-    const url = "http://localhost:5050/clubs/admin";
-
+    const url = `${process.env.REACT_APP_SERVER_URL}/clubs/admin`;
     // at start time, get a list of clubs that the user is an admin for
     useEffect(() => {
         // TODO: get username from loggedin cookies
