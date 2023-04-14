@@ -6,6 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import "./tailwind.css"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AdminInterface from './components/admin/AdminPage';
+import Signup from './components/auth/Signup';
+import Landing from './components/auth/Landing';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,6 +17,8 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/admin" element={<AdminInterface />} />
+        <Route path="/landing" element={<Landing />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<App />} />
       </Routes>
     </Router>
