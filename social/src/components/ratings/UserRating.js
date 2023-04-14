@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./ratingstar.css";
 const url = "http://localhost:5050/ratings";
 
-function UserRating() {
+function UserRating(props) {
   const clubData = useSelector((state) => state.clubData);
   const currentRatings = useSelector((state) => state.currentRatings);
   const previousRatings = useSelector((state) => state.previousRatings);
@@ -85,7 +85,7 @@ function UserRating() {
   }
 
   return (
-    <RatingsBubble>
+    <RatingsBubble width={props.width} height={props.height}>
       <form className="rtg-form">
         {!currentlyRating && clubData.name && (
           <strong>Global Rating for {clubData.name}</strong>
