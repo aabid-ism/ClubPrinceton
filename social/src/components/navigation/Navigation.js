@@ -8,7 +8,12 @@ function Navigation(props) {
       <ul className="nav-list">
         <li>
           <a href="/" className="nav-link">
-            Home
+            Homewroks
+          </a>
+        </li>
+        <li>
+          <a href="/" className="nav-link">
+            Submit Your Club Page!
           </a>
         </li>
         <li>

@@ -30,7 +30,8 @@ app.use(express.json());
 // app.use(bodyParser.urlencoded({
 //     extended: true
 // }));
-app.use(express.static(path.join("./", 'build')));
+// REMOVED for 2 server for deployment
+// app.use(express.static(path.join("./", 'build')));
 // delcaring initial route-string, and connecting clubs router: localhost:5050/clubs...
 app.use("/clubs", clubs);
 app.use("/posts", posts);
@@ -49,9 +50,9 @@ app.use((err, _req, res, next) => {
 })
 
 // routing all routes to index.html because client does all the routing!
-app.get('*', function (req, res) {
-  res.sendFile('index.html', { root: path.join("./", 'build/') });
-});
+// app.get('*', function (req, res) {
+//   res.sendFile('index.html', { root: path.join("./", 'build/') });
+// });
 
 
 
@@ -64,9 +65,9 @@ app.get('*', function (req, res) {
 // });
 
 // Defining global routes: localhost:5050/
-// app.get('/', (req, res) => {
-//   res.send('Hello World!');
-// });
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
 
 
 // app.get('/users', (req, res) => {
