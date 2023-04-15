@@ -7,18 +7,21 @@ import useFetch from "../hooks/useFetch/UseFetch";
 
 const Signup = () => {
     const { handleGoogle, loading, error } = useFetch(
-        "http://localhost:5050/auth/signup"
+        `${process.env.REACT_APP_SERVER_URL}/auth/signup`
     );
 
     useEffect(() => {
-        /* global google */
-
+        /* checking if global google object exists in window. 
+            (check index.html script import) */
         if (window.google) {
+
+            // initialize the google sign-in API
             google.accounts.id.initialize({
                 client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
                 callback: handleGoogle,
             });
 
+            // render the google sign-in button
             google.accounts.id.renderButton(document.getElementById("signUpDiv"), {
                 // type: "standard",
                 theme: "filled_black",

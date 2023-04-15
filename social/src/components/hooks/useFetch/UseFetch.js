@@ -4,7 +4,6 @@ const useFetch = (url) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-
     const handleGoogle = async (response) => {
         setLoading(true);
         fetch(url, {
@@ -21,6 +20,7 @@ const useFetch = (url) => {
             .then((data) => {
                 if (data?.user) {
                     localStorage.setItem("user", JSON.stringify(data?.user));
+                    localStorage.setItem("jwt", JSON.stringify(data?.token));
                     window.location.reload();
                 }
                 throw new Error(data?.message || data);

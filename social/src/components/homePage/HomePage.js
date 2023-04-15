@@ -7,6 +7,8 @@ import Post from "../post/Post";
 import PostList from "../post/PostList";
 import UserRating from "../ratings/UserRating";
 import Events from "../events/Events";
+import api from "../auth/api";
+
 function HomePage() {
   const clubData = useSelector(state => state.clubData);
   return (
@@ -31,7 +33,7 @@ function HomePage() {
           )}
         </div>
 
-        
+
       </div>
       <PostList></PostList>
       {/* 
