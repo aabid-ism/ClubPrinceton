@@ -1,6 +1,8 @@
 import React from "react";
 import { FaCog, FaSignOutAlt, FaQuestionCircle } from "react-icons/fa";
 import "./Navigation.css";
+import ClubForm from "../clubForm/ClubForm";
+import PopUpBtn from "../clubForm/PopUpBtn";
 
 function Navigation(props) {
   return (
@@ -8,13 +10,11 @@ function Navigation(props) {
       <ul className="nav-list">
         <li>
           <a href="/" className="nav-link">
-            Homewroks
+            Home
           </a>
         </li>
         <li>
-          <a href="/" className="nav-link">
-            Submit Your Club Page!
-          </a>
+          <PopUpBtn></PopUpBtn>
         </li>
         <li>
           <a href="/" className="nav-link">
