@@ -14,7 +14,7 @@ function PopUpBtn() {
     return (
         <div>
             <div className="popup-btn" onClick={togglePop}>
-                <button>Submit Your Club!</button>
+                <button><strong>Submit Your Club!</strong></button>
             </div>
             {popped ? <ClubForm toggle={togglePop}/> : null}
         </div>
