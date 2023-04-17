@@ -14,47 +14,42 @@ function ClubForm(props) {
         props.toggle();
     };
 
-    let handleSubmitClick = async () => {
-        alert("Are you sure you want to submit this form?");
-
-        const clubName = document.getElementById("clubName").value;
-        const clubInfo = document.getElementById("clubInfo").value;
-        const clubEmail = document.getElementsById("clubEmail").value;
-        const clubPosition = document.getElementsById("clubPosition").value;
-        const clubCert = document.getElementsById("clubCert").value;
-        const clubAddInfo = document.getElementsById("clubAddInfo").value;
-        console.log(clubName);
-        console.log(clubInfo);
-        console.log(clubEmail);
-        console.log(clubPosition);
-        console.log(clubCert);
-        console.log(clubAddInfo);
+    let handleFormSubmit = async (event) => {
+        event.preventDefault();
         // async await?
         // need to have popup message here!
+        console.log("I'm in handleFormSubmit");
+        const clubName = "123";
         
         // process.env.REACT_APP_SERVER_URL
-        const clubFormUrl = `http://localhost:5050/clubrequest/submit`;
+        const clubFormUrl = "http://localhost:5050/clubrequest/submit";
         // const clubFormUrl = `${process.env.REACT_APP_SERVER_URL}/clubform`;
         // need to do async and await
-        
-        await axios.get(clubFormUrl);
 
-        await axios
-            .post(clubFormUrl, {
-                clubName: clubName,
-                clubInfo: clubInfo,
-                clubEmail: clubEmail,
-                clubPosition: clubPosition,
-                clubCert: clubCert,
-                clubAddInfo: clubAddInfo
-            })
-            .then((response) => {
+        // axios({
+        //     method: "post",
+        //     url: clubFormUrl,
+        //     data: clubName
+        //   })
+        //     .then(function (response) {
+        //       //handle success
+        //       console.log(response);
+        //     })
+        //     .catch(function (response) {
+        //       //handle error
+        //       console.log(response);
+        //     });
+        await axios.post(clubFormUrl, {
+            Name: 'Fred',
+            Age: '23'
+          })
+          .then((response) => {
             console.log(response);
-            })
-            .catch((error) => {
+          })
+          .catch((error) => {
             console.log(error);
-            });
-
+          })
+        // need code to exit out of the form
     };
 
 
@@ -92,19 +87,19 @@ function ClubForm(props) {
                     <br></br>
                     <center>
                         <h5>Name of Your Club:</h5>
-                        <input id="clubName" type="text" size="30"></input>
+                        <input name="clubName" type="text" size="30"></input>
                         <br></br>
                         <br></br>
                         <h5>Club Description:</h5>
-                        <input id="clubInfo" type="text" size="30"></input>
+                        <input name="clubInfo" type="text" size="30"></input>
                         <br></br>
                         <br></br>
                         <h5>Your Club's Princeton Email Address:</h5>
-                        <input id="clubEmail" type="text" size="30"></input>
+                        <input name="clubEmail" type="text" size="30"></input>
                         <br></br>
                         <br></br>
                         <h5>Position Within the Club:</h5>
-                        <input id="clubPosition" type="text" size="30"></input>
+                        <input name="clubPosition" type="text" size="30"></input>
                         <br></br>
                         <br></br>
                         <br></br>
@@ -112,15 +107,15 @@ function ClubForm(props) {
                         <div>Note: This is optional; however, it will speed up your application approval.<br></br>
                             The link can be a website that has your club listed as being ODUS-recognized.
                         </div>
-                        <input id="clubCert" type="text" size="30"></input>
+                        <input name="clubCert" type="text" size="30"></input>
                         <br></br>
                         <br></br>
                         <h5>Additional Info:</h5>
                         <div>Note: This is optional</div>
-                        <input id="clubAddInfo" type="text" size="30"></input>
+                        <input name="clubAddInfo" type="text" size="30"></input>
                         <div className="club-form-submit">
                             <br></br>
-                            <button onClick={handleSubmitClick} type="submit">Click Here to Submit!</button>
+                            <button onClick={handleFormSubmit} type="submit">Click Here to Submit!</button>
                         </div>
                     </center>
                 </form>
