@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const jwt = localStorage.getItem('jwt');
+const jwt = localStorage.getItem('jwt')?.replaceAll(/['"]+/g, '');
 
 const api = axios.create({
     baseURL: `${process.env.REACT_APP_SERVER_URL}`,

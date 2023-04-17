@@ -1,3 +1,4 @@
+import("../loadEnvironment.js");
 import express from 'express';
 import { OAuth2Client } from "google-auth-library";
 import jwt from "jsonwebtoken";
@@ -5,7 +6,7 @@ import conn from '../db/conn.js';
 const router = express.Router();
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
-
+import verifyToken from '../jwt.js';
 // verify a client's uploaded token
 async function verifyGoogleToken(token) {
     try {
@@ -22,6 +23,9 @@ async function verifyGoogleToken(token) {
 
 // post route
 router.post("/signup", async (req, res) => {
+    // getting secret from env variables
+    const secret = process.env.JWT_SECRET || "huththak";
+    console.log(secret);
     try {
         // console.log({ verified: verifyGoogleToken(req.body.credential) });
         if (req.body.credential) {
@@ -36,16 +40,23 @@ router.post("/signup", async (req, res) => {
 
             // obtained user google profile
             const profile = verificationResponse?.payload;
-            console.log("here is the profile: ");
-            console.log(profile);
             // add user profile to users database
             const db = conn.getDb();
             const users_collection = db.collection("users");
 
-            // TODO: send the entire profile or parts of the object we want
-            const result = await users_collection.insertOne(profile);
+            // If user already exists, send the reference to that
+            const query = { email: profile.email };
+            let result = await users_collection.findOne(query);
             console.log(result);
+            if (result == null || undefined) {
+                // If the user does not exist, register it
+                result = await users_collection.insertOne(profile);
+            }
 
+            const token = jwt.sign({ user: profile?.email }, secret, {
+                expiresIn: "1d",
+            });
+            console.log(`token is: ${token}`);
             res.status(201).json({
                 message: "Signup was successful",
                 user: {
@@ -53,9 +64,7 @@ router.post("/signup", async (req, res) => {
                     lastName: profile?.family_name,
                     picture: profile?.picture,
                     email: profile?.email,
-                    token: jwt.sign({ email: profile?.email }, process.env.JWT_SECRET, {
-                        expiresIn: "1d",
-                    }),
+                    token: token,
                 },
             });
         }
@@ -65,5 +74,11 @@ router.post("/signup", async (req, res) => {
         });
     }
 });
+
+
+router.get("/verify", verifyToken, (req, res) => {
+    console.log("everything ok boss!");
+    return res.status(200);
+})
 
 export default router;
