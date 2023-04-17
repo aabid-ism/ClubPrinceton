@@ -35,7 +35,7 @@ router.post("/submit", async (req, res) => {
     // along with empty admin array with netid of requestor in it
 
     clubCreation.insertOne(CLUB_CREATION_REQUEST);
-    console.log("Successfully inserted a club in the clubCreation database")
+    console.log("Successfully inserted a club in the clubCreation collection");
 
     // successfully submitted the form
     res.sendStatus(200);
