@@ -8,6 +8,7 @@ import clubs from "./routes/clubs.js";
 import ratings from "./routes/ratings.js";
 import comments from "./routes/comments.js";
 import posts from "./routes/posts.js";
+import likes from "./routes/likes.js"
 import image_pipeline from "./routes/image_pipeline.js";
 import bodyParser from "body-parser";
 import conn from './db/conn.js';
@@ -35,6 +36,8 @@ app.use("/ratings", ratings);
 app.use("/image_pipeline", image_pipeline);
 
 app.use("/comments", comments)
+
+app.use("/likes", likes)
 
 
 

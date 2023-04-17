@@ -14,7 +14,7 @@ export default function CommentList({ props }){
             setCommentListData(props.comments);
         }
     }, [setCommentListData, props])
-    console.log(commentListData)
+    // console.log(commentListData)
 
     const loadCommentList = async (event) => {
         console.log("Attempting to Load Comments!");

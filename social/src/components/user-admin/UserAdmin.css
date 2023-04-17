@@ -1,0 +1,60 @@
+.admin {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 2fr 1fr;
+    color: #786868;
+}
+
+.publish {
+    background-color: #ffe4cc;
+    border-radius: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top:20px;
+    padding-bottom:20px;
+}
+
+.post-publish {
+    display: grid;
+    /* grid-template-rows: 1fr 2fr 1fr 1.5fr 1fr; */
+}
+
+.post-publish-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-button {
+    border-radius: 30px;
+    background-color: #ff9230;
+}
+
+.file-button {
+    border-radius: 30px;
+    background-color: #786868;
+}
+
+.info-input {
+    background-color: #FFF8E5;
+   border-radius: 10px;
+   display: flex;
+   padding: 5px;
+   border: none;
+}
+
+.info-input-file {
+    background-color: #FFF8E5;
+   border-radius: 10px;
+   display: flex;
+   border: none;
+}
+
+.info-input-lg {
+    background-color: #FFF8E5;
+    border-radius: 10px;
+    display: flex;
+    height: 200px;
+    vertical-align: text-top;
+    padding: 5px;
+    border: none;
+}
