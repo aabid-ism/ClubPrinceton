@@ -1,19 +1,27 @@
-import React, { useReducer } from "react"
+import React, { useReducer, useState } from "react"
 import "./UserAdmin.css"
 
 export default function UserAdminPage({ props }) {
-    // const [publishType, togglePublishType] = useState("Post")
+    const [publishPost, togglePublishType] = useState(true)
     return(
         <div className="admin">
             <div className="publish">
-                <PostPublish/>
+                {publishPost ? <div>
+                    <PostPublish/>
+                    <button className="admin-button" onClick={() => {togglePublishType(!publishPost)}}>Switch to Events</button>
+                    </div> : <div>
+                        <EventPublish/>
+                        <button className="admin-button" onClick={() => {togglePublishType(!publishPost)}}>Switch to Posts</button>
+                        </div>}
             </div>
             <div className="members"></div>
         </div>
     )
 }
 
-function reducer(state, action) {
+// TODO: currently both posts and events can use the same reducer due to
+// both only having three inputs, but this may change and need to be broken up
+function postReducer(state, action) {
     switch (action.type){
         case "caption-input":
             return {
@@ -44,13 +52,18 @@ function PostPublish({props}){
         description: "",
         image: {}
     }
-    const [state, dispatch] = useReducer(reducer, initPostInfoState)
+    const [state, dispatch] = useReducer(postReducer, initPostInfoState)
 
     function handlePostInputChange(e){
         dispatch({
             type: e.target.name,
             input: e.target.value
         })
+    }
+
+    function submitPost(){
+        alert(JSON.stringify(state, undefined, 2))
+
     }
 
     return (
@@ -78,7 +91,7 @@ function PostPublish({props}){
                 </div>
                 <div className="post-publish-info">
                     <h2 >Choose Image(.jpg / .png)</h2>
-                    <div className="info-input-file">
+                    <div>
                         <input 
                             type="file" 
                             name="file-input" 
@@ -87,7 +100,63 @@ function PostPublish({props}){
                     </div>
                 </div>
             </div>
-            <button className="admin-button" onClick={() => {console.log(JSON.stringify(state, undefined, 2))}}>Publish</button>
+            <button className="admin-button" onClick={submitPost}>Publish</button>
+        </div>
+    )
+}
+
+function EventPublish({props}){
+    // TODO: logic to get the club that this is a post for
+    // TODO: Logic to get the user; hardcoded rn
+    const user = 'cspeed';
+    const initPostInfoState = {
+        caption: "",
+        link: "",
+        description: ""
+    }
+    const [state, dispatch] = useReducer(postReducer, initPostInfoState)
+
+    function handlePostInputChange(e){
+        dispatch({
+            type: e.target.name,
+            input: e.target.value
+        })
+    }
+
+    function submitPost(){
+        alert(JSON.stringify(state, undefined, 2))
+
+    }
+
+    return (
+        <div className="post-publish">
+            <div className="post-publish-title">
+                <center>
+                    <h1>
+                        Publish Event
+                    </h1>
+                </center>
+                <hr/>
+            </div>
+            <div>
+                <div className="post-publish-info">
+                    <h2>Event Name</h2>
+                    <input 
+                        type="text" 
+                        name="caption-input" 
+                        onInput={handlePostInputChange} 
+                        className="info-input"/>
+                </div>
+                <div className="post-publish-info">
+                    <h2>Hyperlink for Event</h2>
+                    <input type="text" name="description-input" onInput={handlePostInputChange} className="info-input"/>
+                </div>
+                <div className="post-publish-info">
+                    <h2>Event Description</h2>
+                    <input type="text" name="description-input" onInput={handlePostInputChange} className="info-input-lg"/>
+                </div>
+            </div>
+            <button className="admin-button" onClick={submitPost}>Publish</button>
         </div>
     )
 }
