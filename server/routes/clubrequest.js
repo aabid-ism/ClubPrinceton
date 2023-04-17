@@ -5,8 +5,8 @@ const router = express.Router();
 // Post a club form to club creation collection
 router.post("/submit", async (req, res) => {
     console.log("I'm here in the clubrequest/submit endpoint");
-    console.log(req.params.Name);
-    console.log(typeof(req.params.Name));
+    console.log(req.body.Name);
+    console.log(typeof(req.body.Name));
     // console.log(typeof(req.params.clubName));
     // console.log(req.params.clubName);
     // need to submit netid of use
