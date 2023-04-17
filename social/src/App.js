@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import Landing from "./components/auth/Landing.js";
+// import Landing from "./components/auth/Landing.js";
 import MainBubble from "./components/mainpage/MainPage";
 import SearchBar from "./components/searchBar/SearchBar";
 import HomePage from "./components/homePage/HomePage";
