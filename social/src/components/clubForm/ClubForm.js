@@ -19,32 +19,35 @@ function ClubForm(props) {
         // async await?
         // need to have popup message here!
         console.log("I'm in handleFormSubmit");
-        const clubName = "123";
         
         // process.env.REACT_APP_SERVER_URL
         const clubFormUrl = "http://localhost:5050/clubrequest/submit";
         // const clubFormUrl = `${process.env.REACT_APP_SERVER_URL}/clubform`;
         // need to do async and await
 
-        // axios({
-        //     method: "post",
-        //     url: clubFormUrl,
-        //     data: clubName
-        //   })
-        //     .then(function (response) {
-        //       //handle success
-        //       console.log(response);
-        //     })
-        //     .catch(function (response) {
-        //       //handle error
-        //       console.log(response);
-        //     });
+        // need to add security measures +
+
+        // need to fix form data object send in post request later
+        const clubRequestData = new FormData(event.currentTarget);
+        const clubName = clubRequestData.get('clubName');
+        const clubInfo = clubRequestData.get('clubInfo');
+        const clubEmail = clubRequestData.get('clubEmail');
+        const clubPosition = clubRequestData.get('clubPosition');
+        const clubCert = clubRequestData.get('clubCert');
+        const clubAddInfo = clubRequestData.get('clubAddInfo');
+
         await axios.post(clubFormUrl, {
-            Name: 'Fred',
-            Age: '23'
+            clubName: clubName,
+            clubInfo: clubInfo,
+            clubEmail: clubEmail,
+            clubPosition: clubPosition,
+            clubCert: clubCert,
+            clubAddInfo: clubAddInfo
           })
           .then((response) => {
             console.log(response);
+            alert("Form submitted successfully");
+            props.toggle();
           })
           .catch((error) => {
             console.log(error);
@@ -78,7 +81,7 @@ function ClubForm(props) {
         <div className="club-form">
                 <span className="form-close" onClick={handleCloseClick}>&times;</span>
                 <div>
-                <form>
+                <form onSubmit={handleFormSubmit}>
                     <center>
                     <h3>Submit An Application to Run Your Own Club Page on ClubPrinceton!</h3>
                     <p>Note: To have your club application be approved, you must be an office of your club.</p>
@@ -115,7 +118,7 @@ function ClubForm(props) {
                         <input name="clubAddInfo" type="text" size="30"></input>
                         <div className="club-form-submit">
                             <br></br>
-                            <button onClick={handleFormSubmit} type="submit">Click Here to Submit!</button>
+                            <button type="submit">Click Here to Submit!</button>
                         </div>
                     </center>
                 </form>
