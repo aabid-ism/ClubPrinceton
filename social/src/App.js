@@ -17,7 +17,7 @@ function App() {
     // </React.StrictMode>
     <React.StrictMode>
       <Provider store={store}>
-        <Announce></Announce>
+        <HomePage></HomePage>
       </Provider>
     </React.StrictMode>
   );

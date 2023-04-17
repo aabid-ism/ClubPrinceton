@@ -24,18 +24,18 @@ export function Announce() {
 
     let annoucement = "This is my fake announcement with making a get request";
 
-    if (clubData.name !== undefined) {
-        axios
-        .get(URL + "/" + clubData.name)
-        .then((response) => {
-            const data = response.data;
-            // ?
-            annoucement = data;
-        })
-        .catch((error) => {
-            console.log("Error occurred: ", error);
-        });
-    }
+    // if (clubData.name !== undefined) {
+    //     axios
+    //     .get(URL + "/" + clubData.name)
+    //     .then((response) => {
+    //         const data = response.data;
+    //         // ?
+    //         annoucement = data;
+    //     })
+    //     .catch((error) => {
+    //         console.log("Error occurred: ", error);
+    //     });
+    // }
     // some error has occurred with clubData.name being undefined
     // annoucement = "N/A";
 

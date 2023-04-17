@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import Post from "../post/Post";
 import PostList from "../post/PostList";
 import UserRating from "../ratings/UserRating";
+import Announce from "../announcement/Announce";
 import Events from "../events/Events";
 function HomePage() {
   const clubData = useSelector(state => state.clubData);
@@ -29,6 +30,9 @@ function HomePage() {
           {clubData.name && (
             <MainPage width="500" height="400" />
           )}
+        </div>
+        <div>
+          {clubData.name && <Announce />}
         </div>
 
         

@@ -14,5 +14,5 @@
     /*need to scale the css to occupy a percentage of
     the page */
     /*can also use percentages*/
-    right: 5px; bottom: 5px;
+    top: 5px; right: 5px;
 }
