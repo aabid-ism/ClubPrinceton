@@ -12,6 +12,7 @@ import image_pipeline from "./routes/image_pipeline.js";
 import bodyParser from "body-parser";
 import conn from './db/conn.js';
 import path from "path";
+import clubRequest from "./routes/club_form.js";
 
 // // middleware
 // let corsOptions = {
@@ -33,9 +34,10 @@ app.use(express.json());
 // REMOVED for 2 server for deployment
 // app.use(express.static(path.join("./", 'build')));
 // delcaring initial route-string, and connecting clubs router: localhost:5050/clubs...
+app.use("/clubrequest", clubRequest);
+console.log("app is using clubform endpoint");
 app.use("/clubs", clubs);
 app.use("/posts", posts);
-
 app.use("/ratings", ratings);
 
 app.use("/image_pipeline", image_pipeline);
