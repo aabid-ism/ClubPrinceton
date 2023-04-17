@@ -1,0 +1,51 @@
+.superadmin__club {
+  display: flex;
+  flex-direction: column;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin: 1rem;
+  padding: 1rem;
+  width: 300px;
+}
+
+.superadmin__club__name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.superadmin__club__description,
+.superadmin__club__leadership,
+.superadmin__club__odusLink,
+.superadmin__club__email
+.superadmin__club__status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.superadmin__club__description span,
+.superadmin__club__leadership span,
+.superadmin__club__odusLink span,
+.superadmin__club__email span,
+.superadmin__club__status span {
+  margin-right: 0.5rem;
+}
+
+.superadmin__club__button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.superadmin__club__button:hover {
+  background-color: #0069d9;
+}

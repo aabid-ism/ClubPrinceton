@@ -1,13 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import "./tailwind.css"
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import AdminInterface from './components/admin/AdminPage';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import "./tailwind.css";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
+import AdminInterface from "./components/admin/AdminPage";
+import SuperAdminInterface from "./components/super_admin/SuperAdminInterface";
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>
@@ -15,6 +19,7 @@ root.render(
         <Route path="/" element={<App />} />
         <Route path="/admin" element={<AdminInterface />} />
         <Route path="*" element={<App />} />
+        <Route path="/superadmin" element={<SuperAdminInterface />} />
       </Routes>
     </Router>
   </React.StrictMode>
