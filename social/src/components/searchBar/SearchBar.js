@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import "./searchBar.css";
-
+import api from "../auth/api";
 const url = `${process.env.REACT_APP_SERVER_URL}/clubs`;
 // const url = "http://localhost:5050/clubs";
 
@@ -14,11 +14,11 @@ function SearchBar(props) {
 
   const handleSearchTermChange = async (event) => {
     let searchWord = event.target.value;
-    console.log(searchWord);
-    console.log(`${url}/${searchWord}`);
+    // console.log(searchWord);
+    // console.log(`${url}/${searchWord}`);
     if (searchWord != "") {
-      axios
-        .get(`${url}/${searchWord}`)
+      api
+        .get(`/clubs/${searchWord}`)
         .then((response) => {
           const data = response.data;
           console.log(data);
@@ -35,8 +35,8 @@ function SearchBar(props) {
 
   const handleClubClick = (club) => {
     console.log(`Clicked on ${club.name}`);
-    axios
-      .get(`${url}/a/${club.name}`)
+    api
+      .get(`/clubs/a/${club.name}`)
       .then((response) => {
         const data = response.data;
         console.log("data was recieved: " + data);
@@ -51,6 +51,9 @@ function SearchBar(props) {
         console.log("Dispatched club data:", data[0]);
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          // navigate to login page
+        }
         console.log("Error occurred: ", error);
       });
   };
