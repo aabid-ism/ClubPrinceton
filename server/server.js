@@ -76,8 +76,3 @@ app.listen(PORT, "0.0.0.0", async () => {
 //   res.send(`User with ID ${req.params.id}`);
 // });
 
-// Start the server
-app.listen(PORT, "0.0.0.0", async () => {
-  await conn.connectToServer();
-  console.log(`Server listening on port ${PORT}`);
-});
