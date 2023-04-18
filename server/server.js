@@ -36,7 +36,6 @@ app.use("/ratings", ratings);
 app.use("/image_pipeline", image_pipeline);
 app.use("/comments", comments);
 app.use("/auth", auth);
-
 app.use("/clubCreation", clubCreation);
 
 // Global error handling
@@ -75,4 +74,3 @@ app.listen(PORT, "0.0.0.0", async () => {
 // app.get('/users/:id', (req, res) => {
 //   res.send(`User with ID ${req.params.id}`);
 // });
-

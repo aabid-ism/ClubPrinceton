@@ -10,8 +10,9 @@ import {
   Routes,
 } from "react-router-dom";
 import AdminInterface from "./components/admin/AdminPage";
-import SuperAdminInterface from "./components/super_admin/SuperAdminInterface";import Signup from './components/auth/Signup';
-import Landing from './components/auth/Landing';
+import SuperAdminInterface from "./components/super_admin/SuperAdminInterface";
+import Signup from "./components/auth/Signup";
+import Landing from "./components/auth/Landing";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
