@@ -2,7 +2,7 @@ import React, { useReducer, useState } from "react"
 import "./UserAdmin.css"
 
 export default function UserAdminPage({ props }) {
-    const [publishPost, togglePublishType] = useState(true)
+    const [publishPost, togglePublishType] = useState(true) // booleans
     return(
         <div className="admin">
             <div className="publish">
@@ -100,7 +100,7 @@ function PostPublish({props}){
                     </div>
                 </div>
             </div>
-            <button className="admin-button" onClick={submitPost}>Publish</button>
+            <div className="submission"><button className="admin-button" onClick={submitPost}>Publish</button></div>
         </div>
     )
 }
@@ -123,7 +123,7 @@ function EventPublish({props}){
         })
     }
 
-    function submitPost(){
+    function submitEvent(){
         alert(JSON.stringify(state, undefined, 2))
 
     }
@@ -156,7 +156,7 @@ function EventPublish({props}){
                     <input type="text" name="description-input" onInput={handlePostInputChange} className="info-input-lg"/>
                 </div>
             </div>
-            <button className="admin-button" onClick={submitPost}>Publish</button>
+            <div className="submission"><button className="admin-button" onClick={submitEvent}>Publish</button></div>
         </div>
     )
 }

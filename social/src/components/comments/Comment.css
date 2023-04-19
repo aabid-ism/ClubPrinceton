@@ -21,4 +21,7 @@
     gap:10px;
 }
 
+.comment-submit {
+    display: flex;
+}
 

@@ -2,6 +2,7 @@ import Comment from "./Comment";
 import './Comment.css'
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { FaFeather } from "react-icons/fa";
 
 const url = "http://localhost:5050/comments";
 
@@ -115,13 +116,14 @@ function PersonalComment({LOGO, postId, list}) {
             <div className="your-icon">
                 <img src={LOGO} alt=""></img>
             </div>
-            <div>
+            <div className="comment-submit">
                 <input 
                     type="text" 
                     className="your-comment-text" 
                     placeholder="Add a Comment..." 
                     onKeyDown={handleKeyDown}
                 ></input>
+                {/* <button onClick={handleKeyDown}><FaFeather/></button> */}
             </div>
         </div>);
 }

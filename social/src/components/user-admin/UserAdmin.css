@@ -19,6 +19,11 @@
     /* grid-template-rows: 1fr 2fr 1fr 1.5fr 1fr; */
 }
 
+.submission {
+    display: flex;
+    justify-content: center;
+}
+
 .post-publish-info {
     display: flex;
     flex-direction: column;
