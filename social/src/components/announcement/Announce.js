@@ -48,12 +48,16 @@ export function Announce() {
     // some error has occurred with clubData.name being undefined
     // annoucement = "N/A";
 
+    // styling -> edge cases needed:
+    // text box needs to be fixed
+    // message needs to be centered in that textbox with padding
+
     // do we capitalize?
     console.log(announcement);
     return (
         <AnnounceBubble>
             <center>
-                <h3>Club Annoucement</h3>
+                <h3>Club Announcement</h3>
                 <div>{announcement}</div>
             </center>
         </AnnounceBubble>
