@@ -16,13 +16,14 @@ export function OvrRtg() {
 
     // make an axios request using clubData.name to get the overall rating
 
-    const ovrRating = 1.0;
+    const ovrRating = 2.7;
 
     const MAX_RTG = 5;
     // MIN rating 1 or 0? -> EDGE CASE
     const MIN_RTG = 1;
     const DIFF_RTG = 4;
 
+    // need more defined colors
     // magic number
     let red = Math.round(255 * (MAX_RTG - ovrRating)) / DIFF_RTG;
     let green = Math.round(255 * (ovrRating - MIN_RTG)) / DIFF_RTG;
