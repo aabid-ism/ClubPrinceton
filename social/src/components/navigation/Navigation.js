@@ -1,8 +1,21 @@
 import React from "react";
 import { FaCog, FaSignOutAlt, FaQuestionCircle } from "react-icons/fa";
 import "./Navigation.css";
+import { useNavigate } from "react-router-dom";
+
+
 
 function Navigation(props) {
+  const navigate = useNavigate();
+
+  const handleClick = (event) => {
+    // Handle the click event here
+    localStorage.clear();
+    navigate("/signup");
+
+  }
+
+
   return (
     <div className="nav" style={{ width: `${props.width}px`, height: `${props.height}px` }}>
       <ul className="nav-list">
@@ -22,7 +35,7 @@ function Navigation(props) {
             Settings
           </a>
         </li>
-        <li>
+        <li onClick={handleClick}>
           <a href="/" className="nav-link">
             <FaSignOutAlt className="nav-icon" />
             Logout

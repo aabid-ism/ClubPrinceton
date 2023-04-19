@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Navigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const useFetch = (url) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleGoogle = async (response) => {
         setLoading(true);
@@ -27,7 +29,8 @@ const useFetch = (url) => {
                 throw new Error(data?.message || data);
             })
             .then(() => {
-                return <Navigate to="/" />;
+                console.log("hi");
+                navigate("/");
             })
             .catch((error) => {
                 setError(error?.message);

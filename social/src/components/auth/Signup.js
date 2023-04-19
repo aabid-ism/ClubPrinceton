@@ -1,14 +1,56 @@
 // Signup.jsx
+import { useState } from 'react';
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import useFetch from "../hooks/useFetch/UseFetch";
-import { Navigate } from 'react-router-dom';
+
+// import { Link } from "react-router-dom";
+// import useFetch from "../hooks/useFetch/UseFetch";
+import { useNavigate } from 'react-router-dom';
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
 const Signup = () => {
-    const { handleGoogle, loading, error } = useFetch(
-        `${process.env.REACT_APP_SERVER_URL}/auth/signup`
-    );
+    // const { handleGoogle, loading, error } = useFetch(
+    //     `${process.env.REACT_APP_SERVER_URL}/auth/signup`
+    // );
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+
+    const handleGoogle = async (response) => {
+        setLoading(true);
+        fetch(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ credential: response.credential }),
+        })
+            .then((res) => {
+                setLoading(false);
+                return res.json();
+            })
+            .then((data) => {
+                if (data?.user) {
+                    localStorage.setItem("user", JSON.stringify(data?.user.firstName));
+                    localStorage.setItem("jwt", JSON.stringify(data?.user.token));
+                    // navigate("/");
+                    // window.location.reload();
+                }
+                else {
+                    throw new Error(data?.message || data);
+                }
+            })
+            .then(() => {
+                console.log("hi");
+                if (localStorage.getItem("jwt")) {
+                    navigate("/");
+                }
+            })
+            .catch((error) => {
+                setError(error?.message);
+            });
+    };
+
 
     useEffect(() => {
         /* checking if global google object exists in window. 
@@ -45,7 +87,7 @@ const Signup = () => {
                 }
             }, 100);
         };
-    }, [handleGoogle]);
+    }, []);
 
     return (
         <>
@@ -69,7 +111,7 @@ const Signup = () => {
                 ) : (
                     <div id="signUpDiv" data-text="signup_with"></div>
                 )}
-                {localStorage.getItem('user') && < Navigate to="/" />}
+                {/* {localStorage.getItem('user') && < Navigate to="/" />} */}
             </main>
             <footer></footer>
         </>

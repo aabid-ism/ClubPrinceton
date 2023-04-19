@@ -9,7 +9,7 @@ import UserRating from "../ratings/UserRating";
 import Events from "../events/Events";
 import api from "../auth/api";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 
 function HomePage() {
   const clubData = useSelector(state => state.clubData);
@@ -17,13 +17,23 @@ function HomePage() {
   const user = localStorage.getItem('user')?.replaceAll(/['"]+/g, '');
 
   useEffect(() => {
-    console.log("hi");
-    api.get('/auth/verify')
+    console.log("I am at homepage, about to send verification request");
+
+    let jwt = localStorage.getItem('jwt')?.replaceAll(/['"]+/g, '');
+    console.log(jwt)
+    let api2 = axios.create({
+      baseURL: `${process.env.REACT_APP_SERVER_URL}`,
+      headers: {
+        'Authorization': `Bearer ${jwt}`
+      }
+    });
+    api2.get('/auth/verify')
       // .then((res) => {
 
       // })
       .catch((err) => {
         if (err.response.status == 403) {
+          console.log(err);
           navigate("/signup");
         }
       }
