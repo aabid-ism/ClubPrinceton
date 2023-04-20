@@ -93,10 +93,6 @@ function InfoPanel() {
         <div>Likes</div>
         <div>{clubData.stats.Likes}</div>
       </div>
-      <div style={infoNodeStyle}>
-        <div>Posts</div>
-        <div>{clubData.stats.Posts}</div>
-      </div>
     </div>
   );
 }
