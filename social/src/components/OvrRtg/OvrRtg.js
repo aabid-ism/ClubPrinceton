@@ -11,12 +11,17 @@ const URL = "http://localhost:5050/ovrrtg";
 export function OvrRtg() {
     const clubData = useSelector(state => state.clubData);
 
+    // NONE RATING -> GRAY BACKGROUND
+    // BREAKDOWN NONE -> INDIVIDUAL NONE -> GRAY TEXT BACKGROUND
+
     // to the backend -> we are sending back the club
     // link we are currently on
 
     // make an axios request using clubData.name to get the overall rating
 
     const ovrRating = 2.7;
+
+    
 
     const MAX_RTG = 5;
     // MIN rating 1 or 0? -> EDGE CASE
