@@ -40,6 +40,7 @@ router.post("/a/:name", async (req, res) => {
     club["categories"] = [];
     club["announcement"] = "";
     club["description"] = "";
+    club["posts"] = [];
     console.log(club);
     const results2 = await collection2.insertOne(club);
     res.send("club accepted").status(200);
