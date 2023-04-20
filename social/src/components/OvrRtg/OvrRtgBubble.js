@@ -5,7 +5,8 @@ function OvrRtgBubble(props){
     let cssProperties = {
         // forget about rgb
         // see if you can pass in red
-        backgroundColor: "rgb(" + props.redColor + "," + props.greenColor + ",0)"
+        backgroundColor: "rgb(" + props.redColor + "," + props.greenColor +
+        "," + props.blueColor +  ")"
     };
     return (
         <div className="ovr-rtg-bubble" style={cssProperties}>
