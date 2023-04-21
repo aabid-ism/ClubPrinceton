@@ -5,10 +5,16 @@ import axios from "axios";
 
 function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchClearForm, dispatchMissingValues, dispatchSubmit }) {
 
+    // endpoint to insert a post to the posts collection of a club
     const postUrl = `${process.env.REACT_APP_SERVER_URL}/posts/create`;
+
+    // endpoint to insert an image to the Azure blob storage container
     const imageUrl = `${process.env.REACT_APP_SERVER_URL}/image_pipeline`;
 
+    // getting a reference to the file input
     const fileInputRef = useRef(null);
+
+    // getting the file name that is inputted by the user
     const [azureImageBlobName, setAzureImageBlobName] = useState('');
 
     const handleOnSubmit = async (e) => {
@@ -36,14 +42,14 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
             earlyreturn = true;
         }
 
-        // do not go through with submission if input is missing
+        // do not go through with submission if title or caption is missing
         if (earlyreturn) {
             return;
         }
         // if image exists, send image to azure blob storage and 
         // update state variable
         if (state.inputs.file !== null && state.inputs.file !== "") {
-            // sending image to azure
+
             // create a new FormData object
             const formData = new FormData();
 
@@ -56,7 +62,8 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                     'Content-Type': 'multipart/form-data'
                 }
             }).then(response => {
-                console.log(response.data);
+                // console.log(response.data);
+                // setting azureimageblobname with the input file name
                 setAzureImageBlobName(response.data);
             })
                 .catch(error => {
@@ -87,6 +94,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                 alert('Form submitted successfully!');
                 // clearing form fields after successful submission of form
                 dispatchClearForm();
+                // you can't manipulate file input using state, so used a ref
                 fileInputRef.current.value = null;
             })
             .catch((error) => {
