@@ -78,7 +78,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
         // request object to be sent to post endpoint 
         const post_request_data = {
             // TODO: need to change with the correct netID from cookies!!!
-            netId: "ai4295",
+            netId: localStorage.getItem("netid"),
             title: state.inputs.title,
             club: state.activeClub,
             caption: state.inputs.caption,

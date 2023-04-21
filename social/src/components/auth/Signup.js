@@ -34,7 +34,7 @@ const Signup = () => {
                 if (data?.user) {
                     localStorage.setItem("user", JSON.stringify(data?.user.firstName));
                     const parts = data?.user.email.split("@");
-                    localStorage.setItem("netid", JSON.stringify(parts[0]));
+                    localStorage.setItem("netid", parts[0]);
                     localStorage.setItem("profilepic", data?.user.picture);
                     localStorage.setItem("jwt", JSON.stringify(data?.user.token));
                     // navigate("/");

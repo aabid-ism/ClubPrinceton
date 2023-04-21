@@ -24,7 +24,7 @@ root.render(
         <Route path="/admin" element={<AdminInterface />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={<App />} />
+        {/* <Route path="*" element={<App />} /> */}
         <Route path="/superadmin" element={<SuperAdminInterface />} />
       </Routes>
     </Router>

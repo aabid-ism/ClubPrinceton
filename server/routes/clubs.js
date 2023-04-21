@@ -108,10 +108,10 @@ router.post("/create", verifyToken, async (req, res) => {
 });
 
 
-router.get("/admin/:user", async (req, res) => {
+router.get("/admin/:netid", async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("users");
-  const query = { name: req.params.user };
+  const query = { netid: req.params.netid };
   const userResult = await collection.findOne(query);
 
   const response = userResult.admin_clubs;

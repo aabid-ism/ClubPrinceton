@@ -121,8 +121,8 @@ function AdminInterface() {
     // at start time, get a list of clubs that the user is an admin for
     useEffect(() => {
         // TODO: get username from loggedin cookies
-        const username = "ai4295" || null;
-
+        const username = localStorage.getItem("netid") || null;
+        console.log(username);
         // TODO: Use the base axios request with authorization header
         axios.get(`${url}/${username}`).then((response) => {
             // const data = response.data;
