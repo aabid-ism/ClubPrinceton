@@ -40,6 +40,13 @@ router.post("/signup", async (req, res) => {
 
             // obtained user google profile
             const profile = verificationResponse?.payload;
+            const domain = profile.hd;
+
+            if (domain == undefined) {
+                return res.status(400).json({
+                    message: "Please use a valid Princeton email address.",
+                });
+            }
             // add user profile to users database
             const db = conn.getDb();
             const users_collection = db.collection("users");
@@ -47,7 +54,7 @@ router.post("/signup", async (req, res) => {
             // If user already exists, send the reference to that
             const query = { email: profile.email };
             let result = await users_collection.findOne(query);
-            console.log(result);
+            // console.log(result);
             if (result == null || undefined) {
                 // If the user does not exist, register it
                 result = await users_collection.insertOne(profile);
