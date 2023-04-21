@@ -1,18 +1,16 @@
 // imports
+import express from 'express';
 import {
     BlobServiceClient,
     StorageSharedKeyCredential,
     newPipeline
 } from '@azure/storage-blob';
-
-
 import multer from 'multer';
-import express from 'express';
+import getStream from "into-stream";
 
+// setting up upload strategy
 const inMemoryStorage = multer.memoryStorage();
 const uploadStrategy = multer({ storage: inMemoryStorage }).single('file');
-
-import getStream from "into-stream";
 
 // containers
 const containerName2 = 'images';
@@ -43,6 +41,7 @@ const getBlobName = originalName => {
 
 const router = express.Router();
 
+// Posting an Image
 router.post('/', uploadStrategy, async (req, res) => {
 
     console.log(req.file);
@@ -64,6 +63,42 @@ router.post('/', uploadStrategy, async (req, res) => {
         return res.status(404).send(err);
     }
 });
+
+// Getting images of clubs
+router.get('/get/:club', async (req, res) => {
+
+    let viewData;
+
+    try {
+        const containerClient = blobServiceClient.getContainerClient(containerName1);
+        const listBlobsResponse = await containerClient.listBlobFlatSegment();
+
+        for await (const blob of listBlobsResponse.segment.blobItems) {
+            console.log(`Blob: ${blob.name}`);
+        }
+
+        viewData = {
+            title: 'Home',
+            viewName: 'index',
+            accountName: process.env.AZURE_STORAGE_ACCOUNT_NAME,
+            containerName: containerName1
+        };
+
+        if (listBlobsResponse.segment.blobItems.length) {
+            viewData.thumbnails = listBlobsResponse.segment.blobItems;
+        }
+    } catch (err) {
+        viewData = {
+            title: 'Error',
+            viewName: 'error',
+            message: 'There was an error contacting the blob storage container.',
+            error: err
+        };
+        res.status(500);
+    } finally {
+        res.render(viewData.viewName, viewData);
+    }
+})
 
 export default router;
 
