@@ -11,6 +11,7 @@ export function OvrRtg() {
     const clubData = useSelector(state => state.clubData);
     // made it N/A so we can differentiate what is being seen!
     // in case there is a massive error
+    // something wrong in the axios request
     let [ovrRating, setOvrRating] = useState("N/A");
 
 
@@ -26,10 +27,10 @@ export function OvrRtg() {
     if (clubData.name !== undefined) {
         axios
             .get(ovrRatingURL, {
-                params: {clubName: clubData.name}
+                params: {clubName: clubData.name, ovrRatingReq: true}
             })
             .then((response) => {
-                const ovrRatingData = response.data.ovrRating;
+                const ovrRatingData= response.data;
                 console.log("Overall Rating for the Club: " + ovrRatingData);
                 setOvrRating(ovrRatingData);
             })

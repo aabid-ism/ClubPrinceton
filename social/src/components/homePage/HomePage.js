@@ -7,6 +7,7 @@ import Post from "../post/Post";
 import PostList from "../post/PostList";
 import UserRating from "../ratings/UserRating";
 import Events from "../events/Events";
+import OvrRtg from "../OvrRtg/OvrRtg";
 function HomePage() {
   const clubData = useSelector(state => state.clubData);
   return (
@@ -29,6 +30,9 @@ function HomePage() {
           {clubData.name && (
             <MainPage width="500" height="400" />
           )}
+        </div>
+        <div>
+          {clubData.name && <OvrRtg></OvrRtg>}
         </div>
 
         
