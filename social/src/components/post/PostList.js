@@ -4,19 +4,21 @@ import "./Posts.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const url = "http://localhost:5050/posts";
+const url = `${process.env.REACT_APP_SERVER_URL}/posts`;
 
 export default function Posts({ width, height }) {
-  const clubData = useSelector((state) => state.clubData);
-  const [postListData, setPostListData] = useState([]);
 
-  // load subset posts
-  useEffect(() => {
-    if (clubData.name !== undefined) {
-      setPostListData(clubData.posts);
-      // console.log(clubData.posts);
-    }
-  }, [setPostListData, clubData]);
+    const clubData = useSelector(state => state.clubData);
+    const [postListData, setPostListData] = useState([])
+
+    // load subset posts
+    useEffect(() => {
+        if (clubData.name !== undefined) {
+            setPostListData(clubData.posts);
+            // console.log(clubData.posts);
+        }
+    }, [setPostListData, clubData]);
+
 
   // dynamic post loading
   // possible TODO: pass id and do additional request, rather than time

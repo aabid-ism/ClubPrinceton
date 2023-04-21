@@ -1,4 +1,6 @@
+
 import React, { useState } from "react";
+
 import Navigation from "../navigation/Navigation";
 import SearchBar from "../searchBar/SearchBar";
 import MainPage from "../mainpage/MainPage";
@@ -38,6 +40,39 @@ function HomePage() {
     setShowSearchBar(false);
     setShowNavigation(false);
   };
+
+import api from "../auth/api";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+function HomePage() {
+  const clubData = useSelector(state => state.clubData);
+  const navigate = useNavigate();
+  const user = localStorage.getItem('user')?.replaceAll(/['"]+/g, '');
+
+  useEffect(() => {
+    console.log("I am at homepage, about to send verification request");
+
+    let jwt = localStorage.getItem('jwt')?.replaceAll(/['"]+/g, '');
+    console.log(jwt)
+    let api2 = axios.create({
+      baseURL: `${process.env.REACT_APP_SERVER_URL}`,
+      headers: {
+        'Authorization': `Bearer ${jwt}`
+      }
+    });
+    api2.get('/auth/verify')
+      // .then((res) => {
+
+      // })
+      .catch((err) => {
+        if (err.response.status == 403) {
+          console.log(err);
+          navigate("/signup");
+        }
+      }
+      )
+  }, []);
 
   return (
     <div
@@ -143,6 +178,10 @@ function HomePage() {
         {clubData.name && isDesktopOrLaptop && (
           <MainPage width="500px" height="300px" />
         )}
+                <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+                  {localStorage.getItem('user') && <p>Good day, {user}! </p>}
+                  </div>
+
       </div>
       <div
         style={{

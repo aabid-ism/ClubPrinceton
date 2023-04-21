@@ -5,8 +5,9 @@ import axios from "axios";
 
 function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchClearForm, dispatchMissingValues, dispatchSubmit }) {
 
-    const postUrl = "http://localhost:5050/posts/create"
-    const imageUrl = "http://localhost:5050/image_pipeline/"
+    const postUrl = `${process.env.REACT_APP_SERVER_URL}/posts/create`;
+    const imageUrl = `${process.env.REACT_APP_SERVER_URL}/image_pipeline`;
+
     const fileInputRef = useRef(null);
     const [azureImageBlobName, setAzureImageBlobName] = useState('');
 

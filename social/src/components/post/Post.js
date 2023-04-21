@@ -17,12 +17,9 @@ import {
   PersonalComment,
 } from "./PostInteractions";
 
-function PostContent({ content}) {
-  return (
 
-      <div className="postContent">{content}</div>
-
-  );
+function PostContent({ content }) {
+  return <div className="postContent">{content}</div>;
 }
 
 function PostBubble({ children, width, height }) {
@@ -142,7 +139,9 @@ function Post({ props, width, height }) {
         <OptionButton />
       </PostHeader>
 
+
       <PostContent props={contentProps}/>
+
 
       <PostComments>
         <PostMetrics

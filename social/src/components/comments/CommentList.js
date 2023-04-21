@@ -3,7 +3,7 @@ import './Comment.css'
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const url = "http://localhost:5050/comments";
+const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
 
 export default function CommentList({ props }){
     // this state array should be modifiable via context or passing down when PersonalComment edits
