@@ -19,12 +19,14 @@ router.get("/get", async (req, res) => {
 
 
     // need proper error messaging here!
-    const clubAnnouncment = await clubsCollection.findOne({name: clubName}, {announcement: 1});
-    let announcement = clubAnnouncment.announcement;
+    // can remove announcement: 1 before merging
+    const clubDoc = await clubsCollection.findOne({name: clubName}, {announcement: 1});
+    let announcement = clubDoc.announcement;
 
-    if (announcement === "") announcement = "N/A";
+    // if club doesn't have announcement
+    if (announcement === "") announcement = "Nothing to see here!";
 
-    console.log("Type of data for clubAnnouncement: " + clubAnnouncment);
+    console.log("Club Data: " + clubDoc);
     console.log("announcement: " + announcement);
     console.log("type of data for announcement: " + typeof(announcement));
 

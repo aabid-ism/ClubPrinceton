@@ -51,15 +51,17 @@ export function Announce() {
     // styling -> edge cases needed:
     // text box needs to be fixed
     // message needs to be centered in that textbox with padding
-
     // do we capitalize?
+
+    // build a 200 character fixed box size
+    const string200Chars = "The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump! Jackdaws love my big sphinx of quartz. The five boxing wizards jump quickly. Amazingly few discotheques provide jukeboxes.";
     console.log(announcement);
     return (
         <AnnounceBubble>
-            <center>
-                <h3>Club Announcement</h3>
-                <div>{announcement}</div>
-            </center>
+            <div className="announceTitle">
+                    <h4>Annoucement</h4>
+            </div>
+            <div className="announcementText">{announcement}</div>
         </AnnounceBubble>
     );
 
