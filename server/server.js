@@ -39,6 +39,7 @@ app.use("/announcement", announcement);
 app.use("/image_pipeline", image_pipeline);
 app.use("/comments", comments);
 app.use("/auth", auth);
+app.use("/clubrequest", clubrequest);
 app.use("/clubCreation", clubCreation);
 
 // Global error handling
