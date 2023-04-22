@@ -75,7 +75,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
 
 
 
-        console.log(azureImageBlobName);
+        // console.log(azureImageBlobName);
         // request object to be sent to post endpoint 
         const post_request_data = {
             // TODO: need to change with the correct netID from cookies!!!

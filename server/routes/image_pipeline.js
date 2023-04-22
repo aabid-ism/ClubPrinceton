@@ -1,5 +1,6 @@
 // imports
 import express from 'express';
+import conn from "../db/conn.js";
 import {
     BlobServiceClient,
     StorageSharedKeyCredential,
@@ -64,41 +65,75 @@ router.post('/', uploadStrategy, async (req, res) => {
     }
 });
 
-// Getting images of clubs
+
 router.get('/get/:club', async (req, res) => {
+    // try {
+    // const containerClient = blobServiceClient.getContainerClient("images");
+    // const listBlobsResponse = await containerClient.listBlobFlatSegment();
+    // console.log("............")
+    // console.log(listBlobsResponse);
+    // console.log("............")
 
-    let viewData;
+    // get a list of urls from posts collection
+    const db = conn.getDb();
+    const posts_collection = await db.collection("posts");
+    const club = req.params.club;
+    // const agg = [
+    //     { $search: { text: { query: club, path: "club" } } },
+    // ];
 
-    try {
-        const containerClient = blobServiceClient.getContainerClient(containerName1);
-        const listBlobsResponse = await containerClient.listBlobFlatSegment();
+    // run pipeline
+    const posts = await posts_collection.find({ "club": club }).toArray();
+    console.log(posts);
+    const imageUrls = posts.map(post => {
+        return `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/images/${post.image_url}`;
+    });
 
-        for await (const blob of listBlobsResponse.segment.blobItems) {
-            console.log(`Blob: ${blob.name}`);
-        }
+    res.json({ images: imageUrls });
+    // } catch (err) {
+    //     res.status(500).json({ error: err });
+    // }
+});
 
-        viewData = {
-            title: 'Home',
-            viewName: 'index',
-            accountName: process.env.AZURE_STORAGE_ACCOUNT_NAME,
-            containerName: containerName1
-        };
 
-        if (listBlobsResponse.segment.blobItems.length) {
-            viewData.thumbnails = listBlobsResponse.segment.blobItems;
-        }
-    } catch (err) {
-        viewData = {
-            title: 'Error',
-            viewName: 'error',
-            message: 'There was an error contacting the blob storage container.',
-            error: err
-        };
-        res.status(500);
-    } finally {
-        res.render(viewData.viewName, viewData);
-    }
-})
+
+
+
+// Getting images of clubs
+// router.get('/get/:club', async (req, res) => {
+
+//     let viewData;
+
+//     try {
+//         const containerClient = blobServiceClient.getContainerClient(containerName1);
+//         const listBlobsResponse = await containerClient.listBlobFlatSegment();
+
+//         for await (const blob of listBlobsResponse.segment.blobItems) {
+//             console.log(`Blob: ${blob.name}`);
+//         }
+
+//         viewData = {
+//             title: 'Home',
+//             viewName: 'index',
+//             accountName: process.env.AZURE_STORAGE_ACCOUNT_NAME,
+//             containerName: containerName1
+//         };
+
+//         if (listBlobsResponse.segment.blobItems.length) {
+//             viewData.thumbnails = listBlobsResponse.segment.blobItems;
+//         }
+//     } catch (err) {
+//         viewData = {
+//             title: 'Error',
+//             viewName: 'error',
+//             message: 'There was an error contacting the blob storage container.',
+//             error: err
+//         };
+//         res.status(500);
+//     } finally {
+//         res.render(viewData.viewName, viewData);
+//     }
+// })
 
 export default router;
 
