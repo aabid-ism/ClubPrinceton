@@ -3,6 +3,7 @@ import Form from './Form';
 import Sidebar from './Sidebar';
 import { useEffect, useReducer } from 'react';
 import axios from 'axios';
+import Rightbar from './Rightbar';
 
 // state of the initial input fields
 const initialState = {
@@ -16,17 +17,6 @@ const initialState = {
     },
     isSubmitted: false
 }
-
-// const handleOnChangeFile = (state, file) => {
-//     return { ...state.inputs, file: file }
-// }
-// const handleOnChangeCaption = (state, caption) => {
-//     return { ...state.inputs, caption: caption }
-// }
-// const handleOnChangeTitle = (state, title) => {
-//     return { ...state.inputs, title: title }
-// }
-
 
 function reducer(state, action) {
     switch (action.type) {
@@ -46,7 +36,6 @@ function reducer(state, action) {
         case "setCaption":
             return {
                 ...state,
-                // inputs: handleOnChangeCaption(state, action.payload.value),
                 inputs: {
                     ...state.inputs,
                     caption: action.payload.value
@@ -56,7 +45,6 @@ function reducer(state, action) {
         case "setTitle":
             return {
                 ...state,
-                // inputs: handleOnChangeTitle(state, action.payload.value),
                 inputs: {
                     ...state.inputs,
                     title: action.payload.value
@@ -66,7 +54,6 @@ function reducer(state, action) {
         case "setFile":
             return {
                 ...state,
-                // inputs: handleOnChangeFile(state, action.payload.value),
                 inputs: {
                     ...state.inputs,
                     file: action.payload.value
@@ -120,19 +107,17 @@ function AdminInterface() {
 
     // at start time, get a list of clubs that the user is an admin for
     useEffect(() => {
-        // TODO: get username from loggedin cookies
+
         const username = localStorage.getItem("netid") || null;
-        console.log(username);
+
         // TODO: Use the base axios request with authorization header
-        axios.get(`${url}/${username}`).then((response) => {
-            // const data = response.data;
-            // console.log(data);
-            // setClubs(data);
-            // dispatch({ type: 'setClubs', payload: { value: data } });
-            dispatchSetClubs(response.data);
-        }).catch((error) => {
-            console.log("Error occurred: ", error);
-        });
+        axios.get(`${url}/${username}`)
+            .then((response) => {
+                dispatchSetClubs(response.data);
+            })
+            .catch((error) => {
+                console.log("Error occurred: ", error);
+            });
     },
         []);
 
@@ -156,6 +141,7 @@ function AdminInterface() {
                     />
                 </div>
             </main>
+            <Rightbar />
         </div>
     )
 }
