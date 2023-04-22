@@ -1,11 +1,11 @@
 import conn from "../db/conn.js";
-
+import verifyToken from "../jwt.js";
 import express from "express";
 
 const router = express.Router();
 
 // Get a list of all clubs
-router.get("/", async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
   const results = await collection.find({}).limit(50).toArray();
@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 });
 
 // get club information of a single club
-router.get("/a/:name", async (req, res) => {
+router.get("/a/:name", verifyToken, async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
   const query = req.params.name;
@@ -32,7 +32,7 @@ router.get("/a/:name", async (req, res) => {
   res.send(result).status(200);
 });
 // Get a single club
-router.get("/:name", async (req, res) => {
+router.get("/:name", verifyToken, async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
   const query = req.params.name;
@@ -53,7 +53,7 @@ router.get("/:name", async (req, res) => {
 });
 
 // Get the existence of a  single club
-router.get("/check/:name", async (req, res) => {
+router.get("/check/:name", verifyToken, async (req, res) => {
   const collection = await db.collection("clubs");
   const query = { name: req.params.name };
   const result = await collection.findOne(query);
@@ -63,7 +63,7 @@ router.get("/check/:name", async (req, res) => {
 });
 
 // Post a club
-router.post("/create", async (req, res) => {
+router.post("/create", verifyToken, async (req, res) => {
   // checking for a club with this name needs to be done
   //before accessing this endpoint
 
@@ -108,10 +108,10 @@ router.post("/create", async (req, res) => {
 });
 
 
-router.get("/admin/:user", async (req, res) => {
+router.get("/admin/:netid", async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("users");
-  const query = { name: req.params.user };
+  const query = { netid: req.params.netid };
   const userResult = await collection.findOne(query);
 
   const response = userResult.admin_clubs;

@@ -31,6 +31,7 @@ router.post("/create", async (req, res) => {
 
   post_document_to_insert.comments = [];
   post_document_to_insert.image_url = image_url;
+  console.log(post_document_to_insert);
   // add to the posts collection
   const result = await posts_collection.insertOne(post_document_to_insert);
 
@@ -42,7 +43,7 @@ router.post("/create", async (req, res) => {
 
   const club_post_property = clubdocument.posts || "";
   // console.log(type(clubdocument));
-  console.log(club_post_property);
+  // console.log(club_post_property);
 
   // pop the last post from the posts property of the club document if it already has 5
   if (club_post_property.length >= 5) {

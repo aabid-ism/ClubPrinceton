@@ -2,17 +2,35 @@
     color: black;
     background-color: #f9cb9c;
     margin: auto auto;
-    width: 20rem;
+    width: 22rem;
     border-radius: 0.5rem;
     --tw-bg-opacity: 1;
     box-shadow: 5px 5px 10px rgb(199, 199, 199);
     padding: 0.75rem;
+    height: 19rem;
 
-    /*this is for positioning the ratings bubble
-    in bottom right of page*/
-    position: fixed;
     /*need to scale the css to occupy a percentage of
     the page */
+    position: absolute;
     /*can also use percentages*/
-    right: 5px; bottom: 5px;
+
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center;
+    align-items: center; */
+    top: 400px; right: 0px; bottom: 0px; left: 150px;
+}
+
+.announceTitle {
+    position: relative;
+    text-align: center;
+}
+
+.announcementText {
+    position: relative;
+    display: flex;
+    margin: auto;
+    align-items: center;
+    text-align: center;
+    bottom: 15px;
 }
