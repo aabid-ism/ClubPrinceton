@@ -64,7 +64,9 @@ function HomePage() {
 
 
       </div>
-      <PostList></PostList>
+      <div>
+        {clubData.name && <PostList></PostList>}
+      </div>
       {/* 
         <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
           <Post/>
