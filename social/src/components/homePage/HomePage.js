@@ -10,6 +10,7 @@ import Events from "../events/Events";
 import api from "../auth/api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Announce from "../announcement/Announce";
 
 function HomePage() {
   const clubData = useSelector(state => state.clubData);
@@ -32,7 +33,7 @@ function HomePage() {
 
       // })
       .catch((err) => {
-        if (err.response.status == 403) {
+        if (err.response.status === 403) {
           console.log(err);
           navigate("/signup");
         }
@@ -61,12 +62,15 @@ function HomePage() {
             <MainPage width="500" height="400" />
           )}
         </div>
-
-
       </div>
-      <div>
-        {clubData.name && <PostList></PostList>}
-      </div>
+      {/* For Beta -> I did a quick fix to push the posts list down. I used top/left/right/bottom in the posts css */}
+        <div>
+          {clubData.name && <Announce />}
+        </div>
+        <div >
+            {clubData.name && <PostList></PostList>}
+        </div>
+
       {/* 
         <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
           <Post/>
