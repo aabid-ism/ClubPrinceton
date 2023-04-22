@@ -78,7 +78,7 @@ function HomePage() {
           <Post/>
         </div> */}
       <div>
-        <UserRating></UserRating>
+        {clubData.name && (<UserRating></UserRating>)}
       </div>
       {/* <div style={{ position: "fixed", top: 0, right: 0 }}>
           <Events width="300" height="400" />
