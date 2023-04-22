@@ -15,7 +15,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
     const fileInputRef = useRef(null);
 
     // getting the file name that is inputted by the user
-    const [azureImageBlobName, setAzureImageBlobName] = useState('');
+    let azureImageBlobName = "";
 
     const handleOnSubmit = async (e) => {
         // preventing default refresh of forms
@@ -64,7 +64,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
             }).then(response => {
                 // console.log(response.data);
                 // setting azureimageblobname with the input file name
-                setAzureImageBlobName(response.data);
+                azureImageBlobName = response.data;
                 console.log(response.data);
             })
                 .catch(error => {
