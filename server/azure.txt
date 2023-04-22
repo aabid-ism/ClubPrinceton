@@ -1,0 +1,17 @@
+ResourceGroupName : myResourceGroup
+Location          : eastus
+ResourceId        : /subscriptions/d30e56d0-959b-4eec-a61e-1dbea58b9204/resourceGroups/myResourceGroup
+
+StorageAccountName: clubptonblobstorage
+blobstorageAccountKey: tuc8T6BaP/X/+CNA1sleCch4ZluFbn1IRBQ/peDtlsOqMOVyotLUdUTDkU3V+nlzZQJB+U3W/8XJ+ASt3k3xZw==
+BlobEndPoint: https://clubptonblobstorage.blob.core.windows.net/
+
+ConnectionString    : BlobEndpoint=https://clubptonblobstorage.blob.core.windows.net/;QueueEndpoint=https://clubptonblobstorage.queue.core.windows.net/;TableEndpoint=https
+                      ://clubptonblobstorage.table.core.windows.net/;FileEndpoint=https://clubptonblobstorage.file.core.windows.net/;AccountName=clubptonblobstorage;Accoun
+                      tKey=tuc8T6BaP/X/+CNA1sleCch4ZluFbn1IRBQ/peDtlsOqMOVyotLUdUTDkU3V+nlzZQJB+U3W/8XJ+ASt3k3xZw==
+
+AppServicePlan: myAppServicePlan
+web app name: clubptonblobwebapp
+
+function storage account: clubptonfunctionstorage
+function app: clubptonfunctionapp

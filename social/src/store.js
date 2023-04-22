@@ -6,7 +6,11 @@ const initialState = {
   results: [],
   numResults: 0,
   clubData: {},
-  ratings: { Clout: 5, Intensity: 5, Vibes: 5, Inclusivity: 5 },
+  currentRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
+  previousRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
+  globalRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
+  currentlyRating: false,
+  // user: "",
 };
 
 const reducer = (state = initialState, action) => {
@@ -23,18 +27,47 @@ const reducer = (state = initialState, action) => {
         ...state,
         clubData: action.payload.clubData,
       };
-    case "SET_RATING":
+    // case "SET_USER":
+    //   return {
+    //     ...state,
+    //     user: action.payload.user,
+    //   };
+    case "SET_GLOBAL_RATINGS":
       return {
         ...state,
-        ratings: {
-          ...state.ratings,
+        globalRatings: action.payload.globalRatings,
+      };
+    case "SET_PREVIOUS_RATINGS":
+      return {
+        ...state,
+        previousRatings: action.payload.previousRatings,
+      };
+    // set current ratings by type of rating
+    case "SET_CURRENT_RATINGS":
+      return {
+        ...state,
+        currentRatings: {
+          ...state.currentRatings,
           [action.payload.type]: action.payload.rating,
         },
       };
-    case "GET_CLUB_RATINGS":
+    case "SET_CURRENTLY_RATING":
       return {
         ...state,
-        ratings: action.payload.ratings,
+        currentlyRating: action.payload.currentlyRating,
+      };
+    case "SET_CURRENT_RATINGS_ALL":
+      return {
+        ...state,
+        currentRatings: action.payload.currentRatings,
+      };
+    case "RESET_RATINGS":
+      return {
+        ...state,
+        currentRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
+        previousRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
+        globalRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
+        currentlyRating: false,
       };
     default:
       return state;
