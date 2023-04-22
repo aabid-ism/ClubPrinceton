@@ -23,7 +23,6 @@ router.get("/breakdown", async (req, res) => {
     // need try catch blocks everywhere!
     console.log("I'm in the ovr_rating/breakdown endpoint");
     const clubName = req.query.clubName;
-    const ovrRatingRequest = req.query.ovrRatingReq;
     console.log("clubName to query: " + clubName);
 
     const db = conn.getDb();
@@ -53,17 +52,8 @@ router.get("/breakdown", async (req, res) => {
         console.log("club rating breakdown: " + JSON.stringify(clubRating));
     }
 
-    if (ovrRatingRequest) {
-        console.log("I'm in here requesting the overall Rating");
-        let ovrRating = roundHundreth((clubRating.vibesRating + clubRating.cloutRating +
-            clubRating.inclusRating + clubRating.intensityRating) / 4);
-        res.send(ovrRating).status(200);
-        console.log("Sent Club Overall Rating to the frontend");
-    }
-    else {
-        res.send(clubRating).status(200);
-        console.log("clubRating breakdown sent to the frontend! " + clubRating);
-    }
+    res.send(clubRating).status(200);
+    console.log("sent to client!");
 });
 
 
