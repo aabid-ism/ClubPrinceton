@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import api from "../auth/api";
 import { useSelector } from "react-redux";
 import AnnounceBubble from "./AnnounceBubble";
 
@@ -7,7 +8,8 @@ export function Announce() {
     const clubData = useSelector(state => state.clubData);
     const [announcement, setAnnouncement] = useState("");
 
-    const announceURL = "http://localhost:5050/announcement/get";
+    // const announceURL = "http://localhost:5050/announcement/get";
+    const announceURL = `${process.env.REACT_APP_SERVER_URL}/announcement/get`;
 
     // to the backend -> we are sending back the club
     // link we are currently on
@@ -25,7 +27,7 @@ export function Announce() {
 
     // need to change to api.get for authentication
     if (clubData.name !== undefined) {
-        axios
+        api
         .get(announceURL, {
             params: {
                 clubName: clubData.name
