@@ -11,6 +11,7 @@ import bodyParser from "body-parser";
 import conn from "./db/conn.js";
 import path from "path";
 import clubCreation from "./routes/clubCreation.js";
+import announcement from "./routes/announcement.js";
 const app = express();
 const PORT = process.env.PORT || 5050;
 
@@ -33,6 +34,7 @@ app.use(express.static(path.join("./", "build")));
 app.use("/clubs", clubs);
 app.use("/posts", posts);
 app.use("/ratings", ratings);
+app.use("/announcement", announcement);
 app.use("/image_pipeline", image_pipeline);
 app.use("/comments", comments);
 app.use("/auth", auth);
