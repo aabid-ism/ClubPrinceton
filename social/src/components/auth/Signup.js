@@ -18,6 +18,7 @@ const Signup = () => {
 
     const handleGoogle = async (response) => {
         setLoading(true);
+        setError("");
         fetch(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, {
             method: "POST",
             headers: {
@@ -32,6 +33,9 @@ const Signup = () => {
             .then((data) => {
                 if (data?.user) {
                     localStorage.setItem("user", JSON.stringify(data?.user.firstName));
+                    const parts = data?.user.email.split("@");
+                    localStorage.setItem("netid", parts[0]);
+                    localStorage.setItem("profilepic", data?.user.picture);
                     localStorage.setItem("jwt", JSON.stringify(data?.user.token));
                     // navigate("/");
                     // window.location.reload();
@@ -73,6 +77,10 @@ const Signup = () => {
                     google.accounts.id.initialize({
                         client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
                         callback: handleGoogle,
+                        cancel_on_tap_outside: false,
+                        prompt_parent_id: "g-id-signin",
+                        ux_mode: "popup",
+                        hd: "princeton.edu"
                     });
 
                     // Render the Google Sign-In button
@@ -87,7 +95,7 @@ const Signup = () => {
                 }
             }, 100);
         };
-    }, []);
+    }, [error]);
 
     return (
         <>
