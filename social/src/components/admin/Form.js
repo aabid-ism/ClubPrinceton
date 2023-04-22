@@ -55,7 +55,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
 
             // append the file to the form data object
             formData.append('file', state.inputs.file[0]);
-
+            console.log(state.inputs.file[0]);
             // send the file using axios
             await axios.post(imageUrl, formData, {
                 headers: {
@@ -65,6 +65,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                 // console.log(response.data);
                 // setting azureimageblobname with the input file name
                 setAzureImageBlobName(response.data);
+                console.log(response.data);
             })
                 .catch(error => {
                     console.log(error);
@@ -74,7 +75,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
 
 
 
-
+        console.log(azureImageBlobName);
         // request object to be sent to post endpoint 
         const post_request_data = {
             // TODO: need to change with the correct netID from cookies!!!
