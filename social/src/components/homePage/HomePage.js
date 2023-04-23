@@ -78,6 +78,7 @@ export default function HomePage() {
           backgroundColor: "#FFF8E5",
           display: "flex",
           flexDirection: "column",
+          zIndex: -1
         }}
       >
         {isTabletOrMobile && (
