@@ -10,6 +10,8 @@ const initialState = {
   previousRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
   globalRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
   currentlyRating: false,
+  // checks if the club has been rated so far
+  hasOneUserRtg: false
   // user: "",
 };
 
@@ -27,6 +29,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         clubData: action.payload.clubData,
       };
+    case "SET_HAS_USER_RATING":
+        return {
+          ...state,
+          hasOneUserRtg: action.payload.hasOneUserRtg,
+        };
     // case "SET_USER":
     //   return {
     //     ...state,

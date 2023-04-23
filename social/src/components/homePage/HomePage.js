@@ -11,6 +11,8 @@ import api from "../auth/api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Announce from "../announcement/Announce";
+import { OvrRating } from "../clubRating/OvrRating";
+import { ClubRtgBreakdown } from "../clubRating/ClubRtgBreakdown";
 
 function HomePage() {
   const clubData = useSelector(state => state.clubData);
@@ -62,6 +64,12 @@ function HomePage() {
             <MainPage width="500" height="400" />
           )}
         </div>
+      </div>
+      <div>
+        {clubData.name && <ClubRtgBreakdown />}
+      </div>
+      <div>
+        {clubData.name && <OvrRating />}
       </div>
       <div>
           {clubData.name && <Announce />}
