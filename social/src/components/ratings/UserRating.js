@@ -3,8 +3,9 @@ import RatingsBubble from "./RatingsBubble";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import "./ratingstar.css";
+
 const url = `${process.env.REACT_APP_SERVER_URL}/ratings`;
-function UserRating() {
+function UserRating(props) {
   const clubData = useSelector((state) => state.clubData);
   const currentRatings = useSelector((state) => state.currentRatings);
   const previousRatings = useSelector((state) => state.previousRatings);
@@ -84,7 +85,7 @@ function UserRating() {
   }
 
   return (
-    <RatingsBubble>
+    <RatingsBubble width={props.width} height={props.height}>
       <form className="rtg-form">
         {!currentlyRating && clubData.name && (
           <strong>Global Rating for {clubData.name}</strong>

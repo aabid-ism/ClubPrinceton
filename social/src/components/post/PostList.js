@@ -1,13 +1,13 @@
 import { useEffect, useState, useMemo } from "react";
 import Post from "./Post";
-import './Posts.css'
-import axios from 'axios'
+import "./Posts.css";
+import axios from "axios";
 import { useSelector } from "react-redux";
 
 const url = `${process.env.REACT_APP_SERVER_URL}/posts`;
 
+export default function Posts({ width, height }) {
 
-export default function Posts({ props }) {
     const clubData = useSelector(state => state.clubData);
     const [postListData, setPostListData] = useState([])
 
@@ -19,31 +19,29 @@ export default function Posts({ props }) {
         }
     }, [setPostListData, clubData]);
 
-    // dynamic post loading
-    // possible TODO: pass id and do additional request, rather than time
-    const loadPosts = async (event) => {
-        console.log("Attempting to Load Posts!")
-        console.log(postListData[postListData.length - 1]);
-        // TODO: this might be fixed? See if this can be refactored
-        if (clubData.name !== undefined) {
-            let oldest;
-            if (postListData[postListData.length - 1] !== undefined) {
-                oldest = postListData[postListData.length - 1].created_at;
-            }
-            else {
-                oldest = '';
-            }
-            axios
-                .get(`${url}/${clubData.name}?oldestTime=${oldest}`)
-                .then((response) => {
-                    const data = response.data;
-                    setPostListData([...postListData, ...data]);
-                })
-                .catch((error) => {
-                    console.log("Error occurred: ", error);
-                });
-        }
-        console.log(postListData);
+
+  // dynamic post loading
+  // possible TODO: pass id and do additional request, rather than time
+  const loadPosts = async (event) => {
+    console.log("Attempting to Load Posts!");
+    console.log(postListData[postListData.length - 1]);
+    // TODO: this might be fixed? See if this can be refactored
+    if (clubData.name !== undefined) {
+      let oldest;
+      if (postListData[postListData.length - 1] !== undefined) {
+        oldest = postListData[postListData.length - 1].created_at;
+      } else {
+        oldest = "";
+      }
+      axios
+        .get(`${url}/${clubData.name}?oldestTime=${oldest}`)
+        .then((response) => {
+          const data = response.data;
+          setPostListData([...postListData, ...data]);
+        })
+        .catch((error) => {
+          console.log("Error occurred: ", error);
+        });
     }
     // TODO: Pass down the comments array also
     // if a club is defined, render postsData array's values
