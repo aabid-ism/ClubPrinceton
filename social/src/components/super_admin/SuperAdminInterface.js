@@ -44,8 +44,6 @@ export default function SuperAdminInterface() {
       });
   };
 
-  // display each of the club's data with a button to set that club to active club
-  // and set clubDetails with that club's data
   return (
     <div className="superadmin">
       <div className="superadmin__clubs">
@@ -64,17 +62,22 @@ export default function SuperAdminInterface() {
 
               <div className="superadmin__club__title">Leadership:</div>
               <div className="superadmin__club__leadership">
-                {club.leadership}
-              </div>
-
-              <div className="superadmin__club__title">ODUS Link:</div>
-              <div className="superadmin__club__odusLink">
-                {club.odusLink}
+                {club.positionInClub}: {club.applicantName}
               </div>
 
               <div className="superadmin__club__title">Email:</div>
               <div className="superadmin__club__email">
                 {club.email}
+              </div>
+
+              <div className="superadmin__club__title">Certificate Link:</div>
+              <div className="superadmin__club__certificateLink">
+                {club.certificateLink}
+              </div>
+
+              <div className="superadmin__club__title">Additional Info:</div>
+              <div className="superadmin__club__addInfo">
+                {club.addInfo}
               </div>
 
               <div className="superadmin__club__title">Status:</div>
