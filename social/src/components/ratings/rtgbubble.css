@@ -19,5 +19,5 @@ Refactor CSS ->
     the page */
     /*can also use percentages*/
     right: 5px; bottom: 5px;
-    z-index: -1;
+    z-index: 1;
 }
