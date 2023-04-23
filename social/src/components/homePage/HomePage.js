@@ -44,6 +44,7 @@ function HomePage() {
 import api from "../auth/api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Announce from "../announcement/Announce";
 
 function HomePage() {
   const clubData = useSelector(state => state.clubData);
@@ -66,7 +67,7 @@ function HomePage() {
 
       // })
       .catch((err) => {
-        if (err.response.status == 403) {
+        if (err.response.status === 403) {
           console.log(err);
           navigate("/signup");
         }
@@ -201,6 +202,45 @@ function HomePage() {
           <PostList width="600px" height="1000px" />
         )}
       </div>
+        <div style={{ position: "fixed", top: 0, left: 0 }}>
+          <SearchBar width="300" height="400" />
+        </div>
+        <div style={{ position: "fixed", bottom: 0, left: 0 }}>
+          <Navigation width="300" height="400" />
+        </div>
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          {localStorage.getItem('user') && <p>Good day, {user}! </p>}
+          {clubData.name && (
+            <MainPage width="500" height="400" />
+          )}
+        </div>
+      </div>
+      <div>
+          {clubData.name && <Announce />}
+      </div>
+      {/* For Beta -> I did a quick fix to push the posts list down. I used top/left/right/bottom in the posts css */}
+      <div >
+          {clubData.name && <PostList></PostList>}
+      </div>
+      <div>
+        {clubData.name && (<UserRating></UserRating>)}
+      </div>
+
+      {/* 
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
+          <Post/>
+        </div>
+
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
+          <Post/>
+        </div>
+
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
+          <Post/>
+        </div> */}
+      {/* <div style={{ position: "fixed", top: 0, right: 0 }}>
+          <Events width="300" height="400" />
+        </div> */}
     </div>
   );
 }

@@ -43,38 +43,27 @@ export default function Posts({ width, height }) {
           console.log("Error occurred: ", error);
         });
     }
-    console.log(postListData);
-  };
-  // TODO: Pass down the comments array also
-  // if a club is defined, render postsData array's values
-  // otherwise render nothing
-  return (
-    <div className="posts" style={{ width: width, height: height }}>
-      <div>
-        {postListData.map((postData) => {
-          const postProps = {
-            caption: postData.caption,
-            creator: postData.netId,
-            content: postData.title,
-            id: postData._id,
-            subset_comments: postData.comments,
-            createdTime: new Date(
-              postData.created_at
-            ).toLocaleDateString(),
-          };
-          return (
-            <Post
-              props={postProps}
-              key={postData._id}
-              width={width}
-              height={height}
-            />
-          );
-          // return (<pre key={postData._id}>{JSON.stringify(postData, null, 2)}</pre>)
-        })}
+    // TODO: Pass down the comments array also
+    // if a club is defined, render postsData array's values
+    // otherwise render nothing
+    return (
+            <div className="posts">
+                <div>
+                    {postListData.map((postData) => {
+                        const postProps = {
+                            caption: postData.caption,
+                            creator: postData.netId,
+                            content: postData.title,
+                            id: postData._id,
+                            subset_comments: postData.comments,
+                            createdTime: new Date(postData.created_at).toLocaleDateString()
+                        }
+                        return (<Post props={postProps} key={postData._id} />)
+                        // return (<pre key={postData._id}>{JSON.stringify(postData, null, 2)}</pre>)
+                    })}
 
-        <button onClick={loadPosts}>See More Posts</button>
-      </div>
-    </div>
-  );
+                    <button onClick={loadPosts}>See More Posts</button>
+                </div>
+            </div>
+    );
 }

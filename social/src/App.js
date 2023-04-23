@@ -6,6 +6,7 @@ import SearchBar from "./components/searchBar/SearchBar";
 import HomePage from "./components/homePage/HomePage";
 import store from "./store";
 import { Provider } from "react-redux";
+import Announce from "./components/announcement/Announce";
 
 function App() {
   return (
