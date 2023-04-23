@@ -27,7 +27,11 @@ function RatingFactor(props) {
 
     // html tags are working but not css tags
     return (
-        <strong><br></br><div style={cssProperties}>{props.labeling}{props.singleRating}</div></strong>
+        <strong>
+            <div className="rtg-breakdown-txt">
+                <div style={cssProperties}>{props.labeling}{props.singleRating}</div>
+            </div>
+        </strong>
     );
 }
 
@@ -95,7 +99,7 @@ export function ClubRtgBreakdown() {
 
     return (
         <BreakdownBubble>
-            <div className="rtg-breakdown-txt">
+            <div>
                 <RatingFactor rgbColor={vibesColor} singleRating={clubVibes} labeling="Good Vibes: "></RatingFactor>
                 <RatingFactor rgbColor={intensityColor} singleRating={clubIntensity} labeling="Intensity: "></RatingFactor>
                 <RatingFactor rgbColor={popularityColor} singleRating={clubPopularity} labeling="Popularity: "></RatingFactor>
