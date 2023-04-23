@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 import "./searchBar.css";
 import api from "../auth/api";
 const url = `${process.env.REACT_APP_SERVER_URL}/clubs`;

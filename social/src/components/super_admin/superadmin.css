@@ -1,12 +1,34 @@
-.superadmin__club {
+.superadmin {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Set height to 100% of viewport height */
+  background-color: #FFF8E5;
+}
+
+.superadmin__clubs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: calc(100vh - 20rem); /* set height to 100% of viewport height minus the height of the header and footer */
+  overflow-y: auto; /* add vertical scroll */
+}
+
+
+.superadmin__club {
   background-color: #f2f2f2;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  margin: 1rem;
+  margin: 1rem auto;
   padding: 1rem;
-  width: 300px;
+  width: 80%;
+  text-align: center;
+}
+
+
+.superadmin__club__title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
 .superadmin__club__name {
@@ -17,19 +39,22 @@
 
 .superadmin__club__description,
 .superadmin__club__leadership,
-.superadmin__club__odusLink,
-.superadmin__club__email
+.superadmin__club__certificateLink,
+.superadmin__club__email,
+.superadmin__club__addInfo,
 .superadmin__club__status {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   margin-bottom: 0.5rem;
 }
 
 .superadmin__club__description span,
 .superadmin__club__leadership span,
-.superadmin__club__odusLink span,
+.superadmin__club__certificateLink span,
 .superadmin__club__email span,
+.superadmin__club__addInfo span,
 .superadmin__club__status span {
   margin-right: 0.5rem;
 }
