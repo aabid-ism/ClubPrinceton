@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import Post from "./Post";
 import "./Posts.css";
 import axios from "axios";
@@ -7,18 +7,15 @@ import { useSelector } from "react-redux";
 const url = `${process.env.REACT_APP_SERVER_URL}/posts`;
 
 export default function Posts({ width, height }) {
+  const clubData = useSelector((state) => state.clubData);
+  const [postListData, setPostListData] = useState([]);
 
-    const clubData = useSelector(state => state.clubData);
-    const [postListData, setPostListData] = useState([])
-
-    // load subset posts
-    useEffect(() => {
-        if (clubData.name !== undefined) {
-            setPostListData(clubData.posts);
-            // console.log(clubData.posts);
-        }
-    }, [setPostListData, clubData]);
-
+  // load subset posts
+  useEffect(() => {
+    if (clubData.name !== undefined) {
+      setPostListData(clubData.posts);
+    }
+  }, [setPostListData, clubData]);
 
   // dynamic post loading
   // possible TODO: pass id and do additional request, rather than time
@@ -43,27 +40,37 @@ export default function Posts({ width, height }) {
           console.log("Error occurred: ", error);
         });
     }
-    // TODO: Pass down the comments array also
-    // if a club is defined, render postsData array's values
-    // otherwise render nothing
-    return (
-            <div className="posts">
-                <div>
-                    {postListData.map((postData) => {
-                        const postProps = {
-                            caption: postData.caption,
-                            creator: postData.netId,
-                            content: postData.title,
-                            id: postData._id,
-                            subset_comments: postData.comments,
-                            createdTime: new Date(postData.created_at).toLocaleDateString()
-                        }
-                        return (<Post props={postProps} key={postData._id} />)
-                        // return (<pre key={postData._id}>{JSON.stringify(postData, null, 2)}</pre>)
-                    })}
+  };
 
-                    <button onClick={loadPosts}>See More Posts</button>
-                </div>
-            </div>
-    );
+  // if a club is defined, render postsData array's values
+  // otherwise render nothing
+  return (
+    <div className="posts">
+      <div>
+        {postListData.map((postData) => {
+          const postProps = {
+            caption: postData.caption,
+            creator: postData.netId,
+            content: postData.title,
+            id: postData._id,
+            subset_comments: postData.comments,
+            createdTime: new Date(
+              postData.created_at
+            ).toLocaleDateString(),
+          };
+          return (
+            <Post
+              props={postProps}
+              key={postData._id}
+              width={width}
+              height={height}
+            />
+          );
+          // return (<pre key={postData._id}>{JSON.stringify(postData, null, 2)}</pre>)
+        })}
+
+        <button onClick={loadPosts}>See More Posts</button>
+      </div>
+    </div>
+  );
 }
