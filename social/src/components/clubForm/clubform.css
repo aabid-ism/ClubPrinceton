@@ -14,15 +14,11 @@
 
 .club-form {
     position: fixed;
-    z-index: 1;
+    /* need to come up with a z index order  */
     /* width: 50%; */
     /* height: 50%; */
     background-color: #FFE4CC;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    z-index: 1;
+    top: 0px; left: 0px; right: 0px; bottom: 0px;
 }
 
 /* .form_content {
@@ -43,10 +39,10 @@
     /* need to increase size of x mark */
 }
 
-.club-form-submit {
+/* .club-form-submit {
     color: orange;
     border-radius: 10px;
-}
+*/
 
 .form-close:hover {
     color: cyan;

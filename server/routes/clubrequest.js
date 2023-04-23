@@ -1,4 +1,5 @@
 import conn from "../db/conn.js";
+import verifyToken from "../jwt.js";
 import express from "express";
 const router = express.Router();
 
@@ -11,11 +12,14 @@ router.post("/submit", async (req, res) => {
     console.log(req.body.clubName);
     console.log(typeof(req.body.clubName));
 
+    // testing local storage data
+    console.log("Netid of club applicant: " + req.body.applicantNetid);
+    console.log("Club Applicant's name: " + req.body.applicantName);
+
     // fields to be inserted as a club creation document
     // // need to subsitute with actual user id
-    const dummyID = "ap7232";
     const status = "pending";
-    let clubAdmin = ["ap7232"];
+    let clubAdmin = [req.body.applicantNetid];
     // // clubEmail, clubPosition, clubCert, clubAddInfo
     // // admin array with dummy netid, dummy netid email addr, pending status
     const CLUB_CREATION_REQUEST = {
@@ -24,7 +28,8 @@ router.post("/submit", async (req, res) => {
         description: req.body.clubInfo,
         email: req.body.clubEmail,
         name: req.body.clubName,
-        requesterID: dummyID,
+        requesterID: req.body.applicantNetid,
+        applicantName: req.body.applicantName,
         status: status,
         positionInClub: req.body.clubPosition,
         addInfo: req.body.clubAddInfo
