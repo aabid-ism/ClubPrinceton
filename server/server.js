@@ -14,6 +14,7 @@ import clubCreation from "./routes/clubCreation.js";
 import announcement from "./routes/announcement.js";
 const app = express();
 const PORT = process.env.PORT || 5050;
+import clubrequest from "./routes/clubrequest.js";
 
 // // middleware
 const corsOptions = {
@@ -38,6 +39,7 @@ app.use("/announcement", announcement);
 app.use("/image_pipeline", image_pipeline);
 app.use("/comments", comments);
 app.use("/auth", auth);
+app.use("/clubrequest", clubrequest);
 app.use("/clubCreation", clubCreation);
 
 // Global error handling

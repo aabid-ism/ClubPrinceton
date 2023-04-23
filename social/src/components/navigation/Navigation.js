@@ -4,6 +4,8 @@ import "./Navigation.css";
 import { useNavigate } from "react-router-dom";
 
 
+import ClubForm from "../clubForm/ClubForm";
+import PopUpBtn from "../clubForm/PopUpBtn";
 
 function Navigation(props) {
   const navigate = useNavigate();
@@ -23,6 +25,9 @@ function Navigation(props) {
           <a href="/" className="nav-link">
             Home
           </a>
+        </li>
+        <li>
+          <PopUpBtn></PopUpBtn>
         </li>
         <li>
           <a href="/" className="nav-link">

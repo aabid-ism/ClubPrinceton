@@ -63,13 +63,16 @@ function HomePage() {
           )}
         </div>
       </div>
-      {/* For Beta -> I did a quick fix to push the posts list down. I used top/left/right/bottom in the posts css */}
-        <div>
+      <div>
           {clubData.name && <Announce />}
-        </div>
-        <div >
-            {clubData.name && <PostList></PostList>}
-        </div>
+      </div>
+      {/* For Beta -> I did a quick fix to push the posts list down. I used top/left/right/bottom in the posts css */}
+      <div >
+          {clubData.name && <PostList></PostList>}
+      </div>
+      <div>
+        {clubData.name && (<UserRating></UserRating>)}
+      </div>
 
       {/* 
         <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
@@ -83,9 +86,6 @@ function HomePage() {
         <div style={{ flex: 1, display: "flex", justifyContent: "center" , margin: "10px"}}>
           <Post/>
         </div> */}
-      <div>
-        {clubData.name && (<UserRating></UserRating>)}
-      </div>
       {/* <div style={{ position: "fixed", top: 0, right: 0 }}>
           <Events width="300" height="400" />
         </div> */}

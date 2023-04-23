@@ -11,14 +11,15 @@
 
     /*need to scale the css to occupy a percentage of
     the page */
-    position: absolute;
+    position: relative;
     /*can also use percentages*/
 
     display: flex;
     flex-direction: column;
     /* justify-content: center;
     align-items: center; */
-    top: 400px; right: 0px; bottom: 0px; left: 150px;
+    top: 140px; right: 0px; bottom: 0px; left: 80px;
+    z-index: 1;
 }
 
 .announceTitle {
