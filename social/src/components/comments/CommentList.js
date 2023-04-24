@@ -2,6 +2,7 @@ import Comment from "./Comment";
 import './Comment.css'
 import { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../auth/api";
 
 const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
 
@@ -26,7 +27,7 @@ export default function CommentList({ props }){
         else {
             oldest = '';
         }
-        axios
+        api
         .get(`${url}/load/${props.postId}?oldestTime=${oldest}`)
         .then((response) => {
             const data = response.data;
@@ -96,7 +97,7 @@ function PersonalComment({LOGO, postId, list}) {
                     postId: postId
                 }
                 console.log(event.target.value);
-                axios
+                api
                 .post(`${url}/create`, commentData)
                 .then((response) => {
                     const data = response.data;

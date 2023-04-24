@@ -38,8 +38,6 @@ function PostBubble({ children, width, height }) {
   );
 }
 
-// MAJOR REFACTOR: Comments will now be loaded from the post array AND dynamically
-
 function Post({ props, width, height }) {
   const defaultPostProps = {
     headerProps: {
@@ -110,15 +108,11 @@ function Post({ props, width, height }) {
     content: props.content,
   };
 
-  // TODO: maybe make this a state variable for the comments so that the
-  // PersonalComment component can update it for rendering new comments?
   const commentProps = {
     postId: props.id,
     comments: props.subset_comments,
     commenterLogo: LOGO,
   };
-  // console.log("Subset Comments")
-  // console.log(props.subset_comments);
 
   const numPostComments =
     commentProps.comments !== undefined
