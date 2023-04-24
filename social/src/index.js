@@ -14,6 +14,7 @@ import SuperAdminInterface from "./components/super_admin/SuperAdminInterface";
 import Signup from "./components/auth/Signup";
 import Landing from "./components/auth/Landing";
 import Image from "./components/image/Image";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

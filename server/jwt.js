@@ -18,6 +18,12 @@ const verifyToken = async (req, res, next) => {
         jwt.verify(bearerToken, secret, (err, decoded) => {
             if (err) {
                 console.log(`ERROR verifying JWT token: ${err.message}`);
+                if (err.name == 'TokenExpiredError') {
+                    console.log("Token Expired bro");
+                    res.status(403);
+                    return res.send(err.name);
+                    return res.sendStatus(403);
+                }
                 return res.sendStatus(403);
             }
             if (!decoded) {

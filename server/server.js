@@ -11,6 +11,8 @@ import bodyParser from "body-parser";
 import conn from "./db/conn.js";
 import path from "path";
 import clubCreation from "./routes/clubCreation.js";
+import users from "./routes/users.js";
+
 const app = express();
 const PORT = process.env.PORT || 5050;
 
@@ -36,6 +38,7 @@ app.use("/ratings", ratings);
 app.use("/image_pipeline", image_pipeline);
 app.use("/comments", comments);
 app.use("/auth", auth);
+app.use("/users", users);
 app.use("/clubCreation", clubCreation);
 
 // Global error handling
