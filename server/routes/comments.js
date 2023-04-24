@@ -1,5 +1,6 @@
 import conn from '../db/conn.js';
 import {ObjectId} from 'mongodb';
+import verifyToken from "../jwt.js";
 import express from 'express';
 
 const router = express.Router();
@@ -91,6 +92,21 @@ router.get("/load/:post", async (req, res) => {
     // const result = await collection.find({ postId: { $eq: post } }).toArray();
     //console.log(result);
     res.send(result).status(200);
+});
+
+// Liking functionality
+
+// get the number of likes and whether the provided user has liked a comment
+router.get('/like/:id', async (req, res) => {
+  console.log('Like Request for Comment Received!');
+  console.log(req.params.id);
+  const commentId = req.params.id;
+
+  const commentLikeData = {
+    number_of_likes: 10,
+    user_has_liked: true
+  }
+  res.send(commentLikeData).status(200);
 });
 
 export default router;

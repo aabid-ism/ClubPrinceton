@@ -15,11 +15,11 @@ export default function CommentList({ props }){
             setCommentListData(props.comments);
         }
     }, [setCommentListData, props])
-    console.log(commentListData)
+    //console.log(commentListData)
 
     const loadCommentList = async (event) => {
-        console.log("Attempting to Load Comments!");
-        console.log(`Request made: ${url}/load/${props.postId}`)
+        // console.log("Attempting to Load Comments!");
+        // console.log(`Request made: ${url}/load/${props.postId}`)
         let oldest;
         if (commentListData[commentListData.length - 1] !== undefined){
             oldest = commentListData[commentListData.length - 1].created_at;
@@ -81,7 +81,7 @@ export default function CommentList({ props }){
                 <button onClick={loadCommentList}>See Comments!</button>
                 
             </div>
-            <PersonalComment LOGO={props.commenterLogo} postId={props.postId} list={[commentListData, setCommentListData]}/>
+            <PersonalComment postId={props.postId} list={[commentListData, setCommentListData]}/>
         </div>
     );
 }

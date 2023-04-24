@@ -3,7 +3,7 @@ import { FaRegHeart, FaHeart } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import api from '../auth/api';
 
-const url = `${process.env.REACT_APP_SERVER_URL}/likes`;
+const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
 // TODO: needs to actually update database with likes
 function Like({ priorLikes, priorLikeStatus }){
     const [isLiked, toggleLike] = useState(priorLikeStatus);
@@ -23,23 +23,28 @@ function Like({ priorLikes, priorLikeStatus }){
 }
 
 // TODO: Make a request for whether the post was liked by a certain user
-export default function Comment({ props }){
-    // TODO 1: How many likes did this comment get?
-    // Send a get request with the comment's id
-    // passdown the initial number of likes
-    // for now
-    const net_id = 'cspeed'
-    let commentLikesData;
-    api
-    .get(`${url}/?netId=${net_id}`)
-    .then((response) => {
-        const data = response.data;
-        console.log(data)
-    })
-    .catch((error) => {
-        console.log("Error occurred: ", error);
-    });
-
+export default function Comment ({ props }){
+    let commentLikeData = {
+        number_of_likes: 0,
+        user_has_liked: false
+      }
+    async function getData(){
+        let netId = localStorage.getItem("netid"); // could be moved up the chain
+        const commentId = props._id;
+        const like_info_string = `${url}/like/${commentId}`;
+        
+        await api
+        .get(like_info_string)
+        .then((response) => {
+            console.log(response.data)
+            commentLikeData = response.data;
+        })
+        .catch((error) => {
+            console.log("Error occurred: ", error);
+        });
+    }
+    getData();
+    
     return (
         <div className='comment'>
             <div>
@@ -49,7 +54,7 @@ export default function Comment({ props }){
                 </div>
             </div>
         
-            <Like priorLikes={props.likes} priorLikeStatus={props.priorLikeStatus}/>
+            <Like priorLikes={commentLikeData.number_of_likes} priorLikeStatus={commentLikeData.user_has_liked}/>
         </div>
     );
 }

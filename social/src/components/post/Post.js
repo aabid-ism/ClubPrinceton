@@ -125,7 +125,6 @@ function Post({ props, width, height }) {
   return (
       <PostBubble width={width} height={height}>
         <PostHeader>
-          <Icon image={defaultPostProps.headerProps.creatorIcon} />
           <HeaderInfo>
             <PostTitle props={headerProps} />
             <PostCreationInfo props={headerProps} />
@@ -135,9 +134,6 @@ function Post({ props, width, height }) {
       <PostContent props={contentProps}/>
 
         <PostComments>
-          <PostMetrics
-            props={{ numPostLikes: 10, numPostComments: numPostComments }}
-          />
           <CommentList props={commentProps} />
         </PostComments>
       </PostBubble>
