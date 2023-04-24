@@ -12,6 +12,8 @@ import api from "../auth/api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Announce from "../announcement/Announce";
+import { OvrRating } from "../clubRating/OvrRating";
+import { ClubRtgBreakdown } from "../clubRating/ClubRtgBreakdown";
 
 export default function HomePage() {
   const clubData = useSelector((state) => state.clubData);
@@ -76,6 +78,7 @@ export default function HomePage() {
           backgroundColor: "#FFF8E5",
           display: "flex",
           flexDirection: "column",
+          zIndex: -1
         }}
       >
         {isTabletOrMobile && (
@@ -203,6 +206,12 @@ export default function HomePage() {
             />
           )}
         </div>
+      </div>
+      <div>
+        {clubData.name && <ClubRtgBreakdown />}
+      </div>
+      <div>
+        {clubData.name && <OvrRating />}
       </div>
       <div>{clubData.name && <Announce />}</div>
       {clubData.name && (

@@ -15,6 +15,7 @@ import announcement from "./routes/announcement.js";
 const app = express();
 const PORT = process.env.PORT || 5050;
 import clubrequest from "./routes/clubrequest.js";
+import clubRating from "./routes/clubRating.js";
 
 // // middleware
 const corsOptions = {
@@ -41,6 +42,7 @@ app.use("/comments", comments);
 app.use("/auth", auth);
 app.use("/clubrequest", clubrequest);
 app.use("/clubCreation", clubCreation);
+app.use("/clubRating", clubRating);
 
 // Global error handling
 app.use((err, _req, res, next) => {
