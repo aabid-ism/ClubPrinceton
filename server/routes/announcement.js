@@ -21,7 +21,7 @@ router.get("/get", verifyToken, async (req, res) => {
 
     // need proper error messaging here!
     // can remove announcement: 1 before merging
-    const clubDoc = await clubsCollection.findOne({name: clubName});
+    const clubDoc = await clubsCollection.findOne({ name: clubName });
     let announcement = clubDoc.announcement;
 
     // if club doesn't have announcement
@@ -29,7 +29,7 @@ router.get("/get", verifyToken, async (req, res) => {
 
     console.log("Club Data: " + clubDoc);
     console.log("announcement: " + announcement);
-    console.log("type of data for announcement: " + typeof(announcement));
+    console.log("type of data for announcement: " + typeof (announcement));
 
     // can be null/empty or with words
     // timestamp -> when was announcment last created
@@ -38,6 +38,16 @@ router.get("/get", verifyToken, async (req, res) => {
 });
 
 
+router.get("/post", async (req, res) => {
+
+    // connection and get collection
+
+    // 
+    // get the announcement from request body
+
+    // 
+
+});
 
 
 export default router;

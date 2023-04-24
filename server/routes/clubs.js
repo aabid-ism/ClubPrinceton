@@ -28,9 +28,43 @@ router.get("/a/:name", verifyToken, async (req, res) => {
   const result = await collection.aggregate(agg).toArray();
   // print results
 
-
   res.send(result).status(200);
 });
+
+
+
+// get club information of a single club
+router.get("/club/officers/:name", verifyToken, async (req, res) => {
+  const db = conn.getDb();
+  const clubCollection = await db.collection("clubs");
+  const clubName = req.params.name;
+  if (clubName == "" || undefined) {
+    return res.send("").status(200);
+  }
+
+  // console.log(query);
+  // search for a club by name and return the first result with all attributes
+
+  // const agg = [
+  //   { name: clubName },
+  //   { $limit: 1 },
+  //   { $project: { _id: 0, officers: 1 } },
+  // ];
+
+  // run pipeline
+  // const result = await clubCollection.aggregate(agg).toArray();
+  const result = await clubCollection.findOne(
+    { name: clubName },
+    { _id: 0 }
+  )
+  // print results
+
+  console.log(result);
+  res.send(result).status(200);
+});
+
+
+
 // Get a single club
 router.get("/:name", verifyToken, async (req, res) => {
   const db = conn.getDb();
@@ -61,6 +95,35 @@ router.get("/check/:name", verifyToken, async (req, res) => {
   if (result)
     res.send("A club with that name already exists").status(200);
 });
+
+// Update club officers
+router.post("/club/officers/update/:club", verifyToken, async (req, res) => {
+
+  // If club is empty, return with nothing
+  if (req.params.club == "" || undefined) {
+    return res.send("").status(200);
+  }
+
+  // make connection and get collections
+  const db = conn.getDb();
+  const clubName = req.params.club;
+  const club_collection = await db.collection("clubs");
+
+  // TODO: check whether the netid is a valid, registered user
+
+
+  // update the officers field of the club in the club connection
+  console.log(req.body);
+  club_collection.updateOne(
+    { name: clubName },
+    // [{ $set: { posts: { $concatArrays: ["$posts", [post_document_to_insert]] } } }]
+    [{ $set: { officers: req.body } }]
+  )
+
+  res.send().status(200);
+
+})
+
 
 // Post a club
 router.post("/create", verifyToken, async (req, res) => {
