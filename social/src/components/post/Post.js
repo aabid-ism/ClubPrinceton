@@ -17,6 +17,7 @@ import {
   PersonalComment,
 } from "./PostInteractions";
 
+
 function PostContent({ content }) {
   return <div className="postContent">{content}</div>;
 }
@@ -128,25 +129,24 @@ function Post({ props, width, height }) {
   // the PersonalComment
   // TODO: The post should be keeping track of how many total comments have been made
   return (
-    <PostBubble width={width} height={height}>
-      <PostHeader>
-        <Icon image={defaultPostProps.headerProps.creatorIcon} />
-        <HeaderInfo>
-          <PostTitle props={headerProps} />
-          <PostCreationInfo props={headerProps} />
-        </HeaderInfo>
-        <OptionButton />
-      </PostHeader>
+      <PostBubble width={width} height={height}>
+        <PostHeader>
+          <Icon image={defaultPostProps.headerProps.creatorIcon} />
+          <HeaderInfo>
+            <PostTitle props={headerProps} />
+            <PostCreationInfo props={headerProps} />
+          </HeaderInfo>
+          <OptionButton />
+        </PostHeader>
+      <PostContent props={contentProps}/>
 
-      <PostContent props={contentProps} />
-
-      <PostComments>
-        <PostMetrics
-          props={{ numPostLikes: 10, numPostComments: numPostComments }}
-        />
-        <CommentList props={commentProps} />
-      </PostComments>
-    </PostBubble>
+        <PostComments>
+          <PostMetrics
+            props={{ numPostLikes: 10, numPostComments: numPostComments }}
+          />
+          <CommentList props={commentProps} />
+        </PostComments>
+      </PostBubble>
   );
 }
 

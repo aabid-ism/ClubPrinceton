@@ -11,10 +11,13 @@ import bodyParser from "body-parser";
 import conn from "./db/conn.js";
 import path from "path";
 import clubCreation from "./routes/clubCreation.js";
+import announcement from "./routes/announcement.js";
 import users from "./routes/users.js";
 
 const app = express();
 const PORT = process.env.PORT || 5050;
+import clubrequest from "./routes/clubrequest.js";
+import clubRating from "./routes/clubRating.js";
 
 // // middleware
 const corsOptions = {
@@ -35,11 +38,13 @@ app.use(express.static(path.join("./", "build")));
 app.use("/clubs", clubs);
 app.use("/posts", posts);
 app.use("/ratings", ratings);
+app.use("/announcement", announcement);
 app.use("/image_pipeline", image_pipeline);
 app.use("/comments", comments);
 app.use("/auth", auth);
-app.use("/users", users);
 app.use("/clubCreation", clubCreation);
+app.use("/clubRating", clubRating);
+app.use("/users", users);
 
 // Global error handling
 app.use((err, _req, res, next) => {

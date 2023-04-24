@@ -1,0 +1,50 @@
+.popup-btn {
+    text-align: center;
+    /* top: 30%;
+    left: 42%;
+    zoom: 1.5; */
+    border-radius: 10px;
+    background-color: #FFE4CC;
+    outline: none;
+}
+
+.popup-btn:hover {
+    background-color: orange;
+}
+
+.club-form {
+    position: fixed;
+    /* need to come up with a z index order  */
+    /* width: 50%; */
+    /* height: 50%; */
+    background-color: #FFE4CC;
+    top: 0px; left: 0px; right: 0px; bottom: 0px;
+}
+
+/* .form_content {
+    background-color: white;
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    width: 40%;
+    padding: 20px;
+    border-radius: 5px;
+    border: 2px solid black;
+} */
+
+/* the dot is unique */
+.form-close {
+    color: black;
+    float: right;
+    /* need to increase size of x mark */
+}
+
+/* .club-form-submit {
+    color: orange;
+    border-radius: 10px;
+*/
+
+.form-close:hover {
+    color: cyan;
+    cursor: pointer;
+}

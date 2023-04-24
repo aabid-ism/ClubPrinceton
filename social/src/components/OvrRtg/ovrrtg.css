@@ -1,10 +1,6 @@
-/*
-Refactor CSS -> 
-*/
-
-.rtg-bubble {
+.ovr-rtg-bubble {
     color: black;
-    background-color: #f9cb9c;
+    /* background-color: #f9cb9c; */
     margin: auto auto;
     width: 20rem;
     border-radius: 0.5rem;
@@ -19,5 +15,4 @@ Refactor CSS ->
     the page */
     /*can also use percentages*/
     right: 5px; bottom: 5px;
-    z-index: 0;
 }
