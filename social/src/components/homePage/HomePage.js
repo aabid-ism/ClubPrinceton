@@ -78,7 +78,7 @@ export default function HomePage() {
           backgroundColor: "#FFF8E5",
           display: "flex",
           flexDirection: "column",
-          zIndex: -1
+          zIndex: -1,
         }}
       >
         {isTabletOrMobile && (
@@ -159,61 +159,95 @@ export default function HomePage() {
             </div>
           </React.Fragment>
         )}
-
         <div
           style={{
-            flex: 1,
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
-            alignItems: "center",
-            marginTop: "50px",
-            maxWidth: isDesktopOrLaptop ? "70%" : "100%",
-            margin: "0 auto",
-            textAlign: "center",
           }}
         >
-          {clubData.name && (
-            <MainPage
-              width={isTabletOrMobile ? "100%" : "500px"}
-              height={isTabletOrMobile ? "30%" : "300px"}
-            />
-          )}
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "50px",
+              maxWidth: isDesktopOrLaptop ? "70%" : "100%",
+              margin: "0 auto",
+              textAlign: "center",
+            }}
+          >
+            {clubData.name && (
+              <MainPage
+                width={isTabletOrMobile ? "100%" : "500px"}
+                height={isTabletOrMobile ? "30%" : "300px"}
+              />
+            )}
+
+            {localStorage.getItem("user") && <p>Good day, {user}! </p>}
+          </div>
           <div
             style={{
               flex: 1,
               display: "flex",
               justifyContent: "center",
+              alignItems: "center",
+              maxWidth: isDesktopOrLaptop ? "70%" : "100%",
+              margin: "0 auto",
+              textAlign: "center",
             }}
           >
-            {localStorage.getItem("user") && <p>Good day, {user}! </p>}
+            {clubData.name && <Announce />}
+          </div>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              maxWidth: isDesktopOrLaptop ? "70%" : "100%",
+              margin: "0 auto",
+              textAlign: "center",
+            }}
+          >
+            {clubData.name && (
+              <PostList
+                width={isTabletOrMobile ? "100%" : "600px"}
+                height={isTabletOrMobile ? "60%" : "1000px"}
+              />
+            )}
           </div>
         </div>
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            maxWidth: isDesktopOrLaptop ? "70%" : "100%",
-            margin: "0 auto",
-            textAlign: "center",
-          }}
-        >
-          {clubData.name && (
-            <PostList
-              width={isTabletOrMobile ? "100%" : "600px"}
-              height={isTabletOrMobile ? "60%" : "1000px"}
-            />
-          )}
-        </div>
       </div>
-      <div>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          maxWidth: isDesktopOrLaptop ? "70%" : "100%",
+          margin: "0 auto",
+          textAlign: "center",
+        }}
+      >
         {clubData.name && <ClubRtgBreakdown />}
       </div>
-      <div>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          maxWidth: isDesktopOrLaptop ? "70%" : "100%",
+          margin: "0 auto",
+          textAlign: "center",
+        }}
+      >
         {clubData.name && <OvrRating />}
       </div>
-      <div>{clubData.name && <Announce />}</div>
+
       {clubData.name && (
         <div
           style={{
