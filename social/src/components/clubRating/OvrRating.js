@@ -56,6 +56,7 @@ function getRGBColors(clubRating) {
 
 export function OvrRating() {
     // THE INITIAL VALUE IN USE STATE IS POINTLESS IN CONDITIONAL RENDERING
+    // EDIT: DEBUG LATER IN SEMESTER of why the initial state wasn't being rendered properly
     // LATER: BETTER REACT CODE -> UPDATE to USEEFFECT -> do the same for announcements
     // LATER: More refinde coloring system
     const clubData = useSelector(state => state.clubData);
