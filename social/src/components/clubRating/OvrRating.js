@@ -27,13 +27,16 @@ function roundHundreth(value) {
     return Math.round(value * 100) / 100;
 }
 
+// use useRef
+
 export function OvrRating() {
     // LATER: BETTER REACT CODE -> UPDATE to USEEFFECT -> do the same for announcements
     // LATER: More refinde coloring system
     const clubData = useSelector(state => state.clubData);
     // const hasOneUserRtg = useSelector((state) => state.hasOneUserRtg);
     const clubRating = useSelector(state => state.globalRatings);
-    const [hasClubRating, sethasClubRating] = useState(false);
+    console.log("clubrating for " + clubData.name + " " + JSON.stringify(clubRating));
+    // const [hasClubRating, sethasClubRating] = useState(false);
     const [clubRtgColor, setClubRtgColor] = useState({red: 173, green: 216, blue: 230});
     const [clubRoundedRtg, setClubRoundedRtg] = useState("NEW");
     const dispatch = useDispatch();
@@ -45,6 +48,11 @@ export function OvrRating() {
 
     // runs on only the first render of the component
     // useEffect(() => {setclubRoundRtg(clubRoundRtg)}, []);
+
+    // use state causes application to rerender -> that's why useffect gets run again
+    // with true value set
+
+    let hasClubRating = false;
 
 
     const checkUserRtgUrl = `${process.env.REACT_APP_SERVER_URL}/clubRating/check`;
@@ -67,7 +75,7 @@ export function OvrRating() {
                     console.log("Club has a user rating (1 or 0): " + JSON.stringify(hasUserRating));
                     // setOvrRating(ovrRatingData);
                     if (hasUserRating) {
-                        sethasClubRating(true);
+                        // sethasClubRating(true);
                         dispatch({
                             type: "SET_HAS_USER_RATING",
                             payload: { hasOneUserRtg: hasClubRating },
@@ -93,10 +101,10 @@ export function OvrRating() {
             const DIFF_RTG = MAX_RTG - MIN_RTG;
             console.log("OvrRating: Club Rating breakdown: " + JSON.stringify(clubRating));
 
-            const clubClout = roundHundreth(clubRating.rating.Clout);
-            const clubVibes = roundHundreth(clubRating.rating.Vibes);
-            const clubIntensity = roundHundreth(clubRating.rating.Intensity);
-            const clubInclusivity = roundHundreth(clubRating.rating.Inclusivity);
+            const clubClout = roundHundreth(3);
+            const clubVibes = roundHundreth(2.78);
+            const clubIntensity = roundHundreth(3.24);
+            const clubInclusivity = roundHundreth(1.8);
 
             setClubRoundedRtg(`${roundHundreth((clubClout + clubVibes + clubIntensity + clubInclusivity) / 4)}`);
 
