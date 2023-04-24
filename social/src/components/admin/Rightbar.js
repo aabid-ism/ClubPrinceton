@@ -10,13 +10,20 @@ import ModalComponent from './Modal';
 const Rightbar = ({ state }) => {
 
     const [officers, setOfficers] = useState([]);
-    const [isModal, setModal] = useState(false);
+    const [isOfficersModal, setOfficersModal] = useState(false);
 
     const [officerFormValues, setOfficerFormValues] = useState({
         netid: '',
         title: '',
     });
 
+    const [announcement, setAnnouncement] = useState("");
+    const [isAnnouncementModal, setAnnouncementModal] = useState(false);
+
+    const handleAnnouncementChange = (event) => {
+        const { announcementFromForm } = event.target;
+        setAnnouncement(announcementFromForm);
+    }
     const handleOfficerInputChange = (event) => {
         const { name, value } = event.target;
         setOfficerFormValues(prevState => ({
@@ -79,6 +86,11 @@ const Rightbar = ({ state }) => {
         // alert submitted & clear inputs
     }
 
+    function onSubmitAnnouncementForm(e) {
+        e.preventDefault();
+        alert("announcement submitted!")
+    }
+
     useEffect(() => {
         console.log(state.activeClub);
 
@@ -97,14 +109,34 @@ const Rightbar = ({ state }) => {
                     console.log(err.response.data);
                     // console.log("hi");
                 })
+
+            // get announcement
+            api
+                .get("announcement/get", {
+                    params: {
+                        clubName: state.activeClub
+                    }
+                })
+                .then(async (res) => {
+                    // Extract the officers
+                    setAnnouncement(res.data);
+                })
+                .catch((err) => {
+                    // if (err.response.data == 'TokenExpiredError') {
+                    //     navigate('/signup');
+                    // }
+                    console.log(err.response.data);
+                    // console.log("hi");
+                })
+
         }
         // Put the officer info to the Officers Object
     }, [state.activeClub])
     return (
         <>
-            {isModal && <ModalComponent
-                isModal={isModal}
-                setModal={setModal}
+            {isOfficersModal && <ModalComponent
+                isModal={isOfficersModal}
+                setModal={setOfficersModal}
                 title={<h3> Add an Officer</h3>}
                 children={
                     <div className="mb-5 align-items-center justify-content-center">
@@ -142,26 +174,63 @@ const Rightbar = ({ state }) => {
                         </form>
                     </div>
                 }
-            // onSubmit={
-            //     alert("form submitted!")
-            // }
+            />}
+            {isAnnouncementModal && <ModalComponent
+                isModal={isAnnouncementModal}
+                setModal={setAnnouncementModal}
+                title={<h3> Set a New Announcement</h3>}
+                children={
+                    <div className="mb-5 align-items-center justify-content-center">
+                        <form className="mb-2" style={{ textAlign: "left" }} onSubmit={onSubmitAnnouncementForm}>
+                            <div className="mb-3">
+                                <textarea
+                                    type="text"
+                                    className="form-control"
+                                    name="title"
+                                    value={announcement}
+                                    onChange={handleAnnouncementChange}
+                                    placeholder="Insert Officer Title..."
+                                    aria-describedby="text"
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                disabled={(Object.keys(officerFormValues).length === 0) ? true : false}
+                                className="btn btn-success float-end"
+                            // disabled={state.activeClub ? false : true}
+                            >
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                }
             />}
             <div className='rightbar'>
 
                 <div className='announcement'>
-
-                    {/* Officers List */}
-                    {officers && officers.map((officer, index) => (
-                        < div key={index} className='listrow' >
-                            <p> {officer.title}</p>
-                            <p> {officer.netid}</p>
-                            <button onClick={() => handleRemoveOfficer(index)}>Remove</button>
+                    {officers.length != 0 &&
+                        <div>
+                            <h3> Club Announcement </h3>
+                            <p>{announcement}</p>
+                            {<button onClick={() => { setAnnouncementModal(true) }}> Change Announcement</button>}
                         </div>
-                    ))
+                    }
+                    {/* Officers List */}
+                    {officers &&
+
+                        officers.map((officer, index) => (
+                            < div key={index} className='listrow' >
+                                <p> {officer.title}</p>
+                                <p> {officer.netid}</p>
+                                <button onClick={() => handleRemoveOfficer(index)}>Remove</button>
+                            </div>
+                        ))
+
+
                     }
 
                     {/* Add Button */}
-                    {state.activeClub && <button onClick={() => { setModal(true) }}> ADD OFFICER</button>}
+                    {state.activeClub && <button onClick={() => { setOfficersModal(true) }}> ADD OFFICER</button>}
                 </div >
             </div >
         </>
