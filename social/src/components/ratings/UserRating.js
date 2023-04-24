@@ -10,7 +10,7 @@ function UserRating(props) {
   const currentRatings = useSelector((state) => state.currentRatings);
   const previousRatings = useSelector((state) => state.previousRatings);
   const currentlyRating = useSelector((state) => state.currentlyRating);
-
+  const user = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,17 +18,16 @@ function UserRating(props) {
       axios
         .get(`${url}/${clubData.name}`)
         .then((response) => {
-          const data = response.data["rating"];
           dispatch({
             type: "SET_GLOBAL_RATINGS",
-            payload: { globalRatings: data },
+            payload: { globalRatings: response.data },
           });
         })
         .catch((error) => {
           console.error(error);
         });
       axios
-        .get(`${url}/${clubData.name}/roy`)
+        .get(`${url}/${clubData.name}/${user}`)
         .then((response) => {
           console.log("Previous rating recieved: " + response.data);
           const data = response.data;
@@ -43,15 +42,23 @@ function UserRating(props) {
     }
   }, [clubData, currentlyRating, currentRatings]);
 
+  useEffect(() => {
+    dispatch({
+      type: "RESET_ALL_RATINGS",
+    });
+  }, [clubData]);
+
   function handleSubmitRating(event) {
     console.log("submitting rating");
     currentRatings["club"] = clubData.name;
-    currentRatings["user"] = "roy";
+    currentRatings["user"] = localStorage
+      .getItem("user")
+      ?.replaceAll(/['"]+/g, "");
 
     axios
-      .post(`${url}/${clubData.name}`, currentRatings)
+      .post(`${url}/${clubData.name}/${user}`, currentRatings)
       .then((response) => {
-        console.log(response.data);
+        alert("Rating Submitted Successfully!");
       })
       .catch((error) => {
         console.error(error);
@@ -88,7 +95,7 @@ function UserRating(props) {
     <RatingsBubble width={props.width} height={props.height}>
       <form className="rtg-form">
         {!currentlyRating && clubData.name && (
-          <strong>Global Rating for {clubData.name}</strong>
+          <strong> Your rating for {clubData.name}</strong>
         )}
         {currentlyRating && clubData.name && (
           <strong>Currently Rating {clubData.name}</strong>
@@ -139,43 +146,27 @@ function UserRating(props) {
 }
 
 const SingleRating = (props) => {
-  const [hover, setHover] = useState(0);
+  const { type } = props;
   const clubData = useSelector((state) => state.clubData);
   const currentRatings = useSelector((state) => state.currentRatings);
-  const globalRatings = useSelector((state) => state.globalRatings);
   const previousRatings = useSelector((state) => state.previousRatings);
   const currentlyRating = useSelector((state) => state.currentlyRating);
+  const [hover, setHover] = useState(0);
+  const [rating, setRating] = useState(0);
 
-  const type = "" + props.type;
-
-  const [rating, setRating] = useState(globalRatings[type]);
   useEffect(() => {
-    if (globalRatings[type] > 0 && !currentlyRating) {
-      setRating(globalRatings[type]);
-    } else if (currentRatings[type] > 0 && currentlyRating) {
-      setRating(currentRatings[type]);
-    } else if (
-      currentlyRating &&
-      previousRatings[type] > 0 &&
-      currentRatings[type] == 0
-    ) {
-      setRating(previousRatings[type]);
-    } else if (
-      currentlyRating &&
-      currentRatings[type] == 0 &&
-      previousRatings[type] == 0
-    ) {
-      setRating(0);
-    } else if (currentlyRating && currentRatings[type] > 0) {
-      setRating(currentRatings[type]);
+    if (currentlyRating) {
+      setRating(currentRatings[type] || 0);
+    } else {
+      setRating(previousRatings[type] || 0);
     }
     setHover(rating);
   }, [
     clubData,
-    globalRatings,
     currentRatings,
     currentlyRating,
     previousRatings,
+    type,
   ]);
 
   const dispatch = useDispatch();

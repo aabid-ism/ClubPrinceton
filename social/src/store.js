@@ -61,7 +61,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         currentRatings: action.payload.currentRatings,
       };
-    case "RESET_RATINGS":
+    case "RESET_ALL_RATINGS":
       return {
         ...state,
         currentRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
