@@ -45,6 +45,7 @@ app.use("/auth", auth);
 app.use("/clubCreation", clubCreation);
 app.use("/clubRating", clubRating);
 app.use("/users", users);
+app.use("/clubrequest", clubrequest);
 
 // Global error handling
 app.use((err, _req, res, next) => {
