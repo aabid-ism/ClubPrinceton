@@ -5,7 +5,7 @@ import express from "express";
 const router = express.Router();
 
 router.get("/get", verifyToken, async (req, res) => {
-    console.log("I'm in the announcement endpoint");
+    // console.log("I'm in the announcement endpoint");
     // let clubName = req.params.name;
     // console.log("clubName" + clubName);
 
@@ -16,7 +16,7 @@ router.get("/get", verifyToken, async (req, res) => {
     // need to make this more sophisticated
     // what returns if there is no announcement -> an empty string?
     const clubName = req.query.clubName;
-    console.log("clubName from request: " + clubName);
+    // console.log("clubName from request: " + clubName);
 
 
     // need proper error messaging here!
@@ -27,9 +27,9 @@ router.get("/get", verifyToken, async (req, res) => {
     // if club doesn't have announcement
     if (announcement === "") announcement = "Nothing to see here!";
 
-    console.log("Club Data: " + clubDoc);
-    console.log("announcement: " + announcement);
-    console.log("type of data for announcement: " + typeof (announcement));
+    // console.log("Club Data: " + clubDoc);
+    // console.log("announcement: " + announcement);
+    // console.log("type of data for announcement: " + typeof (announcement));
 
     // can be null/empty or with words
     // timestamp -> when was announcment last created
