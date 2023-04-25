@@ -7,7 +7,10 @@ router.get("/", async (req, res) => {
   try {
     const db = conn.getDb();
     const collection = db.collection("clubCreation");
-    const results = await collection.find({}).toArray();
+    const results = await collection
+      .find({})
+      .sort({ status: -1 })
+      .toArray();
     res.send(results).status(200);
   } catch (err) {
     res.status(500).send("Error fetching clubCreation data");
