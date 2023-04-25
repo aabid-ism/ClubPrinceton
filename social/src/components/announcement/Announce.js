@@ -31,10 +31,10 @@ export default function Announce() {
             })
             .then((response) => {
                 const announceData = response.data;
-                console.log("announcement data from the backend: " + announceData);
+                // console.log("announcement data from the backend: " + announceData);
                 // clubAnnouncement = announceData;
                 setAnnouncement(announceData);
-                console.log("type of announcement: " + typeof(announcement));
+                // console.log("type of announcement: " + typeof(announcement));
                 // annoucement = data;
             })
             .catch((error) => {
@@ -47,7 +47,7 @@ export default function Announce() {
 
     const string200Chars = "The quick brown fox jumps over the lazy dog. Pack my box with five" +
     "dozen liquor jugs. How vexingly quick daft zebras jump! Jackdaws love my big sphinx of quartz. The five boxing wizards jump quickly. Amazingly few discotheques provide jukeboxes.";
-    console.log(announcement);
+    // console.log(announcement);
     return (
         <AnnounceBubble>
             <div className="announceTitle">
