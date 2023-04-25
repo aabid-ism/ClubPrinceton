@@ -58,9 +58,9 @@ export default function Comment ({ props }){
         // } catch (error) {
             //     console.log("Error occurred: ", error);
             // }
-        }
+    }
         // useEffect(() => {
-        const commentLikeData = getData();
+    const commentLikeData = getData();
         
     // })
     console.log(commentLikeData)

@@ -72,8 +72,7 @@ function getClubData(club) {
     announcement: "",
     officers: [
       {
-        name: applicantName,
-        position: positionInClub,
+        title: positionInClub,
         netid: requesterID,
       },
     ],

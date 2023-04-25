@@ -12,6 +12,8 @@ import api from "../auth/api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Announce from "../announcement/Announce";
+import { OvrRating } from "../clubRating/OvrRating";
+import { ClubRtgBreakdown } from "../clubRating/ClubRtgBreakdown";
 
 export default function HomePage() {
   const clubData = useSelector((state) => state.clubData);
@@ -76,6 +78,7 @@ export default function HomePage() {
           backgroundColor: "#FFF8E5",
           display: "flex",
           flexDirection: "column",
+          zIndex: -1,
         }}
       >
         {isTabletOrMobile && (
@@ -156,55 +159,95 @@ export default function HomePage() {
             </div>
           </React.Fragment>
         )}
-
         <div
           style={{
-            flex: 1,
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
-            alignItems: "center",
-            marginTop: "50px",
-            maxWidth: isDesktopOrLaptop ? "70%" : "100%",
-            margin: "0 auto",
-            textAlign: "center",
           }}
         >
-          {clubData.name && (
-            <MainPage
-              width={isTabletOrMobile ? "100%" : "500px"}
-              height={isTabletOrMobile ? "30%" : "300px"}
-            />
-          )}
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "50px",
+              maxWidth: isDesktopOrLaptop ? "70%" : "100%",
+              margin: "0 auto",
+              textAlign: "center",
+            }}
+          >
+            {clubData.name && (
+              <MainPage
+                width={isTabletOrMobile ? "100%" : "500px"}
+                height={isTabletOrMobile ? "30%" : "300px"}
+              />
+            )}
+
+            {localStorage.getItem("user") && <p>Good day, {user}! </p>}
+          </div>
           <div
             style={{
               flex: 1,
               display: "flex",
               justifyContent: "center",
+              alignItems: "center",
+              maxWidth: isDesktopOrLaptop ? "70%" : "100%",
+              margin: "0 auto",
+              textAlign: "center",
             }}
           >
-            {localStorage.getItem("user") && <p>Good day, {user}! </p>}
+            {clubData.name && <Announce />}
+          </div>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              maxWidth: isDesktopOrLaptop ? "70%" : "100%",
+              margin: "0 auto",
+              textAlign: "center",
+            }}
+          >
+            {clubData.name && (
+              <PostList
+                width={isTabletOrMobile ? "100%" : "600px"}
+                height={isTabletOrMobile ? "60%" : "1000px"}
+              />
+            )}
           </div>
         </div>
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            maxWidth: isDesktopOrLaptop ? "70%" : "100%",
-            margin: "0 auto",
-            textAlign: "center",
-          }}
-        >
-          {clubData.name && (
-            <PostList
-              width={isTabletOrMobile ? "100%" : "600px"}
-              height={isTabletOrMobile ? "60%" : "1000px"}
-            />
-          )}
-        </div>
       </div>
-      <div>{clubData.name && <Announce />}</div>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          maxWidth: isDesktopOrLaptop ? "70%" : "100%",
+          margin: "0 auto",
+          textAlign: "center",
+        }}
+      >
+        {clubData.name && <ClubRtgBreakdown />}
+      </div>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          maxWidth: isDesktopOrLaptop ? "70%" : "100%",
+          margin: "0 auto",
+          textAlign: "center",
+        }}
+      >
+        {clubData.name && <OvrRating />}
+      </div>
+
       {clubData.name && (
         <div
           style={{
