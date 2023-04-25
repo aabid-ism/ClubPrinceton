@@ -19,8 +19,8 @@ router.post('/create', async (req, res) => {
 
     console.log(post_comment_to_insert);
 
-    const db = conn.getDb();
-    const comment_collection = await db.collection("comments");
+      const db = conn.getDb();
+      const comment_collection = await db.collection("comments");
     const post_collection = await db.collection("posts");
     const result = await comment_collection.insertOne(post_comment_to_insert);
     console.log(formattedPostId)
@@ -107,6 +107,24 @@ router.get('/like/:id', async (req, res) => {
     user_has_liked: true
   }
   res.send(commentLikeData).status(200);
+});
+
+router.post('/like/', async (req, res) => {
+  console.log('Like Posting for Comment Received!');
+  const { netId, commentId   } = req.body;
+  const db = conn.getDb();
+  const comment_collection = await db.collection("comments");
+  const likes_collection = await db.collection("likes");
+  const formattedCommentId = new ObjectId(commentId);
+  
+  // increase or decrease the comment's likes field
+  await comment_collection.updateOne(
+    {_id: formattedCommentId},
+    { $inc: {likes: 1} }
+    );
+    const comment = await comment_collection.findOne({_id: formattedCommentId})
+    console.log(comment);
+  res.send("Liked/Unliked!").status(200);
 });
 
 export default router;

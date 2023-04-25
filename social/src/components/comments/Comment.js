@@ -5,14 +5,27 @@ import api from '../auth/api';
 
 const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
 // TODO: needs to actually update database with likes
-function Like({ priorLikes, priorLikeStatus }){
+function Like({ commentId, netId, priorLikes, priorLikeStatus }){
     const [isLiked, toggleLike] = useState(priorLikeStatus);
-
+    function handleLike(event){
+        toggleLike(!isLiked);
+        const likeData = {
+            netId: netId,
+            commentId: commentId
+        }
+        api
+        .post(`${url}/like/`, likeData)
+        .then((response) => {
+            const data = response.data;
+            console.log(data) 
+        })// the returned comment
+        .catch((error) => {
+            console.log("Error occurred: ", error);
+        });    
+    }
     return (
         <div>
-            <button onClick={((e) => {
-                 toggleLike(!isLiked);
-            })}>
+            <button onClick={handleLike}>
                 {isLiked ? <FaHeart/> :<FaRegHeart/> }
             </button>
             <p>
@@ -24,10 +37,6 @@ function Like({ priorLikes, priorLikeStatus }){
 
 // TODO: Make a request for whether the post was liked by a certain user
 export default function Comment ({ props }){
-    let commentLikeData = {
-        number_of_likes: 0,
-        user_has_liked: false
-      }
     async function getData(){
         let netId = localStorage.getItem("netid"); // could be moved up the chain
         const commentId = props._id;
@@ -36,14 +45,25 @@ export default function Comment ({ props }){
         await api
         .get(like_info_string)
         .then((response) => {
-            console.log(response.data)
-            commentLikeData = response.data;
+            // console.log(response.data)
+            return response.data;
         })
         .catch((error) => {
             console.log("Error occurred: ", error);
         });
-    }
-    getData();
+
+        // try {
+        //     let response = await api.get(like_info_string);
+        //     return response.data;
+        // } catch (error) {
+            //     console.log("Error occurred: ", error);
+            // }
+        }
+        // useEffect(() => {
+        const commentLikeData = getData();
+        
+    // })
+    console.log(commentLikeData)
     
     return (
         <div className='comment'>
@@ -54,7 +74,7 @@ export default function Comment ({ props }){
                 </div>
             </div>
         
-            <Like priorLikes={commentLikeData.number_of_likes} priorLikeStatus={commentLikeData.user_has_liked}/>
+            <Like commentId={props._id} netId={localStorage.getItem("netid")} priorLikes={commentLikeData.number_of_likes} priorLikeStatus={commentLikeData.user_has_liked}/>
         </div>
     );
 }
