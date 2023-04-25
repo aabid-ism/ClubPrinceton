@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./searchBar.css";
 import api from "../auth/api";
+
 const url = `${process.env.REACT_APP_SERVER_URL}/clubs`;
-// const url = "http://localhost:5050/clubs";
+const MAX_TITLE_LENGTH = 25;
+
+function formatTitle(title) {
+  if (title.length > MAX_TITLE_LENGTH) {
+    return title.substring(0, MAX_TITLE_LENGTH) + "...";
+  } else {
+    return title;
+  }
+}
 
 function SearchBar(props) {
   const dispatch = useDispatch();
@@ -13,41 +22,33 @@ function SearchBar(props) {
 
   const handleSearchTermChange = async (event) => {
     let searchWord = event.target.value;
-    // console.log(searchWord);
-    // console.log(`${url}/${searchWord}`);
-    if (searchWord != "") {
-      api
-        .get(`/clubs/${searchWord}`)
-        .then((response) => {
-          const data = response.data;
-          console.log(data);
-          dispatch({
-            type: "SET_RESULTS",
-            payload: { results: data, numResults: data.length },
-          });
-        })
-        .catch((error) => {
-          console.log("Error occurred: ", error);
+    if (searchWord !== "") {
+      try {
+        const response = await api.get(`${url}/${searchWord}`);
+        const data = response.data;
+        dispatch({
+          type: "SET_RESULTS",
+          payload: { results: data, numResults: data.length },
         });
+      } catch (error) {
+        console.log("Error occurred: ", error);
+      }
     }
   };
 
   const handleClubClick = (club) => {
-    console.log(`Clicked on ${club.name}`);
     api
       .get(`/clubs/a/${club.name}`)
       .then((response) => {
-        const data = response.data;
-        console.log("data was recieved: " + data);
-        // handle club data
+        const data = response.data[0];
         dispatch({
           type: "RESET_RATINGS",
         });
         dispatch({
           type: "SET_CLUB_DATA",
-          payload: { clubData: data[0] },
+          payload: { clubData: data },
         });
-        console.log("Dispatched club data:", data[0]);
+        console.log("Dispatched club data:", data);
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -70,13 +71,13 @@ function SearchBar(props) {
       <p>{numResults} search results</p>
       {results.length > 0 && (
         <div className="results">
-          {results.map((result) => (
+          {results.map((result, index) => (
             <button
               className="result-button"
-              key={result.id}
+              key={index}
               onClick={() => handleClubClick(result)}
             >
-              {result.name}
+              {formatTitle(result.name)}
             </button>
           ))}
         </div>
