@@ -5,7 +5,7 @@ import express from "express";
 const router = express.Router();
 
 // Get a list of all clubs
-router.get("/", verifyToken, async (req, res) => {
+router.get("/", async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
   const results = await collection.find({}).limit(50).toArray();
@@ -13,7 +13,7 @@ router.get("/", verifyToken, async (req, res) => {
 });
 
 // get club information of a single club
-router.get("/a/:name", verifyToken, async (req, res) => {
+router.get("/a/:name", async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
   const query = req.params.name;
@@ -34,7 +34,7 @@ router.get("/a/:name", verifyToken, async (req, res) => {
 
 
 // get club information of a single club
-router.get("/club/officers/:name", verifyToken, async (req, res) => {
+router.get("/club/officers/:name", async (req, res) => {
   const db = conn.getDb();
   const clubCollection = await db.collection("clubs");
   const clubName = req.params.name;
@@ -66,7 +66,7 @@ router.get("/club/officers/:name", verifyToken, async (req, res) => {
 
 
 // Get a single club
-router.get("/:name", verifyToken, async (req, res) => {
+router.get("/:name", async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
   const query = req.params.name;
@@ -87,7 +87,7 @@ router.get("/:name", verifyToken, async (req, res) => {
 });
 
 // Get the existence of a  single club
-router.get("/check/:name", verifyToken, async (req, res) => {
+router.get("/check/:name", async (req, res) => {
   const collection = await db.collection("clubs");
   const query = { name: req.params.name };
   const result = await collection.findOne(query);
@@ -97,7 +97,7 @@ router.get("/check/:name", verifyToken, async (req, res) => {
 });
 
 // Update club officers
-router.post("/club/officers/update/:club", verifyToken, async (req, res) => {
+router.post("/club/officers/update/:club", async (req, res) => {
 
   // If club is empty, return with nothing
   if (req.params.club == "" || undefined) {
@@ -126,7 +126,7 @@ router.post("/club/officers/update/:club", verifyToken, async (req, res) => {
 
 
 // Post a club
-router.post("/create", verifyToken, async (req, res) => {
+router.post("/create", async (req, res) => {
   // checking for a club with this name needs to be done
   //before accessing this endpoint
 

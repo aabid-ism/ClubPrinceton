@@ -95,11 +95,59 @@ router.get("/:name", async (req, res) => {
 });
 
 // Get all clubs' posts
-router.get("/", async (req, res) => {
+router.get("/allposts/:club", async (req, res) => {
+  // establish connection
   const db = conn.getDb();
-  const collection = await db.collection("posts");
-  const result = await collection.find({}).limit(50).toArray();
-  console.log(result);
-  res.send(result).status(200);
+
+  // get the posts collection
+  const post_collection = await db.collection("posts");
+  // const result = await collection.find({}).limit(50).toArray();
+
+  const listOfPosts = await post_collection.aggregate([
+    {
+      $match: {
+        club: req.params.club,
+      }
+    },
+    {
+      $sort: { created_at: -1 }
+    },
+  ]).toArray();
+
+  console.log(req.params.club);
+
+  res.send(listOfPosts).status(200);
 });
+
+
+// delete a post
+router.post("/delete/:objectid", async (req, res) => {
+  // establish connection
+  const db = conn.getDb();
+
+  // get the posts collection
+  const post_collection = await db.collection("posts");
+  // const result = await collection.find({}).limit(50).toArray();
+
+  const deletedPost = await post_collection.deleteOne(
+    {
+      _id: req.params.objectid
+    });
+
+  // const deletingpost = await post_collection.aggregate([
+  //   {
+  //     $match: {
+  //       _id: req.params.objectid,
+  //     }
+  //   },
+  //   {
+  //     $sort: { created_at: -1 }
+  //   },
+  // ]).toArray();
+
+  // console.log(req.params.club);
+
+  res.send().status(200);
+});
+
 export default router;
