@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import Rightbar from './Rightbar';
+import DeletePostComponent from './DeletePostComponent';
 
 // state of the initial input fields
 const initialState = {
@@ -139,8 +140,8 @@ function AdminInterface() {
                     dispatchMissingValues={dispatchMissingValues}
                     dispatchSubmit={dispatchSubmit}
                 />
+                {state.activeClub && <DeletePostComponent state={state} />}
             </div>
-
             <Rightbar state={state} />
         </div>
     )
