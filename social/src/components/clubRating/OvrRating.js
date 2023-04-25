@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 
 function OvrRtgBubble(props){
+    console.log("this is my props: " + props.redColor);
     let cssProperties = {
         // forget about rgb
         // see if you can pass in red
@@ -33,14 +34,14 @@ function getRGBColors(clubRating) {
     const DIFF_RTG = MAX_RTG - MIN_RTG;
     console.log("OzvrRating: Club Rating breakdown: " + JSON.stringify(clubRating));
 
-    const clubClout = roundHundreth(3);
-    const clubVibes = roundHundreth(2.78);
-    const clubIntensity = roundHundreth(3.24);
-    const clubInclusivity = roundHundreth(1.8);
+    const clubClout = roundHundreth(clubRating.rating.Clout);
+    const clubVibes = roundHundreth(clubRating.rating.Vibes);
+    const clubIntensity = roundHundreth(clubRating.rating.Intensity);
+    const clubInclusivity = roundHundreth(clubRating.rating.Inclusivity);
 
     const clubRoundedRtg = `${roundHundreth((clubClout + clubVibes + clubIntensity + clubInclusivity) / 4)}`;
 
-    console.log("club rounded rating: " + clubRoundedRtg);
+    console.log("club roundedz rating: " + clubRoundedRtg);
     console.log("type of value for club rounded rating: " + typeof(clubRoundedRtg));
 
     const red = Math.round(255 * (MAX_RTG - clubRoundedRtg)) / DIFF_RTG;
@@ -48,8 +49,11 @@ function getRGBColors(clubRating) {
     const green = Math.round(255 * (clubRoundedRtg - MIN_RTG)) / DIFF_RTG;
     const blue = 0;
 
-    return {clubRoundedRtg: clubRoundedRtg, red: red, green: green, blue: blue};
+    console.log("redz coloring: " + red);
 
+    console.log("new ratz" + JSON.stringify({clubRoundedRtg: clubRoundedRtg, red: red, green: green, blue: blue}));
+    console.log("please accept: " + clubRoundedRtg);
+    return {clubRoundedRtg: clubRoundedRtg, red: red, green: green, blue: blue};
 }
 
 // use useRef
@@ -91,6 +95,7 @@ export function OvrRating() {
 
     // to the backend -> we are sending back the club
     // link we are currently on
+    // async await? necessary?
     useEffect(() => {
         console.log("first");
         console.log("I'm in the useEffect for overallRating");
@@ -108,11 +113,16 @@ export function OvrRating() {
                     // this gets set for all of the clubs -? for this component
                     if (hasUserRating === 1) {
                         setTestBoolean(1);
-                        setOverallRating({clubRoundedRtg: "test club 2", red: 173, green: 216, blue: 230});
+                        // setOverallRating({clubRoundedRtg: "test club 2", red: 173, green: 216, blue: 230});
+                        // setOverallRating(getRGBColors(clubRating))
+                        console.log("I'm in has user rating and I'm checking club rating" + JSON.stringify(clubRating));
+                        const newClubRating = getRGBColors(clubRating);
+                        setOverallRating(newClubRating);
+                        console.log("OVzzzerall rating: " + newClubRating.clubRoundedRtg);
                     }
                     else {
                         setTestBoolean(0);
-                        setOverallRating({clubRoundedRtg: "test elephant club", red: 173, green: 216, blue: 230});
+                        setOverallRating({clubRoundedRtg: "NEW", red: 173, green: 216, blue: 230});
                     }
                     // setOverallRating({clubRoundedRtg: testBoolean, red: 173, green: 216, blue: 230});
 
