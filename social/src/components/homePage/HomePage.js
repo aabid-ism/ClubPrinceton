@@ -19,33 +19,7 @@ export default function HomePage() {
   const clubData = useSelector((state) => state.clubData);
   const navigate = useNavigate();
   const user = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-device-width: 1224px)",
-  });
-  const isTabletOrMobile = useMediaQuery({
-    query: "(max-width: 1224px)",
-  });
 
-  const [showSearchBar, setShowSearchBar] = useState(false);
-  const [showNavigation, setShowNavigation] = useState(false);
-  const [showUserRating, setShowUserRating] = useState(false);
-
-  const handleSearchBarClick = () => {
-    setShowSearchBar(!showSearchBar);
-    setShowNavigation(false);
-    setShowUserRating(false);
-  };
-
-  const handleNavigationClick = () => {
-    setShowNavigation(!showNavigation);
-    setShowSearchBar(false);
-    setShowUserRating(false);
-  };
-  const handleUserRatingClick = () => {
-    setShowUserRating(!showUserRating);
-    setShowSearchBar(false);
-    setShowNavigation(false);
-  };
   useEffect(() => {
     console.log("I am at homepage, about to send verification request");
 
@@ -81,84 +55,44 @@ export default function HomePage() {
           zIndex: -1,
         }}
       >
-        {isTabletOrMobile && (
+        <React.Fragment>
           <div
             style={{
               position: "fixed",
               top: 0,
               left: 0,
+              width: "100",
+              zIndex: 1,
+            }}
+          >
+            <SearchBar width="300" height="400" />
+          </div>
+          <div
+            style={{
+              position: "fixed",
+              bottom: 0,
+              left: 0,
               width: "100%",
               zIndex: 1,
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "10px",
-              }}
-            >
-              <div onClick={handleSearchBarClick}>
-                <FaSearch size={20} style={{ marginRight: "10px" }} />
-                <span style={{ fontWeight: "bold" }}>Search</span>
-              </div>
-              <div onClick={handleNavigationClick}>
-                <FaBars size={20} style={{ marginRight: "10px" }} />
-                <span style={{ fontWeight: "bold" }}>Menu</span>
-              </div>
-            </div>
-            {showSearchBar && <SearchBar width="100%" height="100%" />}
-            {showNavigation && (
-              <Navigation width="100%" height="100%" />
-            )}
-            <button onClick={handleUserRatingClick}>
-              <FaStar size={20} style={{ marginRight: "10px" }} />
-              {showUserRating ? "Hide Rating" : "Show Rating"}
-            </button>
-            {showUserRating && <UserRating width="100%" height="35%" />}
+            <Navigation width="300" height="400" />
           </div>
-        )}
+          <div
+            style={{
+              position: "fixed",
+              bottom: 0,
+              left: 0,
+              width: "100%",
+              zIndex: 1,
+            }}
+          >
+            {clubData.name && (
+              <UserRating width="300px" height="400px" />
+            )}
+          </div>
+        </React.Fragment>
 
-        {isDesktopOrLaptop && (
-          <React.Fragment>
-            <div
-              style={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                width: "100",
-                zIndex: 1,
-              }}
-            >
-              <SearchBar width="300" height="400" />
-            </div>
-            <div
-              style={{
-                position: "fixed",
-                bottom: 0,
-                left: 0,
-                width: "100%",
-                zIndex: 1,
-              }}
-            >
-              <Navigation width="300" height="400" />
-            </div>
-            <div
-              style={{
-                position: "fixed",
-                bottom: 0,
-                left: 0,
-                width: "100%",
-                zIndex: 1,
-              }}
-            >
-              {clubData.name && (
-                <UserRating width="300px" height="400px" />
-              )}
-            </div>
-          </React.Fragment>
-        )}
         <div
           style={{
             display: "flex",
@@ -174,15 +108,14 @@ export default function HomePage() {
               justifyContent: "center",
               alignItems: "center",
               marginTop: "50px",
-              maxWidth: isDesktopOrLaptop ? "70%" : "100%",
               margin: "0 auto",
               textAlign: "center",
             }}
           >
             {clubData.name && (
               <MainPage
-                width={isTabletOrMobile ? "100%" : "500px"}
-                height={isTabletOrMobile ? "30%" : "300px"}
+                width={"500px"}
+                height={"300px"}
               />
             )}
 
@@ -194,7 +127,6 @@ export default function HomePage() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              maxWidth: isDesktopOrLaptop ? "70%" : "100%",
               margin: "0 auto",
               textAlign: "center",
             }}
@@ -207,15 +139,14 @@ export default function HomePage() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              maxWidth: isDesktopOrLaptop ? "70%" : "100%",
               margin: "0 auto",
               textAlign: "center",
             }}
           >
             {clubData.name && (
               <PostList
-                width={isTabletOrMobile ? "100%" : "600px"}
-                height={isTabletOrMobile ? "60%" : "1000px"}
+                width={"600px"}
+                height={ "1000px"}
               />
             )}
           </div>
@@ -227,7 +158,6 @@ export default function HomePage() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          maxWidth: isDesktopOrLaptop ? "70%" : "100%",
           margin: "0 auto",
           textAlign: "center",
         }}
@@ -240,7 +170,6 @@ export default function HomePage() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          maxWidth: isDesktopOrLaptop ? "70%" : "100%",
           margin: "0 auto",
           textAlign: "center",
         }}
@@ -248,24 +177,19 @@ export default function HomePage() {
         {clubData.name && <OvrRating />}
       </div>
 
-      {clubData.name && (
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            maxWidth: isDesktopOrLaptop ? "70%" : "100%",
-            margin: "0 auto",
-            textAlign: "center",
-          }}
-        >
-          <PostList
-            width={isTabletOrMobile ? "100%" : "500px"}
-            height={isTabletOrMobile ? "40%" : "400px"}
-          />
-        </div>
-      )}
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "0 auto",
+          textAlign: "center",
+        }}
+      >
+        <PostList
+        />
+      </div>
     </div>
   );
 }
