@@ -14,6 +14,8 @@ import SuperAdminInterface from "./components/super_admin/SuperAdminInterface";
 import Signup from "./components/auth/Signup";
 import Landing from "./components/auth/Landing";
 import Image from "./components/image/Image";
+import ClubForm from "./components/clubForm/ClubForm";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -25,6 +27,7 @@ root.render(
         <Route path="/landing" element={<Landing />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/image" element={<Image />} />
+        <Route path="/clubform" element={<ClubForm />} />
         {/* <Route path="*" element={<App />} /> */}
         <Route path="/superadmin" element={<SuperAdminInterface />} />
       </Routes>

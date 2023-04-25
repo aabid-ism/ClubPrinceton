@@ -17,6 +17,7 @@ import {
   PersonalComment,
 } from "./PostInteractions";
 
+
 function PostContent({ content }) {
   return <div className="postContent">{content}</div>;
 }
@@ -137,8 +138,7 @@ function Post({ props, width, height }) {
           </HeaderInfo>
           <OptionButton />
         </PostHeader>
-
-        <PostContent props={contentProps} />
+      <PostContent props={contentProps}/>
 
         <PostComments>
           <PostMetrics
