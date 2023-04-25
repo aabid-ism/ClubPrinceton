@@ -19,10 +19,10 @@ const Rightbar = ({ state }) => {
 
     const [announcement, setAnnouncement] = useState("");
     const [isAnnouncementModal, setAnnouncementModal] = useState(false);
-
+    const [newAnnouncement, setNewAnnouncement] = useState("");
     const handleAnnouncementChange = (event) => {
-        const { announcementFromForm } = event.target;
-        setAnnouncement(announcementFromForm);
+        const announcementFromForm = event.target.value;
+        setNewAnnouncement(announcementFromForm);
     }
     const handleOfficerInputChange = (event) => {
         const { name, value } = event.target;
@@ -78,7 +78,6 @@ const Rightbar = ({ state }) => {
                 .catch((err) => console.log(err));
         }).catch((err) => {
             if (err.response.status == 401) {
-
                 alert("please insert a netid registered in ClubPrinceton.")
             }
         })
@@ -88,7 +87,23 @@ const Rightbar = ({ state }) => {
 
     function onSubmitAnnouncementForm(e) {
         e.preventDefault();
-        alert("announcement submitted!")
+        const announcementToSubmit = {
+            announcement: newAnnouncement
+        }
+        console.log(announcementToSubmit);
+        api.post(`announcement/change/${state.activeClub}`,
+            announcementToSubmit
+        )
+            // push to the database
+            .then((res) => {
+                alert("announcement submitted!");
+                setAnnouncement(newAnnouncement);
+                setNewAnnouncement("");
+            })
+            .catch((err) => {
+                alert(err);
+            })
+
     }
 
     useEffect(() => {
@@ -187,15 +202,15 @@ const Rightbar = ({ state }) => {
                                     type="text"
                                     className="form-control"
                                     name="title"
-                                    value={announcement}
+                                    value={newAnnouncement}
                                     onChange={handleAnnouncementChange}
-                                    placeholder="Insert Officer Title..."
+                                    placeholder="Insert New Announcement..."
                                     aria-describedby="text"
                                 />
                             </div>
                             <button
                                 type="submit"
-                                disabled={(Object.keys(officerFormValues).length === 0) ? true : false}
+                                // disabled={(Object.keys(officerFormValues).length === 0) ? true : false}
                                 className="btn btn-success float-end"
                             // disabled={state.activeClub ? false : true}
                             >
