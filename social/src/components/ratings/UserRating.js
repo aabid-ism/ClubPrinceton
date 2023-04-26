@@ -5,13 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import "./ratingstar.css";
 
 const url = `${process.env.REACT_APP_SERVER_URL}/ratings`;
-
 function UserRating(props) {
   const clubData = useSelector((state) => state.clubData);
   const currentRatings = useSelector((state) => state.currentRatings);
   const previousRatings = useSelector((state) => state.previousRatings);
   const currentlyRating = useSelector((state) => state.currentlyRating);
-  const user = localStorage.getItem("user");
+  const user = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,7 +29,7 @@ function UserRating(props) {
       axios
         .get(`${url}/${clubData.name}/${user}`)
         .then((response) => {
-          console.log("Previous rating received: " + response.data);
+          console.log("Previous rating recieved: " + response.data);
           const data = response.data;
           dispatch({
             type: "SET_PREVIOUS_RATINGS",
@@ -41,19 +40,20 @@ function UserRating(props) {
           console.error(error);
         });
     }
-  }, [clubData, currentlyRating, currentRatings, user, dispatch]);
+  }, [clubData, currentlyRating, currentRatings]);
 
   useEffect(() => {
     dispatch({
       type: "RESET_ALL_RATINGS",
     });
-  }, [clubData, dispatch]);
+  }, [clubData]);
 
   function handleSubmitRating(event) {
-    event.preventDefault();
     console.log("submitting rating");
     currentRatings["club"] = clubData.name;
-    currentRatings["user"] = user;
+    currentRatings["user"] = localStorage
+      .getItem("user")
+      ?.replaceAll(/['"]+/g, "");
 
     axios
       .post(`${url}/${clubData.name}/${user}`, currentRatings)
@@ -100,38 +100,40 @@ function UserRating(props) {
         {currentlyRating && clubData.name && (
           <strong>Currently Rating {clubData.name}</strong>
         )}
+
         <br></br>
         <label>
           <div>Good Vibes</div>
-          <SingleRating type="Vibes" />
+          <SingleRating type="Vibes"></SingleRating>
         </label>
         <br></br>
         <label>
           <div>Intensity</div>
-          <SingleRating type="Intensity" />
+          <SingleRating type="Intensity"></SingleRating>
         </label>
         <br></br>
         <label>
           <div>Popularity</div>
-          <SingleRating type="Clout" />
+          <SingleRating type="Clout"></SingleRating>
         </label>
         <br></br>
         <div>Inclusivity</div>
-        <SingleRating type="Inclusivity" />
+        <SingleRating type="Inclusivity"></SingleRating>
+
         {!currentlyRating && previousRatings["Vibes"] > 0 && (
-          <button type="button" onClick={dispatchCurrentlyRating}>
+          <strong onClick={dispatchCurrentlyRating}>
             Update Rating
-          </button>
+          </strong>
         )}
         {!currentlyRating && previousRatings["Vibes"] === 0 && (
-          <button type="button" onClick={dispatchCurrentlyRating}>
+          <strong onClick={dispatchCurrentlyRating}>
             Submit a Rating
-          </button>
+          </strong>
         )}
         {currentlyRating && (
-          <button type="button" onClick={handleSubmitRating}>
+          <strong onClick={handleSubmitRating}>
             Submit Your Rating
-          </button>
+          </strong>
         )}
         {currentlyRating && (
           <strong style={{ padding: "12px" }} onClick={discard}>
@@ -142,6 +144,7 @@ function UserRating(props) {
     </RatingsBubble>
   );
 }
+
 const SingleRating = (props) => {
   const { type } = props;
   const clubData = useSelector((state) => state.clubData);
