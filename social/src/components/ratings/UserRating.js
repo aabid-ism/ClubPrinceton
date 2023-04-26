@@ -142,3 +142,61 @@ function UserRating(props) {
     </RatingsBubble>
   );
 }
+const SingleRating = (props) => {
+  const { type } = props;
+  const clubData = useSelector((state) => state.clubData);
+  const currentRatings = useSelector((state) => state.currentRatings);
+  const previousRatings = useSelector((state) => state.previousRatings);
+  const currentlyRating = useSelector((state) => state.currentlyRating);
+  const [hover, setHover] = useState(0);
+  const [rating, setRating] = useState(0);
+
+  useEffect(() => {
+    if (currentlyRating) {
+      setRating(currentRatings[type] || 0);
+    } else {
+      setRating(previousRatings[type] || 0);
+    }
+    setHover(rating);
+  }, [
+    clubData,
+    currentRatings,
+    currentlyRating,
+    previousRatings,
+    type,
+  ]);
+
+  const dispatch = useDispatch();
+
+  function handleRating(index) {
+    setRating(index);
+    if (currentlyRating) {
+      dispatch({
+        type: "SET_CURRENT_RATINGS",
+        payload: { type: type, rating: index },
+      });
+    }
+  }
+
+  return (
+    <div className="star-rating">
+      {[...Array(5)].map((star, index) => {
+        index += 1;
+        return (
+          <button
+            type="button"
+            key={index}
+            className={index <= (hover || rating) ? "on" : "off"}
+            onClick={() => handleRating(index)}
+            onMouseEnter={() => setHover(index)}
+            onMouseLeave={() => setHover(rating)}
+          >
+            <span className="star">&#9733;</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+};
+
+export default UserRating;
