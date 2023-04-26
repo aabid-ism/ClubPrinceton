@@ -22,12 +22,16 @@ router.get("/:name", async (req, res) => {
   // run pipeline
   const result = await collection.aggregate(agg).toArray();
   // print results
-
-  res.send(result[0]).status(200);
+  if (result.length === 0) {
+    // no ratings found for the club
+    res.status(404).send({ message: "Club not found" });
+  } else {
+    res.status(200).send(result[0]["rating"]);
+  }
 });
 
 // endpoint to add a rating to the database
-router.post("/:name", async (req, res) => {
+router.post("/:name/:username", async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("ratings");
   // get data from request body
@@ -41,7 +45,9 @@ router.post("/:name", async (req, res) => {
   // update the rating of the club
   const ag = [
     {
-      $match: { club: req.params.name }, // match clubs with the given name
+      $match: { club: req.params.name
+                
+      }, // match clubs with the given name
     },
     {
       $group: {
@@ -75,16 +81,16 @@ router.post("/:name", async (req, res) => {
   res.status(200).send(clubResult);
 });
 
-router.get("/:club/:username", async (req, res) => {
+router.get("/:club/:user", async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("ratings");
   const query = req.params.club;
-  const username = req.params.username;
+  const user = req.params.user;
   // search for a club by name and return the first ratings in
   //result with all attributes
   const agg = [
     {
-      $match: { club: query, username: username }, // match clubs with the given name
+      $match: { club: query, user: user }, // match clubs with the given name
     },
     {
       $project: {
@@ -103,7 +109,12 @@ router.get("/:club/:username", async (req, res) => {
   console.log(result);
   result = result[0];
 
-  if (result == {} || result == [] || result == null || result == undefined) {
+  if (
+    result == {} ||
+    result == [] ||
+    result == null ||
+    result == undefined
+  ) {
     result = { Vibes: 0, Clout: 0, Inclusivity: 0, Intensity: 0 };
   }
 

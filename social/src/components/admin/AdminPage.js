@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import Rightbar from './Rightbar';
+import DeletePostComponent from './DeletePostComponent';
 
 // state of the initial input fields
 const initialState = {
@@ -126,22 +127,22 @@ function AdminInterface() {
             {/* Left Sidebar */}
             <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
             {/* Main Page with Form and Delete-Posts widget */}
-            <main>
-                <div>
-                    {/* <div style={{width: "18rem"}}>
+
+            <div className="mb-5 align-items-center justify-content-center" >
+                {/* <div style={{width: "18rem"}}>
                 <img src={myImage} />
             </div> */}
-                    <Form state={state}
-                        dispatchClearForm={dispatchClearForm}
-                        dispatchCaption={dispatchCaption}
-                        dispatchFile={dispatchFile}
-                        dispatchTitle={dispatchTitle}
-                        dispatchMissingValues={dispatchMissingValues}
-                        dispatchSubmit={dispatchSubmit}
-                    />
-                </div>
-            </main>
-            <Rightbar />
+                <Form state={state}
+                    dispatchClearForm={dispatchClearForm}
+                    dispatchCaption={dispatchCaption}
+                    dispatchFile={dispatchFile}
+                    dispatchTitle={dispatchTitle}
+                    dispatchMissingValues={dispatchMissingValues}
+                    dispatchSubmit={dispatchSubmit}
+                />
+                {state.activeClub && <DeletePostComponent state={state} />}
+            </div>
+            <Rightbar state={state} />
         </div>
     )
 }

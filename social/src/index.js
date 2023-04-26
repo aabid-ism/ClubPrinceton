@@ -15,6 +15,7 @@ import Signup from "./components/auth/Signup";
 import Landing from "./components/auth/Landing";
 import Image from "./components/image/Image";
 import ClubForm from "./components/clubForm/ClubForm";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
