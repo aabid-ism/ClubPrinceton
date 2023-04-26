@@ -4,8 +4,9 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/get", verifyToken, async (req, res) => {
-    console.log("I'm in the announcement endpoint");
+// removing verifyToken for deployment Beta
+router.get("/get", async (req, res) => {
+    // console.log("I'm in the announcement endpoint");
     // let clubName = req.params.name;
     // console.log("clubName" + clubName);
 

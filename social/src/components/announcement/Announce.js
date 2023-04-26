@@ -45,10 +45,10 @@ export default function Announce() {
         })
         .then((response) => {
             const announceData = response.data;
-            console.log("announcement data from the backend: " + announceData);
+            // console.log("announcement data from the backend: " + announceData);
             // clubAnnouncement = announceData;
             setAnnouncement(announceData);
-            console.log("type of announcement: " + typeof(announcement));
+            // console.log("type of announcement: " + typeof(announcement));
             // annoucement = data;
         })
         .catch((error) => {

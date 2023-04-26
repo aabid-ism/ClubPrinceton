@@ -3,6 +3,20 @@ import React from "react";
 import './clubrating.css';
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import axios from 'axios';
+import api from "../auth/api";
+
+/*
+Either refactor OvrRating and ClubRtgBreakdown
+or get state management to work on fast clicking
+on fast clicking (sometimes doesn't have to be fast)
+- one of the properties gets undefined
+Ratings state for zero ratings and non zero ratings are defined differently
+- shouldn't even be going into that condition -> debug later if have time
+Right now code is working -> but making an unecessary API CALL
+*/
+
+// testing -> consider exceptions
 
 // need to add async/await to allow concurrency
 function BreakdownBubble(props){
@@ -19,7 +33,13 @@ function roundHundreth(value) {
 }
 
 // gets the RGB colors for single rating
+// can refactor
 function getRGBColors(singleRating) {
+    // error -> should not enter here
+    if (singleRating < 1) {
+        console.error("Rating factor of Club Rating is less than one");
+        return;
+    }
     const MAX_RTG = 5;
     const MIN_RTG = 1;
     const DIFF_RTG = 4;
@@ -34,7 +54,6 @@ function SingleRating(props) {
         "," + props.rgbColor.blue +  ")"
     };
 
-    // html tags are working but not css tags
     return (
         <strong>
             <div className="rtg-breakdown-txt">
@@ -46,12 +65,14 @@ function SingleRating(props) {
 
 // add asynchronous await -> if needed
 export function ClubRtgBreakdown() {
+    const checkUserRtgUrl = `${process.env.REACT_APP_SERVER_URL}/clubRating/check`;
     // LATER: More refined coloring system
     const clubData = useSelector(state => state.clubData);
     const clubRating = useSelector(state => state.globalRatings);
     const hasOneUserRtg = useSelector(state => state.hasOneUserRtg);
 
     const lightblue = {red: 173, green: 216, blue: 230};
+    // keeping the initial state of N/A -> to see if there are any errors in useEffect
     const [ratingBreakdown, setRatingBreakdown] = 
     useState(
     {
@@ -62,73 +83,83 @@ export function ClubRtgBreakdown() {
     });
 
     useEffect(() => {
+        // console.log("Does my club have one rating: " + hasOneUserRtg);
+        // console.log(clubData.name + "z2: " + JSON.stringify(clubRating));
+        // console.log(clubData.name + "z2: " + hasOneUserRtg);
+        // console.log("I am in useEffect only once for test elephant club");
+        // globalRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
+
+        // debug state management (redux store) with Roy later
         if (clubData.name !== undefined) {
-            if (hasOneUserRtg) {
-                const vibesColor = {};
-                
+            api
+            .get(checkUserRtgUrl, {
+                params: {clubName: clubData.name}
+            })
+            .then((response) => {
+                const hasUserRating= response.data.hasUserRating;
+                    if (hasUserRating === 1) {
+                        const vibesRating = roundHundreth(clubRating.rating.Vibes);
+                        const intensityRating = roundHundreth(clubRating.rating.Intensity);
+                        const popularityRating = roundHundreth(clubRating.rating.Clout);
+                        const inclusivityRating = roundHundreth(clubRating.rating.Inclusivity);
+        
+                        const vibesColor = getRGBColors(vibesRating);
+                        const intensityColor = getRGBColors(intensityRating);
+                        const popularityColor = getRGBColors(popularityRating);
+                        const inclusivityColor = getRGBColors(inclusivityRating);
+        
+                        setRatingBreakdown(
+                        {
+                            vibes: {rating: `${vibesRating}`, color: vibesColor},
+                            intensity: {rating: `${popularityRating}`, color: popularityColor},
+                            popularity: {rating: `${inclusivityRating}`, color: inclusivityColor},
+                            inclusivity: {rating: `${intensityRating}`, color: intensityColor}
+                        });
+                    }
+                    else {
+                        setRatingBreakdown({
+                            vibes: {rating: "NEW", color: lightblue},
+                            intensity: {rating: "NEW", color: lightblue},
+                            popularity: {rating: "NEW", color: lightblue},
+                            inclusivity: {rating: "NEW", color: lightblue}
+                        });
+                    }
+            })
+            .catch((error) => {
+                console.log("Error occurred: ", error);
+            });
+            // console.log("Test Club" + ": " + hasOneUserRtg);
+            // if (hasOneUserRtg) {
+            //     const vibesRating = roundHundreth(clubRating.rating.Vibes);
+            //     const intensityRating = roundHundreth(clubRating.rating.Intensity);
+            //     const popularityRating = roundHundreth(clubRating.rating.Clout);
+            //     const inclusivityRating = roundHundreth(clubRating.rating.Inclusivity);
 
-            }
-            else {
+            //     const vibesColor = getRGBColors(vibesRating);
+            //     const intensityColor = getRGBColors(intensityRating);
+            //     const popularityColor = getRGBColors(popularityRating);
+            //     const inclusivityColor = getRGBColors(inclusivityRating);
 
-            }
+            //     setRatingBreakdown(
+            //     {
+            //         vibes: {rating: `${vibesRating}`, color: vibesColor},
+            //         intensity: {rating: `${popularityRating}`, color: popularityColor},
+            //         popularity: {rating: `${inclusivityRating}`, color: inclusivityColor},
+            //         inclusivity: {rating: `${intensityRating}`, color: intensityColor}
+            //     });
+            // }
+            // else {
+            //     setRatingBreakdown({
+            //         vibes: {rating: "NEW", color: lightblue},
+            //         intensity: {rating: "NEW", color: lightblue},
+            //         popularity: {rating: "NEW", color: lightblue},
+            //         inclusivity: {rating: "NEW", color: lightblue}
+            //     });
+
+            // }
         }
-
-    }, [clubData, clubRating, hasOneUserRtg]);
-
-    /*
-            clubIntensity = roundHundreth(clubRating.Intensity);
-            clubPopularity = roundHundreth(clubRating.Clout);
-            clubInclusivity
-    */
-
-    // let clubVibes = "NEW";
-    // let clubIntensity = "NEW";
-    // // clout
-    // let clubPopularity = "NEW";
-    // let clubInclusivity = "NEW";
-
-    // If club has user ratings -> get RGB colors
-    // let getRGBColors = (clubFactor) => {
-    //     const MAX_RTG = 5;
-    //     // MIN rating 1 or 0? -> EDGE CASE
-    //     const MIN_RTG = 1;
-    //     const DIFF_RTG = 4;
-    //     const red = Math.round(255 * (MAX_RTG - clubFactor)) / DIFF_RTG;
-    //     const green = Math.round(255 * (clubFactor - MIN_RTG)) / DIFF_RTG;
-
-    //     return {red: red, green: green, blue: 0};
-    // };
-
-    // colors for lightblue background using rgb function
-    // can make these consts?
-    // let red = 173;
-    // let green = 216;
-    // let blue = 230;
-
-    // // instead of doing this -> we should have done conditional rendering
-    // // this would be the more react way -> change it post beta
-    // // using props/ternary operator
-
-    // // see if there is a better way to rewrite this logic
-    // let vibesColor = {red: red, green: green, blue: blue};
-    // let intensityColor = {red: red, green: green, blue: blue};
-    // let popularityColor = {red: red, green: green, blue: blue};
-    // let inclusivityColor = {red: red, green: green, blue: blue};
-
-    // // { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
-    // if (clubData.name !== undefined) {
-    //     if (hasOneUserRtg) {
-    //         clubVibes = roundHundreth(clubRating.Vibes);
-    //         clubIntensity = roundHundreth(clubRating.Intensity);
-    //         clubPopularity = roundHundreth(clubRating.Clout);
-    //         clubInclusivity = roundHundreth(clubRating.Inclusivity);
-
-    //         vibesColor = getRGBColors(clubVibes);
-    //         intensityColor = getRGBColors(clubIntensity);
-    //         popularityColor = getRGBColors(clubPopularity);
-    //         inclusivityColor = getRGBColors(clubInclusivity);
-    //     }
-    // }
+    }, [clubData, clubRating]);
+    // clubData, clubRating
 
     return (
         <BreakdownBubble>
@@ -136,10 +167,10 @@ export function ClubRtgBreakdown() {
                 <h2>Breakdown</h2>
             </div>
             <div>
-                <SingleRating rgbColor={vibesColor} singleRating={clubVibes} labeling="Good Vibes: "/>
-                <SingleRating rgbColor={intensityColor} singleRating={clubIntensity} labeling="Intensity: "/>
-                <SingleRating rgbColor={popularityColor} singleRating={clubPopularity} labeling="Popularity: "/>
-                <SingleRating rgbColor={inclusivityColor} singleRating={clubInclusivity} labeling="Inclusivity: "/>
+                <SingleRating rgbColor={ratingBreakdown.vibes.color} singleRating={ratingBreakdown.vibes.rating} labeling="Good Vibes: "/>
+                <SingleRating rgbColor={ratingBreakdown.intensity.color} singleRating={ratingBreakdown.intensity.rating} labeling="Intensity: "/>
+                <SingleRating rgbColor={ratingBreakdown.popularity.color} singleRating={ratingBreakdown.popularity.rating} labeling="Popularity: "/>
+                <SingleRating rgbColor={ratingBreakdown.inclusivity.color} singleRating={ratingBreakdown.inclusivity.rating} labeling="Inclusivity: "/>
             </div>
         </BreakdownBubble>
     );

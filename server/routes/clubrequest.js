@@ -7,14 +7,14 @@ const router = express.Router();
 router.post("/submit", async (req, res) => {
     const db = conn.getDb();
     const clubCreation = await db.collection("clubCreation");
-    console.log("I'm here in the clubrequest/submit endpoint");
-    console.log('new change');
-    console.log(req.body.clubName);
-    console.log(typeof(req.body.clubName));
+    // console.log("I'm here in the clubrequest/submit endpoint");
+    // console.log('new change');
+    // console.log(req.body.clubName);
+    // console.log(typeof(req.body.clubName));
 
     // testing local storage data
-    console.log("Netid of club applicant: " + req.body.applicantNetid);
-    console.log("Club Applicant's name: " + req.body.applicantName);
+    // console.log("Netid of club applicant: " + req.body.applicantNetid);
+    // console.log("Club Applicant's name: " + req.body.applicantName);
 
     // fields to be inserted as a club creation document
     // // need to subsitute with actual user id
