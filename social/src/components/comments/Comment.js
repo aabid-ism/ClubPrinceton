@@ -5,13 +5,15 @@ import api from '../auth/api';
 
 const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
 // TODO: needs to actually update database with likes
-function Like({ commentId, netId, priorLikes, priorLikeStatus }){
+function Like({ commentId, postId, netId, priorLikes, priorLikeStatus }){
     const [isLiked, toggleLike] = useState(priorLikeStatus);
     function handleLike(event){
         toggleLike(!isLiked);
         const likeData = {
             netId: netId,
-            commentId: commentId
+            commentId: commentId,
+            postId: postId,
+            likeAmount: isLiked ? -1 : 1
         }
         api
         .post(`${url}/like/`, likeData)
@@ -36,7 +38,7 @@ function Like({ commentId, netId, priorLikes, priorLikeStatus }){
 }
 
 // TODO: Make a request for whether the post was liked by a certain user
-export default function Comment ({ props }){
+export default function Comment ({ postId, props }){
     async function getData(){
         let netId = localStorage.getItem("netid"); // could be moved up the chain
         const commentId = props._id;
@@ -60,10 +62,11 @@ export default function Comment ({ props }){
             // }
     }
         // useEffect(() => {
-    const commentLikeData = getData();
+    // const commentLikeData = getData();
         
     // })
-    console.log(commentLikeData)
+    console.log("Golly! I have a lot of likes")
+    console.log(props.likes)
     
     return (
         <div className='comment'>
@@ -74,7 +77,7 @@ export default function Comment ({ props }){
                 </div>
             </div>
         
-            <Like commentId={props._id} netId={localStorage.getItem("netid")} priorLikes={props.likes} priorLikeStatus={commentLikeData.user_has_liked}/>
+            <Like commentId={props._id} postId={postId }netId={localStorage.getItem("netid")} priorLikes={props.likes} priorLikeStatus={false}/>
         </div>
     );
 }

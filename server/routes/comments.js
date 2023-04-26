@@ -111,19 +111,58 @@ router.get('/like/:id', async (req, res) => {
 
 router.post('/like/', async (req, res) => {
   console.log('Like Posting for Comment Received!');
-  const { netId, commentId   } = req.body;
+  const { netId, commentId, postId, likeAmount } = req.body;
   const db = conn.getDb();
   const comment_collection = await db.collection("comments");
   const likes_collection = await db.collection("likes");
+  const club_collection = await db.collection("clubs");
   const formattedCommentId = new ObjectId(commentId);
+  const formattedPostId = new ObjectId(postId);
   
-  // increase or decrease the comment's likes field
+  // update subset for post as well
+  const club = await club_collection.findOne({
+    posts: {$elemMatch: {_id: formattedPostId}}
+  });
+// console.log("This is the subset version")
+  const target_post_comments = club.posts.find(post => post._id.toString() === formattedPostId.toString()).comments;
+  console.log(target_post_comments)
+  const target_post_comment = target_post_comments.find(comment => 
+    comment._id.toString() === formattedCommentId.toString()
+    )
+    console.log("Found the subset comment!")
+    console.log(target_post_comment.likes)
+    target_post_comment.likes += likeAmount; // a little buggy
+    let likes = target_post_comment.likes;
+    // console.log(target_post_comment.likes)
+    console.log(target_post_comments)
+  // target_post_comment.likes += likeAmount;
+  await club_collection.updateOne(
+    { posts: {$elemMatch: {_id: formattedPostId}} },
+    [{ $set: { posts: club.posts } }]
+  );
+  // increase or decrease the comment's likes field -> separate doc
   await comment_collection.updateOne(
     {_id: formattedCommentId},
-    { $inc: {likes: 1} }
+    { $set: {likes: likes} }
     );
-    const comment = await comment_collection.findOne({_id: formattedCommentId})
-    console.log(comment);
+  const comment = await comment_collection.findOne({_id: formattedCommentId})
+
+  // create a new like document
+  const like_document_to_add = {
+    liker_netId: netId,
+    commentId: commentId
+  }
+
+  const new_comment = await likes_collection.insertOne(
+    like_document_to_add
+  );
+
+  // TODO: fix duplicate comment creation -> setup DELETE endpoint and be more sophisticated on frontend
+  // TODO: ensure parity between like documents and the subset likes
+  // TODO: 
+
+
+  console.log(comment);
   res.send("Liked/Unliked!").status(200);
 });
 

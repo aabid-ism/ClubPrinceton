@@ -45,7 +45,7 @@ export default function CommentList({ props }){
                 commentListData.map((commentData) => {
                         // return (<pre key={commentData._id}>{JSON.stringify(commentData, null, 2)}</pre>)
                         console.log(commentData)
-                        return (<Comment props={commentData} key={commentData._id}/>)
+                        return (<Comment postId={props.postId }props={commentData} key={commentData._id}/>)
                     })
                 }
                 <button onClick={loadCommentList}>See Comments!</button>
