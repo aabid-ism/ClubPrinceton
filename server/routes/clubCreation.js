@@ -11,13 +11,13 @@ router.get("/", async (req, res) => {
       .find({})
       .sort({ status: -1 })
       .toArray();
-    res.send(results).status(200);
+    res.status(200).send(results);
   } catch (err) {
-    res.status(500).send("Error fetching clubCreation data");
+    console.error("Error fetching clubCreation data:", err);
+    res.status(500).send("Internal server error");
   }
 });
-
-router.post("/a/:name", async (req, res) => {
+router.post("/a/:name/:netid", async (req, res) => {
   try {
     const db = conn.getDb();
     const collection = db.collection("clubCreation");
@@ -25,16 +25,33 @@ router.post("/a/:name", async (req, res) => {
     if (!club) {
       return res.status(404).send("Club not found");
     }
+
+    // Set status to accepted for the club
     await collection.updateOne(
       { name: req.params.name },
       { $set: { status: "accepted" } }
     );
-    const clubData = getClubData(club);
-    const collection2 = db.collection("clubs");
-    const result = await collection2.insertOne(clubData);
-    res.send("Club accepted").status(200);
+
+    // Add club under admins_clubs for the specified user
+    const collection1 = db.collection("users");
+    const user = await collection1.findOne({ netid: req.params.netid });
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    await collection1.updateOne(
+      { netid: req.params.netid },
+      { $push: { admins_clubs: req.params.name } }
+    );
+
+    res
+      .status(200)
+      .send("Club accepted and added to user's admins_clubs");
   } catch (err) {
-    res.status(500).send("Error accepting club");
+    console.error(
+      "Error accepting club and adding to user's admins_clubs:",
+      err
+    );
+    res.status(500).send("Internal server error");
   }
 });
 
@@ -50,9 +67,10 @@ router.post("/d/:name", async (req, res) => {
       { name: req.params.name },
       { $set: { status: "declined" } }
     );
-    res.send("Club declined").status(200);
+    res.status(200).send("Club declined");
   } catch (err) {
-    res.status(500).send("Error declining club");
+    console.error("Error declining club:", err);
+    res.status(500).send("Internal server error");
   }
 });
 

@@ -108,12 +108,16 @@ export default function HomePage() {
               justifyContent: "center",
               alignItems: "center",
               marginTop: "50px",
+              maxWidth: isDesktopOrLaptop ? "70%" : "100%",
               margin: "0 auto",
               textAlign: "center",
             }}
           >
             {clubData.name && (
-              <MainPage width={"500px"} height={"300px"} />
+              <MainPage
+                width={isTabletOrMobile ? "100%" : "500px"}
+                height={isTabletOrMobile ? "30%" : "300px"}
+              />
             )}
 
             {localStorage.getItem("user") && <p>Good day, {user}! </p>}
@@ -124,6 +128,7 @@ export default function HomePage() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              maxWidth: isDesktopOrLaptop ? "70%" : "100%",
               margin: "0 auto",
               textAlign: "center",
             }}
@@ -136,12 +141,16 @@ export default function HomePage() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              maxWidth: isDesktopOrLaptop ? "70%" : "100%",
               margin: "0 auto",
               textAlign: "center",
             }}
           >
             {clubData.name && (
-              <PostList width={"600px"} height={"1000px"} />
+              <PostList
+                width={"600px"}
+                height={ "1000px"}
+              />
             )}
           </div>
         </div>
@@ -181,7 +190,8 @@ export default function HomePage() {
           textAlign: "center",
         }}
       >
-        <PostList />
+        <PostList
+        />
       </div>
     </div>
   );

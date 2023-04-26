@@ -17,12 +17,12 @@
     /*need to scale the css to occupy a percentage of
     the page */
     /*can also use percentages*/
-    bottom: 0px; left: -420px;
+    top: -350px; left: -350px; right: 0px; bottom: 0px;
 }
 
 .rtg-breakdown-bubble {
     color: black;
-    background-color: #f9cb9c;
+    background-color: #FFE4CC;
     margin: auto auto;
     width: 20rem;
     height: 25rem;
@@ -40,7 +40,15 @@
     /* right: 5px; bottom: 5px; */
     top: 5px; right: 5px;
 
+    text-align: center;
+
     z-index: 20;
+}
+
+.rtg-breakdown-group {
+    display: flex;
+    position: fixed;
+    align-items: center
 }
 
 .rtg-breakdown-text {

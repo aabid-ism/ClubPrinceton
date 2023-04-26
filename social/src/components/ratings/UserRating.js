@@ -5,12 +5,13 @@ import { useSelector, useDispatch } from "react-redux";
 import "./ratingstar.css";
 
 const url = `${process.env.REACT_APP_SERVER_URL}/ratings`;
+
 function UserRating(props) {
   const clubData = useSelector((state) => state.clubData);
   const currentRatings = useSelector((state) => state.currentRatings);
   const previousRatings = useSelector((state) => state.previousRatings);
   const currentlyRating = useSelector((state) => state.currentlyRating);
-  const user = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
+  const user = localStorage.getItem("user");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,7 +30,7 @@ function UserRating(props) {
       axios
         .get(`${url}/${clubData.name}/${user}`)
         .then((response) => {
-          console.log("Previous rating recieved: " + response.data);
+          console.log("Previous rating received: " + response.data);
           const data = response.data;
           dispatch({
             type: "SET_PREVIOUS_RATINGS",
@@ -40,20 +41,19 @@ function UserRating(props) {
           console.error(error);
         });
     }
-  }, [clubData, currentlyRating, currentRatings]);
+  }, [clubData, currentlyRating, currentRatings, user, dispatch]);
 
   useEffect(() => {
     dispatch({
       type: "RESET_ALL_RATINGS",
     });
-  }, [clubData]);
+  }, [clubData, dispatch]);
 
   function handleSubmitRating(event) {
+    event.preventDefault();
     console.log("submitting rating");
     currentRatings["club"] = clubData.name;
-    currentRatings["user"] = localStorage
-      .getItem("user")
-      ?.replaceAll(/['"]+/g, "");
+    currentRatings["user"] = user;
 
     axios
       .post(`${url}/${clubData.name}/${user}`, currentRatings)
@@ -100,40 +100,38 @@ function UserRating(props) {
         {currentlyRating && clubData.name && (
           <strong>Currently Rating {clubData.name}</strong>
         )}
-
         <br></br>
         <label>
           <div>Good Vibes</div>
-          <SingleRating type="Vibes"></SingleRating>
+          <SingleRating type="Vibes" />
         </label>
         <br></br>
         <label>
           <div>Intensity</div>
-          <SingleRating type="Intensity"></SingleRating>
+          <SingleRating type="Intensity" />
         </label>
         <br></br>
         <label>
           <div>Popularity</div>
-          <SingleRating type="Clout"></SingleRating>
+          <SingleRating type="Clout" />
         </label>
         <br></br>
         <div>Inclusivity</div>
-        <SingleRating type="Inclusivity"></SingleRating>
-
+        <SingleRating type="Inclusivity" />
         {!currentlyRating && previousRatings["Vibes"] > 0 && (
-          <strong onClick={dispatchCurrentlyRating}>
+          <button type="button" onClick={dispatchCurrentlyRating}>
             Update Rating
-          </strong>
+          </button>
         )}
         {!currentlyRating && previousRatings["Vibes"] === 0 && (
-          <strong onClick={dispatchCurrentlyRating}>
+          <button type="button" onClick={dispatchCurrentlyRating}>
             Submit a Rating
-          </strong>
+          </button>
         )}
         {currentlyRating && (
-          <strong onClick={handleSubmitRating}>
+          <button type="button" onClick={handleSubmitRating}>
             Submit Your Rating
-          </strong>
+          </button>
         )}
         {currentlyRating && (
           <strong style={{ padding: "12px" }} onClick={discard}>
@@ -144,62 +142,3 @@ function UserRating(props) {
     </RatingsBubble>
   );
 }
-
-const SingleRating = (props) => {
-  const { type } = props;
-  const clubData = useSelector((state) => state.clubData);
-  const currentRatings = useSelector((state) => state.currentRatings);
-  const previousRatings = useSelector((state) => state.previousRatings);
-  const currentlyRating = useSelector((state) => state.currentlyRating);
-  const [hover, setHover] = useState(0);
-  const [rating, setRating] = useState(0);
-
-  useEffect(() => {
-    if (currentlyRating) {
-      setRating(currentRatings[type] || 0);
-    } else {
-      setRating(previousRatings[type] || 0);
-    }
-    setHover(rating);
-  }, [
-    clubData,
-    currentRatings,
-    currentlyRating,
-    previousRatings,
-    type,
-  ]);
-
-  const dispatch = useDispatch();
-
-  function handleRating(index) {
-    setRating(index);
-    if (currentlyRating) {
-      dispatch({
-        type: "SET_CURRENT_RATINGS",
-        payload: { type: type, rating: index },
-      });
-    }
-  }
-
-  return (
-    <div className="star-rating">
-      {[...Array(5)].map((star, index) => {
-        index += 1;
-        return (
-          <button
-            type="button"
-            key={index}
-            className={index <= (hover || rating) ? "on" : "off"}
-            onClick={() => handleRating(index)}
-            onMouseEnter={() => setHover(index)}
-            onMouseLeave={() => setHover(rating)}
-          >
-            <span className="star">&#9733;</span>
-          </button>
-        );
-      })}
-    </div>
-  );
-};
-
-export default UserRating;
