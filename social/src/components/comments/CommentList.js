@@ -37,44 +37,14 @@ export default function CommentList({ props }){
             console.log("Error occurred: ", error);
         });
     }
-        // if (commentListData !== undefined){
-        //     axios
-        //     .get(`${url}/load/${props.postId}`)
-        //     .then((response) => {
-        //         const data = response.data;
-        //         console.log("Data Retrieved!");
-        //         console.log(data);
-        //         setCommentListData(data); // later, do spread
-        //         console.log(commentListData);
-        //     })
-        //     .catch((error) => {
-        //         console.log("Error occurred: ", error);
-        //     });
-        // } else {
-        //     axios
-        //     .get(`${url}/load/${props.postId}`)
-        //     .then((response) => {
-        //         const data = response.data;
-        //         console.log("Data Retrieved!");
-        //         console.log(data);
-        //         setCommentListData(data);
-        //         console.log(commentListData);
-        //     })
-        //     .catch((error) => {
-        //         console.log("Error occurred: ", error);
-        //     });
-        // }
-        
-        // }
-    // loadCommentList();
-    // console.log("Comment List Data at Start")
-    // console.log(commentListData)
+       
     return (
         <div>
             <div className="comments">
                 {
                 commentListData.map((commentData) => {
                         // return (<pre key={commentData._id}>{JSON.stringify(commentData, null, 2)}</pre>)
+                        console.log(commentData)
                         return (<Comment props={commentData} key={commentData._id}/>)
                     })
                 }

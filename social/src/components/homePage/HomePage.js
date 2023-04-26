@@ -247,25 +247,6 @@ export default function HomePage() {
       >
         {clubData.name && <OvrRating />}
       </div>
-
-      {clubData.name && (
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            maxWidth: isDesktopOrLaptop ? "70%" : "100%",
-            margin: "0 auto",
-            textAlign: "center",
-          }}
-        >
-          <PostList
-            width={isTabletOrMobile ? "100%" : "500px"}
-            height={isTabletOrMobile ? "40%" : "400px"}
-          />
-        </div>
-      )}
     </div>
   );
 }

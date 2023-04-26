@@ -74,7 +74,7 @@ export default function Comment ({ props }){
                 </div>
             </div>
         
-            <Like commentId={props._id} netId={localStorage.getItem("netid")} priorLikes={commentLikeData.number_of_likes} priorLikeStatus={commentLikeData.user_has_liked}/>
+            <Like commentId={props._id} netId={localStorage.getItem("netid")} priorLikes={props.likes} priorLikeStatus={commentLikeData.user_has_liked}/>
         </div>
     );
 }

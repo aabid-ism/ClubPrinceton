@@ -1,6 +1,6 @@
 .posts {
     display: flex;
-    row-gap: 20px;
+    row-gap: 100px;
     justify-content: center;
     position: relative;
     /* sorry, Chris. Did a quick fix here for Beta! */
