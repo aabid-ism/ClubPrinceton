@@ -40,7 +40,15 @@
     /* right: 5px; bottom: 5px; */
     top: 5px; right: 5px;
 
+    text-align: center;
+
     z-index: 20;
+}
+
+.rtg-breakdown-group {
+    display: flex;
+    position: fixed;
+    align-items: center
 }
 
 .rtg-breakdown-text {
