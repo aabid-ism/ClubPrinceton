@@ -4,7 +4,7 @@
     justify-content: center;
     position: relative;
     /* sorry, Chris. Did a quick fix here for Beta! */
-    top:700px; right:0px; left:75px; bottom: 100px;
+    /* top:700px; right:0px; left:75px; bottom: 100px; */
 }
 
 .test-button {

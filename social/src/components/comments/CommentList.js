@@ -61,7 +61,7 @@ function PersonalComment({LOGO, postId, list}) {
     function handleKeyDown(event){
         if (event.key === 'Enter'){
             if (event.target.value !== ''){
-                
+                console.log("Attempting to comment")
                 const commentData = {
                     data: event.target.value,
                     postId: postId

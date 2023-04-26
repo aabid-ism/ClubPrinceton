@@ -103,3 +103,7 @@ img {
     width: 100%;
     background: transparent;
 }
+
+.postImage {
+    max-height: 100%;
+}

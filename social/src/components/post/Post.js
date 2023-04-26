@@ -18,7 +18,9 @@ function PostContent({ props }) {
   const img_url = `https://${process.env.REACT_APP_AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/images/${props.image_url}`;
   console.log(img_url)
   return (<div className="postContent">
-    <img src={img_url} alt=""/>
+    <div className="postImage">
+      <img src={img_url} alt=""/>
+    </div>
     {props.content}
     </div>);
 }
