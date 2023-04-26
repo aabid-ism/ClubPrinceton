@@ -22,7 +22,7 @@ router.get("/get", async (req, res) => {
 
     // need proper error messaging here!
     // can remove announcement: 1 before merging
-    const clubDoc = await clubsCollection.findOne({ name: clubName });
+    const clubDoc = await clubsCollection.findOne({  name: clubName  });
     let announcement = clubDoc.announcement;
 
     // if club doesn't have announcement

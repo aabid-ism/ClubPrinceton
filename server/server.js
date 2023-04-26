@@ -6,6 +6,7 @@ import ratings from "./routes/ratings.js";
 import comments from "./routes/comments.js";
 import auth from "./routes/auth.js";
 import posts from "./routes/posts.js";
+import likes from "./routes/likes.js"
 import image_pipeline from "./routes/image_pipeline.js";
 import bodyParser from "body-parser";
 import conn from "./db/conn.js";
