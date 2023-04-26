@@ -17,7 +17,7 @@
     /*need to scale the css to occupy a percentage of
     the page */
     /*can also use percentages*/
-    bottom: 0px; left: -420px;
+    top: -350px; left: -350px; right: 0px; bottom: 0px;
 }
 
 .rtg-breakdown-bubble {
