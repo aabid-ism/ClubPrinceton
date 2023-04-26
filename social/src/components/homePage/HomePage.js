@@ -113,10 +113,7 @@ export default function HomePage() {
             }}
           >
             {clubData.name && (
-              <MainPage
-                width={"500px"}
-                height={"300px"}
-              />
+              <MainPage width={"500px"} height={"300px"} />
             )}
 
             {localStorage.getItem("user") && <p>Good day, {user}! </p>}
@@ -144,10 +141,7 @@ export default function HomePage() {
             }}
           >
             {clubData.name && (
-              <PostList
-                width={"600px"}
-                height={ "1000px"}
-              />
+              <PostList width={"600px"} height={"1000px"} />
             )}
           </div>
         </div>
@@ -187,8 +181,7 @@ export default function HomePage() {
           textAlign: "center",
         }}
       >
-        <PostList
-        />
+        <PostList />
       </div>
     </div>
   );

@@ -35,7 +35,10 @@ export default function SuperAdminInterface() {
     // set club status to accepted
     axios
       .post(
-        `${process.env.REACT_APP_SERVER_URL}/clubCreation/a/${club.name}`
+        `${process.env.REACT_APP_SERVER_URL}/clubCreation/a/${
+          club.name
+        }/${localStorage.getItem("netid")}`,
+        club
       )
       .then((res) => {
         console.log("club accepted");
