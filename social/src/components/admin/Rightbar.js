@@ -1,9 +1,5 @@
-import React, { useEffect }, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react';
 import api from '../auth/api';
-import api from '../auth/api';
-import {
-    useState
-} from 'react';
 import { useNavigate } from 'react-router-dom';
 import ModalComponent from './Modal';
 
