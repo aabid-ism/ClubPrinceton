@@ -134,6 +134,18 @@ export default function HomePage() {
             {clubData.name && <Announce />}
           </div>
           <div
+          style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "0 auto",
+          textAlign: "center",
+          }}
+          >
+            {clubData.name && <OvrRating />}
+          </div>
+          <div
             style={{
               flex: 1,
               display: "flex",
@@ -164,20 +176,8 @@ export default function HomePage() {
       >
         {clubData.name && <ClubRtgBreakdown />}
       </div>
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "0 auto",
-          textAlign: "center",
-        }}
-      >
-        {clubData.name && <OvrRating />}
-      </div>
 
-      <div
+      {/* <div
         style={{
           flex: 1,
           display: "flex",
@@ -189,7 +189,7 @@ export default function HomePage() {
       >
         <PostList
         />
-      </div>
+      </div> */}
     </div>
   );
 }
