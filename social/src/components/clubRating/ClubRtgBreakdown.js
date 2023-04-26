@@ -38,7 +38,7 @@ function getRGBColors(singleRating) {
     // error -> should not enter here
     if (singleRating < 1) {
         console.error("Rating factor of Club Rating is less than one");
-        return;
+        // return;
     }
     const MAX_RTG = 5;
     const MIN_RTG = 1;
@@ -69,7 +69,7 @@ export function ClubRtgBreakdown() {
     // LATER: More refined coloring system
     const clubData = useSelector(state => state.clubData);
     const clubRating = useSelector(state => state.globalRatings);
-    const hasOneUserRtg = useSelector(state => state.hasOneUserRtg);
+    // const hasOneUserRtg = useSelector(state => state.hasOneUserRtg);
 
     const lightblue = {red: 173, green: 216, blue: 230};
     // keeping the initial state of N/A -> to see if there are any errors in useEffect
@@ -90,44 +90,45 @@ export function ClubRtgBreakdown() {
         // globalRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
 
         // debug state management (redux store) with Roy later
-        if (clubData.name !== undefined) {
-            api
-            .get(checkUserRtgUrl, {
-                params: {clubName: clubData.name}
-            })
-            .then((response) => {
-                const hasUserRating= response.data.hasUserRating;
-                    if (hasUserRating === 1) {
-                        const vibesRating = roundHundreth(clubRating.rating.Vibes);
-                        const intensityRating = roundHundreth(clubRating.rating.Intensity);
-                        const popularityRating = roundHundreth(clubRating.rating.Clout);
-                        const inclusivityRating = roundHundreth(clubRating.rating.Inclusivity);
-        
-                        const vibesColor = getRGBColors(vibesRating);
-                        const intensityColor = getRGBColors(intensityRating);
-                        const popularityColor = getRGBColors(popularityRating);
-                        const inclusivityColor = getRGBColors(inclusivityRating);
-        
-                        setRatingBreakdown(
-                        {
-                            vibes: {rating: `${vibesRating}`, color: vibesColor},
-                            intensity: {rating: `${popularityRating}`, color: popularityColor},
-                            popularity: {rating: `${inclusivityRating}`, color: inclusivityColor},
-                            inclusivity: {rating: `${intensityRating}`, color: intensityColor}
-                        });
-                    }
-                    else {
-                        setRatingBreakdown({
-                            vibes: {rating: "NEW", color: lightblue},
-                            intensity: {rating: "NEW", color: lightblue},
-                            popularity: {rating: "NEW", color: lightblue},
-                            inclusivity: {rating: "NEW", color: lightblue}
-                        });
-                    }
-            })
-            .catch((error) => {
-                console.log("Error occurred: ", error);
-            });
+        // if (clubData.name !== undefined) {
+        api
+        .get(checkUserRtgUrl, {
+            params: {clubName: clubData.name}
+        })
+        .then((response) => {
+            const hasUserRating= response.data.hasUserRating;
+                if (hasUserRating === 1) {
+                    
+                    const vibesColor = getRGBColors(clubRating.Vibes);
+                    const intensityColor = getRGBColors(clubRating.Intensity);
+                    const popularityColor = getRGBColors(clubRating.Clout);
+                    const inclusivityColor = getRGBColors(clubRating.Inclusivity);
+
+                    const vibesRating = roundHundreth(clubRating.Vibes);
+                    const intensityRating = roundHundreth(clubRating.Intensity);
+                    const popularityRating = roundHundreth(clubRating.Clout);
+                    const inclusivityRating = roundHundreth(clubRating.Inclusivity);
+    
+                    setRatingBreakdown(
+                    {
+                        vibes: {rating: `${vibesRating}`, color: vibesColor},
+                        intensity: {rating: `${popularityRating}`, color: popularityColor},
+                        popularity: {rating: `${inclusivityRating}`, color: inclusivityColor},
+                        inclusivity: {rating: `${intensityRating}`, color: intensityColor}
+                    });
+                }
+                else {
+                    setRatingBreakdown({
+                        vibes: {rating: "NEW", color: lightblue},
+                        intensity: {rating: "NEW", color: lightblue},
+                        popularity: {rating: "NEW", color: lightblue},
+                        inclusivity: {rating: "NEW", color: lightblue}
+                    });
+                }
+        })
+        .catch((error) => {
+            console.log("Error occurred: ", error);
+        });
             // console.log("Test Club" + ": " + hasOneUserRtg);
             // if (hasOneUserRtg) {
             //     const vibesRating = roundHundreth(clubRating.rating.Vibes);
@@ -157,9 +158,11 @@ export function ClubRtgBreakdown() {
             //     });
 
             // }
-        }
+        // }
     }, [clubData, clubRating]);
     // clubData, clubRating
+
+    // console.log("z" + JSON.stringify(ratingBreakdown.vibes.color));
 
     return (
         <BreakdownBubble>

@@ -32,10 +32,10 @@ function getRGBColors(clubRating) {
     const MIN_RTG = 1;
     const DIFF_RTG = MAX_RTG - MIN_RTG;
 
-    const clubClout = roundHundreth(clubRating.rating.Clout);
-    const clubVibes = roundHundreth(clubRating.rating.Vibes);
-    const clubIntensity = roundHundreth(clubRating.rating.Intensity);
-    const clubInclusivity = roundHundreth(clubRating.rating.Inclusivity);
+    const clubClout = roundHundreth(clubRating.Clout);
+    const clubVibes = roundHundreth(clubRating.Vibes);
+    const clubIntensity = roundHundreth(clubRating.Intensity);
+    const clubInclusivity = roundHundreth(clubRating.Inclusivity);
 
     const clubRoundedRtg = `${roundHundreth((clubClout + clubVibes + clubIntensity + clubInclusivity) / 4).toFixed(2)}`;
 
