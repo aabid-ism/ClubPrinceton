@@ -177,7 +177,7 @@ export default function HomePage() {
         {clubData.name && <ClubRtgBreakdown />}
       </div>
 
-      <div
+      {/* <div
         style={{
           flex: 1,
           display: "flex",
@@ -189,7 +189,7 @@ export default function HomePage() {
       >
         <PostList
         />
-      </div>
+      </div> */}
     </div>
   );
 }
