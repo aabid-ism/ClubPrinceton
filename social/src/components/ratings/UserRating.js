@@ -60,6 +60,20 @@ function UserRating(props) {
     console.log("club documentI: " + JSON.stringify(clubData));
     console.log("current user ratingi: " + JSON.stringify(currentRatings));
 
+    // look into async await
+
+    clubData.rating.Clout = currentRatings.Clout;
+    clubData.rating.Vibes = currentRatings.Vibes;
+    clubData.rating.Inclusivity = currentRatings.Inclusivity;
+    clubData.rating.Intensity = currentRatings.Intensity;
+
+    dispatch({
+      type: "SET_CLUB_DATA",
+      payload: { clubData: clubData },
+    });
+
+
+
     // for now -> to test with dummy data -> subsitute with current rating
 
     // set the club data with the current rating

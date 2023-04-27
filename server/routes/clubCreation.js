@@ -74,6 +74,7 @@ function getClubData(club) {
   const { applicantName, positionInClub, requesterID, ...rest } = club;
   const clubData = {
     ...rest,
+    numUserRatings: 0,
     rating: {
       Vibes: 1,
       Clout: 1,
