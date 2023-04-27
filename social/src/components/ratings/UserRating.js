@@ -5,7 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import "./ratingstar.css";
 
 const url = `${process.env.REACT_APP_SERVER_URL}/ratings`;
+
+// user rating component, bottom right of club page
 function UserRating(props) {
+  // get relevent data from redux store
   const clubData = useSelector((state) => state.clubData);
   const currentRatings = useSelector((state) => state.currentRatings);
   const previousRatings = useSelector((state) => state.previousRatings);
@@ -13,6 +16,7 @@ function UserRating(props) {
   const user = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
   const dispatch = useDispatch();
 
+  // get and set previous ratings
   useEffect(() => {
     if (clubData.name) {
       axios
@@ -42,30 +46,46 @@ function UserRating(props) {
     }
   }, [clubData, currentlyRating, currentRatings]);
 
+  // if clubData changes, reset all ratings
   useEffect(() => {
     dispatch({
       type: "RESET_ALL_RATINGS",
     });
   }, [clubData]);
 
+  //submit the rating held in currentRatings
   function handleSubmitRating(event) {
+    // add club name and user to currentRatings
     console.log("submitting rating");
     currentRatings["club"] = clubData.name;
     currentRatings["user"] = localStorage
       .getItem("user")
       ?.replaceAll(/['"]+/g, "");
-
-    axios
-      .post(`${url}/${clubData.name}/${user}`, currentRatings)
-      .then((response) => {
-        alert("Rating Submitted Successfully!");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // send currentRatings to backend if windows confirm returns true
+    if (
+      window.confirm(
+        "Are you sure you want to submit this rating? You can change it later."
+      )
+    ) {
+      axios
+        .post(`${url}/${clubData.name}/${user}`, currentRatings)
+        .then((response) => {
+          alert("Rating Submitted Successfully!");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+    // set previousRatings to currentRatings
+    dispatch({
+      type: "SET_PREVIOUS_RATINGS",
+      payload: { previousRatings: currentRatings },
+    });
+    // reset currentRatings
     discard();
   }
 
+  // toggle currently rating
   function dispatchCurrentlyRating() {
     dispatch({
       type: "SET_CURRENTLY_RATING",
@@ -73,11 +93,13 @@ function UserRating(props) {
     });
   }
 
+  // discard current rating that the user is entering in phase 2
   function discard() {
     dispatch({
       type: "SET_CURRENTLY_RATING",
       payload: { currentlyRating: false },
     });
+
     dispatch({
       type: "SET_CURRENT_RATINGS_ALL",
       payload: {
@@ -93,53 +115,72 @@ function UserRating(props) {
 
   return (
     <RatingsBubble width={props.width} height={props.height}>
-      <form className="rtg-form">
-        {!currentlyRating && clubData.name && (
-          <strong> Your rating for {clubData.name}</strong>
-        )}
-        {currentlyRating && clubData.name && (
-          <strong>Currently Rating {clubData.name}</strong>
-        )}
-
-        <br></br>
-        <label>
-          <div>Good Vibes</div>
-          <SingleRating type="Vibes"></SingleRating>
-        </label>
-        <br></br>
-        <label>
-          <div>Intensity</div>
-          <SingleRating type="Intensity"></SingleRating>
-        </label>
-        <br></br>
-        <label>
-          <div>Popularity</div>
-          <SingleRating type="Clout"></SingleRating>
-        </label>
-        <br></br>
-        <div>Inclusivity</div>
-        <SingleRating type="Inclusivity"></SingleRating>
-
-        {!currentlyRating && previousRatings["Vibes"] > 0 && (
-          <strong onClick={dispatchCurrentlyRating}>
-            Update Rating
-          </strong>
-        )}
-        {!currentlyRating && previousRatings["Vibes"] === 0 && (
-          <strong onClick={dispatchCurrentlyRating}>
-            Submit a Rating
-          </strong>
-        )}
-        {currentlyRating && (
-          <strong onClick={handleSubmitRating}>
-            Submit Your Rating
-          </strong>
-        )}
-        {currentlyRating && (
-          <strong style={{ padding: "12px" }} onClick={discard}>
-            Discard
-          </strong>
-        )}
+      <form
+        className="rtg-form"
+        style={{ flexDirection: "column", height: "100%" }}
+      >
+        <div style={{ margin: "auto", height: "100%" }}>
+          <div style={{ margin: "auto" }}>
+            {!currentlyRating && clubData.name && (
+              <strong> Your rating for {clubData.name}</strong>
+            )}
+            {currentlyRating && clubData.name && (
+              <strong>Currently Rating {clubData.name}</strong>
+            )}
+          </div>
+          <br></br>
+          <div style={{ margin: "auto" }}>
+            <label>
+              <div>Good Vibes</div>
+              <SingleRating type="Vibes"></SingleRating>
+            </label>
+            <br></br>
+            <label>
+              <div>Intensity</div>
+              <SingleRating type="Intensity"></SingleRating>
+            </label>
+            <br></br>
+            <label>
+              <div>Popularity</div>
+              <SingleRating type="Clout"></SingleRating>
+            </label>
+            <br></br>
+            <div>Inclusivity</div>
+            <SingleRating type="Inclusivity"></SingleRating>
+          </div>
+          <br></br>
+          <div style={{ margin: "auto" }}>
+            {!currentlyRating && previousRatings["Vibes"] > 0 && (
+              <button
+                className="rating-button"
+                onClick={dispatchCurrentlyRating}
+              >
+                Update Rating
+              </button>
+            )}
+            {!currentlyRating && previousRatings["Vibes"] === 0 && (
+              <button
+                className="rating-button"
+                onClick={dispatchCurrentlyRating}
+              >
+                Submit a Rating
+              </button>
+            )}
+            {currentlyRating && (
+              <div>
+                <button
+                  className="rating-button"
+                  onClick={handleSubmitRating}
+                >
+                  Submit Your Rating
+                </button>
+                <button className="rating-button" onClick={discard}>
+                  Discard
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
       </form>
     </RatingsBubble>
   );
@@ -172,8 +213,8 @@ const SingleRating = (props) => {
   const dispatch = useDispatch();
 
   function handleRating(index) {
-    setRating(index);
     if (currentlyRating) {
+      setRating(index);
       dispatch({
         type: "SET_CURRENT_RATINGS",
         payload: { type: type, rating: index },
@@ -191,8 +232,12 @@ const SingleRating = (props) => {
             key={index}
             className={index <= (hover || rating) ? "on" : "off"}
             onClick={() => handleRating(index)}
-            onMouseEnter={() => setHover(index)}
-            onMouseLeave={() => setHover(rating)}
+            onMouseEnter={() => {
+              if (currentlyRating) setHover(index);
+            }}
+            onMouseLeave={() => {
+              if (currentlyRating) setHover(rating);
+            }}
           >
             <span className="star">&#9733;</span>
           </button>
