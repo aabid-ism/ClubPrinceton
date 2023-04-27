@@ -29,7 +29,7 @@ function UserRating(props) {
       axios
         .get(`${url}/${clubData.name}/${user}`)
         .then((response) => {
-          console.log("Previous rating recieved: " + response.data);
+          // console.log("Previous rating recieved: " + response.data);
           const data = response.data;
           dispatch({
             type: "SET_PREVIOUS_RATINGS",
@@ -48,12 +48,23 @@ function UserRating(props) {
     });
   }, [clubData]);
 
+  // make this async/await?
   function handleSubmitRating(event) {
     console.log("submitting rating");
     currentRatings["club"] = clubData.name;
     currentRatings["user"] = localStorage
       .getItem("user")
       ?.replaceAll(/['"]+/g, "");
+
+    // set club data here!!! -> prior to posting to ratings endpoint
+    console.log("club documentI: " + JSON.stringify(clubData));
+    console.log("current user ratingi: " + JSON.stringify(currentRatings));
+
+    // for now -> to test with dummy data -> subsitute with current rating
+
+    // set the club data with the current rating
+
+    // dispatch to store afterwards
 
     axios
       .post(`${url}/${clubData.name}/${user}`, currentRatings)
