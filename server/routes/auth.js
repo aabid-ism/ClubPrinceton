@@ -93,7 +93,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.get("/verify", verifyToken, (req, res) => {
+router.get("/verify", (req, res) => {
   console.log("everything ok boss!");
   return res.status(200);
 });
