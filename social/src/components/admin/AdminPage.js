@@ -130,6 +130,9 @@ function AdminInterface() {
 
             <div className="mb-5 align-items-center justify-content-center" >
                 {/* <div style={{width: "18rem"}}>
+
+            <div className="mb-5 align-items-center justify-content-center" >
+                {/* <div style={{width: "18rem"}}>
                 <img src={myImage} />
             </div> */}
                 <Form state={state}
