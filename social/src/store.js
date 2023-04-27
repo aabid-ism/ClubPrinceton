@@ -11,8 +11,7 @@ const initialState = {
   globalRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
   currentlyRating: false,
   // checks if the club has been rated so far
-  hasOneUserRtg: false
-  // user: "",
+  hasOneUserRtg: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -30,10 +29,10 @@ const reducer = (state = initialState, action) => {
         clubData: action.payload.clubData,
       };
     case "SET_HAS_USER_RATING":
-        return {
-          ...state,
-          hasOneUserRtg: action.payload.hasOneUserRtg,
-        };
+      return {
+        ...state,
+        hasOneUserRtg: action.payload.hasOneUserRtg,
+      };
     // case "SET_USER":
     //   return {
     //     ...state,
@@ -71,9 +70,24 @@ const reducer = (state = initialState, action) => {
     case "RESET_ALL_RATINGS":
       return {
         ...state,
-        currentRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
-        previousRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
-        globalRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
+        currentRatings: {
+          Clout: 0,
+          Vibes: 0,
+          Inclusivity: 0,
+          Intensity: 0,
+        },
+        previousRatings: {
+          Clout: 0,
+          Vibes: 0,
+          Inclusivity: 0,
+          Intensity: 0,
+        },
+    /*     globalRatings: {
+          Clout: 0,
+          Vibes: 0,
+          Inclusivity: 0,
+          Intensity: 0,
+        }, */
         currentlyRating: false,
       };
     default:
