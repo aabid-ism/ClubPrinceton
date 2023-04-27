@@ -99,22 +99,22 @@ export function ClubRtgBreakdown() {
             const hasUserRating= response.data.hasUserRating;
                 if (hasUserRating === 1) {
                     
-                    const vibesColor = getRGBColors(clubRating.Vibes);
-                    const intensityColor = getRGBColors(clubRating.Intensity);
-                    const popularityColor = getRGBColors(clubRating.Clout);
-                    const inclusivityColor = getRGBColors(clubRating.Inclusivity);
+                    const vibesColor = getRGBColors(clubData.rating.Vibes);
+                    const intensityColor = getRGBColors(clubData.rating.Intensity);
+                    const popularityColor = getRGBColors(clubData.rating.Clout);
+                    const inclusivityColor = getRGBColors(clubData.rating.Inclusivity);
 
-                    const vibesRating = roundHundreth(clubRating.Vibes);
-                    const intensityRating = roundHundreth(clubRating.Intensity);
-                    const popularityRating = roundHundreth(clubRating.Clout);
-                    const inclusivityRating = roundHundreth(clubRating.Inclusivity);
+                    const vibesRating = roundHundreth(clubData.rating.Vibes);
+                    const intensityRating = roundHundreth(clubData.rating.Intensity);
+                    const popularityRating = roundHundreth(clubData.rating.Clout);
+                    const inclusivityRating = roundHundreth(clubData.rating.Inclusivity);
     
                     setRatingBreakdown(
                     {
                         vibes: {rating: `${vibesRating}`, color: vibesColor},
-                        intensity: {rating: `${popularityRating}`, color: popularityColor},
-                        popularity: {rating: `${inclusivityRating}`, color: inclusivityColor},
-                        inclusivity: {rating: `${intensityRating}`, color: intensityColor}
+                        intensity: {rating: `${intensityRating}`, color: intensityColor},
+                        popularity: {rating: `${popularityRating}`, color: popularityColor},
+                        inclusivity: {rating: `${inclusivityRating}`, color: inclusivityColor}
                     });
                 }
                 else {
@@ -159,7 +159,7 @@ export function ClubRtgBreakdown() {
 
             // }
         // }
-    }, [clubData, clubRating]);
+    }, [clubData]);
     // clubData, clubRating
 
     // console.log("z" + JSON.stringify(ratingBreakdown.vibes.color));

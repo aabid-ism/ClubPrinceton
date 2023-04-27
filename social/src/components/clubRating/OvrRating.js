@@ -67,7 +67,7 @@ export function OvrRating() {
             .then((response) => {
                 const hasUserRating= response.data.hasUserRating;
                     if (hasUserRating === 1) {
-                        const newClubRating = getRGBColors(clubRating);
+                        const newClubRating = getRGBColors(clubData.rating);
                         setOverallRating(newClubRating);
                         dispatch({
                             type: "SET_HAS_USER_RATING",
