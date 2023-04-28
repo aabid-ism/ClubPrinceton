@@ -60,13 +60,31 @@ function UserRating(props) {
     console.log("club documentI: " + JSON.stringify(clubData));
     console.log("current user ratingi: " + JSON.stringify(currentRatings));
 
+
+
     // look into async await
+    // currentRating submitted by the user
+    // club's overall rating currently
+    // numUserRatings for the Club + 1
 
-    clubData.rating.Clout = currentRatings.Clout;
-    clubData.rating.Vibes = currentRatings.Vibes;
-    clubData.rating.Inclusivity = currentRatings.Inclusivity;
-    clubData.rating.Intensity = currentRatings.Intensity;
 
+
+    // Optimizations: Refactor the below code due to repeated operations, send back newly defined averages
+    // to the backend instead of recomputing again in the backend
+    // also maybe send back updated numUserRatings as well
+    // clubData.rating.Clout = (clubData.rating.Clout + currentRatings.Clout) / (clubData.numUserRatings + 1);
+    // clubData.rating.Vibes = (clubData.Vibes + currentRatings.Vibes) / (clubData.numUserRatings + 1);
+    // clubData.rating.Inclusivity = (clubData.Inclusivity + currentRatings.Inclusivity) / (clubData.numUserRatings + 1);
+    // clubData.rating.Intensity = (clubData.rating.Intensity + currentRatings.Intensity) / (clubData.numUserRatings + 1);
+    
+
+    clubData.rating.Clout = 2.70;
+    clubData.rating.Vibes = 2.70;
+    clubData.rating.Inclusivity = 2.70;
+    clubData.rating.Intensity = 2.70;
+    // console.error("Error is here!");
+
+    // await async?
     dispatch({
       type: "SET_CLUB_DATA",
       payload: { clubData: clubData },

@@ -68,7 +68,7 @@ export function ClubRtgBreakdown() {
     const checkUserRtgUrl = `${process.env.REACT_APP_SERVER_URL}/clubRating/check`;
     // LATER: More refined coloring system
     const clubData = useSelector(state => state.clubData);
-    const clubRating = useSelector(state => state.globalRatings);
+    // const clubRating = useSelector(state => state.globalRatings);
     // const hasOneUserRtg = useSelector(state => state.hasOneUserRtg);
 
     const lightblue = {red: 173, green: 216, blue: 230};
