@@ -130,33 +130,88 @@ router.get("/allposts/:club", async (req, res) => {
 
 
 // delete a post
-router.post("/delete/:objectid", async (req, res) => {
+router.post("/delete/:clubName/:objectid", async (req, res) => {
   // establish connection
-  const db = conn.getDb();
-  console.log("here");
-  // get the posts collection
+  const db = await conn.getDb();
+
+  // get the posts and clubs collection
   const post_collection = await db.collection("posts");
-  // const result = await collection.find({}).limit(50).toArray();
-  let object_id = new ObjectId(req.params.objectid)
+  const clubs_collection = await db.collection("clubs");
+  const clubName = req.params.clubName;
+  // get the club document
+  let club_document_copy = await clubs_collection.findOne(
+    { name: clubName },
+    { _id: 0 }
+  );
+
+  // get the object_id of post to delete
+  let object_id = new ObjectId(req.params.objectid);
+
+  // check whether the post is in subset
+  let possible_subset_post_index;
+  // getting the index of subset post if that exists
+  for (let i = 0; i < club_document_copy.posts.length; i++) {
+    if (club_document_copy.posts[i]._id.equals(object_id)) {
+      possible_subset_post_index = i;
+      break;
+    }
+  }
+
+  // delete post from posts_collection
   const deletedPost = await post_collection.deleteOne(
     {
       _id: object_id
     });
 
-  // const deletingpost = await post_collection.aggregate([
-  //   {
-  //     $match: {
-  //       _id: req.params.objectid,
-  //     }
-  //   },
-  //   {
-  //     $sort: { created_at: -1 }
-  //   },
-  // ]).toArray();
+  // if there is no subset, return
+  if (possible_subset_post_index == undefined) {
 
-  // console.log(req.params.club);
-  console.log(deletedPost);
-  res.send(deletedPost).status(200);
+    return res.send().status(200);
+  }
+
+  // if the post was in subset, delete that post from subset
+  club_document_copy.posts.splice(possible_subset_post_index, 1);
+
+  // create a new object which is the clubs' posts object
+  let club_document_new_posts_object = [...club_document_copy.posts];
+  console.log(club_document_new_posts_object);
+
+  // add the next most recent post to the subset
+  // query for movies that have a runtime less than 15 minutes
+  const query = { club: clubName };
+  const options = {
+    // sort returned documents in the order of recent post to oldest post
+    sort: { created_at: -1 },
+  };
+  const posts_of_club = await post_collection.find(query, options).toArray();
+
+
+  if ((await post_collection.countDocuments(query)) === 0) {
+    console.log("No documents found!");
+  }
+
+  // get the fifth recent post (after deletion), 
+  // which is the one we need to add to the subset
+
+
+  let next_recent_post_of_club = posts_of_club[4];
+
+
+  club_document_new_posts_object.push(next_recent_post_of_club);
+
+
+  // update the posts property of the club to the new post
+  try {
+    clubs_collection.updateOne(
+      { name: clubName },
+      [{ $set: { posts: club_document_new_posts_object } }]
+    );
+  } catch (e) {
+    console.log("error!");
+    console.log(e);
+  }
+
+  return res.send().status(200);
 });
 
 export default router;
