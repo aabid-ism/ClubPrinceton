@@ -10,11 +10,11 @@ import Announce from "./components/announcement/Announce";
 
 function App() {
   return (
-    <React.StrictMode>
-      <Provider store={store}>
-        <HomePage></HomePage>
-      </Provider>
-    </React.StrictMode>
+    // <React.StrictMode>
+    <Provider store={store}>
+      <HomePage></HomePage>
+    </Provider>
+
   );
 }
 

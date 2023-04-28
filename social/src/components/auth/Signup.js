@@ -102,8 +102,12 @@ const Signup = () => {
             {/* <nav style={{ padding: "2rem" }}>
                 <Link to="/">Go Back</Link>
             </nav> */}
-            <header style={{ textAlign: "center" }}>
-                <h1>Sign in to continue</h1>
+            <header >
+                <center>
+                    <h1>Welcome to Club Princeton!</h1>
+                    <h2>Sign in to continue</h2>
+                </center>
+
             </header>
             <main
                 style={{

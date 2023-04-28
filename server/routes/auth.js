@@ -23,8 +23,8 @@ async function verifyGoogleToken(token) {
 // post route
 router.post("/signup", async (req, res) => {
   // getting secret from env variables
-  const secret = process.env.JWT_SECRET || "huththak";
-  console.log(secret);
+  const secret = process.env.JWT_SECRET || "NULL";
+  // console.log(secret);
   try {
     // console.log({ verified: verifyGoogleToken(req.body.credential) });
     if (req.body.credential) {
@@ -94,7 +94,7 @@ router.post("/signup", async (req, res) => {
 });
 
 router.get("/verify", verifyToken, (req, res) => {
-  console.log("everything ok boss!");
+  console.log("everything OK!");
   return res.status(200);
 });
 
@@ -102,11 +102,11 @@ router.get("/verify", verifyToken, (req, res) => {
 router.get("/whitelist/:netid", async (req, res) => {
   const db = conn.getDb();
   const whitelist_collection = db.collection("whitelist");
-  console.log(req.params.netid);
+  // console.log(req.params.netid);
   // check if user is whitelisted, each document contains a netid
   const query = { netid: req.params.netid };
   let result = await whitelist_collection.findOne(query);
-  console.log(result);
+  // console.log(result);
   if (result === null || undefined) {
     // If the user does not exist return false
     return res.status(200).send(false);
