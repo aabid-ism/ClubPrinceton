@@ -51,10 +51,10 @@ function getRGBColors(clubRating) {
 export function OvrRating() {
     // LATER: More refined coloring system
     const clubData = useSelector(state => state.clubData);
-    const clubRating = useSelector(state => state.globalRatings);
+    // const clubRating = useSelector(state => state.globalRatings);
     const [overallRating, setOverallRating] = useState({clubRoundedRtg: "INITIAL", red: 173, green: 216, blue: 230});
     const dispatch = useDispatch();
-    const [testBoolean, setTestBoolean] = useState(0);
+    // const [testBoolean, setTestBoolean] = useState(0);
 
     const checkUserRtgUrl = `${process.env.REACT_APP_SERVER_URL}/clubRating/check`;
 
@@ -86,7 +86,7 @@ export function OvrRating() {
                 console.log("Error occurred: ", error);
             });
 
-    }, [clubData, clubRating]);
+    }, [clubData]);
 
     // do we capitalize?
     return (
