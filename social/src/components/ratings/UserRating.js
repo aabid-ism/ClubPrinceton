@@ -59,15 +59,37 @@ function UserRating(props) {
     // add club name and user to currentRatings
     console.log("submitting rating");
     currentRatings["club"] = clubData.name;
-    currentRatings["user"] = localStorage
-      .getItem("user")
-      ?.replaceAll(/['"]+/g, "");
+    currentRatings["user"] = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
+    
+
+
+    // we want to send updated club ratings to the back
+    console.log("The current rating we are submittingk: " + JSON.stringify(currentRatings));
+    console.log("THE club's current ratingk " + JSON.stringify(clubData.rating));
+
+    clubData.rating.Vibes = 2.70;
+    clubData.rating.Clout = 2.70;
+    clubData.rating.Inclusivity = 2.70;
+    clubData.rating.Intensity = 2.69;
+
+
+
+    // dispatch the clubData to store prior to sending to backend for dynamic rendering
+    dispatch({
+      type: "SET_CLUB_DATA",
+      payload: { clubData: clubData },
+    });
+
+    console.log("POST DISPATCH CLUBDATAk " + JSON.stringify(clubData))
+
+
     // send currentRatings to backend if windows confirm returns true
     if (
       window.confirm(
         "Are you sure you want to submit this rating? You can change it later."
       )
     ) {
+
       axios
         .post(`${url}/${clubData.name}/${user}`, currentRatings)
         .then((response) => {
@@ -83,6 +105,7 @@ function UserRating(props) {
       payload: { previousRatings: currentRatings },
     });
     // reset currentRatings
+    // this needs to be automatically rerendered
     discard();
   }
 

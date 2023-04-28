@@ -129,40 +129,9 @@ export function ClubRtgBreakdown() {
         .catch((error) => {
             console.log("Error occurred: ", error);
         });
-            // console.log("Test Club" + ": " + hasOneUserRtg);
-            // if (hasOneUserRtg) {
-            //     const vibesRating = roundHundreth(clubRating.rating.Vibes);
-            //     const intensityRating = roundHundreth(clubRating.rating.Intensity);
-            //     const popularityRating = roundHundreth(clubRating.rating.Clout);
-            //     const inclusivityRating = roundHundreth(clubRating.rating.Inclusivity);
-
-            //     const vibesColor = getRGBColors(vibesRating);
-            //     const intensityColor = getRGBColors(intensityRating);
-            //     const popularityColor = getRGBColors(popularityRating);
-            //     const inclusivityColor = getRGBColors(inclusivityRating);
-
-            //     setRatingBreakdown(
-            //     {
-            //         vibes: {rating: `${vibesRating}`, color: vibesColor},
-            //         intensity: {rating: `${popularityRating}`, color: popularityColor},
-            //         popularity: {rating: `${inclusivityRating}`, color: inclusivityColor},
-            //         inclusivity: {rating: `${intensityRating}`, color: intensityColor}
-            //     });
-            // }
-            // else {
-            //     setRatingBreakdown({
-            //         vibes: {rating: "NEW", color: lightblue},
-            //         intensity: {rating: "NEW", color: lightblue},
-            //         popularity: {rating: "NEW", color: lightblue},
-            //         inclusivity: {rating: "NEW", color: lightblue}
-            //     });
-
-            // }
-        // }
     }, [clubData]);
-    // clubData, clubRating
 
-    // console.log("z" + JSON.stringify(ratingBreakdown.vibes.color));
+    // instead of rerendering everytime clubData changes -> rerender every time clubData.rating changes?
 
     return (
         <BreakdownBubble>

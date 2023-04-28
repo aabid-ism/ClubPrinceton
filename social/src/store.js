@@ -8,7 +8,7 @@ const initialState = {
   clubData: {},
   currentRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
   previousRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
-  // globalRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
+  globalRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
   currentlyRating: false,
   // checks if the club has been rated so far
   hasOneUserRtg: false,
@@ -38,11 +38,11 @@ const reducer = (state = initialState, action) => {
     //     ...state,
     //     user: action.payload.user,
     //   };
-    // case "SET_GLOBAL_RATINGS":
-    //   return {
-    //     ...state,
-    //     globalRatings: action.payload.globalRatings,
-    //   };
+    case "SET_GLOBAL_RATINGS":
+      return {
+        ...state,
+        globalRatings: action.payload.globalRatings,
+      };
     case "SET_PREVIOUS_RATINGS":
       return {
         ...state,
@@ -82,12 +82,12 @@ const reducer = (state = initialState, action) => {
           Inclusivity: 0,
           Intensity: 0,
         },
-    /*     globalRatings: {
+        globalRatings: {
           Clout: 0,
           Vibes: 0,
           Inclusivity: 0,
           Intensity: 0,
-        }, */
+        },
         currentlyRating: false,
       };
     default:

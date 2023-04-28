@@ -51,6 +51,7 @@ function getRGBColors(clubRating) {
 export function OvrRating() {
     // LATER: More refined coloring system
     const clubData = useSelector(state => state.clubData);
+    console.log("NEW CLUBK DATA RATING: " + JSON.stringify(clubData.rating));
     // const clubRating = useSelector(state => state.globalRatings);
     const [overallRating, setOverallRating] = useState({clubRoundedRtg: "INITIAL", red: 173, green: 216, blue: 230});
     const dispatch = useDispatch();
@@ -59,7 +60,7 @@ export function OvrRating() {
     const checkUserRtgUrl = `${process.env.REACT_APP_SERVER_URL}/clubRating/check`;
 
     useEffect(() => {
-        // console.log("I'm in the useEffect for overallRating");
+        console.log("I'm in the useEffect for overallRatingk");
         api
             .get(checkUserRtgUrl, {
                 params: {clubName: clubData.name}
