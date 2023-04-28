@@ -51,9 +51,17 @@ function UserRating(props) {
   function handleSubmitRating(event) {
     console.log("submitting rating");
     currentRatings["club"] = clubData.name;
-    currentRatings["user"] = localStorage
-      .getItem("user")
-      ?.replaceAll(/['"]+/g, "");
+    currentRatings["user"] = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
+
+    clubData.rating.Vibes = currentRatings.Vibes;
+    clubData.rating.Clout = currentRatings.Clout;
+    clubData.rating.Intensity = currentRatings.Intensity;
+    clubData.rating.Inclusivity = currentRatings.Inclusivity;
+
+    // dispatch({
+    //   type: "SET_CLUB_DATA",
+    //   payload: { clubData: clubData },
+    // });
 
     axios
       .post(`${url}/${clubData.name}/${user}`, currentRatings)
