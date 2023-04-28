@@ -53,10 +53,10 @@ function UserRating(props) {
     currentRatings["club"] = clubData.name;
     currentRatings["user"] = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
 
-    clubData.rating.Vibes = currentRatings.Vibes;
-    clubData.rating.Clout = currentRatings.Clout;
-    clubData.rating.Intensity = currentRatings.Intensity;
-    clubData.rating.Inclusivity = currentRatings.Inclusivity;
+    clubData.rating.Vibes = 2;
+    clubData.rating.Clout = 2;
+    clubData.rating.Intensity = 2;
+    clubData.rating.Inclusivity = 2;
 
     // dispatch({
     //   type: "SET_CLUB_DATA",
