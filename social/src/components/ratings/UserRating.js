@@ -51,11 +51,12 @@ function UserRating(props) {
   }, [clubData, currentlyRating, currentRatings]);
 
   // if clubData changes, reset all ratings
-  useEffect(() => {
-    dispatch({
-      type: "RESET_ALL_RATINGS",
-    });
-  }, [clubData]);
+  // this code here is affecting the rendering of breakdown due to dependency on clubData
+  // useEffect(() => {
+  //   dispatch({
+  //     type: "RESET_ALL_RATINGS",
+  //   });
+  // }, [clubData]);
 
   //submit the rating held in currentRatings
   function handleSubmitRating(event) {
