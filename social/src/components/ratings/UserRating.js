@@ -62,29 +62,20 @@ function UserRating(props) {
     // add club name and user to currentRatings
     console.log("submitting rating");
     currentRatings["club"] = clubData.name;
+    currentRatings["user"] = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
     // currentRatings["user"] = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
 
 
     // figure out whether the club has a previous rating or not
+    console.log("Number of user ratings for the club11: " + JSON.stringify(clubData.numUserRatings));
     console.log("User's previous rating11: " + JSON.stringify(previousRatings));
+    console.log("User's current rating11: " + JSON.stringify(currentRatings));
+    console.log("Club rating11: " + JSON.stringify(clubData.rating));
+
 
     // use previous ratings and currentRatings
     // unecessary computation in backend/frontend -> fix later if can
     // can we do this in a more javascript fashion
-
-    axios
-      // you can post the new club averages along with the current ratings
-      // and the new updated number of user ratings if necessary
-      .post(`${url}/${clubData.name}/${user}`, currentRatings)
-      .then((response) => {
-        alert("Rating Submitted Successfully!");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    currentRatings["user"] = localStorage
-      .getItem("user")
-      ?.replaceAll(/['"]+/g, "");
     // send currentRatings to backend if windows confirm returns true
     if (
       window.confirm(
@@ -92,21 +83,31 @@ function UserRating(props) {
       )
     ) {
 
-      // before posting to backend -> have it dynamically rendered on the frontend
-      if (previousRatings.Vibes === 0) {
-        // newly submitted rating 
-        clubData.rating.Vibes = (clubData.rating.Vibes + currentRatings.Vibes) / (clubData.numUserRatings + 1);
-        clubData.rating.Clout = (clubData.rating.Clout + currentRatings.Clout) / (clubData.numUserRatings + 1);
-        clubData.rating.Intensity = (clubData.rating.Intensity + currentRatings.Intensity) / (clubData.numUserRatings + 1);
-        clubData.rating.Inclusivity = (clubData.rating.Inclusivity + currentRatings.Inclusivity) / (clubData.numUserRatings + 1);
-      }
-      else {
-        // using an updating previous rating to calculate quick dynamically rendered club avg rating
-        clubData.rating.Vibes = (clubData.rating.Vibes - previousRatings.Vibes +  currentRatings.Vibes) / (clubData.numUserRatings);
-        clubData.rating.Clout = (clubData.rating.Clout - previousRatings.Clout + currentRatings.Clout) / (clubData.numUserRatings);
-        clubData.rating.Intensity = (clubData.rating.Intensity - previousRatings.Intensity + currentRatings.Intensity) / (clubData.numUserRatings);
-        clubData.rating.Inclusivity = (clubData.rating.Inclusivity - previousRatings.Inclusivity + currentRatings.Inclusivity) / (clubData.numUserRatings);
-      }
+      // adding this safeguard if statement to allow the other clubs to continue without needing to wipeout database
+      // therefore dynamic rendering will only occur on new clubs
+    //   if (clubData.numUserRatings !== undefined) {
+    //       // before posting to backend -> have it dynamically rendered on the frontend
+    //       if (previousRatings.Vibes === 0) {
+    //         // newly submitted rating from a user
+    //         console.log("I'm in the new rating section:73 ");
+    //         clubData.rating.Vibes = (clubData.rating.Vibes + currentRatings.Vibes) / (clubData.numUserRatings + 1);
+    //         clubData.rating.Clout = (clubData.rating.Clout + currentRatings.Clout) / (clubData.numUserRatings + 1);
+    //         clubData.rating.Intensity = (clubData.rating.Intensity + currentRatings.Intensity) / (clubData.numUserRatings + 1);
+    //         clubData.rating.Inclusivity = (clubData.rating.Inclusivity + currentRatings.Inclusivity) / (clubData.numUserRatings + 1);
+    //       }
+    //       else {
+    //         // using an updating previous rating to calculate quick dynamically rendered club avg rating
+    //         clubData.rating.Vibes = (clubData.rating.Vibes - previousRatings.Vibes +  currentRatings.Vibes) / (clubData.numUserRatings);
+    //         clubData.rating.Clout = (clubData.rating.Clout - previousRatings.Clout + currentRatings.Clout) / (clubData.numUserRatings);
+    //         clubData.rating.Intensity = (clubData.rating.Intensity - previousRatings.Intensity + currentRatings.Intensity) / (clubData.numUserRatings);
+    //         clubData.rating.Inclusivity = (clubData.rating.Inclusivity - previousRatings.Inclusivity + currentRatings.Inclusivity) / (clubData.numUserRatings);
+    //       }
+    // }
+
+      clubData.rating.Vibes = 2;
+      clubData.rating.Clout = 2;
+      clubData.rating.Intensity = 2;
+      clubData.rating.Inclusivity = 2;
 
       axios
         .post(`${url}/${clubData.name}/${user}`, currentRatings)

@@ -76,10 +76,10 @@ function getClubData(club) {
     ...rest,
     numUserRatings: 0,
     rating: {
-      Vibes: 1,
-      Clout: 1,
-      Inclusivity: 1,
-      Intensity: 1,
+      Vibes: 0,
+      Clout: 0,
+      Inclusivity: 0,
+      Intensity: 0,
     },
     stats: {
       Followers: 0,

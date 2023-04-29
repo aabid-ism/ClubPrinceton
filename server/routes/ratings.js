@@ -112,6 +112,9 @@ router.get("/:club/:user", async (req, res) => {
   const user = req.params.user;
   // search for a club by name and return the first ratings in
   //result with all attributes
+  // is id needed?
+
+  // changing ratings endpoint to all zeroes
   const agg = [
     {
       $match: { club: query, user: user }, // match clubs with the given name
@@ -119,10 +122,10 @@ router.get("/:club/:user", async (req, res) => {
     {
       $project: {
         _id: 0,
-        Vibes: 1,
-        Clout: 1,
-        Inclusivity: 1,
-        Intensity: 1,
+        Vibes: 0,
+        Clout: 0,
+        Inclusivity: 0,
+        Intensity: 0,
       }, // return only the "rating" field
     },
   ];
