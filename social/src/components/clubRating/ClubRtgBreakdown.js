@@ -159,7 +159,7 @@ export function ClubRtgBreakdown() {
 
             // }
         // }
-    }, [clubData, clubRating]);
+    }, [clubData]);
     // clubData, clubRating
 
     // console.log("z" + JSON.stringify(ratingBreakdown.vibes.color));

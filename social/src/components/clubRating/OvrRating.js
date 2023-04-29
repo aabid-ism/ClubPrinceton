@@ -59,7 +59,7 @@ export function OvrRating() {
     const checkUserRtgUrl = `${process.env.REACT_APP_SERVER_URL}/clubRating/check`;
 
     useEffect(() => {
-        // console.log("I'm in the useEffect for overallRating");
+        console.log("I'm in the useEffect for overallRating11");
         api
             .get(checkUserRtgUrl, {
                 params: {clubName: clubData.name}
@@ -86,8 +86,8 @@ export function OvrRating() {
                 console.log("Error occurred: ", error);
             });
 
-    }, [clubData, clubRating]);
-
+    }, [clubData]);
+    // clubrating
     // do we capitalize?
     return (
         <OvrRtgBubble redColor={overallRating.red} greenColor={overallRating.green} blueColor={overallRating.blue}>

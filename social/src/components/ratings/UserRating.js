@@ -7,7 +7,9 @@ import "./ratingstar.css";
 const url = `${process.env.REACT_APP_SERVER_URL}/ratings`;
 function UserRating(props) {
   const clubData = useSelector((state) => state.clubData);
+  // current rating is the rating we are about to submit
   const currentRatings = useSelector((state) => state.currentRatings);
+  // check whether the user has a previous rating existing
   const previousRatings = useSelector((state) => state.previousRatings);
   const currentlyRating = useSelector((state) => state.currentlyRating);
   const user = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
@@ -18,6 +20,8 @@ function UserRating(props) {
       axios
         .get(`${url}/${clubData.name}`)
         .then((response) => {
+          // we are getting the global ratings of the club and dispatching them to the store
+          console.log("is this getting dispatched every single timell?")
           dispatch({
             type: "SET_GLOBAL_RATINGS",
             payload: { globalRatings: response.data },
@@ -53,17 +57,31 @@ function UserRating(props) {
     currentRatings["club"] = clubData.name;
     currentRatings["user"] = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
 
-    clubData.rating.Vibes = 2;
-    clubData.rating.Clout = 2;
-    clubData.rating.Intensity = 2;
-    clubData.rating.Inclusivity = 2;
 
-    // dispatch({
-    //   type: "SET_CLUB_DATA",
-    //   payload: { clubData: clubData },
-    // });
+    // figure out whether the club has a previous rating or not
+    console.log("User's previous rating11: " + JSON.stringify(previousRatings));
+
+    // use previous ratings and currentRatings
+    // unecessary computation in backend/frontend -> fix later if can
+    // can we do this in a more javascript fashion
+    if (previousRatings.Vibes === 0) {
+      // newly submitted rating 
+      clubData.rating.Vibes = (clubData.rating.Vibes + currentRatings.Vibes) / (clubData.numUserRatings + 1);
+      clubData.rating.Clout = (clubData.rating.Clout + currentRatings.Clout) / (clubData.numUserRatings + 1);
+      clubData.rating.Intensity = (clubData.rating.Intensity + currentRatings.Intensity) / (clubData.numUserRatings + 1);
+      clubData.rating.Inclusivity = (clubData.rating.Inclusivity + currentRatings.Inclusivity) / (clubData.numUserRatings + 1);
+    }
+    else {
+      // using an updating previous rating to calculate quick dynamically rendered club avg rating
+      clubData.rating.Vibes = (clubData.rating.Vibes - previousRatings.Vibes +  currentRatings.Vibes) / (clubData.numUserRatings);
+      clubData.rating.Clout = (clubData.rating.Clout - previousRatings.Clout + currentRatings.Clout) / (clubData.numUserRatings);
+      clubData.rating.Intensity = (clubData.rating.Intensity - previousRatings.Intensity + currentRatings.Intensity) / (clubData.numUserRatings);
+      clubData.rating.Inclusivity = (clubData.rating.Inclusivity - previousRatings.Inclusivity + currentRatings.Inclusivity) / (clubData.numUserRatings);
+    }
 
     axios
+      // you can post the new club averages along with the current ratings
+      // and the new updated number of user ratings if necessary
       .post(`${url}/${clubData.name}/${user}`, currentRatings)
       .then((response) => {
         alert("Rating Submitted Successfully!");
