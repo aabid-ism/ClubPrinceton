@@ -86,7 +86,7 @@ export function OvrRating() {
                 console.log("Error occurred: ", error);
             });
 
-    }, [clubData, clubRating]);
+    }, [clubData.rating, clubRating]);
 
     // do we capitalize?
     return (

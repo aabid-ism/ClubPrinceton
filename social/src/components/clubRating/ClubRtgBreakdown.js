@@ -122,7 +122,7 @@ export function ClubRtgBreakdown() {
         .catch((error) => {
             console.log("Error occurred: ", error);
         });
-    }, [clubData, clubRating]);
+    }, [clubData.rating, clubRating]);
     // clubData, clubRating
 
     return (
