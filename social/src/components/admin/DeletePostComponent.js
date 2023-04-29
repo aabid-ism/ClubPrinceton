@@ -34,7 +34,7 @@ const DeletePostComponent = ({ state }) => {
     }, [state.activeClub, justDeleted]);
 
     function deletePost(objectid) {
-        api.post(`/posts/delete/${objectid}`)
+        api.post(`/posts/delete/${state.activeClub}/${objectid}`)
             .then(() => {
                 setJustDeleted(true);
             })

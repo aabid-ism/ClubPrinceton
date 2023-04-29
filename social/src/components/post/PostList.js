@@ -57,6 +57,7 @@ export default function Posts({ width, height }) {
             createdTime: new Date(
               postData.created_at
             ).toLocaleDateString(),
+            image_url: postData.image_url,
           };
           return (
             <Post

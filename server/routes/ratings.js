@@ -39,15 +39,36 @@ router.post("/:name/:username", async (req, res) => {
   // add a timestamp to the data
   data["lastupdated"] = new Date();
 
-  // insert data into database
-  const result = await collection.insertOne(data);
+  // insert data into database if no previous rating for this club from this user
+  const result = await collection.findOne({
+    club: req.params.name,
+    user: req.params.username,
+  });
 
-  // update the rating of the club
+  const clubCollection = await db.collection("clubs");
+  if (!result) {
+    // no previous rating found, insert new rating
+    const insertResult = await collection.insertOne(data);
+    
+    // if no previous rating found -> then we want to update the clubs collection's numUserRatings
+    // parameter -> allows for easy average calculation on the frontend for automatic rendering
+    await clubCollection.updateOne(
+      {name: req.params.name},
+      { $inc: {numUserRatings: 1}}
+    );
+
+  } else {
+    // previous rating found, update rating
+    await collection.updateOne(
+      { club: req.params.name, user: req.params.username },
+      { $set: data }
+    );
+  }
+
+  // update the overall rating of the club
   const ag = [
     {
-      $match: { club: req.params.name
-                
-      }, // match clubs with the given name
+      $match: { club: req.params.name }, // match clubs with the given name
     },
     {
       $group: {
@@ -70,15 +91,18 @@ router.post("/:name/:username", async (req, res) => {
   const avgRating = allRatings[0];
 
   // update only the rating field of the club
-  const clubCollection = await db.collection("clubs");
-  console.log(avgRating);
-  const clubResult = await clubCollection.updateOne(
-    { name: req.params.name },
-    { $set: { rating: avgRating } }
-  );
-  console.log(clubResult);
-
-  res.status(200).send(clubResult);
+  // console.log(avgRating);
+  try {
+    const clubResult = await clubCollection.updateOne(
+      { name: req.params.name },
+      { $set: { rating: avgRating } },
+    );
+    console.log(clubResult);
+    res.status(200).send(clubResult);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Error updating club rating" });
+  }
 });
 
 router.get("/:club/:user", async (req, res) => {
@@ -106,7 +130,7 @@ router.get("/:club/:user", async (req, res) => {
   // run pipeline
   var result = await collection.aggregate(agg).toArray();
   // print results
-  console.log(result);
+  // console.log(result);
   result = result[0];
 
   if (
@@ -118,7 +142,7 @@ router.get("/:club/:user", async (req, res) => {
     result = { Vibes: 0, Clout: 0, Inclusivity: 0, Intensity: 0 };
   }
 
-  console.log(result);
+  // console.log(result);
   res.send(result).status(200);
 });
 

@@ -55,7 +55,7 @@ export default function HomePage() {
           zIndex: -1,
         }}
       >
-        <React.Fragment>
+        <>
           <div
             style={{
               position: "fixed",
@@ -73,7 +73,7 @@ export default function HomePage() {
               bottom: 0,
               left: 0,
               width: "100%",
-              zIndex: 1,
+              // zIndex: 1,
             }}
           >
             <Navigation width="300" height="400" />
@@ -91,14 +91,26 @@ export default function HomePage() {
               <UserRating width="300px" height="400px" />
             )}
           </div>
-        </React.Fragment>
+          <div
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "0 auto",
+          textAlign: "center",
+        }}
+      >
+        {clubData.name && <ClubRtgBreakdown />}
+      </div>
+        </>
 
         <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
+          // style={{
+          //   display: "flex",
+          //   flexDirection: "column",
+          //   justifyContent: "center",
+          // }}
         >
           <div
             style={{
@@ -111,7 +123,8 @@ export default function HomePage() {
               margin: "0 auto",
               textAlign: "center",
             }}
-          >
+            >
+            {localStorage.getItem("user") && <p>Good day, {user}! </p>}
             {clubData.name && (
               <MainPage
                 width={"500px"}
@@ -119,7 +132,6 @@ export default function HomePage() {
               />
             )}
 
-            {localStorage.getItem("user") && <p>Good day, {user}! </p>}
           </div>
           <div
             style={{
@@ -146,50 +158,24 @@ export default function HomePage() {
             {clubData.name && <OvrRating />}
           </div>
           <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              margin: "0 auto",
-              textAlign: "center",
-            }}
+            // style={{
+            //   flex: 1,
+            //   display: "flex",
+            //   justifyContent: "center",
+            //   alignItems: "center",
+            //   margin: "0 auto",
+            //   textAlign: "center",
+            // }}
           >
             {clubData.name && (
               <PostList
-                width={"600px"}
-                height={ "1000px"}
+                // width={"600px"}
+                // height={ "1000px"}
               />
             )}
           </div>
         </div>
-      </div>
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "0 auto",
-          textAlign: "center",
-        }}
-      >
-        {clubData.name && <ClubRtgBreakdown />}
-      </div>
-
-      {/* <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "0 auto",
-          textAlign: "center",
-        }}
-      >
-        <PostList
-        />
-      </div> */}
+      </div>  
     </div>
   );
 }

@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/a/:name", async (req, res) => {
+router.post("/a/:name/:netid", async (req, res) => {
   try {
     const db = conn.getDb();
     const collection = db.collection("clubCreation");
@@ -29,6 +29,20 @@ router.post("/a/:name", async (req, res) => {
       { name: req.params.name },
       { $set: { status: "accepted" } }
     );
+
+    // add club under admin_clubs field in users collection
+    const collection1 = db.collection("users");
+    const user = await collection1.findOne({ netid: req.params.netid });
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    await collection1.updateOne(
+      { netid: req.params.netid },
+      { $push: { admin_clubs: req.params.name } }
+    );
+
+    // add club to clubs collection
+
     const clubData = getClubData(club);
     const collection2 = db.collection("clubs");
     const result = await collection2.insertOne(clubData);
@@ -60,6 +74,7 @@ function getClubData(club) {
   const { applicantName, positionInClub, requesterID, ...rest } = club;
   const clubData = {
     ...rest,
+    numUserRatings: 0,
     rating: {
       Vibes: 1,
       Clout: 1,
