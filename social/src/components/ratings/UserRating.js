@@ -51,7 +51,7 @@ function UserRating(props) {
     dispatch({
       type: "RESET_ALL_RATINGS",
     });
-  }, [clubData]);
+  }, [clubData.name]);
 
   //submit the rating held in currentRatings
   function handleSubmitRating(event) {
