@@ -36,9 +36,8 @@ const verifyToken = async (req, res, next) => {
         });
     }
     else {
-        res.status(404).send("jwt undefined!");
+        res.status(404).send("jwt is undefined!");
     }
 }
-
 
 export default verifyToken;

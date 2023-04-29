@@ -36,7 +36,7 @@ const Signup = () => {
                     const parts = data?.user.email.split("@");
                     localStorage.setItem("netid", parts[0]);
                     localStorage.setItem("profilepic", data?.user.picture);
-                    localStorage.setItem("jwt", JSON.stringify(data?.user.token));
+                    localStorage.setItem("ACCESS_TOKEN", JSON.stringify(data?.user.access_token));
                     // navigate("/");
                     // window.location.reload();
                 }

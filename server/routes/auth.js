@@ -60,7 +60,7 @@ router.post("/signup", async (req, res) => {
       if (result == null || undefined) {
         // If the user does not exist, register it
 
-        // add an ampty admin_clubs field to new user
+        // add an empty admin_clubs field to new user
         profile.admin_clubs = [];
         const parts = profile?.email.split("@");
 
@@ -71,10 +71,15 @@ router.post("/signup", async (req, res) => {
         result = await users_collection.insertOne(profile);
       }
 
-      const token = jwt.sign({ user: profile?.email }, secret, {
-        expiresIn: "1d",
+      const access_token = jwt.sign({ user: profile?.email }, secret, {
+        expiresIn: "9999999 years",
       });
-      console.log(`token is: ${token}`);
+      // console.log(`token is: ${token}`);
+
+      // Send the refresh-token as an httpOnly cookie
+      res.cookie('ACCESS_TOKEN', access_token, { httpOnly: true });
+
+      // send the user details and access_token in response
       res.status(201).json({
         message: "Signup was successful",
         user: {
@@ -82,7 +87,6 @@ router.post("/signup", async (req, res) => {
           lastName: profile?.family_name,
           picture: profile?.picture,
           email: profile?.email,
-          token: token,
         },
       });
     }
@@ -94,9 +98,15 @@ router.post("/signup", async (req, res) => {
 });
 
 router.get("/verify", verifyToken, (req, res) => {
-  console.log("everything OK!");
+  console.log("Successfully Verified Access Token!");
   return res.status(200);
 });
+
+router.get("/refresh-token", verifyToken, (req, res) => {
+  console.log("Successfully Verified Access Token!");
+  return res.status(200);
+});
+
 
 // route to verify user is whitelisted to use superadmin
 router.get("/whitelist/:netid", async (req, res) => {
