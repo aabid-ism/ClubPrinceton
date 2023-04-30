@@ -60,33 +60,26 @@ export function OvrRating() {
 
     useEffect(() => {
         // console.log("I'm in the useEffect for overallRating");
-        api
-            .get(checkUserRtgUrl, {
-                params: {clubName: clubData.name}
-            })
-            .then((response) => {
-                const hasUserRating= response.data.hasUserRating;
-                    if (hasUserRating === 1) {
-                        const newClubRating = getRGBColors(clubData.rating);
-                        setOverallRating(newClubRating);
-                        dispatch({
-                            type: "SET_HAS_USER_RATING",
-                            payload: { hasOneUserRtg: true },
-                          });
-                    }
-                    else {
-                        setOverallRating({clubRoundedRtg: "NEW", red: 173, green: 216, blue: 230});
-                        dispatch({
-                            type: "SET_HAS_USER_RATING",
-                            payload: { hasOneUserRtg: false },
-                          });
-                    }
-            })
-            .catch((error) => {
-                console.log("Error occurred: ", error);
-            });
-
-    }, [clubData.rating, clubRating]);
+        // api
+        //     .get(checkUserRtgUrl, {
+        //         params: {clubName: clubData.name}
+        //     })
+        //     .then((response) => {
+        //         const hasUserRating= response.data.hasUserRating;
+        console.log("MY NUM OF USER RATINGS: " + JSON.stringify(clubRating.numUserRatings));
+        if (clubRating.numUserRatings > 0) {
+            console.log("I expect to be here after update!!")
+            const newClubRating = getRGBColors(clubRating);
+            setOverallRating(newClubRating);
+        }
+        else {
+            setOverallRating({clubRoundedRtg: "NEW", red: 173, green: 216, blue: 230});
+        }
+            // })
+            // .catch((error) => {
+            //     console.log("Error occurred: ", error);
+            // });
+    }, [clubData.name, clubRating]);
 
     // do we capitalize?
     return (
