@@ -101,7 +101,7 @@ export default function HomePage() {
           textAlign: "center",
         }}
       >
-        {clubData.name && <ClubRtgBreakdown />}
+        {clubData.name && <ClubRtgBreakdown width="300px" height="400px" />}
       </div>
         </>
 
@@ -139,7 +139,7 @@ export default function HomePage() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              margin: "0 auto",
+              margin: "auto",
               textAlign: "center",
             }}
           >
@@ -151,7 +151,7 @@ export default function HomePage() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          margin: "0 auto",
+          margin: "auto",
           textAlign: "center",
           }}
           >
