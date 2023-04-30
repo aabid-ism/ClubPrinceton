@@ -96,11 +96,6 @@ function UserRating(props) {
         }
         else {
           // updating a previous user rating to new overall average
-          // console.log("Previous Ratings Vibes14: " + JSON.stringify(previousRatings.Vibes));
-          // console.log("Current Ratings Vibes14: " + JSON.stringify(currentRatings.Vibes));
-          // console.log("Number of user ratings14: " + JSON.stringify(clubData.numUserRatings));
-          // console.log("Club Rating old average Vibes14: " + JSON.stringify(clubData.rating.Vibes));
-          // console.log("Global ratings of old average Vibes14: " + JSON.stringify(globalRatings.Vibes));
 
           // removing clubData and replacing with globalratings
           updatedClubRating.Vibes = ((globalRatings.Vibes * globalRatings.numUserRatings) - previousRatings.Vibes + currentRatings.Vibes) / (globalRatings.numUserRatings);
