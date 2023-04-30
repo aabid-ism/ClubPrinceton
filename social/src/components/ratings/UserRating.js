@@ -205,6 +205,20 @@ function UserRating(props) {
               <button
                 className="rating-button"
                 onClick={dispatchCurrentlyRating}
+                style={{
+                  backgroundColor: "#FF8C00",
+                  border: "none",
+                  color: "white",
+                  padding: "8px 16px",
+                  textAlign: "center",
+                  textDecoration: "none",
+                  display: "inline-block",
+                  fontSize: "16px",
+                  margin: "4px 2px",
+                  cursor: "pointer",
+                  borderRadius: "4px",
+                  transitionDuration: "0.4s",
+                }}
               >
                 Update Rating
               </button>
@@ -213,6 +227,20 @@ function UserRating(props) {
               <button
                 className="rating-button"
                 onClick={dispatchCurrentlyRating}
+                style={{
+                  backgroundColor: "#FF8C00",
+                  border: "none",
+                  color: "white",
+                  padding: "8px 16px",
+                  textAlign: "center",
+                  textDecoration: "none",
+                  display: "inline-block",
+                  fontSize: "16px",
+                  margin: "4px 2px",
+                  cursor: "pointer",
+                  borderRadius: "4px",
+                  transitionDuration: "0.4s",
+                }}
               >
                 Submit a Rating
               </button>
@@ -222,10 +250,41 @@ function UserRating(props) {
                 <button
                   className="rating-button"
                   onClick={handleSubmitRating}
+                  style={{
+                    backgroundColor: "#FF8C00",
+                    border: "none",
+                    color: "white",
+                    padding: "8px 16px",
+                    textAlign: "center",
+                    textDecoration: "none",
+                    display: "inline-block",
+                    fontSize: "16px",
+                    margin: "4px 2px",
+                    cursor: "pointer",
+                    borderRadius: "4px",
+                    transitionDuration: "0.4s",
+                  }}
                 >
                   Submit Your Rating
                 </button>
-                <button className="rating-button" onClick={discard}>
+                <button
+                  className="rating-button"
+                  onClick={discard}
+                  style={{
+                    backgroundColor: "#FF8C00",
+                    border: "none",
+                    color: "white",
+                    padding: "8px 16px",
+                    textAlign: "center",
+                    textDecoration: "none",
+                    display: "inline-block",
+                    fontSize: "16px",
+                    margin: "4px 2px",
+                    cursor: "pointer",
+                    borderRadius: "4px",
+                    transitionDuration: "0.4s",
+                  }}
+                >
                   Discard
                 </button>
               </div>
