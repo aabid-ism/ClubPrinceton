@@ -222,9 +222,15 @@ const Rightbar = ({ state }) => {
                 <div className='announcement'>
                     {officers.length != 0 &&
                         <div>
-                            <h3> Club Announcement </h3>
-                            <p>{announcement}</p>
-                            {<button onClick={() => { setAnnouncementModal(true) }}> Change Announcement</button>}
+                            <div className="announcement-title">
+                                <h3> Club Announcement </h3>
+                            </div>
+                            <div className="announcement-text">
+                                <p>{announcement}</p>
+                            </div>
+                            <div className="announcement-edit">
+                                {<button onClick={() => { setAnnouncementModal(true) }}> Change Announcement</button>}
+                            </div>
                         </div>
                     }
                     {/* Officers List */}
