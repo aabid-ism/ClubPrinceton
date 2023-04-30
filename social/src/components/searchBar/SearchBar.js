@@ -49,10 +49,11 @@ function SearchBar(props) {
           payload: { clubData: data },
         });
         // to be used for global rating (inital loading and automatic rerendering)
+        console.log("Club number of user ratings: " + data.numUserRatings);
         dispatch({
           type: "SET_GLOBAL_RATINGS",
           payload: {globalRatings: {
-            numUserRatings: clubData.numUserRatings,
+            numUserRatings: data.numUserRatings,
             Vibes: data.rating.Vibes,
             Clout: data.rating.Clout,
             Intensity: data.rating.Intensity,

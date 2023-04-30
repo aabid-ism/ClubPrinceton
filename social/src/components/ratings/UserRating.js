@@ -20,17 +20,6 @@ function UserRating(props) {
   // get and set previous ratings
   useEffect(() => {
     if (clubData.name) {
-      // axios
-      //   .get(`${url}/${clubData.name}`)
-      //   .then((response) => {
-      //     dispatch({
-      //       type: "SET_GLOBAL_RATINGS",
-      //       payload: { globalRatings: response.data },
-      //     });
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
       axios
         .get(`${url}/${clubData.name}/${user}`)
         .then((response) => {
@@ -121,7 +110,8 @@ function UserRating(props) {
           updatedClubRating.numUserRatings = globalRatings.numUserRatings;
         }
       }
-
+      
+      console.log("Number of user ratings prior to dispatch: " + updatedClubRating.numUserRatings);
       dispatch({
         type: "SET_GLOBAL_RATINGS",
         payload: { globalRatings: updatedClubRating }

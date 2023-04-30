@@ -66,6 +66,7 @@ export function OvrRating() {
         //     })
         //     .then((response) => {
         //         const hasUserRating= response.data.hasUserRating;
+        console.log("MY NUM OF USER RATINGS: " + JSON.stringify(clubRating.numUserRatings));
         if (clubRating.numUserRatings > 0) {
             console.log("I expect to be here after update!!")
             const newClubRating = getRGBColors(clubRating);
