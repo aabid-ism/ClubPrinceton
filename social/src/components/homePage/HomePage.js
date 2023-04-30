@@ -39,7 +39,7 @@ export default function HomePage() {
       .catch((err) => {
         if (err.response.status === 403) {
           console.log(err);
-          navigate("/signup");
+          navigate("/landing");
         }
       });
   }, []);
