@@ -15,6 +15,9 @@ import Announce from "../announcement/Announce";
 import { OvrRating } from "../clubRating/OvrRating";
 import { ClubRtgBreakdown } from "../clubRating/ClubRtgBreakdown";
 
+import {Container, Row, Col, Nav} from 'react-bootstrap'
+import './HomePage.css'
+
 export default function HomePage() {
   const clubData = useSelector((state) => state.clubData);
   const navigate = useNavigate();
@@ -43,6 +46,29 @@ export default function HomePage() {
         }
       });
   }, []);
+
+  return (
+    <Container fluid >
+      <Row className='page'> 
+        <Col className="sidebar-left" sm={2}>
+          <Container className='bubble'>
+            <Row className='search'>
+              <SearchBar></SearchBar>
+            </Row>
+            <Row>
+              <Navigation></Navigation>
+            </Row>
+          </Container>
+        </Col>
+        <Col sm={8}>
+          <PostList></PostList>
+        </Col>
+        <Col sm={2} className="sidebar-right">
+        {clubData.name && <ClubRtgBreakdown />}
+        </Col>
+      </Row>
+    </Container>
+  )
 
   return (
     <div>

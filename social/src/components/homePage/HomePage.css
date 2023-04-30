@@ -1,0 +1,32 @@
+.sidebar-left {
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sidebar-right {
+    background-color: blue;
+}
+
+.page {
+    /* width:100%; */
+    min-height: 100vh;
+    background-color: green;
+}
+
+.item {
+    background-color: white;
+}
+
+.bubble{
+    background-color: #FFE4CC;;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+}
+
+.search {
+    min-height: 20rem;
+}

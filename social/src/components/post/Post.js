@@ -28,7 +28,7 @@ function PostContent({ props }) {
 function PostBubble({ children, width, height }) {
   return (
     <div
-      className="bubble"
+      className="post-bubble"
       style={{
         width: width,
         height: height,
