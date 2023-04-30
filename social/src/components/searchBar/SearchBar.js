@@ -48,6 +48,17 @@ function SearchBar(props) {
           type: "SET_CLUB_DATA",
           payload: { clubData: data },
         });
+        // to be used for global rating (inital loading and automatic rerendering)
+        dispatch({
+          type: "SET_GLOBAL_RATINGS",
+          payload: {globalRatings: {
+            numUserRatings: clubData.numUserRatings,
+            Vibes: data.rating.Vibes,
+            Clout: data.rating.Clout,
+            Intensity: data.rating.Intensity,
+            Inclusivity: data.rating.Inclusivity
+          }}
+        });
         console.log("Dispatched club data:", data);
       })
       .catch((error) => {
