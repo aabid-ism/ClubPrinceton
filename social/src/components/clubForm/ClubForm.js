@@ -84,7 +84,7 @@ const ClubForm = () => {
           </h3>
           <p>
             Note: To have your club application be approved, you must be
-            an office of your club.
+            an officer of your club.
           </p>
         </center>
         <br></br>

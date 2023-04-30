@@ -8,7 +8,7 @@ const initialState = {
   clubData: {},
   currentRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
   previousRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
-  globalRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
+  globalRatings: { numUserRatings: 0, Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
   currentlyRating: false,
   // checks if the club has been rated so far
   hasOneUserRtg: false,
@@ -38,6 +38,7 @@ const reducer = (state = initialState, action) => {
     //     ...state,
     //     user: action.payload.user,
     //   };
+    // number of user ratings for a club is also a parameter in global ratings
     case "SET_GLOBAL_RATINGS":
       return {
         ...state,
@@ -82,13 +83,7 @@ const reducer = (state = initialState, action) => {
           Inclusivity: 0,
           Intensity: 0,
         },
-    /*     globalRatings: {
-          Clout: 0,
-          Vibes: 0,
-          Inclusivity: 0,
-          Intensity: 0,
-        }, */
-        currentlyRating: false,
+        // currentlyRating: false,
       };
     default:
       return state;

@@ -1,8 +1,5 @@
 .popup-btn {
     text-align: center;
-    /* top: 30%;
-    left: 42%;
-    zoom: 1.5; */
     border-radius: 10px;
     background-color: #FFE4CC;
     outline: none;
@@ -19,6 +16,9 @@
     /* height: 50%; */
     background-color: #FFE4CC;
     top: 0px; left: 0px; right: 0px; bottom: 0px;
+
+    overflow-y: auto;
+    
 }
 
 /* .form_content {
@@ -34,6 +34,7 @@
 
 /* the dot is unique */
 .form-close {
+    font-size: 35px;
     color: black;
     float: right;
     /* need to increase size of x mark */
