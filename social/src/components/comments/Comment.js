@@ -8,21 +8,21 @@ const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
 function Like({ commentId, postId, netId, priorLikes, priorLikeStatus }){
     const [isLiked, toggleLike] = useState(priorLikeStatus);
     function handleLike(event){
-        toggleLike(!isLiked);
         const likeData = {
             netId: netId,
             commentId: commentId,
             postId: postId,
-            likeAmount: isLiked ? -1 : 1
         }
         api
         .post(`${url}/like/`, likeData)
         .then((response) => {
             const data = response.data;
             console.log(data) 
+            toggleLike(!isLiked);
         })// the returned comment
         .catch((error) => {
             console.log("Error occurred: ", error);
+            alert(error.response.data.status)
         });    
     }
     return (

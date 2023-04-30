@@ -109,29 +109,50 @@ router.get('/like/:id', async (req, res) => {
   res.send(commentLikeData).status(200);
 });
 
+// 'like' a comment.
 router.post('/like/', async (req, res) => {
   console.log('Like Posting for Comment Received!');
-  const { netId, commentId, postId, likeAmount } = req.body;
   const db = conn.getDb();
   const comment_collection = await db.collection("comments");
-  const likes_collection = await db.collection("likes");
   const club_collection = await db.collection("clubs");
+  
+  // initial validation and parameter getting
+  const { netId, commentId, postId } = req.body;
   const formattedCommentId = new ObjectId(commentId);
   const formattedPostId = new ObjectId(postId);
+
+  // create a new like document
+  const like_document_to_add = {
+    liker_netId: netId,
+    commentId: formattedCommentId
+  }
   
+  // has this comment already been liked?
+  const likes_collection = await db.collection("likes");
+  const existing_like = await likes_collection.find(
+    {commentId: formattedCommentId,
+    liker_netId: netId}
+  ).toArray();
+  console.log("Existing Likes:")
+  console.log(existing_like)
+
+  // like document creation
+  // res.status(400).json({status:"Already Liked this Comment!"});
+  // return;
   // update subset for post as well
   const club = await club_collection.findOne({
     posts: {$elemMatch: {_id: formattedPostId}}
   });
 // console.log("This is the subset version")
   const target_post_comments = club.posts.find(post => post._id.toString() === formattedPostId.toString()).comments;
+  console.log("Found the comments")
   console.log(target_post_comments)
   const target_post_comment = target_post_comments.find(comment => 
     comment._id.toString() === formattedCommentId.toString()
     )
     console.log("Found the subset comment!")
     console.log(target_post_comment.likes)
-    target_post_comment.likes += likeAmount; // a little buggy
+    target_post_comment.likes += 1; // a little buggy
     let likes = target_post_comment.likes;
     // console.log(target_post_comment.likes)
     console.log(target_post_comments)
@@ -147,11 +168,7 @@ router.post('/like/', async (req, res) => {
     );
   const comment = await comment_collection.findOne({_id: formattedCommentId})
 
-  // create a new like document
-  const like_document_to_add = {
-    liker_netId: netId,
-    commentId: commentId
-  }
+  
 
   const new_comment = await likes_collection.insertOne(
     like_document_to_add
@@ -163,7 +180,7 @@ router.post('/like/', async (req, res) => {
 
 
   console.log(comment);
-  res.send("Liked/Unliked!").status(200);
+  res.status(200).json({status:"ok"});
 });
 
 export default router;
