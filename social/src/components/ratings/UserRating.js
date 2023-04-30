@@ -34,7 +34,7 @@ function UserRating(props) {
           console.error(error);
         });
     }
-  }, [clubData, currentlyRating, currentRatings]);
+  }, [globalRatings.numUserRatings, clubData, currentlyRating, currentRatings]);
 
   // if clubData changes, reset all ratings
   useEffect(() => {
@@ -96,31 +96,35 @@ function UserRating(props) {
         }
         else {
           // updating a previous user rating to new overall average
-          console.log("Previous Ratings Vibes14: " + JSON.stringify(previousRatings.Vibes));
-          console.log("Current Ratings Vibes14: " + JSON.stringify(currentRatings.Vibes));
-          console.log("Number of user ratings14: " + JSON.stringify(clubData.numUserRatings));
-          console.log("Club Rating old average Vibes14: " + JSON.stringify(clubData.rating.Vibes));
-          console.log("Global ratings of old average Vibes14: " + JSON.stringify(globalRatings.Vibes));
+          // console.log("Previous Ratings Vibes14: " + JSON.stringify(previousRatings.Vibes));
+          // console.log("Current Ratings Vibes14: " + JSON.stringify(currentRatings.Vibes));
+          // console.log("Number of user ratings14: " + JSON.stringify(clubData.numUserRatings));
+          // console.log("Club Rating old average Vibes14: " + JSON.stringify(clubData.rating.Vibes));
+          // console.log("Global ratings of old average Vibes14: " + JSON.stringify(globalRatings.Vibes));
 
           // removing clubData and replacing with globalratings
-          updatedClubRating.Vibes = ((globalRatings.Vibes * globalRatings.numUserRatings) - previousRatings.Vibes + currentRatings.Vibes) / (clubData.numUserRatings);
-          updatedClubRating.Clout = ((globalRatings.Clout * globalRatings.numUserRatings) - previousRatings.Clout + currentRatings.Clout) / (clubData.numUserRatings);
-          updatedClubRating.Intensity = ((globalRatings.Intensity * globalRatings.numUserRatings) - previousRatings.Intensity + currentRatings.Intensity) / (clubData.numUserRatings);
-          updatedClubRating.Inclusivity = ((globalRatings.Inclusivity * globalRatings.numUserRatings) - previousRatings.Inclusivity + currentRatings.Inclusivity) / (clubData.numUserRatings);
+          updatedClubRating.Vibes = ((globalRatings.Vibes * globalRatings.numUserRatings) - previousRatings.Vibes + currentRatings.Vibes) / (globalRatings.numUserRatings);
+          updatedClubRating.Clout = ((globalRatings.Clout * globalRatings.numUserRatings) - previousRatings.Clout + currentRatings.Clout) / (globalRatings.numUserRatings);
+          updatedClubRating.Intensity = ((globalRatings.Intensity * globalRatings.numUserRatings) - previousRatings.Intensity + currentRatings.Intensity) / (globalRatings.numUserRatings);
+          updatedClubRating.Inclusivity = ((globalRatings.Inclusivity * globalRatings.numUserRatings) - previousRatings.Inclusivity + currentRatings.Inclusivity) / (globalRatings.numUserRatings);
           updatedClubRating.numUserRatings = globalRatings.numUserRatings;
         }
       }
       
       console.log("Number of user ratings prior to dispatch: " + updatedClubRating.numUserRatings);
-      dispatch({
-        type: "SET_GLOBAL_RATINGS",
-        payload: { globalRatings: updatedClubRating }
-      });
+      // dispatch({
+      //   type: "SET_GLOBAL_RATINGS",
+      //   payload: { globalRatings: updatedClubRating }
+      // });
 
       axios
         .post(`${url}/${clubData.name}/${user}`, currentRatings)
         .then((response) => {
           alert("Rating Submitted Successfully!");
+          dispatch({
+            type: "SET_GLOBAL_RATINGS",
+            payload: { globalRatings: updatedClubRating }
+          });
         })
         .catch((error) => {
           console.error(error);
@@ -163,6 +167,8 @@ function UserRating(props) {
     });
   }
 
+  console.log("Am I currently rating? " + currentlyRating);
+  console.log("What are my previous rating: " + previousRatings.Vibes);
   return (
     <RatingsBubble width={props.width} height={props.height}>
       <form
