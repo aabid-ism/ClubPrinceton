@@ -1,129 +1,162 @@
 // Signup.jsx
-import { useState } from 'react';
+import { useState } from "react";
 import React, { useEffect } from "react";
 
 // import { Link } from "react-router-dom";
 // import useFetch from "../hooks/useFetch/UseFetch";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
 const Signup = () => {
-    // const { handleGoogle, loading, error } = useFetch(
-    //     `${process.env.REACT_APP_SERVER_URL}/auth/signup`
-    // );
+  // const { handleGoogle, loading, error } = useFetch(
+  //     `${process.env.REACT_APP_SERVER_URL}/auth/signup`
+  // );
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-    const handleGoogle = async (response) => {
-        setLoading(true);
-        setError("");
-        fetch(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ credential: response.credential }),
-        })
-            .then((res) => {
-                setLoading(false);
-                return res.json();
-            })
-            .then((data) => {
-                if (data?.user) {
-                    localStorage.setItem("user", JSON.stringify(data?.user.firstName));
-                    const parts = data?.user.email.split("@");
-                    localStorage.setItem("netid", parts[0]);
-                    localStorage.setItem("profilepic", data?.user.picture);
-                    localStorage.setItem("jwt", JSON.stringify(data?.user.token));
-                    // navigate("/");
-                    // window.location.reload();
-                }
-                else {
-                    throw new Error(data?.message || data);
-                }
-            })
-            .then(() => {
-                console.log("hi");
-                if (localStorage.getItem("jwt")) {
-                    navigate("/");
-                }
-            })
-            .catch((error) => {
-                setError(error?.message);
-            });
-    };
+  const handleGoogle = async (response) => {
+    setLoading(true);
+    setError("");
+    fetch(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ credential: response.credential }),
+    })
+      .then((res) => {
+        setLoading(false);
+        return res.json();
+      })
+      .then((data) => {
+        if (data?.user) {
+          localStorage.setItem(
+            "user",
+            JSON.stringify(data?.user.firstName)
+          );
+          const parts = data?.user.email.split("@");
+          localStorage.setItem("netid", parts[0]);
+          localStorage.setItem("profilepic", data?.user.picture);
+          localStorage.setItem("jwt", JSON.stringify(data?.user.token));
+          // navigate("/");
+          // window.location.reload();
+        } else {
+          throw new Error(data?.message || data);
+        }
+      })
+      .then(() => {
+        console.log("hi");
+        if (localStorage.getItem("jwt")) {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        setError(error?.message);
+      });
+  };
 
-
-    useEffect(() => {
-        /* checking if global google object exists in window. 
+  useEffect(() => {
+    /* checking if global google object exists in window. 
             (check index.html script import) */
-        // Load the Google Sign-In API script
-        const script = document.createElement("script");
-        script.src = "https://accounts.google.com/gsi/client";
-        script.async = true;
-        script.defer = true;
-        document.body.appendChild(script);
+    // Load the Google Sign-In API script
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
 
-        // Wait for the script to load
-        script.onload = () => {
-            // Wait for the google object to become available
-            const google = window.google;
-            const waitGoogle = setInterval(() => {
-                if (window.google && window.google.accounts) {
-                    clearInterval(waitGoogle);
-                    // Initialize the Google Sign-In API
-                    google.accounts.id.initialize({
-                        client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-                        callback: handleGoogle,
-                        cancel_on_tap_outside: false,
-                        prompt_parent_id: "g-id-signin",
-                        ux_mode: "popup",
-                        hd: "princeton.edu"
-                    });
+    // Wait for the script to load
+    script.onload = () => {
+      // Wait for the google object to become available
+      const google = window.google;
+      const waitGoogle = setInterval(() => {
+        if (window.google && window.google.accounts) {
+          clearInterval(waitGoogle);
+          // Initialize the Google Sign-In API
+          google.accounts.id.initialize({
+            client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+            callback: handleGoogle,
+            cancel_on_tap_outside: false,
+            prompt_parent_id: "g-id-signin",
+            ux_mode: "popup",
+            hd: "princeton.edu",
+          });
 
-                    // Render the Google Sign-In button
-                    google.accounts.id.renderButton(
-                        document.getElementById("signUpDiv"),
-                        {
-                            theme: "filled_black",
-                            text: "continue_with",
-                            shape: "pill",
-                        }
-                    );
-                }
-            }, 100);
-        };
-    }, [error]);
+          // Render the Google Sign-In button
+          google.accounts.id.renderButton(
+            document.getElementById("signUpDiv"),
+            {
+              theme: "filled_black",
+              text: "continue_with",
+              shape: "pill",
+            }
+          );
+        }
+      }, 100);
+    };
+  }, [error]);
 
-    return (
-        <>
-            {/* <nav style={{ padding: "2rem" }}>
-                <Link to="/">Go Back</Link>
-            </nav> */}
-            <header style={{ textAlign: "center" }}>
-                <h1>Sign in to continue</h1>
-            </header>
-            <main
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    alignItems: "center",
-                }}
-            >
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                {loading ? (
-                    <div>Loading....</div>
-                ) : (
-                    <div id="signUpDiv" data-text="signup_with"></div>
-                )}
-                {/* {localStorage.getItem('user') && < Navigate to="/" />} */}
-            </main>
-            <footer></footer>
-        </>
-    );
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundColor: "#FFF8E5",
+      }}
+    >
+      <header style={{ marginBottom: "20px" }}>
+        <h1
+          style={{
+            textAlign: "center",
+            color: "#444",
+            fontSize: "2.5em",
+          }}
+        >
+          Sign in to continue
+        </h1>
+      </header>
+      <main
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "20px",
+          backgroundColor: "#FFF8E5",
+          borderRadius: "8px",
+          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+          width: "300px",
+        }}
+      >
+        {error && (
+          <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>
+        )}
+        {loading ? (
+          <div
+            style={{
+              color: "#333",
+              fontSize: "1.2em",
+              marginBottom: "1rem",
+            }}
+          >
+            Loading....
+          </div>
+        ) : (
+          <div id="signUpDiv" data-text="signup_with"></div>
+        )}
+      </main>
+      <footer
+        style={{ marginTop: "20px", color: "#888", fontSize: "0.8em" }}
+      >
+        © 2023 ClubPrinceton
+      </footer>
+    </div>
+  );
 };
 
 export default Signup;
