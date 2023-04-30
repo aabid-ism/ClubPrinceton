@@ -88,6 +88,7 @@ function UserRating(props) {
         }
         else {
           // your first rating for our club that has already been rated by others
+          // need to test this pathway -> along with numUserRatings
           updatedClubRating.Vibes = ((globalRatings.Vibes * globalRatings.numUserRatings) + currentRatings.Vibes) / (globalRatings.numUserRatings + 1);
           updatedClubRating.Clout = ((globalRatings.Clout * globalRatings.numUserRatings) + currentRatings.Clout) / (globalRatings.numUserRatings + 1);
           updatedClubRating.Intensity = ((globalRatings.Intensity * globalRatings.numUserRatings) + currentRatings.Intensity) / (globalRatings.numUserRatings + 1);
