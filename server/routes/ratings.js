@@ -117,6 +117,7 @@ router.get("/:club/:user", async (req, res) => {
       $match: { club: query, user: user }, // match clubs with the given name
     },
     {
+      // changed to all zeroes? -> ask Roy
       $project: {
         _id: 0,
         Vibes: 1,

@@ -70,43 +70,43 @@ function UserRating(props) {
         Intensity: 1,
         Inclusivity: 1
       };
-      if (globalRatings.numUserRatings !== undefined) {
-        if (previousRatings.Vibes === 0) {
-          // adding a new user rating to new overall average
-          // need to do this because the initialization for club rating in the database is set to 1
-          // change it to zero once database is wiped
-          if (globalRatings.numUserRatings === 0) {
-            console.log("I expect to be here please!");
-            // your first rating for a club that has not been rated by others
-            updatedClubRating.Vibes = currentRatings.Vibes;
-            updatedClubRating.Clout = currentRatings.Clout;
-            updatedClubRating.Intensity = currentRatings.Intensity;
-            updatedClubRating.Inclusivity = currentRatings.Inclusivity;
-            updatedClubRating.numUserRatings = 1;
-            console.log("Finished my assignments");
-          }
-          else {
-            // your first rating for our club that has already been rated by others
-            updatedClubRating.Vibes = ((globalRatings.Vibes * globalRatings.numUserRatings) + currentRatings.Vibes) / (globalRatings.numUserRatings + 1);
-            updatedClubRating.Clout = ((globalRatings.Clout * globalRatings.numUserRatings) + currentRatings.Clout) / (globalRatings.numUserRatings + 1);
-            updatedClubRating.Intensity = ((globalRatings.Intensity * globalRatings.numUserRatings) + currentRatings.Intensity) / (globalRatings.numUserRatings + 1);
-            updatedClubRating.Inclusivity = ((globalRatings.Inclusivity * globalRatings.numUserRatings) + currentRatings.Inclusivity) / (globalRatings.numUserRatings + 1);
-            updatedClubRating.numUserRatings = globalRatings.numUserRatings + 1;
-          }
+      if (previousRatings.Vibes === 0) {
+        // adding a new user rating to new overall average
+        // need to do this because the initialization for club rating in the database is set to 1
+        // change it to zero once database is wiped
+        if (globalRatings.numUserRatings === 0) {
+          // console.log("I expect to be here please!");
+          // your first rating for a club that has not been rated by others
+          // see if this can be refactored -> if not leave it because backend work is complicated
+          // ask Roy
+          updatedClubRating.Vibes = currentRatings.Vibes;
+          updatedClubRating.Clout = currentRatings.Clout;
+          updatedClubRating.Intensity = currentRatings.Intensity;
+          updatedClubRating.Inclusivity = currentRatings.Inclusivity;
+          updatedClubRating.numUserRatings = 1;
+          // console.log("Finished my assignments");
         }
         else {
-          // updating a previous user rating to new overall average
-
-          // removing clubData and replacing with globalratings
-          updatedClubRating.Vibes = ((globalRatings.Vibes * globalRatings.numUserRatings) - previousRatings.Vibes + currentRatings.Vibes) / (globalRatings.numUserRatings);
-          updatedClubRating.Clout = ((globalRatings.Clout * globalRatings.numUserRatings) - previousRatings.Clout + currentRatings.Clout) / (globalRatings.numUserRatings);
-          updatedClubRating.Intensity = ((globalRatings.Intensity * globalRatings.numUserRatings) - previousRatings.Intensity + currentRatings.Intensity) / (globalRatings.numUserRatings);
-          updatedClubRating.Inclusivity = ((globalRatings.Inclusivity * globalRatings.numUserRatings) - previousRatings.Inclusivity + currentRatings.Inclusivity) / (globalRatings.numUserRatings);
-          updatedClubRating.numUserRatings = globalRatings.numUserRatings;
+          // your first rating for our club that has already been rated by others
+          updatedClubRating.Vibes = ((globalRatings.Vibes * globalRatings.numUserRatings) + currentRatings.Vibes) / (globalRatings.numUserRatings + 1);
+          updatedClubRating.Clout = ((globalRatings.Clout * globalRatings.numUserRatings) + currentRatings.Clout) / (globalRatings.numUserRatings + 1);
+          updatedClubRating.Intensity = ((globalRatings.Intensity * globalRatings.numUserRatings) + currentRatings.Intensity) / (globalRatings.numUserRatings + 1);
+          updatedClubRating.Inclusivity = ((globalRatings.Inclusivity * globalRatings.numUserRatings) + currentRatings.Inclusivity) / (globalRatings.numUserRatings + 1);
+          updatedClubRating.numUserRatings = globalRatings.numUserRatings + 1;
         }
       }
+      else {
+        // updating a previous user rating to new overall average
+
+        // removing clubData and replacing with globalratings
+        updatedClubRating.Vibes = ((globalRatings.Vibes * globalRatings.numUserRatings) - previousRatings.Vibes + currentRatings.Vibes) / (globalRatings.numUserRatings);
+        updatedClubRating.Clout = ((globalRatings.Clout * globalRatings.numUserRatings) - previousRatings.Clout + currentRatings.Clout) / (globalRatings.numUserRatings);
+        updatedClubRating.Intensity = ((globalRatings.Intensity * globalRatings.numUserRatings) - previousRatings.Intensity + currentRatings.Intensity) / (globalRatings.numUserRatings);
+        updatedClubRating.Inclusivity = ((globalRatings.Inclusivity * globalRatings.numUserRatings) - previousRatings.Inclusivity + currentRatings.Inclusivity) / (globalRatings.numUserRatings);
+        updatedClubRating.numUserRatings = globalRatings.numUserRatings;
+      }
       
-      console.log("Number of user ratings prior to dispatch: " + updatedClubRating.numUserRatings);
+      // console.log("Number of user ratings prior to dispatch: " + updatedClubRating.numUserRatings);
       // dispatch({
       //   type: "SET_GLOBAL_RATINGS",
       //   payload: { globalRatings: updatedClubRating }
