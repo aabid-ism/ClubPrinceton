@@ -74,7 +74,7 @@ const Rightbar = ({ state }) => {
                 })
                 .catch((err) => console.log(err));
         }).catch((err) => {
-            if (err.response.status == 401) {
+            if (err.response.status == 400) {
                 alert("please insert a netid registered in ClubPrinceton.")
             }
         })

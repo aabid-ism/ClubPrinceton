@@ -5,7 +5,7 @@ import { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import Rightbar from './Rightbar';
 import DeletePostComponent from './DeletePostComponent';
-
+import api from '../auth/api';
 // state of the initial input fields
 const initialState = {
     clubs: [],
@@ -104,7 +104,7 @@ function AdminInterface() {
     });
 
     // endpoint to get the clubs that a user has permission to administer
-    const url = `${process.env.REACT_APP_SERVER_URL}/clubs/admin`;
+    // const url = `${process.env.REACT_APP_SERVER_URL}/clubs/admin`;
 
     // at start time, get a list of clubs that the user is an admin for
     useEffect(() => {
@@ -112,7 +112,7 @@ function AdminInterface() {
         const username = localStorage.getItem("netid") || null;
 
         // TODO: Use the base axios request with authorization header
-        axios.get(`${url}/${username}`)
+        api.get(`/clubs/admin/${username}`)
             .then((response) => {
                 dispatchSetClubs(response.data);
             })

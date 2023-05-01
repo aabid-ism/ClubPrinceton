@@ -23,7 +23,7 @@ router.get("/verify/:netid", async (req, res) => {
         res.send("User exists").status(200);
     }
     else {
-        res.sendStatus(401);
+        res.sendStatus(400);
     }
 });
 export default router;
