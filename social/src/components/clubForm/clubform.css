@@ -3,9 +3,6 @@
     border-radius: 10px;
     background-color: #FFE4CC;
     outline: none;
-}
-
-.popup-btn:hover {
     background-color: orange;
 }
 
@@ -19,6 +16,10 @@
 
     overflow-y: auto;
     
+}
+
+.center-text {
+    text-align: center;
 }
 
 /* .form_content {
