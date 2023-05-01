@@ -16,13 +16,19 @@ const ClubForm = () => {
       clubAddInfo: "",
     },
     onSubmit: async (values) => {
+      const { netid, user } = localStorage;
+
       const shouldSubmit = window.confirm(
         "Are you sure you want to submit your club application?"
       );
-
+      
       if (shouldSubmit) {
+        if (!netid) {
+          // console.log("I'm in unauthorized section");
+          alert("Unauthorized. Please login to continue with submission");
+          return;
+        }
         const serverUrl = process.env.REACT_APP_SERVER_URL;
-        const { netid, user } = localStorage;
 
         try {
           await axios.post(`${serverUrl}/clubrequest/submit`, {
@@ -34,7 +40,10 @@ const ClubForm = () => {
           alert("Form submitted successfully");
           navigate("/");
         } catch (error) {
-          console.log(error);
+          // console.log(JSON.stringify(error));
+          // console.error(error.response.data);
+          // need to fix this later!!! -> better error messaging
+          alert(error);
         }
       }
     },
@@ -82,10 +91,10 @@ const ClubForm = () => {
             Submit An Application to Run Your Own Club Page on
             ClubPrinceton!
           </h3>
-          <p>
+          <h6>
             Note: To have your club application be approved, you must be
             an officer of your club.
-          </p>
+          </h6>
         </center>
         <br></br>
         <br></br>
@@ -93,6 +102,7 @@ const ClubForm = () => {
           <h5>Name of Your Club:</h5>
           <input
             name="clubName"
+            className="center-text"
             type="text"
             size="30"
             maxLength="50"
@@ -107,6 +117,7 @@ const ClubForm = () => {
           <h5>Club Description:</h5>
           <input
             name="clubInfo"
+            className="center-text"
             type="text"
             size="100"
             maxLength="150"
@@ -119,8 +130,11 @@ const ClubForm = () => {
           <br></br>
           <br></br>
           <h5>Your Club's Princeton Email Address:</h5>
+          <h6>Note: If you do not have a club email address, 
+            please provide your student email address.</h6>
           <input
             name="clubEmail"
+            className="center-text"
             type="email"
             size="30"
             maxLength="40"
@@ -136,6 +150,7 @@ const ClubForm = () => {
           <h5>Position Within the Club:</h5>
           <input
             name="clubPosition"
+            className="center-text"
             type="text"
             size="30"
             maxLength="40"
@@ -153,16 +168,16 @@ const ClubForm = () => {
             Link to ODUS (Office of the Dean of Undergraduate Students)
             Recognition of Your Club:
           </h5>
-          <div>
+          <h6>
             Note: This is optional; however, it will speed up your
             application approval.
             <br></br>
             The link can be a website that has your club listed as being
             ODUS-recognized.
-          </div>
-          <br></br>
+          </h6>
           <input
             name="clubCert"
+            className="center-text"
             type="text"
             size="100"
             maxLength="100"
@@ -172,9 +187,10 @@ const ClubForm = () => {
           <br></br>
           <br></br>
           <h5>Additional Info:</h5>
-          <div>Note: This is optional</div>
+          <h6>Note: This is optional</h6>
           <input
             name="clubAddInfo"
+            className="center-text"
             type="text"
             size="100"
             maxLength="300"
