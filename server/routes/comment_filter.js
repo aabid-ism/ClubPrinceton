@@ -28,7 +28,7 @@ async function cleanComment(req, res, next) {
         });
         for (let score in response.data.attributeScores) {
             let score_value = response.data.attributeScores[score].summaryScore.value;
-            console.log(`score for ${score} is: ${score_value}`);
+            // console.log(`score for ${score} is: ${score_value}`);
             if (score_value > 0.7) {
                 final_comment = "Your comment is awaiting moderation...";
                 break;
