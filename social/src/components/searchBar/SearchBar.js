@@ -2,9 +2,10 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./searchBar.css";
 import api from "../auth/api";
-
+import { useEffect } from "react";
 const url = `${process.env.REACT_APP_SERVER_URL}/clubs`;
 const MAX_TITLE_LENGTH = 25;
+
 
 function formatTitle(title) {
   if (title.length > MAX_TITLE_LENGTH) {
@@ -20,19 +21,24 @@ function SearchBar(props) {
   const numResults = useSelector((state) => state.numResults);
   const clubData = useSelector((state) => state.clubData);
 
+  let searchTimeout = null;
   const handleSearchTermChange = async (event) => {
     let searchWord = event.target.value;
     if (searchWord !== "") {
-      try {
-        const response = await api.get(`${url}/${searchWord}`);
-        const data = response.data;
-        dispatch({
-          type: "SET_RESULTS",
-          payload: { results: data, numResults: data.length },
-        });
-      } catch (error) {
-        console.log("Error occurred: ", error);
-      }
+      clearTimeout(searchTimeout);
+
+      searchTimeout = setTimeout(async () => {
+        try {
+          const response = await api.get(`${url}/${searchWord}`);
+          const data = response.data;
+          dispatch({
+            type: "SET_RESULTS",
+            payload: { results: data, numResults: data.length },
+          });
+        } catch (error) {
+          console.log("Error occurred: ", error);
+        }
+      }, 500)
     }
   };
 

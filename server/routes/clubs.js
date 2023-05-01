@@ -17,7 +17,7 @@ router.get("/a/:name", verifyToken, async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
   const query = req.params.name;
-  console.log(query);
+  // console.log(query);
   // search for a club by name and return the first result with all attributes
 
   const agg = [
@@ -59,7 +59,7 @@ router.get("/club/officers/:name", verifyToken, async (req, res) => {
   )
   // print results
 
-  console.log(result);
+  // console.log(result);
   res.send(result).status(200);
 });
 
@@ -70,7 +70,7 @@ router.get("/:name", verifyToken, async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
   const query = req.params.name;
-  console.log(query);
+  // console.log(query);
   // const result = await collection.findOne(query);
 
   const agg = [
@@ -113,7 +113,7 @@ router.post("/club/officers/update/:club", verifyToken, async (req, res) => {
 
 
   // update the officers field of the club in the club connection
-  console.log(req.body);
+  // console.log(req.body);
   club_collection.updateOne(
     { name: clubName },
     // [{ $set: { posts: { $concatArrays: ["$posts", [post_document_to_insert]] } } }]
@@ -166,12 +166,12 @@ router.post("/create", verifyToken, async (req, res) => {
   // _id property is automatically assigned by mongodb.
   const result = await collection.insertOne(document);
 
-  console.log(result);
+  // console.log(result);
   res.send("Club Added").status(200);
 });
 
 
-router.get("/admin/:netid", async (req, res) => {
+router.get("/admin/:netid", verifyToken, async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("users");
   const query = { netid: req.params.netid };

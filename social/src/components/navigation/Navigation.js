@@ -13,7 +13,7 @@ function Navigation(props) {
   const handleClick = (event) => {
     // Handle the click event here
     localStorage.clear();
-    navigate("/signup");
+    // navigate("/signup");
 
   }
 

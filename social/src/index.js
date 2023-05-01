@@ -28,7 +28,7 @@ root.render(
         <Route path="/signup" element={<Signup />} />
         <Route path="/image" element={<Image />} />
         <Route path="/clubform" element={<ClubForm />} />
-        {/* <Route path="*" element={<App />} /> */}
+        <Route path="*" element={<App />} />
         <Route path="/superadmin" element={<SuperAdminInterface />} />
       </Routes>
     </Router>
