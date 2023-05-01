@@ -80,7 +80,7 @@ export default function MainBubble(props) {
   };
   const clubData = useSelector((state) => state.clubData);
   return (
-    <div style={divStyle}>
+    <div className="main-bubble">
       <div style={innerDivStyle}>
         <InfoPanel></InfoPanel>
       </div>

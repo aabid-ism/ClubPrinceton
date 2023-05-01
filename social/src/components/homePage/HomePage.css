@@ -1,5 +1,4 @@
 .sidebar-left {
-    background-color: red;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -7,6 +6,21 @@
 
 .sidebar-right {
     background-color: blue;
+}
+
+.content {
+    overflow-y: auto;
+    max-height: 100vh;
+    margin:auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* justify-content: center; */
+}
+
+/* Adapted from ChatGPT */
+div::-webkit-scrollbar {
+    width: 8px;
 }
 
 .page {
@@ -22,6 +36,10 @@
 .bubble{
     background-color: #FFE4CC;;
     border-radius: 0.5rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.nav-search {
     display: flex;
     flex-direction: column;
     align-content: space-between;

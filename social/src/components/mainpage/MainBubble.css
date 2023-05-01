@@ -53,9 +53,10 @@
 }
 
 .main-bubble {
-    background-color: #fde8cd;
+    /* background-color: #fde8cd; */
     margin: 0 auto;
-    border-radius: 0.5rem;
+    /* border-radius: 0.5rem; */
+    width: 50px;
 }
 
 .main-bubble-content {

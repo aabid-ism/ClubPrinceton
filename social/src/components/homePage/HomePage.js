@@ -52,23 +52,35 @@ export default function HomePage() {
       <Row className='page'> 
         <Col className="sidebar-left" sm={2}>
           <Container className='bubble'>
-            <Row >
-              <Col className='search'>
-                <SearchBar></SearchBar>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Navigation></Navigation>
-              </Col>
-            </Row>
+            <div className="nav-search">
+              <Row >
+                <Col className='search'>
+                  <SearchBar></SearchBar>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Navigation></Navigation>
+                </Col>
+              </Row>
+            </div>
           </Container>
         </Col>
-        <Col sm={8}>
+        <Col sm={6} className='content'>
+          <div style={{display: 'flex', justifyContent: 'center'}}>
+            {localStorage.getItem("user") && <>Good day, {user}! </>}
+          </div>
+          <div className="bubble">
+            {clubData.name && <MainPage/>}
+          </div>
           <PostList></PostList>
         </Col>
         <Col sm={2} className="sidebar-right">
+        
         {clubData.name && <ClubRtgBreakdown />}
+        {clubData.name && (
+              <UserRating width="300px" height="400px" />
+            )}
         </Col>
       </Row>
     </Container>
