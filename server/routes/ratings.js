@@ -57,7 +57,7 @@ router.post("/:name/:username", async (req, res) => {
       { $inc: {numUserRatings: 1}}
     );
 
-  } 
+  }
   else {
     // previous rating found, update rating
     await collection.updateOne(
