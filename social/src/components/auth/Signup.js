@@ -36,8 +36,8 @@ const Signup = () => {
                     const parts = data?.user.email.split("@");
                     localStorage.setItem("netid", parts[0]);
                     localStorage.setItem("profilepic", data?.user.picture);
-                    localStorage.setItem("ACCESS_TOKEN", JSON.stringify(data?.user.access_token));
-                    // navigate("/");
+                    localStorage.setItem("ACCESS_TOKEN", JSON.stringify(data?.user.ACCESS_TOKEN));
+
                     // window.location.reload();
                 }
                 else {
@@ -45,8 +45,7 @@ const Signup = () => {
                 }
             })
             .then(() => {
-                console.log("hi");
-                if (localStorage.getItem("jwt")) {
+                if (localStorage.getItem("ACCESS_TOKEN")) {
                     navigate("/");
                 }
             })

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import Navigation from "../navigation/Navigation";
 import SearchBar from "../searchBar/SearchBar";
 import MainPage from "../mainpage/MainPage";
@@ -20,29 +19,50 @@ export default function HomePage() {
   const navigate = useNavigate();
   const user = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
 
+
+  // const fetchVerification = async () => {
+
+  //   let jwt = localStorage.getItem("ACCESS_TOKEN")?.replaceAll(/['"]+/g, "");
+  //   // console.log(jwt);
+  //   let api2 = await axios.create({
+  //     baseURL: `${process.env.REACT_APP_SERVER_URL}`,
+  //     headers: {
+  //       Authorization: `Bearer ${jwt}`,
+  //     },
+  //   });
+  //   api2.interceptors.response.use(
+  //     response => response,
+  //     error => {
+  //       // If the error is a 401 Unauthorized error, redirect the user to the login page
+  //       if (error.response?.status === 401 || error.response?.status === 403) {
+  //         console.log("Interceptor caught a 401 or 403 forbidden request!");
+  //         window.location.href = '/signup';
+  //       }
+  //       return Promise.reject(error);
+  //     }
+  //   );
+
+  //   console.log(`The token at Homepage is: ${localStorage.getItem("ACCESS_TOKEN")}`);
+  //   await api2.get("/auth/verify").then(console.log("Token was verified and came back to homepage successfully!"));
+  // }
+
+
+
   useEffect(() => {
     console.log("I am at homepage, about to send verification request");
 
-    let jwt = localStorage.getItem("jwt")?.replaceAll(/['"]+/g, "");
-    console.log(jwt);
-    let api2 = axios.create({
-      baseURL: `${process.env.REACT_APP_SERVER_URL}`,
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    });
-    api2
-      .get("/auth/verify")
-      // .then((res) => {
+    api.get("/auth/verify");
 
-      // })
-      .catch((err) => {
-        if (err.response.status === 403) {
-          console.log(err);
-          navigate("/signup");
-        }
-      });
-  }, []);
+    // .then((res) => {
+
+    // })
+    // .catch((err) => {
+    //   if (err.response.status === 403 || 401) {
+    //     console.log(err);
+    //     navigate("/signup");
+    //   }
+    // });
+  }, [localStorage.getItem("ACCESS_TOKEN")]);
 
   return (
     <div>
@@ -92,25 +112,25 @@ export default function HomePage() {
             )}
           </div>
           <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "0 auto",
-          textAlign: "center",
-        }}
-      >
-        {clubData.name && <ClubRtgBreakdown />}
-      </div>
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "0 auto",
+              textAlign: "center",
+            }}
+          >
+            {clubData.name && <ClubRtgBreakdown />}
+          </div>
         </>
 
         <div
-          // style={{
-          //   display: "flex",
-          //   flexDirection: "column",
-          //   justifyContent: "center",
-          // }}
+        // style={{
+        //   display: "flex",
+        //   flexDirection: "column",
+        //   justifyContent: "center",
+        // }}
         >
           <div
             style={{
@@ -123,7 +143,7 @@ export default function HomePage() {
               margin: "0 auto",
               textAlign: "center",
             }}
-            >
+          >
             {localStorage.getItem("user") && <p>Good day, {user}! </p>}
             {clubData.name && (
               <MainPage
@@ -146,36 +166,36 @@ export default function HomePage() {
             {clubData.name && <Announce />}
           </div>
           <div
-          style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "0 auto",
-          textAlign: "center",
-          }}
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "0 auto",
+              textAlign: "center",
+            }}
           >
             {clubData.name && <OvrRating />}
           </div>
           <div
-            // style={{
-            //   flex: 1,
-            //   display: "flex",
-            //   justifyContent: "center",
-            //   alignItems: "center",
-            //   margin: "0 auto",
-            //   textAlign: "center",
-            // }}
+          // style={{
+          //   flex: 1,
+          //   display: "flex",
+          //   justifyContent: "center",
+          //   alignItems: "center",
+          //   margin: "0 auto",
+          //   textAlign: "center",
+          // }}
           >
             {clubData.name && (
               <PostList
-                // width={"600px"}
-                // height={ "1000px"}
+              // width={"600px"}
+              // height={ "1000px"}
               />
             )}
           </div>
         </div>
-      </div>  
+      </div>
     </div>
   );
 }

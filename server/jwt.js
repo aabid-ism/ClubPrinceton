@@ -7,17 +7,19 @@ const verifyToken = async (req, res, next) => {
     const bearerHeader = req.headers["authorization"];
 
     if (typeof bearerHeader !== "undefined") {
+
+        // get the token from frontend headers
         const bearerToken = bearerHeader.split(" ")[1];
-        console.log(`token found: ${bearerToken}`);
+        // console.log(`token found: ${bearerToken}`);
 
         if (bearerToken == "null") {
             console.log("token is null!")
-            return res.redirect(401, '/signup');
+            // return res.redirect(401, '/signup');
         }
         // verify the token and get the user
-        jwt.verify(bearerToken, secret, (err, decoded) => {
+        await jwt.verify(bearerToken, secret, (err, decoded) => {
             if (err) {
-                console.log(`ERROR verifying JWT token: ${err.message}`);
+                console.log(`ERROR verifying JWT token, ${bearerToken}: ${err.message}`);
                 if (err.name == 'TokenExpiredError') {
                     console.log("Token Expired bro");
                     res.status(403);
@@ -30,7 +32,7 @@ const verifyToken = async (req, res, next) => {
                 console.log(`Invalid JWT token: decoded value is undefined or null`);
                 return res.sendStatus(403);
             }
-            console.log(`JWT token successfully verified. Decoded payload: ${JSON.stringify(decoded)}`);
+            // console.log(`JWT token successfully verified. Decoded payload: ${JSON.stringify(decoded)}`);
             req.email = decoded.email;
             next();
         });

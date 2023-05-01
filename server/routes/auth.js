@@ -77,7 +77,7 @@ router.post("/signup", async (req, res) => {
       // console.log(`token is: ${token}`);
 
       // Send the refresh-token as an httpOnly cookie
-      res.cookie('ACCESS_TOKEN', access_token, { httpOnly: true });
+      // res.cookie('ACCESS_TOKEN', access_token, { httpOnly: true });
 
       // send the user details and access_token in response
       res.status(201).json({
@@ -87,6 +87,7 @@ router.post("/signup", async (req, res) => {
           lastName: profile?.family_name,
           picture: profile?.picture,
           email: profile?.email,
+          ACCESS_TOKEN: access_token
         },
       });
     }
