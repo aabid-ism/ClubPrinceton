@@ -1,10 +1,17 @@
 import React from "react";
 import { useFormik } from "formik";
+import api from "../auth/api";
 import axios from "axios";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ClubForm = () => {
   const navigate = useNavigate();
+
+  // prevents users from accessing club application page without proper google authentication
+  useEffect(() => {
+    api.get("/auth/verify");
+  }, [localStorage.getItem("ACCESS_TOKEN")]);
 
   const formik = useFormik({
     initialValues: {
