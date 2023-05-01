@@ -11,12 +11,6 @@ function PopUpBtn() {
     // const [popped, setPopped] = useState(false);
 
     const handleClick = () => {
-        // setPopped(!popped);
-        // let's hide the screen here
-        // let screen = document.getElementById("#hideScreen");
-        // // display.style.display = "block";
-        // if (!popped) screen.style.display = "block";
-        // else screen.style.display = "none";
         navigate("/clubform");
     };
 

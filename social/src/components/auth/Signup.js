@@ -1,16 +1,16 @@
 // Signup.jsx
-import { useState } from 'react';
+import { useState } from "react";
 import React, { useEffect } from "react";
 
 // import { Link } from "react-router-dom";
 // import useFetch from "../hooks/useFetch/UseFetch";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
 const Signup = () => {
-    // const { handleGoogle, loading, error } = useFetch(
-    //     `${process.env.REACT_APP_SERVER_URL}/auth/signup`
-    // );
+  // const { handleGoogle, loading, error } = useFetch(
+  //     `${process.env.REACT_APP_SERVER_URL}/auth/signup`
+  // );
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -54,47 +54,46 @@ const Signup = () => {
             });
     };
 
-
-    useEffect(() => {
-        /* checking if global google object exists in window. 
+  useEffect(() => {
+    /* checking if global google object exists in window. 
             (check index.html script import) */
-        // Load the Google Sign-In API script
-        const script = document.createElement("script");
-        script.src = "https://accounts.google.com/gsi/client";
-        script.async = true;
-        script.defer = true;
-        document.body.appendChild(script);
+    // Load the Google Sign-In API script
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
 
-        // Wait for the script to load
-        script.onload = () => {
-            // Wait for the google object to become available
-            const google = window.google;
-            const waitGoogle = setInterval(() => {
-                if (window.google && window.google.accounts) {
-                    clearInterval(waitGoogle);
-                    // Initialize the Google Sign-In API
-                    google.accounts.id.initialize({
-                        client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-                        callback: handleGoogle,
-                        cancel_on_tap_outside: false,
-                        prompt_parent_id: "g-id-signin",
-                        ux_mode: "popup",
-                        hd: "princeton.edu"
-                    });
+    // Wait for the script to load
+    script.onload = () => {
+      // Wait for the google object to become available
+      const google = window.google;
+      const waitGoogle = setInterval(() => {
+        if (window.google && window.google.accounts) {
+          clearInterval(waitGoogle);
+          // Initialize the Google Sign-In API
+          google.accounts.id.initialize({
+            client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+            callback: handleGoogle,
+            cancel_on_tap_outside: false,
+            prompt_parent_id: "g-id-signin",
+            ux_mode: "popup",
+            hd: "princeton.edu",
+          });
 
-                    // Render the Google Sign-In button
-                    google.accounts.id.renderButton(
-                        document.getElementById("signUpDiv"),
-                        {
-                            theme: "filled_black",
-                            text: "continue_with",
-                            shape: "pill",
-                        }
-                    );
-                }
-            }, 100);
-        };
-    }, [error]);
+          // Render the Google Sign-In button
+          google.accounts.id.renderButton(
+            document.getElementById("signUpDiv"),
+            {
+              theme: "filled_black",
+              text: "continue_with",
+              shape: "pill",
+            }
+          );
+        }
+      }, 100);
+    };
+  }, [error]);
 
     return (
         <>
@@ -127,6 +126,7 @@ const Signup = () => {
             <footer></footer>
         </>
     );
+
 };
 
 export default Signup;

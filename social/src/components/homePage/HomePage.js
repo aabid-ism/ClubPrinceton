@@ -54,7 +54,6 @@ export default function HomePage() {
     api.get("/auth/verify");
 
     // .then((res) => {
-
     // })
     // .catch((err) => {
     //   if (err.response.status === 403 || 401) {
@@ -112,17 +111,17 @@ export default function HomePage() {
             )}
           </div>
           <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              margin: "0 auto",
-              textAlign: "center",
-            }}
-          >
-            {clubData.name && <ClubRtgBreakdown />}
-          </div>
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "0 auto",
+          textAlign: "center",
+        }}
+      >
+        {clubData.name && <ClubRtgBreakdown width="300px" height="400px" />}
+      </div>
         </>
 
         <div
@@ -159,21 +158,23 @@ export default function HomePage() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              margin: "0 auto",
+              margin: "auto",
               textAlign: "center",
             }}
           >
             {clubData.name && <Announce />}
           </div>
           <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              margin: "0 auto",
-              textAlign: "center",
-            }}
+
+          style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "auto",
+          textAlign: "center",
+          }}
+
           >
             {clubData.name && <OvrRating />}
           </div>
