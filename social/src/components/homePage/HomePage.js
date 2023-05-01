@@ -52,11 +52,15 @@ export default function HomePage() {
       <Row className='page'> 
         <Col className="sidebar-left" sm={2}>
           <Container className='bubble'>
-            <Row className='search'>
-              <SearchBar></SearchBar>
+            <Row >
+              <Col className='search'>
+                <SearchBar></SearchBar>
+              </Col>
             </Row>
             <Row>
-              <Navigation></Navigation>
+              <Col>
+                <Navigation></Navigation>
+              </Col>
             </Row>
           </Container>
         </Col>
