@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import ClubForm from "./ClubForm";
-import "./clubform.css";
+// import "./clubform.css";
 import Navigation from "../navigation/Navigation";
 import { useNavigate } from "react-router-dom";
 
@@ -16,8 +16,8 @@ function PopUpBtn() {
 
     return (
         <div>
-            <div className="popup-btn" onClick={handleClick}>
-                <button><strong>Submit Your Club!</strong></button>
+            <div onClick={handleClick}>
+                <button>Submit Your Club</button>
             </div>
             {/* {popped ? <ClubForm toggle={togglePop}/> : null} */}
         </div>

@@ -5,7 +5,7 @@
     width: 22rem;
     border-radius: 0.5rem;
     --tw-bg-opacity: 1;
-    box-shadow: 5px 5px 10px rgb(199, 199, 199);
+    /* box-shadow: 5px 5px 10px rgb(199, 199, 199); */
     padding: 0.75rem;
     height: 19rem;
 
@@ -18,7 +18,7 @@
     flex-direction: column;
     /* justify-content: center;
     align-items: center; */
-    top: 0px; right: 0px; bottom: 0px; left: 40px;
+    top: 30px; right: 0px; bottom: 0px; left: 10px;
     z-index: 1;
 }
 
