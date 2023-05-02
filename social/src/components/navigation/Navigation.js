@@ -27,31 +27,33 @@ function Navigation(props) {
           </a>
         </li>
         <li>
-          <PopUpBtn></PopUpBtn>
-        </li>
-        <li>
-          <a href="/" className="nav-link">
-            About Club Princeton
+          <a href="/admin" className="nav-link">
+            Admin
           </a>
         </li>
         <li>
+          <div className="nav-link nav-submit-club-text">
+            <PopUpBtn></PopUpBtn>
+          </div>
+        </li>
+        {/* <li>
           <a href="/" className="nav-link">
             <FaCog className="nav-icon" />
             Settings
           </a>
-        </li>
+        </li> */}
         <li onClick={handleClick}>
           <a href="/" className="nav-link">
             <FaSignOutAlt className="nav-icon" />
             Logout
           </a>
         </li>
-        <li>
+        {/* <li>
           <a href="/" className="nav-link">
             <FaQuestionCircle className="nav-icon" />
             FAQ
           </a>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
