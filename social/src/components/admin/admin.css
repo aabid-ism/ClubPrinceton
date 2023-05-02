@@ -24,6 +24,7 @@
     margin-left: 30px;
     justify-content: center;
     display: flex;
+    flex-direction: column;
   }
 
   .inline-item {
@@ -35,7 +36,11 @@
     /* padding: 50px; */
     display: flex;
     flex-direction: row;
-    align-items: center
+    align-items: center;
+    text-align: center;
+
+    display: inline-block;
+    margin: 0 auto;
   }
 
   .announcement {
@@ -46,14 +51,30 @@
   }
 
   .announcemnt-title {
-    
+    text-align: center;
   }
 
   .announcement-text {
-
+    text-align: center;
   }
 
   .announcement-edit {
+    text-align: center;
+  }
+
+  .announcement-section {
+    text-align: center;
+  }
+
+  .officer-section {
+    text-align: center;
+  }
+
+  .officer-display {
+    text-align: center;
+  }
+
+  .officer-add {
 
   }
 
@@ -81,5 +102,3 @@
     font-size: 16px;
     resize: none;
   }
-
-
