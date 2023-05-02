@@ -218,10 +218,10 @@ const Rightbar = ({ state }) => {
                 }
             />}
             <div className='rightbar'>
-
-                <div className='announcement'>
-                    {officers.length != 0 &&
-                        <div>
+                {/* announcements section */}
+                <div className="announcement-section">
+                    {officers.length !== 0 &&
+                        <div className="announcement">
                             <div className="announcement-title">
                                 <h3> Club Announcement </h3>
                             </div>
@@ -229,30 +229,35 @@ const Rightbar = ({ state }) => {
                                 <p>{announcement}</p>
                             </div>
                             <div className="announcement-edit">
-                                {<button onClick={() => { setAnnouncementModal(true) }}> Change Announcement</button>}
+                                {<button onClick={() => { setAnnouncementModal(true) }}>Edit Announcement</button>}
                             </div>
+                            <br></br>
                         </div>
                     }
-                    {/* Officers List */}
-                    {officers &&
-
-                        officers.map((officer, index) => (
-                            < div key={index} className='listrow' >
-                                <p> {officer.title}</p>
-                                <p> {officer.netid}</p>
-                                <button onClick={() => handleRemoveOfficer(index)}>Remove</button>
-                            </div>
-                        ))
-
-
-                    }
-
-                    {/* Add Button */}
-                    {state.activeClub && <button onClick={() => { setOfficersModal(true) }}> ADD OFFICER</button>}
-                </div >
-            </div >
+                </div>
+                {/* Officers Section */}
+                <div className="officer-section">
+                    <div className="officer-display">
+                        {officers.length !==0 && <div className="announcement-title">
+                            <h3> Club Admin </h3>
+                        </div>}
+                        {officers &&
+                                officers.map((officer, index) => (
+                                        < div key={index} className='listrow' >
+                                            <span> {officer.title}</span>&nbsp;&nbsp;
+                                            <span> {officer.netid}</span>
+                                            <button onClick={() => handleRemoveOfficer(index)}>Remove</button>
+                                        </div>
+                                    ))
+                        }
+                    </div>
+                    <div className="officer-add">
+                        {state.activeClub && <button onClick={() => { setOfficersModal(true) }}> Add Officer</button>}
+                    </div>
+                </div>
+            </div>
         </>
-    )
+    );
 }
 
 export default Rightbar

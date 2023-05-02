@@ -105,6 +105,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
     }
     return (
         <>
+        <div className="clubpage-edit">
             <div>
                 <p className="display-6 text-center mb-3">Publish Post</p>
                 <p className="display-6 text-center mb-3">{state.activeClub}</p>
@@ -161,6 +162,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                     </button>
                 </form>
             </div>
+        </div>
         </>
     )
 

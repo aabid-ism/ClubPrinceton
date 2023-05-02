@@ -64,7 +64,8 @@ function PersonalComment({LOGO, postId, list}) {
                 console.log("Attempting to comment")
                 const commentData = {
                     data: event.target.value,
-                    postId: postId
+                    postId: postId,
+                    netid: localStorage.getItem("netid")
                 }
                 console.log(event.target.value);
                 api

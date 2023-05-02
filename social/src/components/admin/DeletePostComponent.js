@@ -54,11 +54,14 @@ const DeletePostComponent = ({ state }) => {
             })} */}
             <h3>Delete Previous Posts</h3>
             {posts?.map((post, index) => (
+                <div>
                 <Row key={post.id}>
-                    {post.title}
-                    {formatDateTime(post.created_at)}
-                    <button onClick={() => { deletePost(post._id) }}> Delete </button>
+                    <span>{post.title}</span>
+                    <span>{formatDateTime(post.created_at)}</span>
+                    <span className='delete-post-button'><button onClick={() => { deletePost(post._id) }}>Delete</button></span>
                 </Row>
+                <br></br>
+                </div>
 
             ))}
             {/* <Row>
