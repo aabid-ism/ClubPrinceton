@@ -16,8 +16,8 @@ function PopUpBtn() {
 
     return (
         <div>
-            <div className="popup-btn" onClick={handleClick}>
-                <button><strong>Submit Your Club!</strong></button>
+            <div onClick={handleClick}>
+                Submit Your Club
             </div>
             {/* {popped ? <ClubForm toggle={togglePop}/> : null} */}
         </div>

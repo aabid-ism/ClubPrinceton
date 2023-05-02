@@ -24,9 +24,12 @@
     display: flex;
     align-items: center;
     font-weight: bold;
-    color: black;
     text-decoration: none;
     margin: 10px;
+  }
+
+  .nav-submit-club-text {
+    cursor: pointer;
   }
   
   .nav-icon {
@@ -34,3 +37,11 @@
     margin-right: 10px;
     font-size: 24px;
   }
+
+  .orange-oval-text {
+    text-align: center;
+    border-radius: 10px;
+    background-color: #FFE4CC;
+    outline: none;
+    background-color: orange;
+}
