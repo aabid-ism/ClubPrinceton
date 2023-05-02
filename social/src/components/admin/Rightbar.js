@@ -237,22 +237,22 @@ const Rightbar = ({ state }) => {
                 </div>
                 {/* Officers Section */}
                 <div className="officer-section">
-                    <div className="announcement-title">
-                        <h3> Club Admin </h3>
-                    </div>
                     <div className="officer-display">
-                    {officers &&
-                            officers.map((officer, index) => (
-                                    < div key={index} className='listrow' >
-                                        <span> {officer.title}</span>&nbsp;&nbsp;
-                                        <span> {officer.netid}</span>
-                                        <button onClick={() => handleRemoveOfficer(index)}>Remove</button>
-                                    </div>
-                                ))
-                    }
+                        {officers.length !==0 && <div className="announcement-title">
+                            <h3> Club Admin </h3>
+                        </div>}
+                        {officers &&
+                                officers.map((officer, index) => (
+                                        < div key={index} className='listrow' >
+                                            <span> {officer.title}</span>&nbsp;&nbsp;
+                                            <span> {officer.netid}</span>
+                                            <button onClick={() => handleRemoveOfficer(index)}>Remove</button>
+                                        </div>
+                                    ))
+                        }
                     </div>
                     <div className="officer-add">
-                        {state.activeClub && <button onClick={() => { setOfficersModal(true) }}> ADD OFFICER</button>}
+                        {state.activeClub && <button onClick={() => { setOfficersModal(true) }}> Add Officer</button>}
                     </div>
                 </div>
             </div>

@@ -6,7 +6,7 @@
     left: 0;
     bottom: 0;
     width: 200px;
-    background-color: #f2f2f2;
+    background-color: #FFE4CC;
     padding: 10px;
     margin-right: 30px;
   }
@@ -19,7 +19,7 @@
     right: 0;
     bottom: 0;
     width: 400px;
-    background-color: #f2f2f2;
+    background-color: #FFE4CC;
     padding: 10px;
     margin-left: 30px;
     justify-content: center;
@@ -41,6 +41,8 @@
 
     display: inline-block;
     margin: 0 auto;
+  }
+  .clubpage-edit {
   }
 
   .announcement {
@@ -76,6 +78,14 @@
 
   .officer-add {
 
+  }
+
+  .delete-post-button {
+  }
+
+  .my-clubs-title {
+    text-align: center;
+    margin: 0 auto;
   }
 
   /* .announcement input,
