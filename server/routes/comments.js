@@ -7,13 +7,13 @@ const router = express.Router();
 
 router.post('/create', cleanComment, async (req, res) => {
   // TODO: include user as info
-  const { data, postId } = req.body;
+  const { data, postId, netid } = req.body;
   const formattedPostId = new ObjectId(postId);
   const post_comment_to_insert = {
     postId: formattedPostId,
     data,
     likes: 0,
-    commenter_netId: 'cspeed',
+    commenter_netId: netid,
     created_at: new Date()
   };
 
