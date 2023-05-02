@@ -24,11 +24,12 @@
     display: flex;
     align-items: center;
     font-weight: bold;
-    color: black;
     text-decoration: none;
     margin: 10px;
+  }
 
-
+  .nav-submit-club-text {
+    cursor: pointer;
   }
   
   .nav-icon {

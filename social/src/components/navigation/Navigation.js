@@ -32,8 +32,8 @@ function Navigation(props) {
           </a>
         </li>
         <li>
-          <div className="nav-link">
-          <PopUpBtn></PopUpBtn>
+          <div className="nav-link nav-submit-club-text">
+            <PopUpBtn></PopUpBtn>
           </div>
         </li>
         {/* <li>
