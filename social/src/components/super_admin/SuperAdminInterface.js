@@ -31,10 +31,11 @@ export default function SuperAdminInterface() {
       .catch((err) => {
         console.log(err);
       });
-  }, [rerenderCount]);
+  }, []);
 
-  const handleAccept = (club) => {
-    setRerenderCount(rerenderCount + 1);
+  useEffect(() => {});
+
+  const handleAccept = (club, index) => {
     // set club status to accepted
     axios
       .post(
@@ -48,10 +49,13 @@ export default function SuperAdminInterface() {
       .catch((err) => {
         console.log("club not accepted");
       });
+
+    clubs[index]["status"] = "Accepted";
+
+    setRerenderCount(rerenderCount + 1);
   };
 
-  const handleDecline = (club) => {
-    setRerenderCount(rerenderCount + 1);
+  const handleDecline = (club, index) => {
     // set club status to declined
     axios
       .post(
@@ -63,6 +67,10 @@ export default function SuperAdminInterface() {
       .catch((err) => {
         console.log("club not declined");
       });
+
+    clubs[index]["status"] = "Declined";
+
+    setRerenderCount(rerenderCount + 1);
   };
 
   // see if user is whitelisted by checking if netid is in whitelist
@@ -125,14 +133,14 @@ export default function SuperAdminInterface() {
                     <button
                       style={{ marginRight: "10px" }}
                       className="superadmin__club__button"
-                      onClick={() => handleAccept(club)}
+                      onClick={() => handleAccept(club, index)}
                     >
                       Accept
                     </button>
                     <button
                       style={{ marginLeft: "10px" }}
                       className="superadmin__club__button"
-                      onClick={() => handleDecline(club)}
+                      onClick={() => handleDecline(club, index)}
                     >
                       Decline
                     </button>
