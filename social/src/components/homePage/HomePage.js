@@ -19,7 +19,6 @@ export default function HomePage() {
   const navigate = useNavigate();
   const user = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
 
-
   // const fetchVerification = async () => {
 
   //   let jwt = localStorage.getItem("ACCESS_TOKEN")?.replaceAll(/['"]+/g, "");
@@ -45,8 +44,6 @@ export default function HomePage() {
   //   console.log(`The token at Homepage is: ${localStorage.getItem("ACCESS_TOKEN")}`);
   //   await api2.get("/auth/verify").then(console.log("Token was verified and came back to homepage successfully!"));
   // }
-
-
 
   useEffect(() => {
     console.log("I am at homepage, about to send verification request");
@@ -111,26 +108,91 @@ export default function HomePage() {
             )}
           </div>
           <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "0 auto",
-          textAlign: "center",
-        }}
-      >
-        {clubData.name && <ClubRtgBreakdown width="300px" height="400px" />}
-      </div>
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "0 auto",
+              textAlign: "center",
+            }}
+          >
+            {clubData.name && (
+              <ClubRtgBreakdown width="300px" height="400px" />
+            )}
+          </div>
         </>
-
+       
         <div
-        // style={{
-        //   display: "flex",
-        //   flexDirection: "column",
-        //   justifyContent: "center",
-        // }}
-        >
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        > {!clubData.name && (
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              position: "fixed",
+              top: 1,
+              left: 0,
+              right: 0,
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "auto",
+              textAlign: "center",
+            }}
+          >
+            {user && (
+              <h1
+                style={{
+                  fontSize: "2.5rem",
+                  color: "#333",
+                  fontWeight: "bold",
+                  marginBottom: "1rem",
+                }}
+              >
+                Hello, {user}!
+              </h1>
+            )}
+            
+              <div>
+                <h1
+                  style={{
+                    fontSize: "3.5rem",
+                    color: "#2c3e50",
+                    fontWeight: "bold",
+                    marginRight: "10px",
+                  }}
+                >
+                  Welcome to
+                </h1>
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <h1
+                    style={{
+                      fontSize: "3.5rem",
+                      color: "orange",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Club
+                  </h1>
+                  <h1
+                    style={{
+                      fontSize: "3.5rem",
+                      color: "#2c3e50",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Princeton!
+                  </h1>
+                </div>
+              </div>
+        
+          </div>
+          )}
           <div
             style={{
               flex: 1,
@@ -143,14 +205,9 @@ export default function HomePage() {
               textAlign: "center",
             }}
           >
-            {localStorage.getItem("user") && <p>Good day, {user}! </p>}
             {clubData.name && (
-              <MainPage
-                width={"500px"}
-                height={"300px"}
-              />
+              <MainPage width={"500px"} height={"300px"} />
             )}
-
           </div>
           <div
             style={{
@@ -165,16 +222,14 @@ export default function HomePage() {
             {clubData.name && <Announce />}
           </div>
           <div
-
-          style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "auto",
-          textAlign: "center",
-          }}
-
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "auto",
+              textAlign: "center",
+            }}
           >
             {clubData.name && <OvrRating />}
           </div>
