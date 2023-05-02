@@ -34,7 +34,12 @@ function UserRating(props) {
           console.error(error);
         });
     }
-  }, [globalRatings.numUserRatings, clubData, currentlyRating, currentRatings]);
+  }, [
+    globalRatings.numUserRatings,
+    clubData,
+    currentlyRating,
+    currentRatings,
+  ]);
 
   // if clubData changes, reset all ratings
   useEffect(() => {
@@ -52,13 +57,22 @@ function UserRating(props) {
     currentRatings["user"] = localStorage
       .getItem("user")
       ?.replaceAll(/['"]+/g, "");
+
+    // check if all rating categories have a non-zero value
+    const hasNonZeroValues = Object.values(currentRatings).every(
+      (value) => value !== 0
+    );
+    if (!hasNonZeroValues) {
+      alert("Please provide a rating for all categories.");
+      return;
+    }
+
     // send currentRatings to backend if windows confirm returns true
     if (
       window.confirm(
         "Are you sure you want to submit this rating? You can change it later."
       )
     ) {
-
       // right before axios request to submit current ratings to backend:
       // let's include the dynamic rendering here!
       // keeping this outside of the if statement in case something goes awry
@@ -68,7 +82,7 @@ function UserRating(props) {
         Vibes: clubData.Vibes - 1,
         Clout: 1,
         Intensity: 1,
-        Inclusivity: 1
+        Inclusivity: 1,
       };
       if (previousRatings.Vibes === 0) {
         // adding a new user rating to new overall average
@@ -85,27 +99,54 @@ function UserRating(props) {
           updatedClubRating.Inclusivity = currentRatings.Inclusivity;
           updatedClubRating.numUserRatings = 1;
           // console.log("Finished my assignments");
-        }
-        else {
+        } else {
           // your first rating for our club that has already been rated by others
-          updatedClubRating.Vibes = ((globalRatings.Vibes * globalRatings.numUserRatings) + currentRatings.Vibes) / (globalRatings.numUserRatings + 1);
-          updatedClubRating.Clout = ((globalRatings.Clout * globalRatings.numUserRatings) + currentRatings.Clout) / (globalRatings.numUserRatings + 1);
-          updatedClubRating.Intensity = ((globalRatings.Intensity * globalRatings.numUserRatings) + currentRatings.Intensity) / (globalRatings.numUserRatings + 1);
-          updatedClubRating.Inclusivity = ((globalRatings.Inclusivity * globalRatings.numUserRatings) + currentRatings.Inclusivity) / (globalRatings.numUserRatings + 1);
-          updatedClubRating.numUserRatings = globalRatings.numUserRatings + 1;
+          updatedClubRating.Vibes =
+            (globalRatings.Vibes * globalRatings.numUserRatings +
+              currentRatings.Vibes) /
+            (globalRatings.numUserRatings + 1);
+          updatedClubRating.Clout =
+            (globalRatings.Clout * globalRatings.numUserRatings +
+              currentRatings.Clout) /
+            (globalRatings.numUserRatings + 1);
+          updatedClubRating.Intensity =
+            (globalRatings.Intensity * globalRatings.numUserRatings +
+              currentRatings.Intensity) /
+            (globalRatings.numUserRatings + 1);
+          updatedClubRating.Inclusivity =
+            (globalRatings.Inclusivity * globalRatings.numUserRatings +
+              currentRatings.Inclusivity) /
+            (globalRatings.numUserRatings + 1);
+          updatedClubRating.numUserRatings =
+            globalRatings.numUserRatings + 1;
         }
-      }
-      else {
+      } else {
         // updating a previous user rating to new overall average
 
         // removing clubData and replacing with globalratings
-        updatedClubRating.Vibes = ((globalRatings.Vibes * globalRatings.numUserRatings) - previousRatings.Vibes + currentRatings.Vibes) / (globalRatings.numUserRatings);
-        updatedClubRating.Clout = ((globalRatings.Clout * globalRatings.numUserRatings) - previousRatings.Clout + currentRatings.Clout) / (globalRatings.numUserRatings);
-        updatedClubRating.Intensity = ((globalRatings.Intensity * globalRatings.numUserRatings) - previousRatings.Intensity + currentRatings.Intensity) / (globalRatings.numUserRatings);
-        updatedClubRating.Inclusivity = ((globalRatings.Inclusivity * globalRatings.numUserRatings) - previousRatings.Inclusivity + currentRatings.Inclusivity) / (globalRatings.numUserRatings);
+        updatedClubRating.Vibes =
+          (globalRatings.Vibes * globalRatings.numUserRatings -
+            previousRatings.Vibes +
+            currentRatings.Vibes) /
+          globalRatings.numUserRatings;
+        updatedClubRating.Clout =
+          (globalRatings.Clout * globalRatings.numUserRatings -
+            previousRatings.Clout +
+            currentRatings.Clout) /
+          globalRatings.numUserRatings;
+        updatedClubRating.Intensity =
+          (globalRatings.Intensity * globalRatings.numUserRatings -
+            previousRatings.Intensity +
+            currentRatings.Intensity) /
+          globalRatings.numUserRatings;
+        updatedClubRating.Inclusivity =
+          (globalRatings.Inclusivity * globalRatings.numUserRatings -
+            previousRatings.Inclusivity +
+            currentRatings.Inclusivity) /
+          globalRatings.numUserRatings;
         updatedClubRating.numUserRatings = globalRatings.numUserRatings;
       }
-      
+
       // console.log("Number of user ratings prior to dispatch: " + updatedClubRating.numUserRatings);
       // dispatch({
       //   type: "SET_GLOBAL_RATINGS",
@@ -118,20 +159,28 @@ function UserRating(props) {
           alert("Rating Submitted Successfully!");
           dispatch({
             type: "SET_GLOBAL_RATINGS",
-            payload: { globalRatings: updatedClubRating }
+            payload: { globalRatings: updatedClubRating },
           });
         })
         .catch((error) => {
           console.error(error);
         });
+    } else {
+      // if the user cancels, reset the state of currentRatings to what it was before the user made any changes
+      dispatch({
+        type: "SET_CURRENT_RATINGS_ALL",
+        payload: { currentRatings: previousRatings },
+      });
     }
+  
     // set previousRatings to currentRatings
     dispatch({
       type: "SET_PREVIOUS_RATINGS",
       payload: { previousRatings: currentRatings },
     });
-    // reset currentRatings
-    discard();
+  
+    // reset currentlyRating
+    dispatchCurrentlyRating();
   }
 
   // toggle currently rating
