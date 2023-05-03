@@ -45,11 +45,11 @@ function Post({ props, width, height }) {
   const headerProps = {
     creator: props.creator,
     creatorIcon: LOGO,
-    title: props.caption,
+    title: props.content,
     createdTime: props.createdTime
   };
   const contentProps = {
-    content: props.content,
+    content: props.caption,
     image_url: props.image_url
   };
 
