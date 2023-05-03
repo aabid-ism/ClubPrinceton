@@ -98,6 +98,10 @@
     text-align: center;
   }
 
+  .admin-welcome-text {
+    text-indent: 8em;
+  }
+
   .middle-form-area {
     display: flex;
     height: 100vh;
@@ -109,11 +113,12 @@
   }
 
   .inner-delete-posts {
+    text-align: center;
 
   }
 
   .post-name {
-    text-align: left;
+    text-align: center;
   }
 
   .just-form {
@@ -122,6 +127,14 @@
 
   .left-sidebar {
   }
+
+  .orange-button {
+    background-color: #FF9230 !important;
+    color: white !important;
+    border-color: #FF9230 !important;
+  }
+
+
 
 
 
