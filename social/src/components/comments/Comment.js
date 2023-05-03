@@ -1,6 +1,6 @@
 import './Comment.css'
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import api from '../auth/api';
 
 const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
@@ -65,13 +65,28 @@ export default function Comment ({ postId, props }){
     // const commentLikeData = getData();
         
     // })
-    console.log("Golly! I have a lot of likes")
-    console.log(props.likes)
+    // console.log("Golly! I have a lot of likes")
+    // console.log(props.likes)
+    const [commentInfo, setCommentInfo] = useState("Loading")
+    const getName = async () => {
+        await api
+        .get(`${url}/getname/${props.commenter_netId}`)
+        .then((response) => {
+            setCommentInfo(response.data);
+        })
+        .catch((error) => {
+            console.log("Error occurred: ", error);
+        });
+    }
+    
+    useEffect(() => {
+        getName(); 
+    });
     
     return (
         <div className='comment'>
             <div>
-                {props.commenter_netId}:
+                {`${commentInfo} (${props.commenter_netId})`}:
                 <div className="commentText">
                 {props.data}
                 </div>

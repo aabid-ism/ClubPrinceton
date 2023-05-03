@@ -66,7 +66,7 @@ export default function CommentList({ props }){
     );
 }
 
-function PersonalComment({LOGO, postId, list}) {
+function PersonalComment({ postId, list}) {
     const [listData, updateListData] = list;
     function handleKeyDown(event){
         if (event.key === 'Enter'){
@@ -101,13 +101,13 @@ function PersonalComment({LOGO, postId, list}) {
     return (
         <div className="your-comment">
             <div className="your-icon">
-                <img src={LOGO} alt=""></img>
+                <img src={localStorage.getItem("profilepic")} alt=""></img>
             </div>
             <div>
                 <input 
                     type="text" 
                     className="your-comment-text" 
-                    placeholder="Add a Comment..." 
+                    placeholder='Add a Comment... (Press "Enter" to Send)'
                     onKeyDown={handleKeyDown}
                 ></input>
             </div>
