@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/esm/Button';
+import "./admin.css";
 import api
     from '../auth/api';
 
@@ -52,18 +54,20 @@ const DeletePostComponent = ({ state }) => {
                     </Row>
                 );
             })} */}
+            <div>
             <h3>Delete Previous Posts</h3>
             {posts?.map((post, index) => (
-                <div>
+                <div className='post-name'>
                 <Row key={post.id}>
                     <span>{post.title}</span>
                     <span>{formatDateTime(post.created_at)}</span>
-                    <span className='delete-post-button'><button onClick={() => { deletePost(post._id) }}>Delete</button></span>
+                    <span className='delete-post-button'><Button onClick={() => { deletePost(post._id) }}>Delete</Button></span>
                 </Row>
                 <br></br>
                 </div>
 
             ))}
+            </div>
             {/* <Row>
                 <Col>1 of 1</Col>
             </Row> */}

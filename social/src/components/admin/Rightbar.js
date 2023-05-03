@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../auth/api';
 import { useNavigate } from 'react-router-dom';
 import ModalComponent from './Modal';
+import Button from 'react-bootstrap/esm/Button';
 
 
 const Rightbar = ({ state }) => {
@@ -229,7 +230,7 @@ const Rightbar = ({ state }) => {
                                 <p>{announcement}</p>
                             </div>
                             <div className="announcement-edit">
-                                {<button onClick={() => { setAnnouncementModal(true) }}>Edit Announcement</button>}
+                                {<Button onClick={() => { setAnnouncementModal(true) }}>Edit Announcement</Button>}
                             </div>
                             <br></br>
                         </div>
@@ -246,13 +247,13 @@ const Rightbar = ({ state }) => {
                                         < div key={index} className='listrow' >
                                             <span> {officer.title}</span>&nbsp;&nbsp;
                                             <span> {officer.netid}</span>
-                                            <button onClick={() => handleRemoveOfficer(index)}>Remove</button>
+                                            <button onClick={() => handleRemoveOfficer(index)}><strong>Remove</strong></button>
                                         </div>
                                     ))
                         }
                     </div>
                     <div className="officer-add">
-                        {state.activeClub && <button onClick={() => { setOfficersModal(true) }}> Add Officer</button>}
+                        {state.activeClub && <Button onClick={() => { setOfficersModal(true) }}> Add Officer</Button>}
                     </div>
                 </div>
             </div>

@@ -123,34 +123,43 @@ function AdminInterface() {
         []);
 
     return (
-        <div style={{ display: 'flex', height: '100vh', position: 'relative' }}>
+        <div className="middle-form-area">
             {/* Left Sidebar */}
+            <div className='left-sidebar'>
             <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
+            </div>
             {/* Main Page with Form and Delete-Posts widget */}
 
-            <div className="mb-5 align-items-center justify-content-center margin-0-auto display-flex" >
+            <div className='admin-welcome'>
+                {/*className="mb-5 align-items-center justify-content-center margin-0-auto display-flex" */}
                 {/* <div style={{width: "18rem"}}>
 
             <div className="mb-5 align-items-center justify-content-center" >
                 {/* <div style={{width: "18rem"}}>
                 <img src={myImage} />
             </div> */}
-            {!state.activeClub && 
-            <div>
-            <div className='justify-center'><h1>Welcome to ClubPrinceton for Admin!</h1></div>
-            <div><h5>If you are a registered administrator for a club page, please select your club on the left sidebar.</h5></div>
+                {!state.activeClub && 
+                <div>
+                <h1>Welcome to ClubPrinceton for Admin!</h1>
+                <h5>If you are a registered administrator for a club page,
+                    please select your club on the left sidebar.</h5>
+                </div>
+                }
+                
+                <div className='just-form'>
+                {state.activeClub &&
+                    <Form state={state}
+                        dispatchClearForm={dispatchClearForm}
+                        dispatchCaption={dispatchCaption}
+                        dispatchFile={dispatchFile}
+                        dispatchTitle={dispatchTitle}
+                        dispatchMissingValues={dispatchMissingValues}
+                        dispatchSubmit={dispatchSubmit}
+                    />
+                }
+                </div>
             </div>
-            }
-            {state.activeClub &&
-                <Form state={state}
-                    dispatchClearForm={dispatchClearForm}
-                    dispatchCaption={dispatchCaption}
-                    dispatchFile={dispatchFile}
-                    dispatchTitle={dispatchTitle}
-                    dispatchMissingValues={dispatchMissingValues}
-                    dispatchSubmit={dispatchSubmit}
-                />
-            }
+            <div className='delete-posts'>
                 {state.activeClub && <DeletePostComponent state={state} />}
             </div>
             <Rightbar state={state} />
