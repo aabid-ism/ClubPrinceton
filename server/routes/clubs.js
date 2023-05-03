@@ -63,7 +63,38 @@ router.get("/club/officers/:name", verifyToken, async (req, res) => {
   res.send(result).status(200);
 });
 
+router.get("/club/description/:name", verifyToken, async (req, res) => {
+  const db = conn.getDb();
+  const clubCollection = await db.collection("clubs");
+  const clubName = req.params.name;
+  if (clubName == "" || undefined) {
+    return res.send("").status(200);
+  }
 
+  // search for a club by name and return only description
+  const result = await clubCollection.findOne(
+    { name: clubName },
+    { _id: 0, description: 1 }
+  )
+
+  // console.log(result);
+  res.send(result).status(200);
+});
+
+router.post(`/club/description/update/:name`, verifyToken, async (req, res) => {
+  const db = conn.getDb();
+  const clubCollection = await db.collection("clubs");
+  const clubName = req.params.name;
+  
+  // search for club by name and update the description
+  const result = await clubCollection.updateOne(
+    { name: clubName },
+    { $set: { description: req.body.description } }
+  )
+
+  // console.log(result);
+  res.send(result).status(200);
+});
 
 // Get a single club
 router.get("/:name", verifyToken, async (req, res) => {
