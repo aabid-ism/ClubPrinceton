@@ -22,17 +22,17 @@ function Navigation(props) {
     <div className="nav" style={{ width: `${props.width}px`, height: `${props.height}px` }}>
       <ul className="nav-list">
         <li>
-          <a href="/" className="nav-link">
+          <a href="/" className="nav-link orange-oval-text">
             Home
           </a>
         </li>
         <li>
-          <a href="/admin" className="nav-link">
+          <a href="/admin" className="nav-link orange-oval-text">
             Admin
           </a>
         </li>
         <li>
-          <div className="nav-link nav-submit-club-text">
+          <div className="nav-link nav-submit-club-text orange-oval-text">
             <PopUpBtn></PopUpBtn>
           </div>
         </li>
@@ -43,8 +43,8 @@ function Navigation(props) {
           </a>
         </li> */}
         <li onClick={handleClick}>
-          <a href="/" className="nav-link">
-            <FaSignOutAlt className="nav-icon" />
+          <a href="/" className="nav-link orange-oval-text">
+            {/* <FaSignOutAlt className="nav-icon" /> */}
             Logout
           </a>
         </li>
