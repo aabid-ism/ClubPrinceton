@@ -157,7 +157,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                     {/* btn btn-success */ }
                     <Button
                         type="submit"
-                        className="float-end"
+                        className="float-end orange-button"
                         disabled={state.activeClub ? false : true}
                     >
                         Submit

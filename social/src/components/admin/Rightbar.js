@@ -3,6 +3,7 @@ import api from "../auth/api";
 import { useNavigate } from "react-router-dom";
 import ModalComponent from "./Modal";
 import Button from "react-bootstrap/esm/Button";
+import "./admin.css";
 
 const Rightbar = ({ state }) => {
   // set initial state
@@ -331,7 +332,7 @@ const Rightbar = ({ state }) => {
               </div>
               <div className="announcement-edit">
                 {
-                  <Button
+                  <Button className="orange-button"
                     onClick={() => {
                       setDescriptionModal(true);
                     }}
@@ -356,7 +357,7 @@ const Rightbar = ({ state }) => {
               </div>
               <div className="announcement-edit">
                 {
-                  <Button
+                  <Button className="orange-button"
                     onClick={() => {
                       setAnnouncementModal(true);
                     }}
@@ -390,7 +391,7 @@ const Rightbar = ({ state }) => {
           </div>
           <div className="officer-add">
             {state.activeClub && (
-              <Button
+              <Button className="orange-button"
                 onClick={() => {
                   setOfficersModal(true);
                 }}

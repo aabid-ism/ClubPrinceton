@@ -139,14 +139,14 @@ function AdminInterface() {
                 <img src={myImage} />
             </div> */}
                 {!state.activeClub && 
-                <div>
+                <div className='admin-welcome-text'>
                 <h1>Welcome to ClubPrinceton for Admin!</h1>
                 <h5>If you are a registered administrator for a club page,
                     please select your club on the left sidebar.</h5>
                 </div>
                 }
                 
-                <div className='just-form'>
+                <div className='just-form rounded'>
                 {state.activeClub &&
                     <Form state={state}
                         dispatchClearForm={dispatchClearForm}
