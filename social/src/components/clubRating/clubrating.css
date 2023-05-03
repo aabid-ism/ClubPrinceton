@@ -40,7 +40,17 @@
 
     text-align: center;
 
+    display: grid;
+    height: 100%;
+
     z-index: 20;
+}
+
+.rtg-collection {
+    font-size: 25px;
+    position: relative;
+    top: -30px;
+    place-items: center;
 }
 
 .rtg-breakdown-group {
@@ -50,7 +60,4 @@
 }
 
 .rtg-breakdown-text {
-    position: fixed;
-    display: flex;
-    align-items: center;
 }

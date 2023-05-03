@@ -27,9 +27,9 @@ function InfoPanel() {
 
   return (
     <div style={infoPanelStyle}>
-      <div style={logoStyle}>
+      {/* <div style={logoStyle}>
         <img src={logo} alt="" />
-      </div>
+      </div> */}
       <div style={infoNodeStyle}>
         <div>Followers</div>
         <div>{clubData.stats.Followers}</div>
@@ -51,6 +51,8 @@ function ClubDescription() {
     textAlign: "center",
     padding: "0.75rem",
   };
+
+  const randomTest = "The quick brown fox jumps over the lazy dog. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eleifend, magna id finibus congue, velit tellus convallis tortor, a venenatis ex quam in tellus. Fusce dapibus elit euismod justo pulvinar, eu mattis arcu bibendum. Nulla facilisi. Sed vel lectus.";
 
   return (
     <div style={clubDescriptionStyle}>
