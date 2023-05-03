@@ -67,11 +67,12 @@ export default function MainBubble(props) {
     margin: "0 auto",
     width: `${props.width}`,
     height: `${props.height}`,
-    borderRadius: "2px",
+    borderRadius: "0.5rem",
     display: "flex",
     flexDirection: "column",
     gap: "2px",
     padding: "3px",
+    boxShadow: "5px 5px 10px rgb(199, 199, 199)"
   };
 
   const innerDivStyle = {

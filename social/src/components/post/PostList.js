@@ -70,7 +70,7 @@ export default function Posts({ width, height }) {
           // return (<pre key={postData._id}>{JSON.stringify(postData, null, 2)}</pre>)
         })}
 
-        <button onClick={loadPosts}>See More Posts</button>
+        <center><button onClick={loadPosts}>See More Posts</button></center>
       </div>
     </div>
   );
