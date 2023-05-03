@@ -1,7 +1,6 @@
 import Comment from "./Comment";
 import './Comment.css'
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState, useRef } from "react";
 import api from "../auth/api";
 
 const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
@@ -9,7 +8,16 @@ const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
 export default function CommentList({ props }){
     // this state array should be modifiable via context or passing down when PersonalComment edits
     const [commentListData, setCommentListData] = useState([])
-    // console.log(props)
+
+    // const listDiv = useRef(null)
+
+    // useEffect(() => {
+    //     // scroll to the top on re-rendering -> adapted from chatgpt    
+    //     if (listDiv.current) {
+    //       listDiv.current.scrollTop = 0;
+    //     }
+    //   });
+
     useEffect(() => {
         if (props.comments !== undefined){
             setCommentListData(props.comments);
@@ -40,16 +48,18 @@ export default function CommentList({ props }){
        
     return (
         <div>
-            <div className="comments">
-                {
-                commentListData.map((commentData) => {
-                        // return (<pre key={commentData._id}>{JSON.stringify(commentData, null, 2)}</pre>)
-                        console.log(commentData)
-                        return (<Comment postId={props.postId }props={commentData} key={commentData._id}/>)
-                    })
-                }
-                <button onClick={loadCommentList}>See Comments!</button>
+            <div className="comments" >
+                <div>
+                    {
+                    commentListData.map((commentData) => {
+                            // return (<pre key={commentData._id}>{JSON.stringify(commentData, null, 2)}</pre>)
+                            console.log(commentData)
+                            return (<Comment postId={props.postId }props={commentData} key={commentData._id}/>)
+                        })
+                    }
+                </div>
                 
+                <button onClick={loadCommentList}>See Comments!</button>
             </div>
             <PersonalComment postId={props.postId} list={[commentListData, setCommentListData]}/>
         </div>
@@ -79,6 +89,12 @@ function PersonalComment({LOGO, postId, list}) {
                 .catch((error) => {
                     console.log("Error occurred: ", error);
                 });
+                // empty the comment field for typing
+                // alert('Comment Submitted!')
+                event.target.value = '';
+                // if (listDiv.current) {
+                //     listDiv.current.scrollTop = 0;
+                // }
             }
         }
     }
