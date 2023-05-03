@@ -2,6 +2,7 @@ import React from "react"
 import './admin.css'
 import { useRef, useState } from "react";
 import axios from "axios";
+import Button from "react-bootstrap/esm/Button";
 
 function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchClearForm, dispatchMissingValues, dispatchSubmit }) {
 
@@ -153,13 +154,14 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                             accept="image/png, image/jpeg" />
                     </div>
                     {/* SUBMIT BUTTON */}
-                    <button
+                    {/* btn btn-success */ }
+                    <Button
                         type="submit"
-                        className="btn btn-success float-end"
+                        className="float-end"
                         disabled={state.activeClub ? false : true}
                     >
                         Submit
-                    </button>
+                    </Button>
                 </form>
             </div>
         </div>

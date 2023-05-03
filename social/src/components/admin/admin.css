@@ -84,9 +84,46 @@
   }
 
   .my-clubs-title {
-    text-align: center;
-    margin: 0 auto;
+  text-align: center;
   }
+
+  .club-names-list {
+    text-align: center;
+  }
+
+  .admin-welcome {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .middle-form-area {
+    display: flex;
+    height: 100vh;
+  }
+
+  .delete-posts {
+    
+    
+  }
+
+  .inner-delete-posts {
+
+  }
+
+  .post-name {
+    text-align: left;
+  }
+
+  .just-form {
+    background-color: #FFE4CC;
+  }
+
+  .left-sidebar {
+  }
+
+
 
   /* .announcement input,
   .announcement p{
