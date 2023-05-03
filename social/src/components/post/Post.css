@@ -74,14 +74,6 @@ img {
     column-gap: 10px;
 }
 
-.your-comment{
-    display: grid;
-    padding: 20px;
-    grid-template-areas: 
-        "your-icon your-comment-text";
-    grid-template-columns: 1fr 8fr; 
-}
-
 .your-icon{
     grid-area: your-icon;
     border-radius: 50%;
