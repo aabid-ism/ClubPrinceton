@@ -45,12 +45,11 @@ function Post({ props, width, height }) {
   const headerProps = {
     creator: props.creator,
     creatorIcon: LOGO,
-    title: props.caption,
-    createdTime: props.createdTime,
-    modTime: "Edits: None!",
+    title: props.content,
+    createdTime: props.createdTime
   };
   const contentProps = {
-    content: props.content,
+    content: props.caption,
     image_url: props.image_url
   };
 
@@ -60,10 +59,6 @@ function Post({ props, width, height }) {
     commenterLogo: LOGO,
   };
 
-  const numPostComments =
-    commentProps.comments !== undefined
-      ? commentProps.comments.length
-      : 0;
   return (
       <PostBubble width={width} height={height}>
         <PostHeader>

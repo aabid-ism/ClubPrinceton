@@ -65,7 +65,7 @@ function SingleRating(props) {
 
   return (
     <strong>
-      <div className="rtg-breakdown-txt">
+      <div>
         <div style={cssProperties}>
           {props.labeling}
           {props.singleRating}
@@ -140,7 +140,7 @@ export function ClubRtgBreakdown({width, height}) {
       <div>
         <h2>Breakdown</h2>
       </div>
-      <div>
+      <div className="rtg-collection">
         <SingleRating
           rgbColor={ratingBreakdown.vibes.color}
           singleRating={ratingBreakdown.vibes.rating}

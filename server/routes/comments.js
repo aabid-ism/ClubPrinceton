@@ -5,6 +5,16 @@ import express from 'express';
 import cleanComment from './comment_filter.js'
 const router = express.Router();
 
+// load the name of a user
+router.get('/getname/:id', async (req, res) => {
+  const netId = req.params.id;
+  const db = conn.getDb();
+  const users_collection = await db.collection("users");
+  const user = await users_collection.findOne({netid: {$eq: netId}});
+  console.log(user)
+  res.send(user.name).status(200);
+});
+
 router.post('/create', cleanComment, async (req, res) => {
   // TODO: include user as info
   const { data, postId, netid } = req.body;
