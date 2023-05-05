@@ -3,6 +3,8 @@ import express from "express";
 
 const router = express.Router();
 
+// fetches pending/accepted/declined clubs in the clubCreation database
+// 
 router.get("/", async (req, res) => {
   try {
     const db = conn.getDb();

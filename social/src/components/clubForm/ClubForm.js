@@ -68,6 +68,7 @@ const ClubForm = () => {
 
       if (!values.clubEmail) {
         errors.clubEmail = "Required";
+        // is this else if condition needed?
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.clubEmail)) {
         errors.clubEmail = "Invalid email address";
       }
@@ -100,14 +101,17 @@ const ClubForm = () => {
             ClubPrinceton!
           </h3>
           <h6>
-            Note: To have your club application be approved, you must be
-            an officer of your club.
+            Notes: To have your club application be approved, you must be
+            an officer of your club. <br /> On approval of your club,
+            you will be able to edit your club page via the admin link on ClubPrinceton's homepage.
           </h6>
         </center>
         <br></br>
         <br></br>
         <center>
           <h5>Name of Your Club:</h5>
+          <h6><strong>Note: After submission of this application,
+            your club name can only be changed by contacting a system administrator.</strong></h6>
           <input
             name="clubName"
             className="center-text"
@@ -146,7 +150,7 @@ const ClubForm = () => {
             type="email"
             size="30"
             maxLength="40"
-            pattern="[a-z0-9._%+-]+@princeton.edu$"
+            pattern="[a-zA-Z0-9._%+-]+@princeton.edu$"
             value={formik.values.clubEmail}
             onChange={formik.handleChange}
           />
