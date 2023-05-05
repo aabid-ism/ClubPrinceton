@@ -57,16 +57,17 @@ export default function SuperAdminInterface() {
 
   const handleDecline = (club, index) => {
     // set club status to declined
-    axios
-      .post(
-        `${process.env.REACT_APP_SERVER_URL}/clubCreation/d/${club.name}`
-      )
-      .then((res) => {
+    // removing club.name from url
+    axios.post(`${process.env.REACT_APP_SERVER_URL}/clubCreation/d`, {
+      clubName: club.name
+    }
+    )
+    .then((res) => {
         console.log("club declined");
-      })
-      .catch((err) => {
+    })
+    .catch((err) => {
         console.log("club not declined");
-      });
+    });
 
     clubs[index]["status"] = "Declined";
 
