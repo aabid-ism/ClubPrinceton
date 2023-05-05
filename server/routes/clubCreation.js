@@ -3,6 +3,8 @@ import express from "express";
 
 const router = express.Router();
 
+// fetches pending/accepted/declined clubs in the clubCreation database
+// for the superadmin interface
 router.get("/", async (req, res) => {
   try {
     const db = conn.getDb();
@@ -17,10 +19,13 @@ router.get("/", async (req, res) => {
   }
 });
 
+// posts an accepted club to the clubCreation database
+// makes club requester an admin member in users collection
+// adds accepted club to the clubs database
 router.post("/a/:name/:netid", async (req, res) => {
   try {
     const db = conn.getDb();
-    const collection = db.collection("clubCreation");
+    const collection = await db.collection("clubCreation");
     const club = await collection.findOne({ name: req.params.name });
     if (!club) {
       return res.status(404).send("Club not found");
@@ -42,28 +47,35 @@ router.post("/a/:name/:netid", async (req, res) => {
     );
 
     // add club to clubs collection
-
     const clubData = getClubData(club);
+    // new club data in clubs collection is now accepted
+    clubData.status = "accepted";
+    console.log("to be inserted club data: " + JSON.stringify(clubData));
     const collection2 = db.collection("clubs");
     const result = await collection2.insertOne(clubData);
     res.send("Club accepted").status(200);
-  } catch (err) {
+  } 
+  catch (err) {
     res.status(500).send("Error accepting club");
   }
 });
 
-router.post("/d/:name", async (req, res) => {
+// declining a club in club creation collection
+router.post("/d", async (req, res) => {
   try {
     const db = conn.getDb();
-    const collection = db.collection("clubCreation");
-    const club = await collection.findOne({ name: req.params.name });
+    const collection = await db.collection("clubCreation");
+    const club = await collection.findOne({ name: req.body.clubName });
+
     if (!club) {
       return res.status(404).send("Club not found");
     }
+
     await collection.updateOne(
-      { name: req.params.name },
+      { name: req.body.clubName },
       { $set: { status: "declined" } }
     );
+
     res.send("Club declined").status(200);
   } catch (err) {
     res.status(500).send("Error declining club");
