@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./superadmin.css";
-import { Container, Row, Col, Button } from 'react-bootstrap';
-
+import { Container, Row, Col, Button } from "react-bootstrap";
+import Navigation from "../navigation/Navigation";
 export default function SuperAdminInterface() {
   const [clubs, setClubs] = useState([]);
   const [whitelisted, setWhitelisted] = useState(false);
@@ -78,10 +78,11 @@ export default function SuperAdminInterface() {
   */
   const handleDecline = (club, index) => {
     // set club status to declined in backend
+    // removing club.name from url
     axios
-      .post(
-        `${process.env.REACT_APP_SERVER_URL}/clubCreation/d/${club.name}`
-      )
+      .post(`${process.env.REACT_APP_SERVER_URL}/clubCreation/d`, {
+        clubName: club.name,
+      })
       .then((res) => {
         console.log("club declined");
       })
@@ -100,86 +101,93 @@ export default function SuperAdminInterface() {
     return (
       <Container fluid className="superadmin">
         <h1 className="superadmin__title">Super Admin Interface</h1>
-        <Container className="superadmin__clubs">
-          {clubs.map((club, index) => {
-            return (
-              <Container className="superadmin__club" key={index}>
-                <div className="superadmin__club__title">
-                  Club Name:
-                </div>
-                <div className="superadmin__club__info">
-                  {club.name}
-                </div>
+        <Row>
+          <Container className="superadmin__clubs">
+            {clubs.map((club, index) => {
+              return (
+                <Container className="superadmin__club" key={index}>
+                  <div className="superadmin__club__title">
+                    Club Name:
+                  </div>
+                  <div className="superadmin__club__info">
+                    {club.name}
+                  </div>
 
-                <div className="superadmin__club__title">
-                  Description:
-                </div>
-                <div className="superadmin__club__info">
-                  {club.description}
-                </div>
+                  <div className="superadmin__club__title">
+                    Description:
+                  </div>
+                  <div className="superadmin__club__info">
+                    {club.description}
+                  </div>
 
-                <div className="superadmin__club__title">
-                  Leadership:
-                </div>
-                <div className="superadmin__club__info">
-                  {club.positionInClub}: {club.applicantName}
-                </div>
+                  <div className="superadmin__club__title">
+                    Leadership:
+                  </div>
+                  <div className="superadmin__club__info">
+                    {club.positionInClub}: {club.applicantName}
+                  </div>
 
-                <div className="superadmin__club__title">Email:</div>
-                <div className="superadmin__club__info">
-                  {club.email}
-                </div>
+                  <div className="superadmin__club__title">Email:</div>
+                  <div className="superadmin__club__info">
+                    {club.email}
+                  </div>
 
-                <div className="superadmin__club__title">
-                  Certificate Link:
-                </div>
-                <div className="superadmin__club__info">
-                  {club.certificateLink}
-                </div>
+                  <div className="superadmin__club__title">
+                    Certificate Link:
+                  </div>
+                  <div className="superadmin__club__info">
+                    {club.certificateLink}
+                  </div>
 
-                <div className="superadmin__club__title">
-                  Additional Info:
-                </div>
-                <div className="superadmin__club__info">
-                  {club.addInfo}
-                </div>
+                  <div className="superadmin__club__title">
+                    Additional Info:
+                  </div>
+                  <div className="superadmin__club__info">
+                    {club.addInfo}
+                  </div>
 
-                <div className="superadmin__club__title">Status:</div>
-                <div className="superadmin__club__info">
-                  {club.status}
-                </div>
+                  <div className="superadmin__club__title">Status:</div>
+                  <div className="superadmin__club__info">
+                    {club.status}
+                  </div>
 
-                {club.status === "pending" && (
-                  <>
+                  {club.status === "pending" && (
+                    <>
+                      <Button
+                        style={{ marginRight: "10px" }}
+                        className="superadmin__club__button"
+                        onClick={() => handleAccept(club, index)}
+                      >
+                        Accept
+                      </Button>
+                      <Button
+                        style={{ marginLeft: "10px" }}
+                        className="superadmin__club__button"
+                        onClick={() => handleDecline(club, index)}
+                      >
+                        Decline
+                      </Button>
+                    </>
+                  )}
+
+                  {club.status === "declined" && (
                     <Button
-                      style={{ marginRight: "10px" }}
                       className="superadmin__club__button"
-                      onClick={() => handleAccept(club, index)}
+                      onClick={() => handleAccept(club)}
                     >
                       Accept
                     </Button>
-                    <Button
-                      style={{ marginLeft: "10px" }}
-                      className="superadmin__club__button"
-                      onClick={() => handleDecline(club, index)}
-                    >
-                      Decline
-                    </Button>
-                  </>
-                )}
-
-                {club.status === "declined" && (
-                  <Button
-                    className="superadmin__club__button"
-                    onClick={() => handleAccept(club)}
-                  >
-                    Accept
-                  </Button>
-                )}
-              </Container>
-            );
-          })}
-        </Container>
+                  )}
+                </Container>
+              );
+            })}
+          </Container>
+        </Row>
+        <Row>
+          <Container className="navigation-bar">
+            <Navigation width="100%" height="30%" />
+          </Container>
+        </Row>
       </Container>
     );
   } else {
