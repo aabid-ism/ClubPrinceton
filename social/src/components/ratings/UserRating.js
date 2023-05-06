@@ -111,7 +111,10 @@ function UserRating(props) {
       }
 
       axios
-        .post(`${url}/${clubData.name}/${user}`, currentRatings)
+        .post(`${url}/${clubData.name}/${user}`, {
+          currentUserRatings: currentRatings,
+          updatedClubRating: updatedClubRating
+        })
         .then((response) => {
           alert("Rating Submitted Successfully!");
           dispatch({
