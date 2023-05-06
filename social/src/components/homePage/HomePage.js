@@ -92,7 +92,7 @@ export default function HomePage() {
               // zIndex: 1,
             }}
           >
-            <Navigation width="300" height="400" />
+            <Navigation width="300px" height="400px" />
           </div>
           <div
             style={{

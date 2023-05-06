@@ -43,12 +43,7 @@
   margin-bottom: 0.5rem;
 }
 
-.superadmin__club__description,
-.superadmin__club__leadership,
-.superadmin__club__certificateLink,
-.superadmin__club__email,
-.superadmin__club__addInfo,
-.superadmin__club__status {
+.superadmin__club__info {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -56,12 +51,7 @@
   margin-bottom: 0.5rem;
 }
 
-.superadmin__club__description span,
-.superadmin__club__leadership span,
-.superadmin__club__certificateLink span,
-.superadmin__club__email span,
-.superadmin__club__addInfo span,
-.superadmin__club__status span {
+.superadmin__club__info span{
   margin-right: 0.5rem;
 }
 
