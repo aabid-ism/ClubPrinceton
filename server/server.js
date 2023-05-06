@@ -18,7 +18,6 @@ import users from "./routes/users.js";
 const app = express();
 const PORT = process.env.PORT || 5050;
 import clubrequest from "./routes/clubrequest.js";
-import clubRating from "./routes/clubRating.js";
 
 // // middleware
 const corsOptions = {
@@ -44,7 +43,6 @@ app.use("/image_pipeline", image_pipeline);
 app.use("/comments", comments);
 app.use("/auth", auth);
 app.use("/clubCreation", clubCreation);
-app.use("/clubRating", clubRating);
 app.use("/users", users);
 app.use("/clubrequest", clubrequest);
 

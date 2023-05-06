@@ -2,8 +2,6 @@ import React from "react";
 // need to make constant?
 import './clubrating.css';
 import { useEffect, useState, useRef } from "react";
-import axios from 'axios';
-import api from "../auth/api";
 import { useSelector, useDispatch } from "react-redux";
 
 
@@ -46,27 +44,15 @@ function getRGBColors(clubRating) {
     return {clubRoundedRtg: clubRoundedRtg, red: red, green: green, blue: blue};
 }
 
-// use useRef
-
 export function OvrRating() {
     // LATER: More refined coloring system
     const clubData = useSelector(state => state.clubData);
     const clubRating = useSelector(state => state.globalRatings);
-    const [overallRating, setOverallRating] = useState({clubRoundedRtg: "INITIAL", red: 173, green: 216, blue: 230});
-    const dispatch = useDispatch();
-    const [testBoolean, setTestBoolean] = useState(0);
+    const [overallRating, setOverallRating] = useState({clubRoundedRtg: "N/A", red: 173, green: 216, blue: 230});
 
-    const checkUserRtgUrl = `${process.env.REACT_APP_SERVER_URL}/clubRating/check`;
 
     useEffect(() => {
-        // console.log("I'm in the useEffect for overallRating");
-        // api
-        //     .get(checkUserRtgUrl, {
-        //         params: {clubName: clubData.name}
-        //     })
-        //     .then((response) => {
-        //         const hasUserRating= response.data.hasUserRating;
-        console.log("MY NUM OF USER RATINGS: " + JSON.stringify(clubRating.numUserRatings));
+        // increase this to > 5 later -> spamming measure
         if (clubRating.numUserRatings > 0) {
             console.log("I expect to be here after update!!")
             const newClubRating = getRGBColors(clubRating);
@@ -75,10 +61,6 @@ export function OvrRating() {
         else {
             setOverallRating({clubRoundedRtg: "NEW", red: 173, green: 216, blue: 230});
         }
-            // })
-            // .catch((error) => {
-            //     console.log("Error occurred: ", error);
-            // });
     }, [clubData.name, clubRating]);
 
     // do we capitalize?
