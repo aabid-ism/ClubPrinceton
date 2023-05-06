@@ -56,10 +56,10 @@ export default function SuperAdminInterface() {
         }/${localStorage.getItem("netid")}`
       )
       .then((res) => {
-        console.log("club accepted");
+        // console.log("club accepted");
       })
       .catch((err) => {
-        console.log("club not accepted");
+        console.error("club not accepted");
       });
 
     // set status of clubs in state and trigger rerender
@@ -89,6 +89,7 @@ export default function SuperAdminInterface() {
       .catch((err) => {
         console.log("club not declined");
       });
+
 
     // set status of clubs in state and trigger rerender
     clubs[index]["status"] = "Declined";
