@@ -6,16 +6,6 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import api from "../auth/api";
 
-/*
-Either refactor OvrRating and ClubRtgBreakdown
-or get state management to work on fast clicking
-on fast clicking (sometimes doesn't have to be fast)
-- one of the properties gets undefined
-Ratings state for zero ratings and non zero ratings are defined differently
-- shouldn't even be going into that condition -> debug later if have time
-Right now code is working -> but making an unecessary API CALL
-*/
-
 // testing -> consider exceptions
 
 // need to add async/await to allow concurrency
@@ -93,13 +83,6 @@ export function ClubRtgBreakdown({width, height}) {
   });
 
     useEffect(() => {
-        // if (clubData.name !== undefined) {
-        // api
-        // .get(checkUserRtgUrl, {
-        //     params: {clubName: clubData.name}
-        // })
-        // .then((response) => {
-        //     const hasUserRating= response.data.hasUserRating;
         if (clubRating.numUserRatings > 0) {
             
             const vibesColor = getRGBColors(clubRating.Vibes);
@@ -128,10 +111,6 @@ export function ClubRtgBreakdown({width, height}) {
                 inclusivity: {rating: "NEW", color: lightblue}
             });
         }
-        // })
-        // .catch((error) => {
-        //     console.log("Error occurred: ", error);
-        // });
     }, [clubData.name, clubRating]);
     // clubData, clubRating
 

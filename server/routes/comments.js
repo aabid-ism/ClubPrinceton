@@ -11,7 +11,7 @@ router.get('/getname/:id', async (req, res) => {
   const db = conn.getDb();
   const users_collection = await db.collection("users");
   const user = await users_collection.findOne({netid: {$eq: netId}});
-  console.log(user)
+  // console.log(user)
   res.send(user.name).status(200);
 });
 
