@@ -26,16 +26,18 @@ function roundHundreth(value) {
 }
 
 function getRGBColors(clubRating) {
+    // UPDATE: DUE TO USER FEEDBACK -> WE ARE REMOVING INTENSITY FROM OUR OVERALL RATINGS CALCULATION
     const MAX_RTG = 5;
     const MIN_RTG = 1;
     const DIFF_RTG = MAX_RTG - MIN_RTG;
 
     const clubClout = roundHundreth(clubRating.Clout);
     const clubVibes = roundHundreth(clubRating.Vibes);
-    const clubIntensity = roundHundreth(clubRating.Intensity);
+    // const clubIntensity = roundHundreth(clubRating.Intensity);
     const clubInclusivity = roundHundreth(clubRating.Inclusivity);
 
-    const clubRoundedRtg = `${roundHundreth((clubClout + clubVibes + clubIntensity + clubInclusivity) / 4).toFixed(2)}`;
+    // removed intensity
+    const clubRoundedRtg = `${roundHundreth((clubClout + clubVibes + clubInclusivity) / 3).toFixed(2)}`;
 
     const red = Math.round(255 * (MAX_RTG - clubRoundedRtg)) / DIFF_RTG;
     const green = Math.round(255 * (clubRoundedRtg - MIN_RTG)) / DIFF_RTG;
