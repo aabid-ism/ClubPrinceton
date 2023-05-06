@@ -97,9 +97,6 @@ const Signup = () => {
 
     return (
         <>
-            {/* <nav style={{ padding: "2rem" }}>
-                <Link to="/">Go Back</Link>
-            </nav> */}
             <header >
                 <center>
                     <h1>Welcome to Club Princeton!</h1>
@@ -121,7 +118,7 @@ const Signup = () => {
                 ) : (
                     <div id="signUpDiv" data-text="signup_with"></div>
                 )}
-                {/* {localStorage.getItem('user') && < Navigate to="/" />} */}
+                
             </main>
             <footer></footer>
         </>
