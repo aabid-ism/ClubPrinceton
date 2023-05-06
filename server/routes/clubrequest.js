@@ -25,9 +25,21 @@ router.post("/submit", async (req, res) => {
             throw new Error("invalid email address. Please follow the correct format.");
         }
 
-        // console.log("past error handling");
-        
+        if (req.body.clubName !== req.body.clubName.trim()) {
+            throw new Error("Remove leading and/or trailing whitespace in club name");
+        }
+
         const db = conn.getDb();
+
+        const clubsCollection = await db.collection("clubs");
+        const clubFound = await clubsCollection.countDocuments({name: req.body.clubName}, {limit: 1});
+
+        if (clubFound) {
+            throw new Error("Sorry, club page already exists on ClubPrinceton. If you think there has been an error," +
+             "please contact an officer from the club and/or system administrator for ClubPrinceton.");
+        }
+
+        // console.log("past error handling");
         const clubCreation = await db.collection("clubCreation");
 
         // fields to be inserted as a club creation document
@@ -59,7 +71,23 @@ router.post("/submit", async (req, res) => {
     }
     catch(error) {
         console.log("Error message: " + error.message);
-        res.status(401).send(error);
+        // this is how we override the message
+        res.status(401).send({ message: error.message });
+    }
+});
+
+// checks to see if the club name is already in the clubs collection of the database
+// remove later -> not needed
+router.get("/find", async (req, res) => {
+    try {
+        const db = await conn.getDb();
+
+        const checkDuplicate = {foundDuplicate: clubDuplicate};
+
+        res.send(checkDuplicate).status(200);
+    }
+    catch (error) {
+        console.error("Error in clubrequest/find endpoint: " + JSON.stringify(error));
     }
 });
 

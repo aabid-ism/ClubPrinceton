@@ -22,6 +22,11 @@
     text-align: center;
 }
 
+.form-error {
+    font-weight: bold;
+    color: red;
+}
+
 /* .form_content {
     background-color: white;
     position: absolute;

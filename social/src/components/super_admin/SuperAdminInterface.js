@@ -44,10 +44,10 @@ export default function SuperAdminInterface() {
         }/${localStorage.getItem("netid")}`
       )
       .then((res) => {
-        console.log("club accepted");
+        // console.log("club accepted");
       })
       .catch((err) => {
-        console.log("club not accepted");
+        console.error("club not accepted");
       });
 
     clubs[index]["status"] = "Accepted";
@@ -58,15 +58,12 @@ export default function SuperAdminInterface() {
   const handleDecline = (club, index) => {
     // set club status to declined
     // removing club.name from url
-    axios.post(`${process.env.REACT_APP_SERVER_URL}/clubCreation/d`, {
-      clubName: club.name
-    }
-    )
+    axios.post(`${process.env.REACT_APP_SERVER_URL}/clubCreation/d/${club.name}`)
     .then((res) => {
-        console.log("club declined");
+        // console.log("club declined");
     })
     .catch((err) => {
-        console.log("club not declined");
+        console.error("club not declined");
     });
 
     clubs[index]["status"] = "Declined";

@@ -61,18 +61,18 @@ router.post("/a/:name/:netid", async (req, res) => {
 });
 
 // declining a club in club creation collection
-router.post("/d", async (req, res) => {
+router.post("/d/:name", async (req, res) => {
   try {
     const db = conn.getDb();
     const collection = await db.collection("clubCreation");
-    const club = await collection.findOne({ name: req.body.clubName });
+    const club = await collection.findOne({ name: req.params.name });
 
     if (!club) {
       return res.status(404).send("Club not found");
     }
 
     await collection.updateOne(
-      { name: req.body.clubName },
+      { name: req.params.name },
       { $set: { status: "declined" } }
     );
 

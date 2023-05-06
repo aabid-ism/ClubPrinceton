@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 const ClubForm = () => {
   const navigate = useNavigate();
-
   // prevents users from accessing club application page without proper google authentication
   useEffect(() => {
     api.get("/auth/verify");
@@ -36,9 +35,9 @@ const ClubForm = () => {
           alert("Unauthorized. Please login to continue with submission");
           return;
         }
-        const serverUrl = process.env.REACT_APP_SERVER_URL;
 
         try {
+          const serverUrl = process.env.REACT_APP_SERVER_URL;
           await axios.post(`${serverUrl}/clubrequest/submit`, {
             ...values,
             applicantNetid: netid,
@@ -47,19 +46,27 @@ const ClubForm = () => {
 
           alert("Form submitted successfully");
           navigate("/");
-        } catch (error) {
-          // console.log(JSON.stringify(error));
-          // console.error(error.response.data);
-          // need to fix this later!!! -> better error messaging
-          alert(error);
+        } 
+        catch (error) {
+          if (error.response) {
+            alert(error.response.data.message);
+          }
+          // no custom error message
+          else {
+            alert(error);
+          }
         }
       }
     },
-    validate: (values) => {
+    validate: async (values) => {
       const errors = {};
 
       if (!values.clubName) {
         errors.clubName = "Required";
+      }
+
+      if (values.clubName !== values.clubName.trim()) {
+        errors.clubName = "Remove leading and/or trailing whitespace in club name";
       }
 
       if (!values.clubInfo) {
