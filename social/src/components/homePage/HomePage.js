@@ -52,9 +52,7 @@ export default function HomePage() {
       .then((res) => {})
       .catch((err) => {
           console.log(err);
-          
-
-        navigate("/landing");
+        navigate("/login");
       });
   }, [localStorage.getItem("ACCESS_TOKEN")]);
 
@@ -128,7 +126,6 @@ export default function HomePage() {
             justifyContent: "center",
           }}
         >
-          {" "}
           {!clubData.name && (
             <div
               style={{

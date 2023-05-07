@@ -40,6 +40,7 @@ function UserRating(props) {
     currentlyRating,
     currentRatings,
   ]);
+  // removing currentlyRating from useEffect here
 
   // if clubData changes, reset all ratings
   useEffect(() => {
@@ -64,97 +65,56 @@ function UserRating(props) {
     );
     if (!hasNonZeroValues) {
       alert("Please provide a rating for all categories.");
+      dispatchCurrentlyRating();
       return;
     }
 
     // send currentRatings to backend if windows confirm returns true
-    if (
-      window.confirm(
-        "Are you sure you want to submit this rating? You can change it later."
-      )
-    ) {
-      // right before axios request to submit current ratings to backend:
-      // let's include the dynamic rendering here!
-      // keeping this outside of the if statement in case something goes awry
-      // will refactor for concision and clarity
+    const submit = window.confirm(
+      "Are you sure you want to submit this rating? You can change it later."
+    )
+    if (submit) {
       const updatedClubRating = {
         numUserRatings: -1,
-        Vibes: clubData.Vibes - 1,
+        Vibes: 1,
         Clout: 1,
         Intensity: 1,
         Inclusivity: 1,
       };
+      const ratingFactors = ["Vibes", "Clout", "Intensity", "Inclusivity"];
       if (previousRatings.Vibes === 0) {
         // adding a new user rating to new overall average
         // need to do this because the initialization for club rating in the database is set to 1
-        // change it to zero once database is wiped
         if (globalRatings.numUserRatings === 0) {
-          // console.log("I expect to be here please!");
-          // your first rating for a club that has not been rated by others
-          // see if this can be refactored -> if not leave it because backend work is complicated
-          // ask Roy
-          updatedClubRating.Vibes = currentRatings.Vibes;
-          updatedClubRating.Clout = currentRatings.Clout;
-          updatedClubRating.Intensity = currentRatings.Intensity;
-          updatedClubRating.Inclusivity = currentRatings.Inclusivity;
           updatedClubRating.numUserRatings = 1;
+          ratingFactors.forEach(rating => {updatedClubRating[rating] = currentRatings[rating]});
           // console.log("Finished my assignments");
-        } else {
-          // your first rating for our club that has already been rated by others
-          updatedClubRating.Vibes =
-            (globalRatings.Vibes * globalRatings.numUserRatings +
-              currentRatings.Vibes) /
-            (globalRatings.numUserRatings + 1);
-          updatedClubRating.Clout =
-            (globalRatings.Clout * globalRatings.numUserRatings +
-              currentRatings.Clout) /
-            (globalRatings.numUserRatings + 1);
-          updatedClubRating.Intensity =
-            (globalRatings.Intensity * globalRatings.numUserRatings +
-              currentRatings.Intensity) /
-            (globalRatings.numUserRatings + 1);
-          updatedClubRating.Inclusivity =
-            (globalRatings.Inclusivity * globalRatings.numUserRatings +
-              currentRatings.Inclusivity) /
-            (globalRatings.numUserRatings + 1);
-          updatedClubRating.numUserRatings =
-            globalRatings.numUserRatings + 1;
+        } 
+        else {
+          // adding a new user rating for a club that has been previously rated
+          updatedClubRating.numUserRatings = globalRatings.numUserRatings + 1;
+          
+          ratingFactors.forEach(rating => {updatedClubRating[rating] = (
+            globalRatings[rating] * globalRatings.numUserRatings + currentRatings[rating]) / 
+          (globalRatings.numUserRatings + 1)}
+          );
         }
-      } else {
+      } 
+      else {
         // updating a previous user rating to new overall average
-
-        // removing clubData and replacing with globalratings
-        updatedClubRating.Vibes =
-          (globalRatings.Vibes * globalRatings.numUserRatings -
-            previousRatings.Vibes +
-            currentRatings.Vibes) /
-          globalRatings.numUserRatings;
-        updatedClubRating.Clout =
-          (globalRatings.Clout * globalRatings.numUserRatings -
-            previousRatings.Clout +
-            currentRatings.Clout) /
-          globalRatings.numUserRatings;
-        updatedClubRating.Intensity =
-          (globalRatings.Intensity * globalRatings.numUserRatings -
-            previousRatings.Intensity +
-            currentRatings.Intensity) /
-          globalRatings.numUserRatings;
-        updatedClubRating.Inclusivity =
-          (globalRatings.Inclusivity * globalRatings.numUserRatings -
-            previousRatings.Inclusivity +
-            currentRatings.Inclusivity) /
-          globalRatings.numUserRatings;
         updatedClubRating.numUserRatings = globalRatings.numUserRatings;
+
+        ratingFactors.forEach(rating => {updatedClubRating[rating] = (
+          (globalRatings[rating] * globalRatings.numUserRatings - 
+          previousRatings[rating] + currentRatings[rating]) 
+          / globalRatings.numUserRatings )});
       }
 
-      // console.log("Number of user ratings prior to dispatch: " + updatedClubRating.numUserRatings);
-      // dispatch({
-      //   type: "SET_GLOBAL_RATINGS",
-      //   payload: { globalRatings: updatedClubRating }
-      // });
-
       axios
-        .post(`${url}/${clubData.name}/${user}`, currentRatings)
+        .post(`${url}/${clubData.name}/${user}`, {
+          currentUserRatings: currentRatings,
+          updatedClubRating: updatedClubRating
+        })
         .then((response) => {
           alert("Rating Submitted Successfully!");
           dispatch({
@@ -165,14 +125,19 @@ function UserRating(props) {
         .catch((error) => {
           console.error(error);
         });
-    } else {
+    } 
+    else {
       // if the user cancels, reset the state of currentRatings to what it was before the user made any changes
+      
       dispatch({
-        type: "SET_CURRENT_RATINGS_ALL",
-        payload: { currentRatings: previousRatings },
+        type: "SET_CURRENTLY_RATING",
+        payload: { currentlyRating: true },
       });
+      discard();
+      return;
     }
-  
+
+    // after pressing submit 
     // set previousRatings to currentRatings
     dispatch({
       type: "SET_PREVIOUS_RATINGS",
@@ -185,6 +150,7 @@ function UserRating(props) {
 
   // toggle currently rating
   function dispatchCurrentlyRating() {
+    discard();
     dispatch({
       type: "SET_CURRENTLY_RATING",
       payload: { currentlyRating: !currentlyRating },
@@ -211,8 +177,6 @@ function UserRating(props) {
     });
   }
 
-  console.log("Am I currently rating? " + currentlyRating);
-  console.log("What are my previous rating: " + previousRatings.Vibes);
   return (
     <RatingsBubble width={props.width} height={props.height}>
       <form
@@ -345,6 +309,7 @@ function UserRating(props) {
   );
 }
 
+// this needs to be refactored into a separate file -> UserRating component is too long
 const SingleRating = (props) => {
   const { type } = props;
   const clubData = useSelector((state) => state.clubData);

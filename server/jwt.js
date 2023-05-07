@@ -14,7 +14,6 @@ const verifyToken = async (req, res, next) => {
 
         if (bearerToken == "null") {
             console.log("token is null!")
-            // return res.redirect(401, '/signup');
         }
         // verify the token and get the user
         await jwt.verify(bearerToken, secret, (err, decoded) => {

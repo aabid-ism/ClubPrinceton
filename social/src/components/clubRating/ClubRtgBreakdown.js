@@ -6,16 +6,6 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import api from "../auth/api";
 
-/*
-Either refactor OvrRating and ClubRtgBreakdown
-or get state management to work on fast clicking
-on fast clicking (sometimes doesn't have to be fast)
-- one of the properties gets undefined
-Ratings state for zero ratings and non zero ratings are defined differently
-- shouldn't even be going into that condition -> debug later if have time
-Right now code is working -> but making an unecessary API CALL
-*/
-
 // testing -> consider exceptions
 
 // need to add async/await to allow concurrency
@@ -37,7 +27,7 @@ function roundHundreth(value) {
 
 // gets the RGB colors for single rating
 // can refactor
-function getRGBColors(singleRating) {
+function getRGBColors(singleRating, ratingType=null) {
   // error -> should not enter here
   if (singleRating < 1) {
     console.error("Rating factor of Club Rating is less than one");
@@ -45,6 +35,11 @@ function getRGBColors(singleRating) {
   }
   const MAX_RTG = 5;
   const MIN_RTG = 1;
+
+  if (ratingType === "intensity") {
+    singleRating = MAX_RTG - singleRating + MIN_RTG;
+  }
+
   const DIFF_RTG = 4;
   const red = Math.round(255 * (MAX_RTG - singleRating)) / DIFF_RTG;
   const green = Math.round(255 * (singleRating - MIN_RTG)) / DIFF_RTG;
@@ -63,21 +58,48 @@ function SingleRating(props) {
       ")",
   };
 
+  // let's do conditional rendering here!
   return (
-    <strong>
       <div>
-        <div style={cssProperties}>
-          {props.labeling}
-          {props.singleRating}
-        </div>
+        <div>
+          <strong>People say this club <span style={cssProperties}>{props.adverb} {props.labeling}.</span></strong></div>
       </div>
-    </strong>
   );
 }
 
+const adverbSelector = (singleRtg, ratingType) => {
+
+  // very, moderately, not so, not
+  let chosenAdverb = "";
+  switch (true) {
+    case (singleRtg >= 4.00 && singleRtg <= 5.00):
+      if (ratingType === "vibes") return chosenAdverb = "has great";
+      return chosenAdverb = "is very";
+
+    case (singleRtg >= 3.00 && singleRtg < 4.00):
+      if (ratingType === "vibes") return chosenAdverb = "has good";
+      return chosenAdverb = "is moderately";
+
+    case (singleRtg >= 2.00 && singleRtg < 3.00):
+      if (ratingType === "vibes") return chosenAdverb = "has ok";
+      return chosenAdverb = "is not so";
+
+    case (singleRtg >= 1.00 && singleRtg < 2.00):
+      if (ratingType === "vibes") return chosenAdverb = "has bad";
+      return chosenAdverb = "is not";
+
+    default:
+      console.error("Error in adverb rating breakdown");
+      if (ratingType === "vibes") return chosenAdverb = "has great";
+      chosenAdverb = "is very";
+  }
+  return chosenAdverb;
+}
+
+
+
 // add asynchronous await -> if needed
 export function ClubRtgBreakdown({width, height}) {
-  const checkUserRtgUrl = `${process.env.REACT_APP_SERVER_URL}/clubRating/check`;
   // LATER: More refined coloring system
   const clubData = useSelector((state) => state.clubData);
   const clubRating = useSelector((state) => state.globalRatings);
@@ -93,17 +115,11 @@ export function ClubRtgBreakdown({width, height}) {
   });
 
     useEffect(() => {
-        // if (clubData.name !== undefined) {
-        // api
-        // .get(checkUserRtgUrl, {
-        //     params: {clubName: clubData.name}
-        // })
-        // .then((response) => {
-        //     const hasUserRating= response.data.hasUserRating;
+        // need to increase quota -> prevent spamming
         if (clubRating.numUserRatings > 0) {
             
             const vibesColor = getRGBColors(clubRating.Vibes);
-            const intensityColor = getRGBColors(clubRating.Intensity);
+            const intensityColor = getRGBColors(clubRating.Intensity, "intensity");
             const popularityColor = getRGBColors(clubRating.Clout);
             const inclusivityColor = getRGBColors(clubRating.Inclusivity);
 
@@ -128,40 +144,47 @@ export function ClubRtgBreakdown({width, height}) {
                 inclusivity: {rating: "NEW", color: lightblue}
             });
         }
-        // })
-        // .catch((error) => {
-        //     console.log("Error occurred: ", error);
-        // });
     }, [clubData.name, clubRating]);
     // clubData, clubRating
 
   return (
+    <>
     <BreakdownBubble width={width} height={height}>
       <div>
         <h2>Breakdown</h2>
       </div>
-      <div className="rtg-collection">
-        <SingleRating
-          rgbColor={ratingBreakdown.vibes.color}
-          singleRating={ratingBreakdown.vibes.rating}
-          labeling="Good Vibes: "
-        />
-        <SingleRating
-          rgbColor={ratingBreakdown.intensity.color}
-          singleRating={ratingBreakdown.intensity.rating}
-          labeling="Intensity: "
-        />
-        <SingleRating
-          rgbColor={ratingBreakdown.popularity.color}
-          singleRating={ratingBreakdown.popularity.rating}
-          labeling="Popularity: "
-        />
-        <SingleRating
-          rgbColor={ratingBreakdown.inclusivity.color}
-          singleRating={ratingBreakdown.inclusivity.rating}
-          labeling="Inclusivity: "
-        />
-      </div>
+      {clubData.numUserRatings > 0 &&
+        <div className="rtg-collection">
+          <SingleRating
+            rgbColor={ratingBreakdown.vibes.color}
+            adverb={adverbSelector(ratingBreakdown.vibes.rating, "vibes")}
+            labeling="vibes"
+          />
+          <SingleRating
+            rgbColor={ratingBreakdown.intensity.color}
+            adverb={adverbSelector(ratingBreakdown.intensity.rating, "intense")}
+            labeling="intense"
+          />
+          <SingleRating
+            rgbColor={ratingBreakdown.popularity.color}
+            adverb={adverbSelector(ratingBreakdown.popularity.rating, "popular")}
+            labeling="popular"
+          />
+          <SingleRating
+            rgbColor={ratingBreakdown.inclusivity.color}
+            adverb={adverbSelector(ratingBreakdown.inclusivity.rating, "inclusive")}
+            labeling="inclusive"
+          />
+        </div>
+      }
+      {
+        clubData.numUserRatings === 0 && 
+        <div className="no-rtg-breakdown">
+          <div>Nothing</div>
+          <div>to see here!</div>
+        </div>
+      }
     </BreakdownBubble>
+    </>
   );
 }
