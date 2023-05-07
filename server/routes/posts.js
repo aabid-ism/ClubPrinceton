@@ -176,8 +176,7 @@ router.post("/delete/:clubName/:objectid", async (req, res) => {
   let club_document_new_posts_object = [...club_document_copy.posts];
   console.log(club_document_new_posts_object);
 
-  // add the next most recent post to the subset
-  // query for movies that have a runtime less than 15 minutes
+  // add the next most recent post to the club document's posts subset
   const query = { club: clubName };
   const options = {
     // sort returned documents in the order of recent post to oldest post
@@ -193,10 +192,23 @@ router.post("/delete/:clubName/:objectid", async (req, res) => {
   // get the fifth recent post (after deletion), 
   // which is the one we need to add to the subset
 
+  // This is the case where we don't have posts other than the ones in 
+  // the subset
+  if (posts_of_club.length < 5) {
+    try {
+      clubs_collection.updateOne(
+        { name: clubName },
+        [{ $set: { posts: club_document_new_posts_object } }]
+      );
+    } catch (e) {
+      console.log("error!");
+      console.log(e);
+    }
+    return res.send().status(200);
+  }
 
+  // This is the case where we have more than 5 posts for the club
   let next_recent_post_of_club = posts_of_club[4];
-
-
   club_document_new_posts_object.push(next_recent_post_of_club);
 
 
