@@ -123,43 +123,35 @@ function AdminInterface() {
         []);
 
     return (
-        <div className="middle-form-area">
+        <div>
             {/* Left Sidebar */}
-            <div className='left-sidebar'>
+            <div>
             <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
             </div>
             {/* Main Page with Form and Delete-Posts widget */}
-
-            <div className='admin-welcome'>
-                {/*className="mb-5 align-items-center justify-content-center margin-0-auto display-flex" */}
-                {/* <div style={{width: "18rem"}}>
-
-            <div className="mb-5 align-items-center justify-content-center" >
-                {/* <div style={{width: "18rem"}}>
-                <img src={myImage} />
-            </div> */}
+            <div>
                 {!state.activeClub && 
-                <div className='admin-welcome-text'>
+                <div>
                 <h1>Welcome to ClubPrinceton for Admin!</h1>
                 <h5>If you are a registered administrator for a club page,
                     please select your club on the left sidebar.</h5>
                 </div>
                 }
                 
-                <div className='just-form rounded'>
-                {state.activeClub &&
-                    <Form state={state}
-                        dispatchClearForm={dispatchClearForm}
-                        dispatchCaption={dispatchCaption}
-                        dispatchFile={dispatchFile}
-                        dispatchTitle={dispatchTitle}
-                        dispatchMissingValues={dispatchMissingValues}
-                        dispatchSubmit={dispatchSubmit}
-                    />
-                }
+                <div>
+                    {state.activeClub &&
+                        <Form state={state}
+                            dispatchClearForm={dispatchClearForm}
+                            dispatchCaption={dispatchCaption}
+                            dispatchFile={dispatchFile}
+                            dispatchTitle={dispatchTitle}
+                            dispatchMissingValues={dispatchMissingValues}
+                            dispatchSubmit={dispatchSubmit}
+                        />
+                    }
                 </div>
             </div>
-            <div className='delete-posts'>
+            <div>
                 {state.activeClub && <DeletePostComponent state={state} />}
             </div>
             <Rightbar state={state} />

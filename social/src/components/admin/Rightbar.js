@@ -195,8 +195,10 @@ const Rightbar = ({ state }) => {
     }
     // Put the officer info to the Officers Object
   }, [state.activeClub]);
+  // looks like Modal is already responsive -> not going to touch that
   return (
     <>
+      {/* for editing the club description modal */}
       {isDescriptionModal && (
         <ModalComponent
           isModal={isDescriptionModal}
@@ -223,6 +225,7 @@ const Rightbar = ({ state }) => {
                 <button
                   type="submit"
                   // disabled={(Object.keys(officerFormValues).length === 0) ? true : false}
+                  // change to orange button if you can
                   className="btn btn-success float-end"
                   // disabled={state.activeClub ? false : true}
                 >
@@ -233,6 +236,8 @@ const Rightbar = ({ state }) => {
           }
         />
       )}
+
+      {/* this is for editing the officers modal */}
       {isOfficersModal && (
         <ModalComponent
           isModal={isOfficersModal}
@@ -284,6 +289,7 @@ const Rightbar = ({ state }) => {
           }
         />
       )}
+      {/* this is for editing the announcment modal */}
       {isAnnouncementModal && (
         <ModalComponent
           isModal={isAnnouncementModal}
@@ -320,17 +326,20 @@ const Rightbar = ({ state }) => {
           }
         />
       )}
-      <div className="rightbar">
-        <div className="announcement-section">
+      {/* Here is the beginning of the right bar */}
+      {/* rightbar is removed -> netids in admin section no longer stacked */}
+      {/* announcement section announcement announcement title announcement title announcement edit */}
+      <div>
+        <div>
           {officers.length !== 0 && (
-            <div className="announcement">
-              <div className="announcement-title">
+            <div>
+              <div>
                 <h3> Club Description </h3>
               </div>
-              <div className="announcement-text">
+              <div>
                 <p>{description}</p>
               </div>
-              <div className="announcement-edit">
+              <div>
                 {
                   <Button className="orange-button"
                     onClick={() => {
@@ -346,16 +355,16 @@ const Rightbar = ({ state }) => {
           )}
         </div>
         {/* announcements section */}
-        <div className="announcement-section">
+        <div>
           {officers.length !== 0 && (
-            <div className="announcement">
-              <div className="announcement-title">
+            <div>
+              <div>
                 <h3> Club Announcement </h3>
               </div>
-              <div className="announcement-text">
+              <div>
                 <p>{announcement}</p>
               </div>
-              <div className="announcement-edit">
+              <div>
                 {
                   <Button className="orange-button"
                     onClick={() => {
@@ -371,16 +380,18 @@ const Rightbar = ({ state }) => {
           )}
         </div>
         {/* Officers Section */}
-        <div className="officer-section">
-          <div className="officer-display">
+        <div>
+          <div>
             {officers.length !== 0 && (
-              <div className="announcement-title">
+              <div>
                 <h3> Club Admin </h3>
               </div>
             )}
+            {/* removing listrow */}
+            {/* we have a key props thing going on */}
             {officers &&
               officers.map((officer, index) => (
-                <div key={index} className="listrow">
+                <div key={index}>
                   <span> {officer.title}</span>&nbsp;&nbsp;
                   <span> {officer.netid}</span>
                   <button onClick={() => handleRemoveOfficer(index)}>
@@ -389,7 +400,7 @@ const Rightbar = ({ state }) => {
                 </div>
               ))}
           </div>
-          <div className="officer-add">
+          <div>
             {state.activeClub && (
               <Button className="orange-button"
                 onClick={() => {
