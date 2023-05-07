@@ -10,6 +10,7 @@
 .open-search-button {
     max-width: 80%;
     border-radius: 15px !important;
+    min-width: 60%;
     /* position: fixed;
     top: 0;
     left: 0;
