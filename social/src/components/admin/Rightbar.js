@@ -299,6 +299,7 @@ const Rightbar = ({ state }) => {
                 <div className="mb-3">
                   <textarea
                     type="text"
+                    maxLength="200"
                     className="form-control"
                     name="title"
                     value={newAnnouncement}
