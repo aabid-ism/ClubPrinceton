@@ -9,6 +9,7 @@ const router = express.Router();
 router.get('/getname/:id', async (req, res) => {
   try {
     const netId = req.params.id;
+    console.log(`My NetID is here: ${netId}`);
     const db = conn.getDb();
     const users_collection = await db.collection("users");
     const user = await users_collection.findOne({ netid: { $eq: netId } });
@@ -16,7 +17,7 @@ router.get('/getname/:id', async (req, res) => {
     res.send(user.name).status(200);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Internal server error');
+    res.status(500).send('Internal server error!');
   }
 });
 
@@ -43,8 +44,9 @@ router.post('/create', cleanComment, async (req, res) => {
   const amount_of_comments_to_check_for = 50;
   const time_period_to_check_comments_in_mins = 10;
   if (comments_of_that_netid.length > amount_of_comments_to_check_for) {
-    const diff = comments_of_that_netid[0].created_at - comments_of_that_netid[amount_of_comments_to_check_for - 1].created_at;
-    const diffInMinutes = diff / (1000 * 60);
+    const currentTime = new Date();
+    const twentieth_comment_time = new Date(comments_of_that_netid[amount_of_comments_to_check_for - 1].created_at);
+    const diffInMinutes = (currentTime.getTime() - twentieth_comment_time.getTime()) / 60000;
     console.log("-------20 or MORE COMMENTS ---")
     if (diffInMinutes <= time_period_to_check_comments_in_mins) {
       console.log("-------20 or MORE COMMENTS WITHIN 10 MINUTES!!! ---")
