@@ -3,6 +3,7 @@ import api from "../auth/api";
 import { useNavigate } from "react-router-dom";
 import ModalComponent from "./Modal";
 import Button from "react-bootstrap/esm/Button";
+import Row from "react-bootstrap/esm/Row";
 import "./admin.css";
 
 const Rightbar = ({ state }) => {
@@ -326,11 +327,12 @@ const Rightbar = ({ state }) => {
           }
         />
       )}
+{/*----------------------------------------------------------------------------------------------- */}
       {/* Here is the beginning of the right bar */}
       {/* rightbar is removed -> netids in admin section no longer stacked */}
       {/* announcement section announcement announcement title announcement title announcement edit */}
       <div>
-        <div>
+        <Row className="middle-delete-posts-row">
           {officers.length !== 0 && (
             <div>
               <div>
@@ -353,9 +355,9 @@ const Rightbar = ({ state }) => {
               <br></br>
             </div>
           )}
-        </div>
+        </Row>
         {/* announcements section */}
-        <div>
+        <Row>
           {officers.length !== 0 && (
             <div>
               <div>
@@ -378,9 +380,9 @@ const Rightbar = ({ state }) => {
               <br></br>
             </div>
           )}
-        </div>
+        </Row>
         {/* Officers Section */}
-        <div>
+        <Row className="middle-delete-posts-row">
           <div>
             {officers.length !== 0 && (
               <div>
@@ -412,7 +414,7 @@ const Rightbar = ({ state }) => {
               </Button>
             )}
           </div>
-        </div>
+        </Row>
       </div>
     </>
   );

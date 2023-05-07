@@ -102,7 +102,7 @@
     text-indent: 8em;
   }
 
-  .middle-form-area {
+  .admin-page {
     display: flex;
     height: 100vh;
   }
@@ -162,3 +162,31 @@
     font-size: 16px;
     resize: none;
   }
+
+
+/* react bootstrap col names */
+.admin-page-row {
+  background-color: gray;
+}
+
+.left-sidebar-col {
+  background-color: lightgreen;
+
+}
+
+.middle-form-col {
+  background-color: lightpink;
+}
+
+.middle-delete-posts-row {
+  background-color: lightsalmon;
+}
+
+.right-sidebar-col {
+  background-color: lightskyblue;
+
+}
+
+.full-height {
+  height: 100vh;
+}

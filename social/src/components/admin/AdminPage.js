@@ -6,6 +6,9 @@ import axios from 'axios';
 import Rightbar from './Rightbar';
 import DeletePostComponent from './DeletePostComponent';
 import api from '../auth/api';
+import Container from 'react-bootstrap/esm/Container';
+import Col from 'react-bootstrap/esm/Col';
+import Row from 'react-bootstrap/esm/Row';
 // state of the initial input fields
 const initialState = {
     clubs: [],
@@ -123,39 +126,47 @@ function AdminInterface() {
         []);
 
     return (
-        <div>
+        <Container fluid>
             {/* Left Sidebar */}
-            <div>
-            <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
-            </div>
-            {/* Main Page with Form and Delete-Posts widget */}
-            <div>
-                {!state.activeClub && 
-                <div>
-                <h1>Welcome to ClubPrinceton for Admin!</h1>
-                <h5>If you are a registered administrator for a club page,
-                    please select your club on the left sidebar.</h5>
-                </div>
-                }
-                
-                <div>
-                    {state.activeClub &&
-                        <Form state={state}
-                            dispatchClearForm={dispatchClearForm}
-                            dispatchCaption={dispatchCaption}
-                            dispatchFile={dispatchFile}
-                            dispatchTitle={dispatchTitle}
-                            dispatchMissingValues={dispatchMissingValues}
-                            dispatchSubmit={dispatchSubmit}
-                        />
+            <Row className="admin-page-row full-height">
+                <Col className="left-sidebar-col">
+                    <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
+                </Col>
+                {/* Main Page with Form and Delete-Posts widget */}
+                <Col className="middle-form-col">
+                    <Row>
+                    {!state.activeClub && 
+                    <div>
+                        <h1>Welcome to ClubPrinceton for Admin!</h1>
+                        <h5>If you are a registered administrator for a club page,
+                            please select your club on the left sidebar.</h5>
+                    </div>
                     }
-                </div>
-            </div>
-            <div>
-                {state.activeClub && <DeletePostComponent state={state} />}
-            </div>
-            <Rightbar state={state} />
-        </div>
+                    </Row>
+                    
+                    <Row>
+                        {state.activeClub &&
+                            <Form state={state}
+                                dispatchClearForm={dispatchClearForm}
+                                dispatchCaption={dispatchCaption}
+                                dispatchFile={dispatchFile}
+                                dispatchTitle={dispatchTitle}
+                                dispatchMissingValues={dispatchMissingValues}
+                                dispatchSubmit={dispatchSubmit}
+                            />
+                        }
+                    </Row>
+                    <Row className="middle-delete-posts-row">
+                    <div>
+                    {state.activeClub && <DeletePostComponent state={state} />}
+                    </div>
+                    </Row>
+                </Col>
+                <Col className="right-sidebar-col">
+                <Rightbar state={state} />
+                </Col>
+            </Row>
+        </Container>
     )
 }
 
