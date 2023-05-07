@@ -2,13 +2,13 @@
     color: black;
     background-color: #FFE4CC;
     margin: auto auto;
-    width: 22rem;
+    /* width: 22rem; */
     border-radius: 0.5rem;
     --tw-bg-opacity: 1;
     /* box-shadow: 5px 5px 10px rgb(199, 199, 199); */
     padding: 0.75rem;
-    height: 19rem;
-    box-shadow: 5px 5px 10px rgb(199, 199, 199);
+    max-height: 20%;
+    /*box-shadow: 5px 5px 10px rgb(199, 199, 199); */
 
     /*need to scale the css to occupy a percentage of
     the page */
@@ -19,8 +19,8 @@
     flex-direction: column;
     /* justify-content: center;
     align-items: center; */
-    top: 30px; right: 0px; bottom: 0px; left: 10px;
-    z-index: 1;
+    /* top: 30px; right: 0px; bottom: 0px; left: 10px;
+    z-index: 1; */
 }
 
 .announceTitle {

@@ -4,10 +4,10 @@ import './rtgbubble.css';
 function RatingsBubble({ children, width, height }){
     return (
         <div className="rtg-bubble" 
-            style={{
-                width: width,
-                height: height,
-            }}
+            // style={{
+            //     width: width,
+            //     height: height,
+            // }}
         >
             {children}
         </div>

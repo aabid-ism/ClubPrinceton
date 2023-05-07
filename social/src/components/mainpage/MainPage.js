@@ -1,4 +1,5 @@
-import logo from "./triangle logo.png";
+import './MainBubble.css'
+
 import { useSelector } from "react-redux";
 
 function InfoPanel() {
@@ -62,31 +63,27 @@ function ClubDescription() {
 }
 
 export default function MainBubble(props) {
-  const divStyle = {
-    backgroundColor: "#FFE4CC",
-    margin: "0 auto",
-    width: `${props.width}`,
-    height: `${props.height}`,
-    borderRadius: "0.5rem",
-    display: "flex",
-    flexDirection: "column",
-    gap: "2px",
-    padding: "3px",
-    boxShadow: "5px 5px 10px rgb(199, 199, 199)"
-  };
+  // const divStyle = {
+  //   backgroundColor: "#FFE4CC",
+  //   margin: "0 auto",
+  //   borderRadius: "0.5rem",
+  //   display: "flex",
+  //   flexDirection: "column",
+  //   gap: "2px",
+  //   padding: "3px",
+  //   boxShadow: "5px 5px 10px rgb(199, 199, 199)"
+  // };
 
-  const innerDivStyle = {
-    display: "flex",
-    flexDirection: "column",
-    borderBottom: "2px solid #C05621",
-    padding: "3px",
-  };
+  // const innerDivStyle = {
+  //   display: "flex",
+  //   flexDirection: "column",
+  //   borderBottom: "2px solid #C05621",
+  //   padding: "3px",
+  // };
   const clubData = useSelector((state) => state.clubData);
   return (
-    <div style={divStyle}>
-      <div style={innerDivStyle}>
-        <InfoPanel></InfoPanel>
-      </div>
+    <div className='main-bubble'>
+      <InfoPanel></InfoPanel>
       <div
         style={{
           display: "flex",

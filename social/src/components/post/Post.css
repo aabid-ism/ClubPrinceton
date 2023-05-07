@@ -1,8 +1,8 @@
-.bubble {
+.post-bubble {
     color: black;
     background-color: rgb(255 252 237);
     margin: auto auto;
-    width: 48rem;
+    /* width: 48rem; */
     border-radius: 0.5rem;
     --tw-bg-opacity: 1;
     box-shadow: 5px 5px 10px rgb(199, 199, 199);
@@ -57,10 +57,10 @@
     justify-content: end;
 }
 
-img {
+/* img {
     max-width:100%;
     max-height:100%;
-}
+} */
 
 .postTitle {
     font-weight: bold;
@@ -97,5 +97,6 @@ img {
 }
 
 .postImage {
-    max-height: 100%;
+    max-height: 30%;
+    max-width: 30%;
 }

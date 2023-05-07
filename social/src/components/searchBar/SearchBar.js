@@ -78,13 +78,12 @@ function SearchBar(props) {
 
   return (
     <div
-      className="search-bar"
-      style={{ width: `${props.width}px`, height: `${props.height}px` }}
     >
       <input
         type="text"
         placeholder="Search..."
         onChange={handleSearchTermChange}
+        autoFocus={true}
       />
       <p>{numResults} search results</p>
       {results.length > 0 && (

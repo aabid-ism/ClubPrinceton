@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const url = `${process.env.REACT_APP_SERVER_URL}/posts`;
 
-export default function Posts({ width, height }) {
+export default function PostList({props}) {
   const clubData = useSelector((state) => state.clubData);
   const [postListData, setPostListData] = useState([]);
 
@@ -63,8 +63,6 @@ export default function Posts({ width, height }) {
             <Post
               props={postProps}
               key={postData._id}
-              width={width}
-              height={height}
             />
           );
           // return (<pre key={postData._id}>{JSON.stringify(postData, null, 2)}</pre>)

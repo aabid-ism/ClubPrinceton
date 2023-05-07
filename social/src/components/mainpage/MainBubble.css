@@ -1,4 +1,3 @@
-
 .button-style {
     color: #b45309;
     padding: 0.25rem 1.25rem;
@@ -53,9 +52,10 @@
 }
 
 .main-bubble {
-    background-color: #fde8cd;
+    background-color: #FFE4CC;
     margin: 0 auto;
     border-radius: 0.5rem;
+    width: 100%;
 }
 
 .main-bubble-content {
