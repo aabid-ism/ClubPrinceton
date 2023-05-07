@@ -11,8 +11,7 @@ import {
 } from "react-router-dom";
 import AdminInterface from "./components/admin/AdminPage";
 import SuperAdminInterface from "./components/super_admin/SuperAdminInterface";
-import Signup from "./components/auth/Signup";
-import Landing from "./components/auth/Landing";
+import Login from "./components/auth/Login";
 import Image from "./components/image/Image";
 import ClubForm from "./components/clubForm/ClubForm";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,8 +23,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/admin" element={<AdminInterface />} />
-        <Route path="/landing" element={<Landing />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/image" element={<Image />} />
         <Route path="/clubform" element={<ClubForm />} />
         <Route path="*" element={<App />} />

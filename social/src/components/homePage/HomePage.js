@@ -48,16 +48,15 @@ export default function HomePage() {
   useEffect(() => {
     console.log("I am at homepage, about to send verification request");
 
-    api.get("/auth/verify");
+    api
+      .get("/auth/verify")
 
-    // .then((res) => {
-    // })
-    // .catch((err) => {
-    //   if (err.response.status === 403 || 401) {
-    //     console.log(err);
-    //     navigate("/signup");
-    //   }
-    // });
+      .then((res) => {
+        console.log("Token was verified and came back to homepage successfully!");
+      })
+      .catch((err) => {
+        navigate("/login");
+      });
   }, [localStorage.getItem("ACCESS_TOKEN")]);
 
   return (
@@ -122,42 +121,43 @@ export default function HomePage() {
             )}
           </div>
         </>
-       
+
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
           }}
-        > {!clubData.name && (
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              position: "fixed",
-              top: 1,
-              left: 0,
-              right: 0,
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              margin: "auto",
-              textAlign: "center",
-            }}
-          >
-            {user && (
-              <h1
-                style={{
-                  fontSize: "2.5rem",
-                  color: "#333",
-                  fontWeight: "bold",
-                  marginBottom: "1rem",
-                }}
-              >
-                Hello, {user}!
-              </h1>
-            )}
-            
+        >
+          {!clubData.name && (
+            <div
+              style={{
+                flex: 1,
+                display: "flex",
+                position: "fixed",
+                top: 1,
+                left: 0,
+                right: 0,
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                margin: "auto",
+                textAlign: "center",
+              }}
+            >
+              {user && (
+                <h1
+                  style={{
+                    fontSize: "2.5rem",
+                    color: "#333",
+                    fontWeight: "bold",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  Hello, {user}!
+                </h1>
+              )}
+
               <div>
                 <h1
                   style={{
@@ -190,8 +190,7 @@ export default function HomePage() {
                   </h1>
                 </div>
               </div>
-        
-          </div>
+            </div>
           )}
           <div
             style={{

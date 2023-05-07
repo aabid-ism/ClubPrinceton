@@ -7,7 +7,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
-const Signup = () => {
+const Login = () => {
   // const { handleGoogle, loading, error } = useFetch(
   //     `${process.env.REACT_APP_SERVER_URL}/auth/signup`
   // );
@@ -129,4 +129,4 @@ const Signup = () => {
 
 };
 
-export default Signup;
+export default Login;

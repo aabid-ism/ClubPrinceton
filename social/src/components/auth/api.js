@@ -25,7 +25,7 @@ api.interceptors.response.use(
         // If the error is a 401 Unauthorized error, redirect the user to the login page
         if (error.response?.status === 401 || error.response?.status === 403) {
             console.log("Interceptor caught a 401 or 403 forbidden request!");
-            window.location.href = '/signup';
+            window.location.href = '/login';
         }
         return Promise.reject(error);
     }
