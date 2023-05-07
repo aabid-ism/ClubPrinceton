@@ -5,8 +5,6 @@ import MainPage from "../mainpage/MainPage";
 import { useSelector } from "react-redux";
 import PostList from "../post/PostList";
 import UserRating from "../ratings/UserRating";
-import { useMediaQuery } from "react-responsive";
-import { FaSearch, FaBars, FaStar } from "react-icons/fa";
 import api from "../auth/api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -51,10 +49,9 @@ export default function HomePage() {
     api
       .get("/auth/verify")
 
-      .then((res) => {
-        console.log("Token was verified and came back to homepage successfully!");
-      })
+      .then((res) => {})
       .catch((err) => {
+          console.log(err);
         navigate("/login");
       });
   }, [localStorage.getItem("ACCESS_TOKEN")]);
