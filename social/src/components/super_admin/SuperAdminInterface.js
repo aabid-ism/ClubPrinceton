@@ -13,6 +13,14 @@ import {
 } from "react-bootstrap";
 import NavBar from "./NavBar";
 
+/* 
+  SuperAdminInterface component for the super admin interface.
+  Contains a list of clubs that have requested approval.
+  To be positioned at the center of the page below NavBar.
+  @param: none
+  @return: SuperAdminInterface component
+*/
+
 export default function SuperAdminInterface() {
   const [clubs, setClubs] = useState([]);
   const [whitelisted, setWhitelisted] = useState(false);
