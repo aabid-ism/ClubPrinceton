@@ -105,6 +105,10 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                 alert("Oops! Something went wrong. Please contact site administrator")
             });
     }
+    // following css is removed
+    // for publish post: display-6 text-center mb-3
+    // for active club name -> display-6 text-center mb-3
+    // main form css className="mb-5 d-flex align-items-center justify-content-center" style={{ margin: " 30 px" }}
     return (
         <>
             <div className="clubpage-edit">

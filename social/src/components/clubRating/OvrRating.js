@@ -39,8 +39,8 @@ function getRGBColors(clubRating) {
     // removed intensity
     const clubRoundedRtg = `${roundHundreth((clubClout + clubVibes + clubInclusivity) / 3).toFixed(2)}`;
 
-    const red = Math.round(255 * (MAX_RTG - clubRoundedRtg)) / DIFF_RTG;
-    const green = Math.round(255 * (clubRoundedRtg - MIN_RTG)) / DIFF_RTG;
+    const red = Math.round(200 * (MAX_RTG - clubRoundedRtg)) / DIFF_RTG;
+    const green = Math.round(200 * (clubRoundedRtg - MIN_RTG)) / DIFF_RTG;
     const blue = 0;
 
     return {clubRoundedRtg: clubRoundedRtg, red: red, green: green, blue: blue};
