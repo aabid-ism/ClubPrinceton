@@ -332,7 +332,7 @@ const Rightbar = ({ state }) => {
       {/* rightbar is removed -> netids in admin section no longer stacked */}
       {/* announcement section announcement announcement title announcement title announcement edit */}
       <div>
-        <Row className="middle-delete-posts-row">
+        <Row className="right-sidebar-info">
           {officers.length !== 0 && (
             <div>
               <div>
@@ -340,6 +340,7 @@ const Rightbar = ({ state }) => {
               </div>
               <div>
                 <p>{description}</p>
+                <p>The sun was shining on the sea, shining with all its might: it did its very best to make the billows smooth and bright. And this was odd, because it was the middle of the night. The moon was shining sulkily, because she thought the sun had got no business to be there after the day was done.</p>
               </div>
               <div>
                 {
@@ -357,7 +358,7 @@ const Rightbar = ({ state }) => {
           )}
         </Row>
         {/* announcements section */}
-        <Row>
+        <Row className="right-sidebar-announce">
           {officers.length !== 0 && (
             <div>
               <div>
@@ -365,6 +366,7 @@ const Rightbar = ({ state }) => {
               </div>
               <div>
                 <p>{announcement}</p>
+                <p>The sun was shining on the sea, shining with all its might: it did its very best to make the billows smooth and bright. And this was odd, because it was the middle of the night. The moon was shining sulkily, because she thought the sun had got no business to be there after the day was done.</p>
               </div>
               <div>
                 {
@@ -382,8 +384,7 @@ const Rightbar = ({ state }) => {
           )}
         </Row>
         {/* Officers Section */}
-        <Row className="middle-delete-posts-row">
-          <div>
+        <Row className="right-sidebar-admin">
             {officers.length !== 0 && (
               <div>
                 <h3> Club Admin </h3>
@@ -391,29 +392,31 @@ const Rightbar = ({ state }) => {
             )}
             {/* removing listrow */}
             {/* we have a key props thing going on */}
-            {officers &&
-              officers.map((officer, index) => (
-                <div key={index}>
-                  <span> {officer.title}</span>&nbsp;&nbsp;
-                  <span> {officer.netid}</span>
-                  <button onClick={() => handleRemoveOfficer(index)}>
-                    <strong>Remove</strong>
-                  </button>
-                </div>
-              ))}
-          </div>
-          <div>
-            {state.activeClub && (
-              <Button className="orange-button"
-                onClick={() => {
-                  setOfficersModal(true);
-                }}
-              >
-                {" "}
-                Add Officer
-              </Button>
-            )}
-          </div>
+            <div className="admin-members-collection">
+                {officers &&
+                officers.map((officer, index) => (
+                  <div key={index}>
+                    <span> {officer.title}</span>&nbsp;&nbsp;
+                    <span> {officer.netid}</span>
+                    <button onClick={() => handleRemoveOfficer(index)}>
+                      <strong>Remove</strong>
+                    </button>
+                    <div>The quick brown fox jumps over the lazy dog</div>
+                    <div>The quick brown fox jumps over the lazy dog</div>
+                    <div>The quick brown fox jumps over the lazy dog</div>
+                    <div>The quick brown fox jumps over the lazy dog</div>
+                    <div>The quick brown fox jumps over the lazy dog</div>
+                  </div>
+                ))}
+              </div>
+              <div>
+              {state.activeClub && (
+                <Button className="orange-button" onClick={() => {setOfficersModal(true);}}>
+                  {/* {" "} */}
+                  Add Officer
+                </Button>
+              )}
+              </div>
         </Row>
       </div>
     </>

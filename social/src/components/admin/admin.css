@@ -182,6 +182,16 @@
     height: 200px;
     overflow-y: auto;
   }
+  .delete-posts-collection {
+    height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .admin-members-collection {
+    height: 200px;
+    background-color: #FF9230;
+    overflow-y: auto;
+  }
 }
 
 @media (min-width: 992px) {
@@ -189,7 +199,15 @@
     height: 100vh;
     overflow-y: auto;
   }
-  
+  .delete-posts-collection {
+    height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .admin-members-collection {
+    height: 350px;
+    overflow-y: auto;
+  }
 }
 
 .middle-form-col {
@@ -202,6 +220,20 @@
 
 .right-sidebar-col {
   background-color: lightskyblue;
+}
+
+.right-sidebar-info {
+  background-color: lightcyan;
+
+}
+
+.right-sidebar-announce {
+  background-color: lightyellow;
+
+}
+
+.right-sidebar-admin {
+  background-color: lightseagreen;
 
 }
 
