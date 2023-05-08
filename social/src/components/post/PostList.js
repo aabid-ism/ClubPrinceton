@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Post from "./Post";
 import "./Posts.css";
 import axios from "axios";
+import api from "../auth/api";
 import { useSelector } from "react-redux";
 
 const url = `${process.env.REACT_APP_SERVER_URL}/posts`;
@@ -30,7 +31,7 @@ export default function Posts({ width, height }) {
       } else {
         oldest = "";
       }
-      axios
+      api
         .get(`${url}/${clubData.name}?oldestTime=${oldest}`)
         .then((response) => {
           const data = response.data;

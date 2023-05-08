@@ -2,7 +2,6 @@ import './admin.css';
 import Form from './Form';
 import Sidebar from './Sidebar';
 import { useEffect, useReducer } from 'react';
-import axios from 'axios';
 import Rightbar from './Rightbar';
 import DeletePostComponent from './DeletePostComponent';
 import api from '../auth/api';
@@ -110,8 +109,6 @@ function AdminInterface() {
     useEffect(() => {
 
         const username = localStorage.getItem("netid") || null;
-
-        // TODO: Use the base axios request with authorization header
         api.get(`/clubs/admin/${username}`)
             .then((response) => {
                 dispatchSetClubs(response.data);
@@ -126,7 +123,7 @@ function AdminInterface() {
         <div className="middle-form-area">
             {/* Left Sidebar */}
             <div className='left-sidebar'>
-            <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
+                <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
             </div>
             {/* Main Page with Form and Delete-Posts widget */}
 
@@ -138,25 +135,25 @@ function AdminInterface() {
                 {/* <div style={{width: "18rem"}}>
                 <img src={myImage} />
             </div> */}
-                {!state.activeClub && 
-                <div className='admin-welcome-text'>
-                <h1>Welcome to ClubPrinceton for Admin!</h1>
-                <h5>If you are a registered administrator for a club page,
-                    please select your club on the left sidebar.</h5>
-                </div>
+                {!state.activeClub &&
+                    <div className='admin-welcome-text'>
+                        <h1>Welcome to ClubPrinceton for Admin!</h1>
+                        <h5>If you are a registered administrator for a club page,
+                            please select your club on the left sidebar.</h5>
+                    </div>
                 }
-                
+
                 <div className='just-form rounded'>
-                {state.activeClub &&
-                    <Form state={state}
-                        dispatchClearForm={dispatchClearForm}
-                        dispatchCaption={dispatchCaption}
-                        dispatchFile={dispatchFile}
-                        dispatchTitle={dispatchTitle}
-                        dispatchMissingValues={dispatchMissingValues}
-                        dispatchSubmit={dispatchSubmit}
-                    />
-                }
+                    {state.activeClub &&
+                        <Form state={state}
+                            dispatchClearForm={dispatchClearForm}
+                            dispatchCaption={dispatchCaption}
+                            dispatchFile={dispatchFile}
+                            dispatchTitle={dispatchTitle}
+                            dispatchMissingValues={dispatchMissingValues}
+                            dispatchSubmit={dispatchSubmit}
+                        />
+                    }
                 </div>
             </div>
             <div className='delete-posts'>

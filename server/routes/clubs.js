@@ -5,7 +5,7 @@ import express from "express";
 const router = express.Router();
 
 // Get a list of all clubs
-router.get("/", async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
   const results = await collection.find({}).limit(50).toArray();

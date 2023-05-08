@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import api from '../auth/api';
 
 function Image() {
     const [images, setImages] = useState([]);
@@ -7,7 +8,7 @@ function Image() {
     useEffect(() => {
         async function fetchImages() {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/image_pipeline/get/${club}`);
+                const response = await api.get(`${process.env.REACT_APP_SERVER_URL}/image_pipeline/get/${club}`);
                 setImages(response.data.images);
             } catch (error) {
                 console.error(error);

@@ -1,11 +1,12 @@
 import conn from '../db/conn.js';
 import express from 'express';
 import { ObjectId } from 'mongodb';
+import verifyToken from '../jwt.js';
 
 const router = express.Router();
 
 // endpoint to create a post from the admin page
-router.post("/create", async (req, res) => {
+router.post("/create", verifyToken, async (req, res) => {
   try {
     const db = conn.getDb();
     const club_collection = db.collection("clubs");
@@ -69,7 +70,7 @@ router.post("/create", async (req, res) => {
 })
 
 // Get more NEW posts for a club
-router.get("/:name", async (req, res) => {
+router.get("/:name", verifyToken, async (req, res) => {
   // no posts in the subset or dynamic? this might be buggy
   if (req.query.oldestTime === '') {
     res.send([]);
@@ -109,7 +110,7 @@ router.get("/:name", async (req, res) => {
 // });
 
 // Get all clubs' posts
-router.get("/allposts/:club", async (req, res) => {
+router.get("/allposts/:club", verifyToken, async (req, res) => {
   // establish connection
   const db = conn.getDb();
 
@@ -134,7 +135,7 @@ router.get("/allposts/:club", async (req, res) => {
 });
 
 // delete a post
-router.post("/delete/:clubName/:objectid", async (req, res) => {
+router.post("/delete/:clubName/:objectid", verifyToken, async (req, res) => {
 
   try {
     // establish connection
