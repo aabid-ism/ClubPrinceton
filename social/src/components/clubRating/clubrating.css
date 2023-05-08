@@ -15,15 +15,15 @@
     /*need to scale the css to occupy a percentage of
     the page */
     /*can also use percentages*/
-    top: -350px; left: -350px; right: 0px; bottom: 0px;
+    /* top: -350px; left: -350px; right: 0px; bottom: 0px; */
 }
 
 .rtg-breakdown-bubble {
     color: black;
     background-color: #FFE4CC;
     margin: auto auto;
-    width: 20rem;
-    height: 25rem;
+    /* width: 20rem;
+    height: 25rem; */
     border-radius: 0.5rem;
     --tw-bg-opacity: 1;
     box-shadow: 5px 5px 10px rgb(199, 199, 199);
@@ -31,19 +31,19 @@
 
     /*this is for positioning the ratings bubble
     in bottom right of page*/
-    position: fixed;
+    /* position: fixed; */
     /*need to scale the css to occupy a percentage of
     the page */
     /*can also use percentages*/
     /* right: 5px; bottom: 5px; */
-    top: 5px; right: 5px;
+    /* top: 5px; right: 5px;
 
     text-align: center;
 
     display: grid;
-    height: 100%;
+    height: 100%; */
 
-    z-index: 20;
+    /* z-index: 20; */
 }
 
 .rtg-collection {

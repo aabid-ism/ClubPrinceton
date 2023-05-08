@@ -6,8 +6,9 @@
     border-radius: 0.5rem;
     --tw-bg-opacity: 1;
     /* box-shadow: 5px 5px 10px rgb(199, 199, 199); */
+    box-shadow: 5px 5px 10px rgb(199, 199, 199);
     padding: 0.75rem;
-    max-height: 20%;
+    /* max-height: 20%; */
     /*box-shadow: 5px 5px 10px rgb(199, 199, 199); */
 
     /*need to scale the css to occupy a percentage of

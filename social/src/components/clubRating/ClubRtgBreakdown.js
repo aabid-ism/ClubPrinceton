@@ -76,7 +76,7 @@ function SingleRating(props) {
 }
 
 // add asynchronous await -> if needed
-export function ClubRtgBreakdown({width, height}) {
+export function ClubRtgBreakdown({}) {
   const checkUserRtgUrl = `${process.env.REACT_APP_SERVER_URL}/clubRating/check`;
   // LATER: More refined coloring system
   const clubData = useSelector((state) => state.clubData);
@@ -136,7 +136,7 @@ export function ClubRtgBreakdown({width, height}) {
     // clubData, clubRating
 
   return (
-    <BreakdownBubble width={width} height={height}>
+    <BreakdownBubble>
       <div>
         <h2>Breakdown</h2>
       </div>

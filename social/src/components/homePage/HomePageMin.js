@@ -6,14 +6,21 @@ import MainPage from "../mainpage/MainPage";
 import Announce from '../announcement/Announce';
 import Navigation from "../navigation/Navigation";
 import UserRating from '../ratings/UserRating';
+import { OvrRating } from '../clubRating/OvrRating';
 import { FaSearch } from 'react-icons/fa';
+import { ClubRtgBreakdown } from '../clubRating/ClubRtgBreakdown';
 
 export default function HomePageMin({children, clubName, user}){
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [showNavBar, setShowNavBar] = useState(false);
+    const [showRatingBar, setShowRatingBar] = useState(false);
 
-    const handleClose = () => {setShowSearchBar(false)};
-    const handleShow = () => {setShowSearchBar(true)};
+    const handleSearchClose = () => {setShowSearchBar(false)};
+    const handleSearchShow = () => {setShowSearchBar(true)};
+    const handleNavClose = () => {setShowNavBar(false)};
+    const handleNavShow = () => {setShowNavBar(true)};
+    const handleRateClose = () => {setShowRatingBar(false)};
+    const handleRateShow = () => {setShowRatingBar(true)};
 
     return (
         clubName === undefined ? 
@@ -24,50 +31,7 @@ export default function HomePageMin({children, clubName, user}){
                     <Col sm={3}>
                     </Col>
                     <Col sm={6}>
-                    <div>
-                        <h1
-                        style={{
-                            fontSize: "3.5rem",
-                            color: "#2c3e50",
-                            fontWeight: "bold",
-                            marginRight: "10px",
-                        }}
-                        >
-                        Welcome to
-                        </h1>
-                        <div style={{ display: "flex", flexDirection: "row" }}>
-                        <h1
-                            style={{
-                            fontSize: "3.5rem",
-                            color: "orange",
-                            fontWeight: "bold",
-                            }}
-                        >
-                            Club
-                        </h1>
-                        <h1
-                            style={{
-                            fontSize: "3.5rem",
-                            color: "#2c3e50",
-                            fontWeight: "bold",
-                            }}
-                        >
-                            Princeton!
-                        </h1>
-                        </div>
-                    </div>
-                        {user && (
-                        <h1
-                            style={{
-                            fontSize: "2.5rem",
-                            color: "#333",
-                            fontWeight: "bold",
-                            marginBottom: "1rem",
-                            }}
-                        >
-                            Hello, {user}!
-                        </h1>
-                        )}
+                        <Welcome user={user}/>
                         <div className='search-bar-landing'>
                             <SearchBar />
                         </div>
@@ -81,30 +45,45 @@ export default function HomePageMin({children, clubName, user}){
         <div>
             <Container fluid className="page">
                 <Navbar sticky='top' className='search-top'>
+                    <Button size='lg'
+                        onClick={handleNavShow}>
+                        Navigation
+                    </Button>
                     <Button
                         size='lg'
-                        onClick={handleShow}
+                        onClick={handleSearchShow}
                         className='open-search-button'
                         variant='secondary'
                         
-                    >
+                        >
                         <FaSearch/>
                         {clubName !== undefined ? clubName : "Search"}
                     </Button>
+                    <Button size='lg' className='text-nowrap'
+                        onClick={handleRateShow}>
+                        Rate Club!
+                    </Button>
                 </Navbar>
                 <Row >
-                    <Col sm={2} lg={1} >
+                    <Col  lg={1} >
                     </Col>
-                    <Col sm={8} lg={10} className="d-flex justify-content-center">
+                    <Col  lg={10} className="d-flex justify-content-center">
                         <Container >
                             <div className='page-content'>
                                 {clubName && (<MainPage />)}
-                                {clubName && (<Announce />)}
+                                <Row className='announce-rating'>
+                                    <Col>
+                                        {clubName && (<Announce />)}
+                                    </Col>
+                                    <Col>
+                                        {clubName && (<ClubRtgBreakdown/>)}
+                                    </Col>
+                                </Row>
                                 {children}
                             </div>
                         </Container>
                     </Col>
-                    <Col sm={2} lg={1}>
+                    <Col  lg={1}>
                     </Col>
                 </Row>
                 
@@ -126,7 +105,7 @@ export default function HomePageMin({children, clubName, user}){
                         </Navbar.Collapse>
                     </Navbar>
                 </Container> */}
-                <Navbar expand='lg' className='nav-button'>
+                {/* <Navbar expand='lg' className='nav-button'>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse>
                         <Container>
@@ -141,11 +120,10 @@ export default function HomePageMin({children, clubName, user}){
                             {clubName && <UserRating/>}
                         </Container>
                     </Navbar.Collapse>
-                </Navbar>
-                {/* This modal is for the search bar */}
-                <Modal
+                </Navbar> */}
+                <Modal className='search-modal'
                     show={showSearchBar}
-                    onHide={handleClose}
+                    onHide={handleSearchClose}
                     size='lg'
                     centered={true}
                 >
@@ -153,7 +131,80 @@ export default function HomePageMin({children, clubName, user}){
                         <SearchBar />
                     </Modal.Body>
                 </Modal>
+
+                <Modal className='nav-modal'
+                    show={showNavBar}
+                    onHide={handleNavClose}
+                    size='lg'
+                    centered={true}
+                >
+                    <Modal.Body className=''>
+                        <Navigation/>
+                    </Modal.Body>
+                </Modal>
+
+                <Modal className='rate-modal'
+                    show={showRatingBar}
+                    onHide={handleRateClose}
+                    size='lg'
+                    centered={true}
+                >
+                    <Modal.Body className=''>
+                        {clubName && <UserRating/>}
+                    </Modal.Body>
+                </Modal>
             </Container>
         </div>
     );
+}
+
+function Welcome({ user }){
+    return (
+        <>
+            {/* <div>
+                <h1
+                style={{
+                    fontSize: "3.5rem",
+                    color: "#2c3e50",
+                    fontWeight: "bold",
+                    marginRight: "10px",
+                }}
+                >
+                Welcome to
+                </h1>
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                    <h1
+                        style={{
+                        fontSize: "3.5rem",
+                        color: "orange",
+                        fontWeight: "bold",
+                        }}
+                    >
+                        Club
+                    </h1>
+                    <h1
+                        style={{
+                        fontSize: "3.5rem",
+                        color: "#2c3e50",
+                        fontWeight: "bold",
+                        }}
+                    >
+                        Princeton!
+                    </h1>
+                </div>
+            </div> */}
+            {user && (
+            <h1
+                style={{
+                fontSize: "2.5rem",
+                color: "#333",
+                fontWeight: "bold",
+                marginBottom: "1rem",
+                }}
+            >
+                Hello, {user}!
+            </h1>
+            )}
+        </>
+    )
 }
