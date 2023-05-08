@@ -5,7 +5,7 @@ import express from "express";
 const router = express.Router();
 
 // Get a list of all clubs
-router.get("/", verifyToken, async (req, res) => {
+router.get("/", async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
   const results = await collection.find({}).limit(50).toArray();
@@ -85,7 +85,7 @@ router.post(`/club/description/update/:name`, verifyToken, async (req, res) => {
   const db = conn.getDb();
   const clubCollection = await db.collection("clubs");
   const clubName = req.params.name;
-  
+
   // search for club by name and update the description
   const result = await clubCollection.updateOne(
     { name: clubName },
