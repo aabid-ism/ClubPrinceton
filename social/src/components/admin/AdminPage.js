@@ -10,6 +10,7 @@ import Container from 'react-bootstrap/esm/Container';
 import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
 import { Navbar, NavDropdown, Nav } from 'react-bootstrap';
+import AdminNavBar from './AdminNavbar';
 // state of the initial input fields
 const initialState = {
     clubs: [],
@@ -130,33 +131,12 @@ function AdminInterface() {
         <Container fluid>
             {/* refactor into separate file later */}
             {/* fixed="top" */}
-            <Navbar bg="light" expand="lg">
-                <Container fluid>
-                    <Navbar.Brand href="#home">ClubPrinceton for Admin</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/logout">Logout</Nav.Link>
-                            <Nav.Link href="/clubform">Submit Club</Nav.Link>
-                            <NavDropdown title="TestDropdown" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item></NavDropdown>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-            {/* Left Sidebar */}
-            <Row className="admin-page-row full-height">
-                <Col className="left-sidebar-col">
+            <AdminNavBar />
+            {/*     
+                            <Col className="left-sidebar-col">
                     <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
                 </Col>
-                {/* Main Page with Form and Delete-Posts widget */}
-                <Col className="middle-form-col" lg={6}>
-                    <Row>
+                    <Row lg="12">
                     {!state.activeClub && 
                     <div>
                         <h1>Welcome to ClubPrinceton for Admin!</h1>
@@ -164,7 +144,31 @@ function AdminInterface() {
                             please select your club on the left sidebar.</h5>
                     </div>
                     }
-                    </Row>
+                    </Row> */}
+            {/* Left Sidebar */}
+
+            {
+                !state.activeClub &&
+                <Row className='full-height'>
+                    <Col lg={4} className="initial-clublist">
+                        <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
+                    </Col>
+                    <Col lg={8} className="initial-welcome d-flex align-items-center justify-content-center flex-column">
+                        <h1>Welcome to ClubPrinceton for Admin</h1>
+                        <div className="text-center mb-3">
+                        <h3>If you are a registered administrator for a club page, please select your club page in the My Clubs section.</h3>
+                        </div>
+                    </Col>
+                </Row>
+            }
+
+            {state.activeClub &&
+            <Row className="admin-page-row full-height">
+                <Col className="left-sidebar-col">
+                    <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
+                </Col>
+                {/* Main Page with Form and Delete-Posts widget */}
+                <Col className="middle-form-col" lg={6}>
                     
                     <Row lg>
                         {state.activeClub &&
@@ -188,6 +192,7 @@ function AdminInterface() {
                 <Rightbar state={state} />
                 </Col>
             </Row>
+            }
         </Container>
     )
 }
