@@ -2,8 +2,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import api from "../auth/api";
 import "./superadmin.css";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import Navigation from "../navigation/Navigation";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Nav,
+  Navbar,
+  NavDropdown,
+} from "react-bootstrap";
+import NavBar from "./NavBar";
+
 export default function SuperAdminInterface() {
   const [clubs, setClubs] = useState([]);
   const [whitelisted, setWhitelisted] = useState(false);
@@ -89,7 +98,6 @@ export default function SuperAdminInterface() {
         console.log("club not declined");
       });
 
-
     // set status of clubs in state and trigger rerender
     clubs[index]["status"] = "Declined";
     setRerenderCount(rerenderCount + 1);
@@ -100,7 +108,11 @@ export default function SuperAdminInterface() {
   if (whitelisted) {
     return (
       <Container fluid className="superadmin">
-        <h1 className="superadmin__title">Super Admin Interface</h1>
+        <Row><h1>SuperAdmin Interface</h1> </Row>
+        <Row>
+          <NavBar />
+        </Row>
+
         <Row>
           <Container className="superadmin__clubs">
             {clubs.map((club, index) => {
@@ -181,11 +193,6 @@ export default function SuperAdminInterface() {
                 </Container>
               );
             })}
-          </Container>
-        </Row>
-        <Row>
-          <Container className="navigation-bar">
-            <Navigation width="100%" height="30%" />
           </Container>
         </Row>
       </Container>
