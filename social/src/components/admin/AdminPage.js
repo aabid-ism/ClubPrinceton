@@ -9,6 +9,7 @@ import api from '../auth/api';
 import Container from 'react-bootstrap/esm/Container';
 import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
+import { Navbar, NavDropdown, Nav } from 'react-bootstrap';
 // state of the initial input fields
 const initialState = {
     clubs: [],
@@ -127,13 +128,34 @@ function AdminInterface() {
 
     return (
         <Container fluid>
+            {/* refactor into separate file later */}
+            {/* fixed="top" */}
+            <Navbar bg="light" expand="lg">
+                <Container fluid>
+                    <Navbar.Brand href="#home">ClubPrinceton for Admin</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link href="/">Home</Nav.Link>
+                            <Nav.Link href="/logout">Logout</Nav.Link>
+                            <Nav.Link href="/clubform">Submit Club</Nav.Link>
+                            <NavDropdown title="TestDropdown" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item></NavDropdown>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
             {/* Left Sidebar */}
             <Row className="admin-page-row full-height">
                 <Col className="left-sidebar-col">
                     <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
                 </Col>
                 {/* Main Page with Form and Delete-Posts widget */}
-                <Col className="middle-form-col">
+                <Col className="middle-form-col" lg={6}>
                     <Row>
                     {!state.activeClub && 
                     <div>
@@ -144,7 +166,7 @@ function AdminInterface() {
                     }
                     </Row>
                     
-                    <Row>
+                    <Row lg>
                         {state.activeClub &&
                             <Form state={state}
                                 dispatchClearForm={dispatchClearForm}
@@ -156,13 +178,13 @@ function AdminInterface() {
                             />
                         }
                     </Row>
-                    <Row className="middle-delete-posts-row">
+                    <Row className="middle-delete-posts-row" lg>
                     <div>
                     {state.activeClub && <DeletePostComponent state={state} />}
                     </div>
                     </Row>
                 </Col>
-                <Col className="right-sidebar-col">
+                <Col className="right-sidebar-col" lg>
                 <Rightbar state={state} />
                 </Col>
             </Row>
