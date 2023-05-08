@@ -18,7 +18,7 @@ function Sidebar({ state, dispatchActiveClub }) {
             <div class="mb-3">
             <Button
               key={index}
-              className="orange-button"
+              className="orange-button-clubs"
               onClick={(e) => dispatchActiveClub(club)}
             >
               <strong>{club}</strong>

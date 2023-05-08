@@ -128,7 +128,7 @@ function AdminInterface() {
         []);
 
     return (
-        <Container fluid>
+        <Container fluid className="admin-container-color">
             {/* refactor into separate file later */}
             {/* fixed="top" */}
             <AdminNavBar />
