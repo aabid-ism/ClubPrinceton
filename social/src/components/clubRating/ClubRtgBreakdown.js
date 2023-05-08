@@ -37,32 +37,37 @@ function getRGBColors(singleRating, ratingType=null) {
   const MIN_RTG = 1;
 
   if (ratingType === "intensity") {
-    singleRating = MAX_RTG - singleRating + MIN_RTG;
+    return {red: 128, green: 128, blue: 128};
+    // singleRating = MAX_RTG - singleRating + MIN_RTG;
   }
 
   const DIFF_RTG = 4;
-  const red = Math.round(255 * (MAX_RTG - singleRating)) / DIFF_RTG;
-  const green = Math.round(255 * (singleRating - MIN_RTG)) / DIFF_RTG;
+  // originally 255
+  // changed to 200 -> to dull brightness
+  const red = Math.round(200 * (MAX_RTG - singleRating)) / DIFF_RTG;
+  const green = Math.round(200 * (singleRating - MIN_RTG)) / DIFF_RTG;
   return { red: red, green: green, blue: 0 };
 }
 
-function SingleRating(props) {
-  let cssProperties = {
-    color:
+function SingleRating({rgbColor, adverb, labeling}) {
+  let cssProperties = (rgbColor) => {
+    return {color:
       "rgb(" +
-      props.rgbColor.red +
-      "," +
-      props.rgbColor.green +
-      "," +
-      props.rgbColor.blue +
-      ")",
+      rgbColor.red + "," + 
+      rgbColor.green + "," + 
+      rgbColor.blue + ")",}
   };
 
-  // let's do conditional rendering here!
   return (
       <div>
         <div>
-          <strong>People say this club <span style={cssProperties}>{props.adverb} {props.labeling}.</span></strong></div>
+          <strong>People say this club 
+            <span style={cssProperties(rgbColor.vibesColor)}>{adverb.vibesAdverb} {labeling.vibesLabel}</span>,
+            <span style={cssProperties(rgbColor.popularityColor)}>{adverb.popularAdverb} {labeling.popularLabel}</span>,
+            <span style={cssProperties(rgbColor.inclusiveColor)}>{adverb.inclusiveAdverb} {labeling.inclusiveLabel}</span>, and
+            <span style={cssProperties(rgbColor.intensityColor)}>{adverb.intenseAdverb} {labeling.intensityLabel}</span>
+          </strong>
+        </div>
       </div>
   );
 }
@@ -73,25 +78,25 @@ const adverbSelector = (singleRtg, ratingType) => {
   let chosenAdverb = "";
   switch (true) {
     case (singleRtg >= 4.00 && singleRtg <= 5.00):
-      if (ratingType === "vibes") return chosenAdverb = "has great";
-      return chosenAdverb = "is very";
+      if (ratingType === "vibes") return chosenAdverb = " has great ";
+      return chosenAdverb = " is very ";
 
     case (singleRtg >= 3.00 && singleRtg < 4.00):
-      if (ratingType === "vibes") return chosenAdverb = "has good";
-      return chosenAdverb = "is moderately";
+      if (ratingType === "vibes") return chosenAdverb = " has good ";
+      return chosenAdverb = " is moderately ";
 
     case (singleRtg >= 2.00 && singleRtg < 3.00):
-      if (ratingType === "vibes") return chosenAdverb = "has ok";
-      return chosenAdverb = "is not so";
+      if (ratingType === "vibes") return chosenAdverb = " has ok ";
+      return chosenAdverb = " is not so ";
 
     case (singleRtg >= 1.00 && singleRtg < 2.00):
-      if (ratingType === "vibes") return chosenAdverb = "has bad";
-      return chosenAdverb = "is not";
+      if (ratingType === "vibes") return chosenAdverb = " has bad ";
+      return chosenAdverb = " is not ";
 
     default:
       console.error("Error in adverb rating breakdown");
-      if (ratingType === "vibes") return chosenAdverb = "has great";
-      chosenAdverb = "is very";
+      if (ratingType === "vibes") return chosenAdverb = " has great ";
+      chosenAdverb = " is very ";
   }
   return chosenAdverb;
 }
@@ -156,11 +161,20 @@ export function ClubRtgBreakdown({width, height}) {
       {clubData.numUserRatings > 0 &&
         <div className="rtg-collection">
           <SingleRating
-            rgbColor={ratingBreakdown.vibes.color}
-            adverb={adverbSelector(ratingBreakdown.vibes.rating, "vibes")}
-            labeling="vibes"
+            rgbColor={{vibesColor: ratingBreakdown.vibes.color,
+              popularityColor: ratingBreakdown.popularity.color,
+              inclusiveColor: ratingBreakdown.inclusivity.color,
+              intensityColor: ratingBreakdown.intensity.color}}
+            adverb={{vibesAdverb: adverbSelector(ratingBreakdown.vibes.rating, "vibes"),
+                    popularAdverb: adverbSelector(ratingBreakdown.popularity.rating, "popular"),
+                    inclusiveAdverb: adverbSelector(ratingBreakdown.inclusivity.rating, "inclusive"),
+                    intenseAdverb: adverbSelector(ratingBreakdown.intensity.rating, "intense")}}
+            labeling={{vibesLabel: "vibes",
+                      popularLabel: "popular",
+                      inclusiveLabel: "inclusive",
+                      intensityLabel: "intensive"}}
           />
-          <SingleRating
+          {/* <SingleRating
             rgbColor={ratingBreakdown.intensity.color}
             adverb={adverbSelector(ratingBreakdown.intensity.rating, "intense")}
             labeling="intense"
@@ -174,7 +188,7 @@ export function ClubRtgBreakdown({width, height}) {
             rgbColor={ratingBreakdown.inclusivity.color}
             adverb={adverbSelector(ratingBreakdown.inclusivity.rating, "inclusive")}
             labeling="inclusive"
-          />
+          /> */}
         </div>
       }
       {
