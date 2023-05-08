@@ -7,7 +7,7 @@ const url = `${process.env.REACT_APP_SERVER_URL}/clubs`;
 const MAX_TITLE_LENGTH = 25;
 
 
-function formatTitle(title) {
+function formatTitle(title, maxLength) {
   if (title.length > MAX_TITLE_LENGTH) {
     return title.substring(0, MAX_TITLE_LENGTH) + "...";
   } else {
@@ -79,28 +79,31 @@ function SearchBar(props) {
   return (
     <div
     >
-      <input
-        type="text"
-        placeholder="Search..."
-        onChange={handleSearchTermChange}
-        autoFocus={true}
-      />
-      <p>{numResults} search results</p>
+      <div>
+        <input
+          type="text"
+          placeholder="Search..."
+          onChange={handleSearchTermChange}
+          autoFocus={true}
+        />
+        <p>{numResults} search results</p>
+      </div>
       {results.length > 0 && (
-        <div className="results">
-          {results.map((result, index) => (
-            <button
-              className="result-button"
-              key={index}
-              onClick={() => handleClubClick(result)}
-            >
-              {formatTitle(result.name)}
-            </button>
-          ))}
-        </div>
+      <div className="results">
+        {results.map((result, index) => (
+          <button
+            className="result-button"
+            key={index}
+            onClick={() => handleClubClick(result)}
+          >
+            {formatTitle(result.name, MAX_TITLE_LENGTH)}
+          </button>
+        ))}
+      </div>
       )}
     </div>
   );
 }
 
+export {formatTitle};
 export default SearchBar;

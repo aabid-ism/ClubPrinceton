@@ -53,20 +53,7 @@ export default function Comment ({ postId, props }){
         .catch((error) => {
             console.log("Error occurred: ", error);
         });
-
-        // try {
-        //     let response = await api.get(like_info_string);
-        //     return response.data;
-        // } catch (error) {
-            //     console.log("Error occurred: ", error);
-            // }
     }
-        // useEffect(() => {
-    // const commentLikeData = getData();
-        
-    // })
-    // console.log("Golly! I have a lot of likes")
-    // console.log(props.likes)
     const [commentInfo, setCommentInfo] = useState("Loading")
     const getName = async () => {
         await api
@@ -82,17 +69,17 @@ export default function Comment ({ postId, props }){
     useEffect(() => {
         getName(); 
     });
-    
+    // liking functionality tba
     return (
         <div className='comment'>
             <div>
                 {`${commentInfo} (${props.commenter_netId})`}:
                 <div className="commentText">
-                {props.data}
+                    {props.data}
                 </div>
             </div>
-        
-            <Like commentId={props._id} postId={postId }netId={localStorage.getItem("netid")} priorLikes={props.likes} priorLikeStatus={false}/>
+
+            {/* <Like commentId={props._id} postId={postId }netId={localStorage.getItem("netid")} priorLikes={props.likes} priorLikeStatus={false}/> */}
         </div>
     );
 }

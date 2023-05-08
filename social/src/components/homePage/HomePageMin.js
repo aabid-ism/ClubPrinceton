@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import {Container, Row, Col, Button, Modal, Navbar, ButtonGroup, OverlayTrigger, Tooltip} from 'react-bootstrap'
 import './HomePageMin.css'
-import SearchBar from '../searchBar/SearchBar';
+import SearchBar, {formatTitle} from '../searchBar/SearchBar';
 import MainPage from "../mainpage/MainPage";
 import Announce from '../announcement/Announce';
 import Navigation from "../navigation/Navigation";
 import UserRating from '../ratings/UserRating';
 import { OvrRating } from '../clubRating/OvrRating';
-import { FaSearch, FaBars, FaCheck } from 'react-icons/fa';
+import { FaSearch, FaBars, FaCheck, FaStar } from 'react-icons/fa';
 import { ClubRtgBreakdown } from '../clubRating/ClubRtgBreakdown';
 
 function LandingPage({user}){
@@ -33,53 +33,60 @@ function LandingPage({user}){
 }
 
 export default function HomePageMin({children, clubName, user}){
-    const [showSearchBar, setShowSearchBar] = useState(false);
-    const [showNavBar, setShowNavBar] = useState(false);
     const [showRatingBar, setShowRatingBar] = useState(false);
-
-    const handleSearchClose = () => {setShowSearchBar(false)};
-    const handleSearchShow = () => {setShowSearchBar(true)};
-    const handleNavClose = () => {setShowNavBar(false)};
-    const handleNavShow = () => {setShowNavBar(true)};
+    const [showLandingNav, setShowLandingNav] = useState(false);
+    
+    const handleLandingNavClose = () => {setShowLandingNav(false)};
+    const handleLandingNavShow = () => {setShowLandingNav(true)};
     const handleRateClose = () => {setShowRatingBar(false)};
     const handleRateShow = () => {setShowRatingBar(true)};
 
     return (
         clubName === undefined ? 
-            <LandingPage user={user}/>
+        <Container fluid className="landing-page">
+                
+            <Row>
+                <Col sm={3}>
+                </Col>
+                <Col sm={6}>
+                    <div className='page-content'>
+                        <Welcome user={user}/>
+                        <div className='search-bar-landing'>
+                            <SearchBar />
+                        </div>
+                        <Container className='d-flex justify-content-center'>
+                                <Button
+                                    className=' toggle-button landing-settings'
+                            
+                                    onClick={handleLandingNavShow}
+                                    variant='secondary'
+                                >
+                                    Settings
+                                </Button>
+                        </Container>
+                    </div>
+                </Col>
+                <Col sm={3}>
+                </Col>
+            </Row>
+            <Modal className='nav-modal'
+                    show={showLandingNav}
+                    onHide={handleLandingNavClose}
+                    size='lg'
+                    centered={true}
+                >
+                    <Modal.Body className="nav">
+                        <Navigation/>
+                    </Modal.Body>
+                </Modal>
+        </Container>
         :
         <div>
             <Container fluid className="page">
                 <Navbar sticky='top' className='search-top'>
-                    <ButtonGroup>
-                        <Button 
-                            className='d-none d-md-block toggle-button'
-                            size='lg'
-                            onClick={handleNavShow}
-                            variant='secondary'
-                        >
-                            Navigation
-                        </Button>
-                        <Button className='d-md-none toggle-button'
-                            onClick={handleNavShow}
-                            variant='secondary'
-                        >
-                            <FaBars />
-                        </Button>
-                    </ButtonGroup>
+                    <NavModal/>
+                    <SearchModal clubName={clubName}/>
                     
-                    <Button
-                        size='lg'
-                        onClick={handleSearchShow}
-                        className='open-search-button'
-                        variant='secondary'
-                        
-                        >
-                        <div className='d-flex justify-content-center align-items-center'>
-                            <FaSearch className="mr-2"/>
-                            {clubName !== undefined ? clubName : "Search"}
-                        </div>
-                    </Button>
                     <ButtonGroup>
                         <Button 
                             className='d-none d-md-block toggle-button'
@@ -93,7 +100,7 @@ export default function HomePageMin({children, clubName, user}){
                             onClick={handleRateShow}
                             variant='secondary'
                         >
-                            <FaCheck />
+                            <FaStar />
                         </Button>
                     </ButtonGroup>
                 </Navbar>
@@ -104,10 +111,10 @@ export default function HomePageMin({children, clubName, user}){
                         <Container >
                             <div className='page-content'>
                                 {clubName && (
-                                    <div>
-                                        <MainPage />
-                                        <OvrRating />
-                                    </div>
+                                        <MainPage />                          
+                                )}
+                                {clubName && (
+                                        <OvrRating />                        
                                 )}
                                 <Row className='announce-rating'>
                                     <Col>
@@ -124,28 +131,6 @@ export default function HomePageMin({children, clubName, user}){
                     <Col  lg={1}>
                     </Col>
                 </Row>
-                <Modal className='search-modal'
-                    show={showSearchBar}
-                    onHide={handleSearchClose}
-                    size='lg'
-                    centered={true}
-                >
-                    <Modal.Body className='search-bar'>
-                        <SearchBar />
-                    </Modal.Body>
-                </Modal>
-
-                <Modal className='nav-modal'
-                    show={showNavBar}
-                    onHide={handleNavClose}
-                    size='lg'
-                    centered={true}
-                >
-                    <Modal.Body className="nav">
-                        <Navigation/>
-                    </Modal.Body>
-                </Modal>
-
                 <Modal className='rate-modal'
                     show={showRatingBar}
                     onHide={handleRateClose}
@@ -210,4 +195,70 @@ function Welcome({ user }){
             )}
         </>
     )
+}
+
+function NavModal({}){
+    const [showNavBar, setShowNavBar] = useState(false);
+    const handleNavClose = () => {setShowNavBar(false)};
+    const handleNavShow = () => {setShowNavBar(true)};
+    return(
+        <>
+            <ButtonGroup>
+                <Button 
+                    className='d-none d-md-block toggle-button'
+                    size='lg'
+                    onClick={handleNavShow}
+                    variant='secondary'
+                >
+                    Navigation
+                </Button>
+                <Button className='d-md-none toggle-button'
+                    onClick={handleNavShow}
+                    variant='secondary'
+                >
+                    <FaBars />
+                </Button>
+            </ButtonGroup>
+            <Modal className='nav-modal'
+                show={showNavBar}
+                onHide={handleNavClose}
+                size='lg'
+                centered={true}
+            >
+                <Modal.Body className="nav">
+                    <Navigation/>
+                </Modal.Body>
+            </Modal>
+        </>
+    );
+}
+
+function SearchModal({clubName}){
+    const [showSearchBar, setShowSearchBar] = useState(false);
+    const handleSearchClose = () => {setShowSearchBar(false)};
+    const handleSearchShow = () => {setShowSearchBar(true)};
+    return(<>
+        <Button
+            size='lg'
+            onClick={handleSearchShow}
+            className='open-search-button'
+            variant='secondary'
+        
+            >
+            <div className='d-flex justify-content-center align-items-center'>
+                <FaSearch className="mr-2"/>
+                {clubName !== undefined ? formatTitle(clubName) : "Search"}
+            </div>
+        </Button>
+        <Modal className='search-modal'
+        show={showSearchBar}
+        onHide={handleSearchClose}
+        size='lg'
+        centered={true}
+        >
+        <Modal.Body className='search-bar'>
+            <SearchBar />
+        </Modal.Body>
+        </Modal>
+    </>);
 }

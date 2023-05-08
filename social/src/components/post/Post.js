@@ -17,7 +17,7 @@ import { Container } from "react-bootstrap";
 
 function PostContent({ props }) {
   const img_url = `https://${process.env.REACT_APP_AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/images/${props.image_url}`;
-  console.log(img_url)
+  // console.log(img_url)
   return (<div className="postContent">
     <div >
       <img className="postImage" src={img_url} alt=""/>
@@ -30,12 +30,6 @@ function PostBubble({ children}) {
   return (
     <Container
       className="post-bubble"
-      // style={{
-      //   width: width,
-      //   height: height,
-      //   maxHeight: height,
-      //   maxWidth: width,
-      // }}
     >
       {children}
     </Container>
@@ -56,8 +50,7 @@ function Post({ props }) {
 
   const commentProps = {
     postId: props.id,
-    comments: props.subset_comments,
-    commenterLogo: LOGO,
+    comments: props.subset_comments
   };
 
   return (

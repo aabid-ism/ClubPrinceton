@@ -12,7 +12,7 @@ Refactor CSS ->
     /* box-shadow: 5px 5px 10px rgb(199, 199, 199); */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding: 0.75rem;
-
+    
     /*this is for positioning the ratings bubble
     in bottom right of page*/
     /* position: fixed; */

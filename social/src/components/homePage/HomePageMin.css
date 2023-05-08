@@ -7,6 +7,11 @@
     overflow-y: auto;
 }  */
 
+/* .search-bar{
+    overflow-y: auto;
+    max-height: 50%;
+} */
+
 .main-and-rating {
     position: relative;
 }
@@ -18,21 +23,29 @@
     transform: translate(-50%, -50%);
 }
 
+/* Top of page search styling */
 .open-search-button {
-    /* max-width: 80%; */
     border-radius: 15px !important;
     min-width: 70%;
     background-color: #a7a7a7c9 !important;
-    /* position: fixed;
-    top: 0;
-    left: 0;
-    right: 0; */
-    
+}
+
+.open-search-button:hover {
+    border-radius: 15px !important;
+    min-width: 70%;
+    background-color: #818181c9 !important;
 }
 
 .toggle-button {
     border-radius: 15px !important;
     background-color: #a7a7a7 !important;
+    border: none !important;
+    
+}
+
+.toggle-button:hover {
+    border-radius: 15px !important;
+    background-color: #838383 !important;
     
 }
 
@@ -57,6 +70,10 @@
     justify-content: center;
     /* align-items: center; */
     height: 100vh;
+}
+
+.landing-settings {
+    /* max-width: 70%; */
 }
 
 .page-content {

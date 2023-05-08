@@ -84,7 +84,7 @@ export function OvrRating() {
     // do we capitalize?
     return (
         <OvrRtgBubble redColor={overallRating.red} greenColor={overallRating.green} blueColor={overallRating.blue}>
-            <div>{`${overallRating.clubRoundedRtg}`}</div>
+            <div><h2>{`${overallRating.clubRoundedRtg}`}</h2></div>
         </OvrRtgBubble>
     );
 }

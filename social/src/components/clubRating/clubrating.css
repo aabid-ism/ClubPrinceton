@@ -1,17 +1,18 @@
 .ovr-rtg-bubble {
     color: white;
-    font-size: 50px;
+    /* font-size: 50px; */
     /* background-color: #f9cb9c; */
     margin: auto auto;
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
     --tw-bg-opacity: 1;
     box-shadow: 5px 5px 10px rgb(199, 199, 199);
-    padding: 0.75rem;
+    /* padding: 0.75rem; */
+    min-width: 60%;
 
     /*this is for positioning the ratings bubble
     in bottom right of page*/
     text-align: center;
-    position: relative;
+    /* position: relative; */
     /*need to scale the css to occupy a percentage of
     the page */
     /*can also use percentages*/

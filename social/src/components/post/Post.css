@@ -57,20 +57,20 @@
     justify-content: end;
 }
 
-/* img {
+img {
     max-width:100%;
     max-height:100%;
-} */
+}
 
-.postTitle {
+.postTitle h2{
     font-weight: bold;
-    font-size:x-large
+    /* font-size:x-large */
 }
 
 .postTimelineInfo {
     display: flex;
-    font-weight: bold;
-    font-size: small;
+    /* font-weight: bold; */
+    /* font-size: small; */
     column-gap: 10px;
 }
 
@@ -80,6 +80,7 @@
     overflow: hidden;
     height:60px;
     width: 60px;
+    background-color: tomato;
 }
 
 .your-icon img{
