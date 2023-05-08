@@ -3,6 +3,7 @@ import RatingsBubble from "./RatingsBubble";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import "./ratingstar.css";
+import api from "../auth/api";
 
 const url = `${process.env.REACT_APP_SERVER_URL}/ratings`;
 
@@ -20,7 +21,7 @@ function UserRating(props) {
   // get and set previous ratings
   useEffect(() => {
     if (clubData.name) {
-      axios
+      api
         .get(`${url}/${clubData.name}/${user}`)
         .then((response) => {
           console.log("Previous rating recieved: " + response.data);
@@ -87,30 +88,34 @@ function UserRating(props) {
         // need to do this because the initialization for club rating in the database is set to 1
         if (globalRatings.numUserRatings === 0) {
           updatedClubRating.numUserRatings = 1;
-          ratingFactors.forEach(rating => {updatedClubRating[rating] = currentRatings[rating]});
+          ratingFactors.forEach(rating => { updatedClubRating[rating] = currentRatings[rating] });
           // console.log("Finished my assignments");
-        } 
+        }
         else {
           // adding a new user rating for a club that has been previously rated
           updatedClubRating.numUserRatings = globalRatings.numUserRatings + 1;
-          
-          ratingFactors.forEach(rating => {updatedClubRating[rating] = (
-            globalRatings[rating] * globalRatings.numUserRatings + currentRatings[rating]) / 
-          (globalRatings.numUserRatings + 1)}
+
+          ratingFactors.forEach(rating => {
+            updatedClubRating[rating] = (
+              globalRatings[rating] * globalRatings.numUserRatings + currentRatings[rating]) /
+              (globalRatings.numUserRatings + 1)
+          }
           );
         }
-      } 
+      }
       else {
         // updating a previous user rating to new overall average
         updatedClubRating.numUserRatings = globalRatings.numUserRatings;
 
-        ratingFactors.forEach(rating => {updatedClubRating[rating] = (
-          (globalRatings[rating] * globalRatings.numUserRatings - 
-          previousRatings[rating] + currentRatings[rating]) 
-          / globalRatings.numUserRatings )});
+        ratingFactors.forEach(rating => {
+          updatedClubRating[rating] = (
+            (globalRatings[rating] * globalRatings.numUserRatings -
+              previousRatings[rating] + currentRatings[rating])
+            / globalRatings.numUserRatings)
+        });
       }
 
-      axios
+      api
         .post(`${url}/${clubData.name}/${user}`, {
           currentUserRatings: currentRatings,
           updatedClubRating: updatedClubRating
@@ -125,10 +130,10 @@ function UserRating(props) {
         .catch((error) => {
           console.error(error);
         });
-    } 
+    }
     else {
       // if the user cancels, reset the state of currentRatings to what it was before the user made any changes
-      
+
       dispatch({
         type: "SET_CURRENTLY_RATING",
         payload: { currentlyRating: true },
@@ -143,7 +148,7 @@ function UserRating(props) {
       type: "SET_PREVIOUS_RATINGS",
       payload: { previousRatings: currentRatings },
     });
-  
+
     // reset currentlyRating
     dispatchCurrentlyRating();
   }
@@ -178,13 +183,12 @@ function UserRating(props) {
   }
 
   return (
-    <RatingsBubble width={props.width} height={props.height}>
+    <RatingsBubble>
       <form
         className="rtg-form"
-        style={{ flexDirection: "column", height: "100%" }}
       >
-        <div style={{ margin: "auto", height: "100%" }}>
-          <div style={{ margin: "auto" }}>
+        <div >
+          <div >
             {!currentlyRating && clubData.name && (
               <strong> Your rating for {clubData.name}</strong>
             )}
@@ -193,7 +197,7 @@ function UserRating(props) {
             )}
           </div>
           <br></br>
-          <div style={{ margin: "auto" }}>
+          <div >
             <label>
               <div>Good Vibes</div>
               <SingleRating type="Vibes"></SingleRating>
@@ -213,7 +217,7 @@ function UserRating(props) {
             <SingleRating type="Inclusivity"></SingleRating>
           </div>
           <br></br>
-          <div style={{ margin: "auto" }}>
+          <div >
             {!currentlyRating && previousRatings["Vibes"] > 0 && (
               <button
                 className="rating-button"

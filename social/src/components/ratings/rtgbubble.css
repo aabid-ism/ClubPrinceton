@@ -5,19 +5,20 @@ Refactor CSS ->
 .rtg-bubble {
     color: black;
     background-color: #FFE4CC;
-    margin: auto auto;
-    width: 20rem;
+    /* margin: auto auto; */
+    /* width: 20rem; */
     border-radius: 0.5rem;
     --tw-bg-opacity: 1;
-    box-shadow: 5px 5px 10px rgb(199, 199, 199);
+    /* box-shadow: 5px 5px 10px rgb(199, 199, 199); */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding: 0.75rem;
-
+    
     /*this is for positioning the ratings bubble
     in bottom right of page*/
-    position: fixed;
+    /* position: fixed; */
     /*need to scale the css to occupy a percentage of
     the page */
     /*can also use percentages*/
-    right: 5px; bottom: 5px;
-    z-index: 0;
+    /* right: 5px; bottom: 5px; */
+    /* z-index: 0; */
 }

@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import Post from "./Post";
 import "./Posts.css";
 import axios from "axios";
+import api from "../auth/api";
 import { useSelector } from "react-redux";
 
 const url = `${process.env.REACT_APP_SERVER_URL}/posts`;
 
-export default function Posts({ width, height }) {
+export default function PostList({props}) {
   const clubData = useSelector((state) => state.clubData);
   const [postListData, setPostListData] = useState([]);
 
@@ -30,7 +31,7 @@ export default function Posts({ width, height }) {
       } else {
         oldest = "";
       }
-      axios
+      api
         .get(`${url}/${clubData.name}?oldestTime=${oldest}`)
         .then((response) => {
           const data = response.data;
@@ -63,8 +64,6 @@ export default function Posts({ width, height }) {
             <Post
               props={postProps}
               key={postData._id}
-              width={width}
-              height={height}
             />
           );
           // return (<pre key={postData._id}>{JSON.stringify(postData, null, 2)}</pre>)

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import api from "../auth/api";
 import "./superadmin.css";
 import {
   Container,
@@ -20,7 +21,7 @@ export default function SuperAdminInterface() {
 
   useEffect(() => {
     // get all clubs from backend that requested approval
-    axios
+    api
       .get(`${process.env.REACT_APP_SERVER_URL}/clubCreation`)
       .then((res) => {
         setClubs(res.data);
@@ -30,10 +31,9 @@ export default function SuperAdminInterface() {
       });
 
     // check if user is whitelisted
-    axios
+    api
       .get(
-        `${
-          process.env.REACT_APP_SERVER_URL
+        `${process.env.REACT_APP_SERVER_URL
         }/auth/whitelist/${localStorage.getItem("netid")}`
       )
       .then((res) => {
@@ -45,7 +45,7 @@ export default function SuperAdminInterface() {
   }, []);
 
   // rerender when club status changes
-  useEffect(() => {}, [rerenderCount]);
+  useEffect(() => { }, [rerenderCount]);
 
   /*
     Handles the action of accepting a club
@@ -58,10 +58,9 @@ export default function SuperAdminInterface() {
   */
   const handleAccept = (club, index) => {
     // set club status to accepted in backend
-    axios
+    api
       .post(
-        `${process.env.REACT_APP_SERVER_URL}/clubCreation/a/${
-          club.name
+        `${process.env.REACT_APP_SERVER_URL}/clubCreation/a/${club.name
         }/${localStorage.getItem("netid")}`
       )
       .then((res) => {
@@ -88,7 +87,7 @@ export default function SuperAdminInterface() {
   const handleDecline = (club, index) => {
     // set club status to declined in backend
     // removing club.name from url
-    axios
+    api
       .post(`${process.env.REACT_APP_SERVER_URL}/clubCreation/d`, {
         clubName: club.name,
       })

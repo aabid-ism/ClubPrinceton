@@ -48,7 +48,7 @@ const ClubForm = () => {
 
         try {
           const serverUrl = process.env.REACT_APP_SERVER_URL;
-          await axios.post(`${serverUrl}/clubrequest/submit`, {
+          await api.post(`${serverUrl}/clubrequest/submit`, {
             ...values,
             applicantNetid: netid,
             applicantName: user,
@@ -217,7 +217,7 @@ const ClubForm = () => {
                   }
                 />
                 {formik.touched.clubPosition &&
-                formik.errors.clubPosition ? (
+                  formik.errors.clubPosition ? (
                   <div className="form-error">
                     {formik.errors.clubPosition}
                   </div>

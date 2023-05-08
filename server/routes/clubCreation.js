@@ -1,11 +1,11 @@
 import conn from "../db/conn.js";
 import express from "express";
-
+import verifyToken from "../jwt.js";
 const router = express.Router();
 
 // fetches pending/accepted/declined clubs in the clubCreation database
 // for the superadmin interface
-router.get("/", async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   try {
     const db = conn.getDb();
     const collection = db.collection("clubCreation");
@@ -54,7 +54,7 @@ router.post("/a/:name/:netid", async (req, res) => {
     const collection2 = db.collection("clubs");
     const result = await collection2.insertOne(clubData);
     res.send("Club accepted").status(200);
-  } 
+  }
   catch (err) {
     res.status(500).send("Error accepting club");
   }

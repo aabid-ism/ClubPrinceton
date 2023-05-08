@@ -1,10 +1,11 @@
 import conn from "../db/conn.js";
 import express from "express";
+import verifyToken from "../jwt.js";
 
 const router = express.Router();
 
 // endpoint to get a rating from the database
-router.get("/:name", async (req, res) => {
+router.get("/:name", verifyToken, async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
   const query = req.params.name;
@@ -31,7 +32,7 @@ router.get("/:name", async (req, res) => {
 });
 
 // endpoint to add a rating to the database
-router.post("/:name/:username", async (req, res) => {
+router.post("/:name/:username", verifyToken, async (req, res) => {
   // need to have zero ratings error handling here!
   const db = conn.getDb();
   const ratingsCollection = await db.collection("ratings");
@@ -57,15 +58,15 @@ router.post("/:name/:username", async (req, res) => {
   if (!result) {
     // no previous rating found, insert new rating
     const insertResult = await ratingsCollection.insertOne(currentUserRatings);
-    
+
     // if no previous rating found -> then we want to update the clubs collection's numUserRatings
     // parameter -> allows for easy average calculation on the frontend for automatic rendering
     await clubCollection.updateOne(
-      {name: req.params.name},
-      { $set: {numUserRatings: req.body.updatedClubRating.numUserRatings}}
+      { name: req.params.name },
+      { $set: { numUserRatings: req.body.updatedClubRating.numUserRatings } }
     );
 
-  } 
+  }
   else {
     // previous rating found, update rating
     await ratingsCollection.updateOne(
@@ -108,7 +109,7 @@ router.post("/:name/:username", async (req, res) => {
     );
     console.log(clubResult);
     res.status(200).send(clubResult);
-  } 
+  }
   catch (err) {
     console.error(err);
     res.status(500).send({ message: "Error updating club rating" });
@@ -116,7 +117,7 @@ router.post("/:name/:username", async (req, res) => {
 });
 
 
-router.get("/:club/:user", async (req, res) => {
+router.get("/:club/:user", verifyToken, async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("ratings");
   const query = req.params.club;

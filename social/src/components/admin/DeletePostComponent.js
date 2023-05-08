@@ -42,37 +42,26 @@ const DeletePostComponent = ({ state }) => {
             })
 
     }
+    // removing fluid md
+    // removing inner delete posts
+    // removing post name
+    // removed container
     return (
-        <Container fluid="md">
-
-            {/* build a row for each post */}
-
-            {/* {posts.map((post) => {
-                return (
-                    <Row key={post.id}>
-                        {post.title}
-                    </Row>
-                );
-            })} */}
-            <div className='inner-delete-posts'>
-            <h3>Delete Previous Posts</h3>
+            <div>
+            <h2>Delete Previous Posts</h2>
+            <div className='delete-posts-collection'>
             {posts?.map((post, index) => (
-                <div className='post-name'>
+                <div>
                 <Row key={post.id}>
-                    <span>{post.title}</span>
+                    <span><strong>{post.title}</strong></span>
                     <span>{formatDateTime(post.created_at)}</span>
-                    <span className='delete-post-button'><Button className="orange-button" onClick={() => { deletePost(post._id) }}>Delete</Button></span>
+                    <span><Button className="orange-button" onClick={() => { deletePost(post._id) }}>Delete</Button></span>
                 </Row>
-                <br></br>
+                <br />
                 </div>
-
             ))}
             </div>
-            {/* <Row>
-                <Col>1 of 1</Col>
-            </Row> */}
-        </Container>
+            </div>
     )
 }
-
 export default DeletePostComponent

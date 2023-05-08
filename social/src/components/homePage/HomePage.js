@@ -11,6 +11,7 @@ import axios from "axios";
 import Announce from "../announcement/Announce";
 import { OvrRating } from "../clubRating/OvrRating";
 import { ClubRtgBreakdown } from "../clubRating/ClubRtgBreakdown";
+import HomePageMin from "./HomePageMin";
 
 export default function HomePage() {
   const clubData = useSelector((state) => state.clubData);
@@ -55,6 +56,15 @@ export default function HomePage() {
         navigate("/login");
       });
   }, [localStorage.getItem("ACCESS_TOKEN")]);
+
+
+  return(
+    <>
+      <HomePageMin clubName={clubData.name} user={user}>
+        {clubData.name && (<PostList></PostList>)}
+      </HomePageMin>
+    </>
+  );
 
   return (
     <div>

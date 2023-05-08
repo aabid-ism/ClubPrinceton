@@ -4,7 +4,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/get", async (req, res) => {
+router.get("/get", verifyToken, async (req, res) => {
     // maybe some inefficency -> is post route calling get route in admin interface?
     // check later if have time
     const db = conn.getDb();
@@ -12,7 +12,7 @@ router.get("/get", async (req, res) => {
 
     const clubName = req.query.clubName;
 
-    const clubDoc = await clubsCollection.findOne({  name: clubName  });
+    const clubDoc = await clubsCollection.findOne({ name: clubName });
     let announcement = clubDoc.announcement;
 
     // if club doesn't have announcement
@@ -24,7 +24,7 @@ router.get("/get", async (req, res) => {
 
 
 // posting an announcement from admin interface to club collection for specific club
-router.post("/change/:clubName", async (req, res) => {
+router.post("/change/:clubName", verifyToken, async (req, res) => {
 
     // connection and get collection
     const db = conn.getDb();

@@ -6,10 +6,9 @@ import cleanComment from './comment_filter.js'
 const router = express.Router();
 
 // load the name of a user
-router.get('/getname/:id', async (req, res) => {
+router.get('/getname/:id', verifyToken, async (req, res) => {
   try {
     const netId = req.params.id;
-    console.log(`My NetID is here: ${netId}`);
     const db = conn.getDb();
     const users_collection = await db.collection("users");
     const user = await users_collection.findOne({ netid: { $eq: netId } });
@@ -21,7 +20,7 @@ router.get('/getname/:id', async (req, res) => {
   }
 });
 
-router.post('/create', cleanComment, async (req, res) => {
+router.post('/create', verifyToken, cleanComment, async (req, res) => {
 
   const db = conn.getDb();
   const comment_collection = await db.collection("comments");
@@ -112,7 +111,7 @@ router.post('/create', cleanComment, async (req, res) => {
 });
 
 // Get more NEW comments for a post
-router.get("/load/:post", async (req, res) => {
+router.get("/load/:post", verifyToken, async (req, res) => {
   console.log("Received Request for more comments");
   const post = new ObjectId(req.params.post);
   console.log(post);
@@ -142,7 +141,7 @@ router.get("/load/:post", async (req, res) => {
 // Liking functionality
 
 // get the number of likes and whether the provided user has liked a comment
-router.get('/like/:id', async (req, res) => {
+router.get('/like/:id', verifyToken, async (req, res) => {
   console.log('Like Request for Comment Received!');
   console.log(req.params.id);
   const commentId = req.params.id;
@@ -154,7 +153,7 @@ router.get('/like/:id', async (req, res) => {
   res.send(commentLikeData).status(200);
 });
 
-router.post('/like/', async (req, res) => {
+router.post('/like/', verifyToken, async (req, res) => {
   console.log('Like Posting for Comment Received!');
   const { netId, commentId, postId, likeAmount } = req.body;
   const db = conn.getDb();
