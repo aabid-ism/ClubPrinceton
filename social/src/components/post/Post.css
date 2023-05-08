@@ -7,6 +7,7 @@
     --tw-bg-opacity: 1;
     box-shadow: 5px 5px 10px rgb(199, 199, 199);
     padding: 0.75rem;
+    
 }
 
 
@@ -35,7 +36,7 @@
     grid-template-areas: 
         " content optionButton";
     grid-template-columns:  3fr 0.5fr; 
-    height: 100px;
+    min-height: 2rem;
 }
 
 .headerIcon {
@@ -97,7 +98,11 @@ img {
     background: transparent;
 }
 
-.postImage {
-    max-height: 30%;
-    max-width: 30%;
+.post-image {
+    border-radius: 0.5rem;
+    /* max-width: 100%; */
+}
+
+.post-image-wrapper {
+    max-width: 20vw;
 }

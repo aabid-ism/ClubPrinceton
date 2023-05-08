@@ -8,20 +8,8 @@
     /* box-shadow: 5px 5px 10px rgb(199, 199, 199); */
     box-shadow: 5px 5px 10px rgb(199, 199, 199);
     padding: 0.75rem;
-    /* max-height: 20%; */
-    /*box-shadow: 5px 5px 10px rgb(199, 199, 199); */
-
-    /*need to scale the css to occupy a percentage of
-    the page */
-    position: relative;
-    /*can also use percentages*/
-
     display: flex;
     flex-direction: column;
-    /* justify-content: center;
-    align-items: center; */
-    /* top: 30px; right: 0px; bottom: 0px; left: 10px;
-    z-index: 1; */
 }
 
 .announceTitle {
@@ -35,5 +23,5 @@
     margin: auto;
     align-items: center;
     text-align: center;
-    bottom: 15px;
+    /* bottom: 15px; */
 }

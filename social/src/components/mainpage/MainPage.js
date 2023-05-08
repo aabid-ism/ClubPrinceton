@@ -1,3 +1,4 @@
+import { Container } from 'react-bootstrap';
 import './MainBubble.css'
 
 import { useSelector } from "react-redux";
@@ -25,7 +26,7 @@ function InfoPanel() {
   const logoStyle = {
     padding: "0.5rem",
   };
-
+  // should be refactored later to remove inline
   return (
     <div style={infoPanelStyle}>
       {/* <div style={logoStyle}>
@@ -56,45 +57,18 @@ function ClubDescription() {
   const randomTest = "The quick brown fox jumps over the lazy dog. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eleifend, magna id finibus congue, velit tellus convallis tortor, a venenatis ex quam in tellus. Fusce dapibus elit euismod justo pulvinar, eu mattis arcu bibendum. Nulla facilisi. Sed vel lectus.";
 
   return (
-    <div style={clubDescriptionStyle}>
+    <div >
       <p>{clubData.description}</p>
     </div>
   );
 }
 
 export default function MainBubble(props) {
-  // const divStyle = {
-  //   backgroundColor: "#FFE4CC",
-  //   margin: "0 auto",
-  //   borderRadius: "0.5rem",
-  //   display: "flex",
-  //   flexDirection: "column",
-  //   gap: "2px",
-  //   padding: "3px",
-  //   boxShadow: "5px 5px 10px rgb(199, 199, 199)"
-  // };
-
-  // const innerDivStyle = {
-  //   display: "flex",
-  //   flexDirection: "column",
-  //   borderBottom: "2px solid #C05621",
-  //   padding: "3px",
-  // };
   const clubData = useSelector((state) => state.clubData);
   return (
-    <div className='main-bubble'>
-      <InfoPanel></InfoPanel>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+    <Container fluid className='main-bubble'>
         <h1>{clubData.name}</h1>
-        <ClubDescription />
-      </div>
-    </div>
+        <p>{clubData.description}</p>
+    </Container>
   );
 }

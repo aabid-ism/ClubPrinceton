@@ -4,12 +4,12 @@ import "./searchBar.css";
 import api from "../auth/api";
 import { useEffect } from "react";
 const url = `${process.env.REACT_APP_SERVER_URL}/clubs`;
-const MAX_TITLE_LENGTH = 25;
+const MAX_TITLE_LENGTH = 40;
 
 
 function formatTitle(title, maxLength) {
-  if (title.length > MAX_TITLE_LENGTH) {
-    return title.substring(0, MAX_TITLE_LENGTH) + "...";
+  if (title.length > maxLength) {
+    return title.substring(0, maxLength) + "...";
   } else {
     return title;
   }

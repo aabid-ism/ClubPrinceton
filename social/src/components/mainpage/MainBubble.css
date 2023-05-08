@@ -53,13 +53,39 @@
 
 .main-bubble {
     background-color: #FFE4CC;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     border-radius: 0.5rem;
-    width: 100%;
     box-shadow: 5px 5px 10px rgb(199, 199, 199);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.main-bubble-content {
-    display: flex;
-    flex-direction: column
+.main-bubble h1 {
+    font-size: 2rem;
+}
+
+.main-bubble p {
+    font-weight: bold;
+}
+
+@media (max-width: 767px) {
+    .main-bubble h1 {
+        font-size: 2rem;
+    }
+    
+    .main-bubble p {
+        font-weight: bold;
+    }
+}
+
+@media (min-width: 768px) {
+    .main-bubble h1 {
+        font-size: 3rem;
+    }
+    
+    .main-bubble p {
+        font-weight: bold;
+    }
 }

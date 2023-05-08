@@ -1,27 +1,28 @@
 import React from "react";
-
+import {Container, Image, Button} from 'react-bootstrap'
 import "./Post.css";
 import LOGO from "./blue_man.jpg";
 import {
   PostHeader,
   PostCreationInfo,
   PostTitle,
-  Icon,
   HeaderInfo,
   OptionButton,
 } from "./PostHeader.js";
 import CommentList from "../comments/CommentList";
 import { PostComments } from "./PostInteractions";
-import { Container } from "react-bootstrap";
 
 
 function PostContent({ props }) {
   const img_url = `https://${process.env.REACT_APP_AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/images/${props.image_url}`;
   // console.log(img_url)
   return (<div className="postContent">
-    <div >
-      <img className="postImage" src={img_url} alt=""/>
-    </div>
+    {props.image_url !== '' ? 
+    <div className="post-image-wrapper">
+        <img src={img_url} alt=""/>
+    </div> 
+    : 
+    <></>}
     {props.content}
     </div>);
 }
@@ -60,9 +61,8 @@ function Post({ props }) {
             <PostTitle props={headerProps} />
             <PostCreationInfo props={headerProps} />
           </HeaderInfo>
-          <OptionButton />
         </PostHeader>
-      <PostContent props={contentProps}/>
+        <PostContent props={contentProps}/>
 
         <PostComments>
           <CommentList props={commentProps} />

@@ -57,11 +57,10 @@ export default function HomePageMin({children, clubName, user}){
                         <Container className='d-flex justify-content-center'>
                                 <Button
                                     className=' toggle-button landing-settings'
-                            
                                     onClick={handleLandingNavShow}
                                     variant='secondary'
                                 >
-                                    Settings
+                                    Settings    
                                 </Button>
                         </Container>
                     </div>
@@ -247,7 +246,7 @@ function SearchModal({clubName}){
             >
             <div className='d-flex justify-content-center align-items-center'>
                 <FaSearch className="mr-2"/>
-                {clubName !== undefined ? formatTitle(clubName) : "Search"}
+                {clubName !== undefined ? formatTitle(clubName, 10) : "Search"}
             </div>
         </Button>
         <Modal className='search-modal'

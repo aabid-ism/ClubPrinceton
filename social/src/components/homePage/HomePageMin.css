@@ -1,17 +1,3 @@
-/* .search-modal {
-    
-}
-
-.search-bar {
-    height: 400px;
-    overflow-y: auto;
-}  */
-
-/* .search-bar{
-    overflow-y: auto;
-    max-height: 50%;
-} */
-
 .main-and-rating {
     position: relative;
 }
@@ -83,14 +69,6 @@
     
 }
 
-.nav-button {
-    position:fixed;
-    bottom: 0;
-    left: 0;
-}
-
-.rate-button {
-    position:fixed;
-    bottom: 0;
-    right: 0;
+.announce-rating{
+    row-gap: 1rem;
 }

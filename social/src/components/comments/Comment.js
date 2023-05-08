@@ -73,7 +73,9 @@ export default function Comment ({ postId, props }){
     return (
         <div className='comment'>
             <div>
-                {`${commentInfo} (${props.commenter_netId})`}:
+                <div className='commenter-text'>
+                    {`${commentInfo} (${props.commenter_netId})`}:
+                </div>
                 <div className="commentText">
                     {props.data}
                 </div>
