@@ -181,8 +181,15 @@
   .my-clubs-collection {
     height: 300px;
     overflow-y: auto;
-    
   }
+}
+
+@media (min-width: 992px) {
+  .my-clubs-collection {
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
 }
 
 .middle-form-col {
