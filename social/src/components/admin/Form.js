@@ -104,16 +104,20 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                 alert("Oops! Something went wrong. Please contact site administrator")
             });
     }
+    // following css is removed
+    // for publish post: display-6 text-center mb-3
+    // for active club name -> display-6 text-center mb-3
+    // main form css className="mb-5 d-flex align-items-center justify-content-center" style={{ margin: " 30 px" }}
     return (
         <>
-        <div className="clubpage-edit">
+        <div>
             <div>
-                <p className="display-6 text-center mb-3">Publish Post</p>
-                <p className="display-6 text-center mb-3">{state.activeClub}</p>
+                <h1 className="fw-bold text-center mb-3">Publish Post</h1>
+                <h2 className="fw-bold text-center mb-3">{state.activeClub}</h2>
             </div>
-            <div className="mb-5 d-flex align-items-center justify-content-center" style={{ margin: " 30 px" }}>
+            <div>
                 {/* <Preview {...inputs} /> */}
-                <form encType="multipart/form-data" className="mb-2" style={{ margin: "30px", textAlign: "left" }} onSubmit={(e) => handleOnSubmit(e)}>
+                <form encType="multipart/form-data" className="mb-2 text-center" style={{ margin: "30px"}} onSubmit={(e) => handleOnSubmit(e)}>
                     {state.isSubmitted && state.missingValues.title && <div> <p style={{ color: "red" }}> Please fill in the Title!</p></div>}
                     <div className="mb-3" >
                         {/* TITLE */}
@@ -143,7 +147,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                     {/* IMAGE UPLOAD */}
                     {/* {state.isSubmitted && state.missingValues.image && <div> <p style={{ color: "red" }}> Please upload a file!</p></div>} */}
                     <div className="mb-3">
-                        <label htmlFor="image_uploads">Choose images to upload (PNG, JPG)</label>
+                        <label htmlFor="image_uploads" class="fw-bold">Choose image to upload (PNG & JPG/JPEG ONLY)</label>
                         <input id="image_uploads"
                             type="file"
                             className="form-control"
@@ -157,7 +161,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                     {/* btn btn-success */ }
                     <Button
                         type="submit"
-                        className="float-end orange-button"
+                        className="mb-5 orange-button"
                         disabled={state.activeClub ? false : true}
                     >
                         Submit

@@ -6,6 +6,11 @@ import axios from 'axios';
 import Rightbar from './Rightbar';
 import DeletePostComponent from './DeletePostComponent';
 import api from '../auth/api';
+import Container from 'react-bootstrap/esm/Container';
+import Col from 'react-bootstrap/esm/Col';
+import Row from 'react-bootstrap/esm/Row';
+import { Navbar, NavDropdown, Nav } from 'react-bootstrap';
+import AdminNavBar from './AdminNavbar';
 // state of the initial input fields
 const initialState = {
     clubs: [],
@@ -123,47 +128,58 @@ function AdminInterface() {
         []);
 
     return (
-        <div className="middle-form-area">
-            {/* Left Sidebar */}
-            <div className='left-sidebar'>
-            <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
-            </div>
-            {/* Main Page with Form and Delete-Posts widget */}
+        <Container fluid className="admin-container-color">
+            {/* refactor into separate file later */}
+            {/* fixed="top" */}
+            <AdminNavBar />
 
-            <div className='admin-welcome'>
-                {/*className="mb-5 align-items-center justify-content-center margin-0-auto display-flex" */}
-                {/* <div style={{width: "18rem"}}>
+            {
+                !state.activeClub &&
+                <Row className='full-height'>
+                    <Col lg={2} className="initial-clublist">
+                        <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
+                    </Col>
+                    <Col lg={10} className="initial-welcome d-flex align-items-center justify-content-center flex-column">
+                        <h1>Welcome to ClubPrinceton for Admin</h1>
+                        <div className="text-center mb-3">
+                        <h3>If you are a registered administrator for a club page, please select your club page in the My Clubs section.</h3>
+                        </div>
+                    </Col>
+                </Row>
+            }
 
-            <div className="mb-5 align-items-center justify-content-center" >
-                {/* <div style={{width: "18rem"}}>
-                <img src={myImage} />
-            </div> */}
-                {!state.activeClub && 
-                <div className='admin-welcome-text'>
-                <h1>Welcome to ClubPrinceton for Admin!</h1>
-                <h5>If you are a registered administrator for a club page,
-                    please select your club on the left sidebar.</h5>
-                </div>
-                }
-                
-                <div className='just-form rounded'>
-                {state.activeClub &&
-                    <Form state={state}
-                        dispatchClearForm={dispatchClearForm}
-                        dispatchCaption={dispatchCaption}
-                        dispatchFile={dispatchFile}
-                        dispatchTitle={dispatchTitle}
-                        dispatchMissingValues={dispatchMissingValues}
-                        dispatchSubmit={dispatchSubmit}
-                    />
-                }
-                </div>
-            </div>
-            <div className='delete-posts'>
-                {state.activeClub && <DeletePostComponent state={state} />}
-            </div>
-            <Rightbar state={state} />
-        </div>
+            {state.activeClub &&
+            <Row className="admin-page-row full-height">
+                <Col className="left-sidebar-col">
+                    <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
+                </Col>
+                {/* Main Page with Form and Delete-Posts widget */}
+                <Col className="middle-form-col" lg={8}>
+                    
+                    <Row lg>
+                        {state.activeClub &&
+                            <Form state={state}
+                                dispatchClearForm={dispatchClearForm}
+                                dispatchCaption={dispatchCaption}
+                                dispatchFile={dispatchFile}
+                                dispatchTitle={dispatchTitle}
+                                dispatchMissingValues={dispatchMissingValues}
+                                dispatchSubmit={dispatchSubmit}
+                            />
+                        }
+                    </Row>
+                    <Row className="middle-delete-posts-row" lg>
+                    <div>
+                    {state.activeClub && <DeletePostComponent state={state} />}
+                    </div>
+                    </Row>
+                </Col>
+                <Col className="right-sidebar-col" lg>
+                <Rightbar state={state} />
+                </Col>
+            </Row>
+            }
+        </Container>
     )
 }
 
