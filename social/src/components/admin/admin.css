@@ -192,7 +192,8 @@
     background-color: #FF9230;
     overflow-y: auto;
   }
-  .initial-clublist {
+  .initial-welcome {
+    height: 70%;
 
   }
 }
