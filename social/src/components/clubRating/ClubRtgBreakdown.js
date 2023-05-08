@@ -65,7 +65,7 @@ function SingleRating({rgbColor, adverb, labeling}) {
             <span style={cssProperties(rgbColor.vibesColor)}>{adverb.vibesAdverb} {labeling.vibesLabel}</span>,
             <span style={cssProperties(rgbColor.popularityColor)}>{adverb.popularAdverb} {labeling.popularLabel}</span>,
             <span style={cssProperties(rgbColor.inclusiveColor)}>{adverb.inclusiveAdverb} {labeling.inclusiveLabel}</span>, and
-            <span style={cssProperties(rgbColor.intensityColor)}>{adverb.intenseAdverb} {labeling.intensityLabel}</span>
+            <span style={cssProperties(rgbColor.intensityColor)}>{adverb.intenseAdverb} {labeling.intensityLabel}</span>.
           </strong>
         </div>
       </div>
