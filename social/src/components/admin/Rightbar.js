@@ -405,14 +405,14 @@ const Rightbar = ({ state }) => {
                     }
                   </div>
                 ))}
-              </div>
-              <div>
-              {state.activeClub && (
-                <Button className="orange-button" onClick={() => {setOfficersModal(true);}}>
-                  Add Officer
-                </Button>
-              )}
-              </div>
+                <div>
+                  {state.activeClub && (
+                    <Button className="orange-button" onClick={() => {setOfficersModal(true);}}>
+                      Add Officer
+                    </Button>
+                  )}
+                </div>
+            </div>
         </Row>
       </div>
     </>

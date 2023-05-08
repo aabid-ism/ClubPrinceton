@@ -192,7 +192,6 @@
   }
   .admin-members-collection {
     height: 200px;
-    background-color: #FF9230;
     overflow-y: auto;
   }
   .initial-welcome {
@@ -218,32 +217,31 @@
 }
 
 .middle-form-col {
-  background-color: lightpink;
+  background-color: #FFFCED;
 }
 
 .middle-delete-posts-row {
-  background-color: lightsalmon;
+  background-color: #FFFCED;
   text-align: center;
 }
 
 .right-sidebar-col {
-  background-color: lightskyblue;
+  background-color: #FFE4CC;
   text-align: center;
 }
 
 .right-sidebar-info {
-  background-color: lightcyan;
+  /* background-color: lightcyan; */
 
 }
 
 .right-sidebar-announce {
-  background-color: lightyellow;
+  /* background-color: lightyellow; */
 
 }
 
 .right-sidebar-admin {
-  background-color: lightseagreen;
-
+  /* background-color: lightseagreen; */
 }
 
 .full-height {
@@ -270,5 +268,5 @@
 }
 
 .navbar-color {
-  background-color: #F7D7A1 !important;
+  background-color: #fff3ed !important;
 }

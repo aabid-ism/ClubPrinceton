@@ -64,5 +64,4 @@ const DeletePostComponent = ({ state }) => {
             </div>
     )
 }
-
 export default DeletePostComponent
