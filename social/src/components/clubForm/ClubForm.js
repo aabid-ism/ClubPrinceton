@@ -151,6 +151,8 @@ const ClubForm = () => {
                   </strong>
                 </Form.Text>
               </Form.Group>
+            </Col>
+            <Col>
               <Form.Group controlId="clubInfo">
                 <Form.Label>Club Description:</Form.Label>
                 <Form.Control
