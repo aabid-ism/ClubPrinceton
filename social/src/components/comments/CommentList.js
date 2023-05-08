@@ -23,11 +23,8 @@ export default function CommentList({ props }){
             setCommentListData(props.comments);
         }
     }, [setCommentListData, props])
-    //console.log(commentListData)
 
     const loadCommentList = async (event) => {
-        // console.log("Attempting to Load Comments!");
-        // console.log(`Request made: ${url}/load/${props.postId}`)
         let oldest;
         if (commentListData[commentListData.length - 1] !== undefined){
             oldest = commentListData[commentListData.length - 1].created_at;
@@ -52,8 +49,7 @@ export default function CommentList({ props }){
                 <div>
                     {
                     commentListData.map((commentData) => {
-                            // return (<pre key={commentData._id}>{JSON.stringify(commentData, null, 2)}</pre>)
-                            console.log(commentData)
+                            // console.log(commentData)
                             return (<Comment postId={props.postId }props={commentData} key={commentData._id}/>)
                         })
                     }
@@ -82,22 +78,17 @@ function PersonalComment({ postId, list}) {
                 .post(`${url}/create`, commentData)
                 .then((response) => {
                     const data = response.data;
-                    console.log(data) // the returned comment
-                    // could refactor to be slightly more sus
                     updateListData([data, ...listData])
                 })
                 .catch((error) => {
                     console.log("Error occurred: ", error);
                 });
-                // empty the comment field for typing
-                // alert('Comment Submitted!')
+                // clear out the comment
                 event.target.value = '';
-                // if (listDiv.current) {
-                //     listDiv.current.scrollTop = 0;
-                // }
             }
         }
     }
+    console.log(localStorage.getItem("profilepic"))
     return (
         <div className="your-comment">
             <div className="your-icon">

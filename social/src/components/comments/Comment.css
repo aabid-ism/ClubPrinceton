@@ -1,7 +1,31 @@
-.commentText {
-    color: black;
-    font-weight: bold;
+
+
+@media (max-width: 767px) {
+    .commentText {
+        color: black;
+        /* font-weight: bold; */
+        font-size: 0.9rem;
+    }
+
+    .commenter-text {
+        font-size: 0.6rem;
+        font-weight: 600;
+    }
 }
+
+@media (min-width: 768px) {
+    .commentText {
+        color: black;
+        /*   */
+        font-size: 1.1rem;
+    }
+
+    .commenter-text {
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+}
+
 
 .comment {
     display: flex;

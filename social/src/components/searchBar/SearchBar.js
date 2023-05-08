@@ -4,7 +4,7 @@ import "./searchBar.css";
 import api from "../auth/api";
 import { useEffect } from "react";
 const url = `${process.env.REACT_APP_SERVER_URL}/clubs`;
-const MAX_TITLE_LENGTH = 25;
+const MAX_TITLE_LENGTH = 40;
 
 /*
   Formats the title of a club to be displayed in the search bar.
@@ -16,9 +16,9 @@ const MAX_TITLE_LENGTH = 25;
 
 */
 
-function formatTitle(title) {
-  if (title.length > MAX_TITLE_LENGTH) {
-    return title.substring(0, MAX_TITLE_LENGTH) + "...";
+function formatTitle(title, maxLength) {
+  if (title.length > maxLength) {
+    return title.substring(0, maxLength) + "...";
   } else {
     return title;
   }
@@ -86,30 +86,32 @@ function SearchBar(props) {
 
   return (
     <div
-      className="search-bar"
-      style={{ width: `${props.width}px`, height: `${props.height}px` }}
     >
-      <input
-        type="text"
-        placeholder="Search..."
-        onChange={handleSearchTermChange}
-      />
-      <p>{numResults} search results</p>
+      <div>
+        <input
+          type="text"
+          placeholder="Search..."
+          onChange={handleSearchTermChange}
+          autoFocus={true}
+        />
+        <p>{numResults} search results</p>
+      </div>
       {results.length > 0 && (
-        <div className="results">
-          {results.map((result, index) => (
-            <button
-              className="result-button"
-              key={index}
-              onClick={() => handleClubClick(result)}
-            >
-              {formatTitle(result.name)}
-            </button>
-          ))}
-        </div>
+      <div className="results">
+        {results.map((result, index) => (
+          <button
+            className="result-button"
+            key={index}
+            onClick={() => handleClubClick(result)}
+          >
+            {formatTitle(result.name, MAX_TITLE_LENGTH)}
+          </button>
+        ))}
+      </div>
       )}
     </div>
   );
 }
 
+export {formatTitle};
 export default SearchBar;

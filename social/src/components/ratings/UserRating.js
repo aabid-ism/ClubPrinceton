@@ -183,13 +183,12 @@ function UserRating(props) {
   }
 
   return (
-    <RatingsBubble width={props.width} height={props.height}>
+    <RatingsBubble>
       <form
         className="rtg-form"
-        style={{ flexDirection: "column", height: "100%" }}
       >
-        <div style={{ margin: "auto", height: "100%" }}>
-          <div style={{ margin: "auto" }}>
+        <div >
+          <div >
             {!currentlyRating && clubData.name && (
               <strong> Your rating for {clubData.name}</strong>
             )}
@@ -198,7 +197,7 @@ function UserRating(props) {
             )}
           </div>
           <br></br>
-          <div style={{ margin: "auto" }}>
+          <div >
             <label>
               <div>Good Vibes</div>
               <SingleRating type="Vibes"></SingleRating>
@@ -218,7 +217,7 @@ function UserRating(props) {
             <SingleRating type="Inclusivity"></SingleRating>
           </div>
           <br></br>
-          <div style={{ margin: "auto" }}>
+          <div >
             {!currentlyRating && previousRatings["Vibes"] > 0 && (
               <button
                 className="rating-button"

@@ -64,12 +64,6 @@ export default function Comment({ postId, props }) {
         //     console.log("Error occurred: ", error);
         // }
     }
-    // useEffect(() => {
-    // const commentLikeData = getData();
-
-    // })
-    // console.log("Golly! I have a lot of likes")
-    // console.log(props.likes)
     const [commentInfo, setCommentInfo] = useState("Loading")
     const getName = async () => {
         await api
@@ -92,13 +86,15 @@ export default function Comment({ postId, props }) {
     return (
         <div className='comment'>
             <div>
-                {`${commentInfo} (${props.commenter_netId})`}:
+                <div className='commenter-text'>
+                    {`${commentInfo} (${props.commenter_netId})`}:
+                </div>
                 <div className="commentText">
                     {props.data}
                 </div>
             </div>
 
-            <Like commentId={props._id} postId={postId} netId={localStorage.getItem("netid")} priorLikes={props.likes} priorLikeStatus={false} />
+            {/* <Like commentId={props._id} postId={postId }netId={localStorage.getItem("netid")} priorLikes={props.likes} priorLikeStatus={false}/> */}
         </div>
     );
 }

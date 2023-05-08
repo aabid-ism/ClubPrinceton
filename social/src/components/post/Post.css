@@ -1,12 +1,13 @@
-.bubble {
+.post-bubble {
     color: black;
     background-color: rgb(255 252 237);
-    margin: auto auto;
-    width: 48rem;
+    /* margin: auto auto; */
+    /* width: 48rem; */
     border-radius: 0.5rem;
     --tw-bg-opacity: 1;
     box-shadow: 5px 5px 10px rgb(199, 199, 199);
     padding: 0.75rem;
+    
 }
 
 
@@ -35,7 +36,7 @@
     grid-template-areas: 
         " content optionButton";
     grid-template-columns:  3fr 0.5fr; 
-    height: 100px;
+    min-height: 2rem;
 }
 
 .headerIcon {
@@ -62,15 +63,15 @@ img {
     max-height:100%;
 }
 
-.postTitle {
+.postTitle h2{
     font-weight: bold;
-    font-size:x-large
+    /* font-size:x-large */
 }
 
 .postTimelineInfo {
     display: flex;
-    font-weight: bold;
-    font-size: small;
+    /* font-weight: bold; */
+    /* font-size: small; */
     column-gap: 10px;
 }
 
@@ -80,6 +81,7 @@ img {
     overflow: hidden;
     height:60px;
     width: 60px;
+    background-color: tomato;
 }
 
 .your-icon img{
@@ -96,6 +98,11 @@ img {
     background: transparent;
 }
 
-.postImage {
-    max-height: 100%;
+.post-image {
+    border-radius: 0.5rem;
+    /* max-width: 100%; */
+}
+
+.post-image-wrapper {
+    max-width: 20vw;
 }

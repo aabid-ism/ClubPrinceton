@@ -153,8 +153,7 @@ export function ClubRtgBreakdown({width, height}) {
     // clubData, clubRating
 
   return (
-    <>
-    <BreakdownBubble width={width} height={height}>
+    <BreakdownBubble>
       <div>
         <h2>Breakdown</h2>
       </div>
@@ -199,6 +198,5 @@ export function ClubRtgBreakdown({width, height}) {
         </div>
       }
     </BreakdownBubble>
-    </>
   );
 }

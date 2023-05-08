@@ -38,7 +38,7 @@ function PostHeader({ children }){
 function PostTitle({ props }){
     return (
         <div className="postTitle">
-            {props.title}
+            <h2>{props.title}</h2>
         </div>
     );
 }
@@ -46,9 +46,8 @@ function PostTitle({ props }){
 function PostCreationInfo({ props }){
     return (
         <div className="postTimelineInfo">
-            <p>{props.creator}</p>
-            <p>{props.createdTime}</p>
-            <p>{props.modTime}</p>
+            <h6>{props.creator}</h6>
+            <h6>{props.createdTime}</h6>
         </div>
     );
 }
