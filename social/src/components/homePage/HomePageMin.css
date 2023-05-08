@@ -18,6 +18,12 @@
     
 }
 
+.toggle-button {
+    border-radius: 15px !important;
+    background-color: #a39b95 !important;
+    
+}
+
 .search-top {
     display: flex !important;
     justify-content: space-between !important;
@@ -44,7 +50,7 @@
 .page-content {
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;
+    row-gap: 1.5rem;
     
 }
 

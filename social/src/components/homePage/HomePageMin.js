@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Container, Row, Col, Button, Modal, Navbar} from 'react-bootstrap'
+import {Container, Row, Col, Button, Modal, Navbar, ButtonGroup, OverlayTrigger, Tooltip} from 'react-bootstrap'
 import './HomePageMin.css'
 import SearchBar from '../searchBar/SearchBar';
 import MainPage from "../mainpage/MainPage";
@@ -7,23 +7,11 @@ import Announce from '../announcement/Announce';
 import Navigation from "../navigation/Navigation";
 import UserRating from '../ratings/UserRating';
 import { OvrRating } from '../clubRating/OvrRating';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaBars, FaCheck } from 'react-icons/fa';
 import { ClubRtgBreakdown } from '../clubRating/ClubRtgBreakdown';
 
-export default function HomePageMin({children, clubName, user}){
-    const [showSearchBar, setShowSearchBar] = useState(false);
-    const [showNavBar, setShowNavBar] = useState(false);
-    const [showRatingBar, setShowRatingBar] = useState(false);
-
-    const handleSearchClose = () => {setShowSearchBar(false)};
-    const handleSearchShow = () => {setShowSearchBar(true)};
-    const handleNavClose = () => {setShowNavBar(false)};
-    const handleNavShow = () => {setShowNavBar(true)};
-    const handleRateClose = () => {setShowRatingBar(false)};
-    const handleRateShow = () => {setShowRatingBar(true)};
-
-    return (
-        clubName === undefined ? 
+function LandingPage({user}){
+    return(
         <div>
             <Container fluid className="landing-page">
                 
@@ -41,14 +29,45 @@ export default function HomePageMin({children, clubName, user}){
                 </Row>
             </Container>
         </div> 
+    );
+}
+
+export default function HomePageMin({children, clubName, user}){
+    const [showSearchBar, setShowSearchBar] = useState(false);
+    const [showNavBar, setShowNavBar] = useState(false);
+    const [showRatingBar, setShowRatingBar] = useState(false);
+
+    const handleSearchClose = () => {setShowSearchBar(false)};
+    const handleSearchShow = () => {setShowSearchBar(true)};
+    const handleNavClose = () => {setShowNavBar(false)};
+    const handleNavShow = () => {setShowNavBar(true)};
+    const handleRateClose = () => {setShowRatingBar(false)};
+    const handleRateShow = () => {setShowRatingBar(true)};
+
+    return (
+        clubName === undefined ? 
+            <LandingPage user={user}/>
         :
         <div>
             <Container fluid className="page">
                 <Navbar sticky='top' className='search-top'>
-                    <Button size='lg'
-                        onClick={handleNavShow}>
-                        Navigation
-                    </Button>
+                    <ButtonGroup>
+                        <Button 
+                            className='d-none d-md-block toggle-button'
+                            size='lg'
+                            onClick={handleNavShow}
+                            variant='secondary'
+                        >
+                            Navigation
+                        </Button>
+                        <Button className='d-md-none toggle-button'
+                            onClick={handleNavShow}
+                            variant='secondary'
+                        >
+                            <FaBars />
+                        </Button>
+                    </ButtonGroup>
+                    
                     <Button
                         size='lg'
                         onClick={handleSearchShow}
@@ -56,13 +75,27 @@ export default function HomePageMin({children, clubName, user}){
                         variant='secondary'
                         
                         >
-                        <FaSearch/>
-                        {clubName !== undefined ? clubName : "Search"}
+                        <div className='d-flex justify-content-center align-items-center'>
+                            <FaSearch className="mr-2"/>
+                            {clubName !== undefined ? clubName : "Search"}
+                        </div>
                     </Button>
-                    <Button size='lg' className='text-nowrap'
-                        onClick={handleRateShow}>
-                        Rate Club!
-                    </Button>
+                    <ButtonGroup>
+                        <Button 
+                            className='d-none d-md-block toggle-button'
+                            size='lg'
+                            onClick={handleRateShow}
+                            variant='secondary'
+                        >
+                            Rate Club
+                        </Button>
+                        <Button className='d-md-none toggle-button'
+                            onClick={handleRateShow}
+                            variant='secondary'
+                        >
+                            <FaCheck />
+                        </Button>
+                    </ButtonGroup>
                 </Navbar>
                 <Row >
                     <Col  lg={1} >
@@ -70,7 +103,12 @@ export default function HomePageMin({children, clubName, user}){
                     <Col  lg={10} className="d-flex justify-content-center">
                         <Container >
                             <div className='page-content'>
-                                {clubName && (<MainPage />)}
+                                {clubName && (
+                                    <div>
+                                        <MainPage />
+                                        <OvrRating />
+                                    </div>
+                                )}
                                 <Row className='announce-rating'>
                                     <Col>
                                         {clubName && (<Announce />)}
@@ -86,41 +124,6 @@ export default function HomePageMin({children, clubName, user}){
                     <Col  lg={1}>
                     </Col>
                 </Row>
-                
-                {/* <Container fluid className='nav-plus-rate'>
-                    <Navbar expand='lg'>
-                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse>
-                            <Container>
-                                <Navigation/>
-                            </Container>
-                        </Navbar.Collapse>
-                    </Navbar>
-                    <Navbar expand='lg'>
-                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse>
-                            <Container>
-                                {clubName && <UserRating/>}
-                            </Container>
-                        </Navbar.Collapse>
-                    </Navbar>
-                </Container> */}
-                {/* <Navbar expand='lg' className='nav-button'>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse>
-                        <Container>
-                            <Navigation/>
-                        </Container>
-                    </Navbar.Collapse>
-                </Navbar>
-                <Navbar expand='lg' className='rate-button'>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse>
-                        <Container>
-                            {clubName && <UserRating/>}
-                        </Container>
-                    </Navbar.Collapse>
-                </Navbar> */}
                 <Modal className='search-modal'
                     show={showSearchBar}
                     onHide={handleSearchClose}
