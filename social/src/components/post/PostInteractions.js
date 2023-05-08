@@ -1,5 +1,5 @@
 import { FaThumbsUp, FaCommentAlt } from "react-icons/fa";
-
+import api from "../auth/api";
 import axios from "axios";
 const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
 
@@ -41,7 +41,7 @@ function PersonalComment({ LOGO, postId }) {
                     postId: postId
                 }
                 console.log(event.target.value);
-                axios
+                api
                     .post(`${url}/create`, commentData)
                     .then((response) => {
                         const data = response.data;

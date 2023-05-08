@@ -6,6 +6,15 @@ import { useEffect } from "react";
 const url = `${process.env.REACT_APP_SERVER_URL}/clubs`;
 const MAX_TITLE_LENGTH = 40;
 
+/*
+  Formats the title of a club to be displayed in the search bar.
+  If the title is longer than MAX_TITLE_LENGTH, it is truncated and
+  an ellipsis is added to the end.
+
+  @param title: the title of the club
+  @return the formatted title
+
+*/
 
 function formatTitle(title, maxLength) {
   if (title.length > maxLength) {
@@ -19,7 +28,6 @@ function SearchBar(props) {
   const dispatch = useDispatch();
   const results = useSelector((state) => state.results);
   const numResults = useSelector((state) => state.numResults);
-  const clubData = useSelector((state) => state.clubData);
 
   let searchTimeout = null;
   const handleSearchTermChange = async (event) => {

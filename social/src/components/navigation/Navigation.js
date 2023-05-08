@@ -1,10 +1,6 @@
 import React from "react";
-import { FaCog, FaSignOutAlt, FaQuestionCircle } from "react-icons/fa";
 import "./Navigation.css";
 import { useNavigate } from "react-router-dom";
-
-
-import ClubForm from "../clubForm/ClubForm";
 import PopUpBtn from "../clubForm/PopUpBtn";
 
 function Navigation(props) {
@@ -36,24 +32,13 @@ function Navigation(props) {
             <PopUpBtn></PopUpBtn>
           </div>
         </li>
-        {/* <li>
-          <a href="/" className="nav-link">
-            <FaCog className="nav-icon" />
-            Settings
-          </a>
-        </li> */}
+
         <li onClick={handleClick}>
           <a href="/" className="nav-link orange-oval-text">
-            {/* <FaSignOutAlt className="nav-icon" /> */}
             Logout
           </a>
         </li>
-        {/* <li>
-          <a href="/" className="nav-link">
-            <FaQuestionCircle className="nav-icon" />
-            FAQ
-          </a>
-        </li> */}
+
       </ul>
     </div>
   );

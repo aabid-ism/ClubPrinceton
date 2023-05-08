@@ -85,7 +85,7 @@ router.post(`/club/description/update/:name`, verifyToken, async (req, res) => {
   const db = conn.getDb();
   const clubCollection = await db.collection("clubs");
   const clubName = req.params.name;
-  
+
   // search for club by name and update the description
   const result = await clubCollection.updateOne(
     { name: clubName },

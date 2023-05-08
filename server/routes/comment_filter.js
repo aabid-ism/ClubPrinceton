@@ -39,7 +39,9 @@ async function cleanComment(req, res, next) {
     }
     // return final_comment;
     catch (err) {
-        res.status(401).send({ error: "Unauthorized" });
+        // res.status(401).send({ error: "Unauthorized" });
+        console.log("Comment Moderation Bypassed due to API request limit");
+        next();
     }
 }
 

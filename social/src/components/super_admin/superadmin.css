@@ -15,6 +15,7 @@
   width: 700px; /* set fixed width */
   height: calc(100vh - 20rem); /* set height to 100% of viewport height minus the height of the header and footer */
   overflow-y: auto; /* add vertical scroll */
+  overflow-x: auto;
 }
 
 
@@ -24,8 +25,8 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   margin: 1rem auto;
   padding: 1rem;
-  width: 600px; /* set fixed width */
-  height: 500px; /* set fixed height */
+  width: 900px; /* set fixed width */
+  height: 700px; /* set fixed height */ /* tested on max chars from club form */
   text-align: center;
 }
 
@@ -42,12 +43,7 @@
   margin-bottom: 0.5rem;
 }
 
-.superadmin__club__description,
-.superadmin__club__leadership,
-.superadmin__club__certificateLink,
-.superadmin__club__email,
-.superadmin__club__addInfo,
-.superadmin__club__status {
+.superadmin__club__info {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -55,12 +51,7 @@
   margin-bottom: 0.5rem;
 }
 
-.superadmin__club__description span,
-.superadmin__club__leadership span,
-.superadmin__club__certificateLink span,
-.superadmin__club__email span,
-.superadmin__club__addInfo span,
-.superadmin__club__status span {
+.superadmin__club__info span{
   margin-right: 0.5rem;
 }
 

@@ -6,18 +6,54 @@ import cleanComment from './comment_filter.js'
 const router = express.Router();
 
 // load the name of a user
-router.get('/getname/:id', async (req, res) => {
-  const netId = req.params.id;
-  const db = conn.getDb();
-  const users_collection = await db.collection("users");
-  const user = await users_collection.findOne({netid: {$eq: netId}});
-  console.log(user)
-  res.send(user.name).status(200);
+router.get('/getname/:id', verifyToken, async (req, res) => {
+  try {
+    const netId = req.params.id;
+    const db = conn.getDb();
+    const users_collection = await db.collection("users");
+    const user = await users_collection.findOne({ netid: { $eq: netId } });
+    // console.log(user)
+    res.send(user.name).status(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal server error!');
+  }
 });
 
-router.post('/create', cleanComment, async (req, res) => {
+router.post('/create', verifyToken, cleanComment, async (req, res) => {
+
+  const db = conn.getDb();
+  const comment_collection = await db.collection("comments");
+  const post_collection = await db.collection("posts");
   // TODO: include user as info
   const { data, postId, netid } = req.body;
+
+  // If there has been 50 comments in the last 10 minutes, send a 429 Error
+
+  // Take the comments of that netid sorted by created_at
+  const query = { commenter_netId: netid };
+  const options = {
+    // sort returned documents in the order of recent comment to oldest comment
+    sort: { created_at: -1 },
+  };
+  const comments_of_that_netid = await comment_collection.find(query, options).toArray();
+  // If there is no more than 20 comments, do nothing.
+  // If the 1st comment's created_at and 20th comment's created_at is within 10 minutes, send 404 Error
+
+  const amount_of_comments_to_check_for = 50;
+  const time_period_to_check_comments_in_mins = 10;
+  if (comments_of_that_netid.length > amount_of_comments_to_check_for) {
+    const currentTime = new Date();
+    const twentieth_comment_time = new Date(comments_of_that_netid[amount_of_comments_to_check_for - 1].created_at);
+    const diffInMinutes = (currentTime.getTime() - twentieth_comment_time.getTime()) / 60000;
+    console.log("-------20 or MORE COMMENTS ---")
+    if (diffInMinutes <= time_period_to_check_comments_in_mins) {
+      console.log("-------20 or MORE COMMENTS WITHIN 10 MINUTES!!! ---")
+      // should be 429 status
+      return res.send("Too many comments within a short span of time!").status(429);
+    }
+  }
+
   const formattedPostId = new ObjectId(postId);
   const post_comment_to_insert = {
     postId: formattedPostId,
@@ -29,9 +65,7 @@ router.post('/create', cleanComment, async (req, res) => {
 
   console.log(post_comment_to_insert);
 
-  const db = conn.getDb();
-  const comment_collection = await db.collection("comments");
-  const post_collection = await db.collection("posts");
+
   const result = await comment_collection.insertOne(post_comment_to_insert);
   console.log(formattedPostId)
 
@@ -77,7 +111,7 @@ router.post('/create', cleanComment, async (req, res) => {
 });
 
 // Get more NEW comments for a post
-router.get("/load/:post", async (req, res) => {
+router.get("/load/:post", verifyToken, async (req, res) => {
   console.log("Received Request for more comments");
   const post = new ObjectId(req.params.post);
   console.log(post);
@@ -107,7 +141,7 @@ router.get("/load/:post", async (req, res) => {
 // Liking functionality
 
 // get the number of likes and whether the provided user has liked a comment
-router.get('/like/:id', async (req, res) => {
+router.get('/like/:id', verifyToken, async (req, res) => {
   console.log('Like Request for Comment Received!');
   console.log(req.params.id);
   const commentId = req.params.id;
@@ -119,7 +153,7 @@ router.get('/like/:id', async (req, res) => {
   res.send(commentLikeData).status(200);
 });
 
-router.post('/like/', async (req, res) => {
+router.post('/like/', verifyToken, async (req, res) => {
   console.log('Like Posting for Comment Received!');
   const { netId, commentId, postId, likeAmount } = req.body;
   const db = conn.getDb();

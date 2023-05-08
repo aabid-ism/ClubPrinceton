@@ -22,6 +22,11 @@
     text-align: center;
 }
 
+.form-error {
+    font-weight: bold;
+    color: red;
+}
+
 /* .form_content {
     background-color: white;
     position: absolute;
@@ -38,6 +43,7 @@
     font-size: 35px;
     color: black;
     float: right;
+    margin: 15px;
     /* need to increase size of x mark */
 }
 

@@ -1,25 +1,30 @@
 import './admin.css'
 import React from 'react';
+import Button from 'react-bootstrap/esm/Button';
 
 function Sidebar({ state, dispatchActiveClub }) {
 
   return (
-    <div className="sidebar">
-      <div className="my-clubs-title"><h3>&emsp;My Clubs</h3></div>
+    <div>
+      <div class="mb-3">
+        {/* If we contain My Clubs in an outer div -> the text will automatically wrap around */}
+        <h1>My Clubs</h1>
+      </div>
       {/* render club list using clubs that the netid is an admin of */}
-      <div className='club-names-list'>
-        <ul>
-          {/* <li>Hi </li> */}
+      {/* we can use react bootstrap stack here for every button instead of a UL*/}
+      <div className='my-clubs-collection'>
+        {/* <ul> */}
           {state.clubs?.map((club, index) => (
-            <button
+            <div class="mb-3">
+            <Button
               key={index}
-              className="text-gray-700 mb-2 border-b border-gray-300 my-clubs-title"
+              className="orange-button-clubs"
               onClick={(e) => dispatchActiveClub(club)}
             >
               <strong>{club}</strong>
-            </button>
+            </Button>
+            </div>
           ))}
-        </ul>
       </div>
     </div>
   );

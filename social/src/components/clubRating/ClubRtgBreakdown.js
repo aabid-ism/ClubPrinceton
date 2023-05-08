@@ -6,16 +6,6 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import api from "../auth/api";
 
-/*
-Either refactor OvrRating and ClubRtgBreakdown
-or get state management to work on fast clicking
-on fast clicking (sometimes doesn't have to be fast)
-- one of the properties gets undefined
-Ratings state for zero ratings and non zero ratings are defined differently
-- shouldn't even be going into that condition -> debug later if have time
-Right now code is working -> but making an unecessary API CALL
-*/
-
 // testing -> consider exceptions
 
 // need to add async/await to allow concurrency
@@ -37,7 +27,7 @@ function roundHundreth(value) {
 
 // gets the RGB colors for single rating
 // can refactor
-function getRGBColors(singleRating) {
+function getRGBColors(singleRating, ratingType=null) {
   // error -> should not enter here
   if (singleRating < 1) {
     console.error("Rating factor of Club Rating is less than one");
@@ -45,39 +35,76 @@ function getRGBColors(singleRating) {
   }
   const MAX_RTG = 5;
   const MIN_RTG = 1;
+
+  if (ratingType === "intensity") {
+    return {red: 128, green: 128, blue: 128};
+    // singleRating = MAX_RTG - singleRating + MIN_RTG;
+  }
+
   const DIFF_RTG = 4;
-  const red = Math.round(255 * (MAX_RTG - singleRating)) / DIFF_RTG;
-  const green = Math.round(255 * (singleRating - MIN_RTG)) / DIFF_RTG;
+  // originally 255
+  // changed to 200 -> to dull brightness
+  const red = Math.round(200 * (MAX_RTG - singleRating)) / DIFF_RTG;
+  const green = Math.round(200 * (singleRating - MIN_RTG)) / DIFF_RTG;
   return { red: red, green: green, blue: 0 };
 }
 
-function SingleRating(props) {
-  let cssProperties = {
-    color:
+function SingleRating({rgbColor, adverb, labeling}) {
+  let cssProperties = (rgbColor) => {
+    return {color:
       "rgb(" +
-      props.rgbColor.red +
-      "," +
-      props.rgbColor.green +
-      "," +
-      props.rgbColor.blue +
-      ")",
+      rgbColor.red + "," + 
+      rgbColor.green + "," + 
+      rgbColor.blue + ")",}
   };
 
   return (
-    <strong>
       <div>
-        <div style={cssProperties}>
-          {props.labeling}
-          {props.singleRating}
+        <div>
+          <strong>People say this club 
+            <span style={cssProperties(rgbColor.vibesColor)}>{adverb.vibesAdverb} {labeling.vibesLabel}</span>,
+            <span style={cssProperties(rgbColor.popularityColor)}>{adverb.popularAdverb} {labeling.popularLabel}</span>,
+            <span style={cssProperties(rgbColor.inclusiveColor)}>{adverb.inclusiveAdverb} {labeling.inclusiveLabel}</span>, and
+            <span style={cssProperties(rgbColor.intensityColor)}>{adverb.intenseAdverb} {labeling.intensityLabel}</span>.
+          </strong>
         </div>
       </div>
-    </strong>
   );
 }
 
+const adverbSelector = (singleRtg, ratingType) => {
+
+  // very, moderately, not so, not
+  let chosenAdverb = "";
+  switch (true) {
+    case (singleRtg >= 4.00 && singleRtg <= 5.00):
+      if (ratingType === "vibes") return chosenAdverb = " has great ";
+      return chosenAdverb = " is very ";
+
+    case (singleRtg >= 3.00 && singleRtg < 4.00):
+      if (ratingType === "vibes") return chosenAdverb = " has good ";
+      return chosenAdverb = " is moderately ";
+
+    case (singleRtg >= 2.00 && singleRtg < 3.00):
+      if (ratingType === "vibes") return chosenAdverb = " has ok ";
+      return chosenAdverb = " is not so ";
+
+    case (singleRtg >= 1.00 && singleRtg < 2.00):
+      if (ratingType === "vibes") return chosenAdverb = " has bad ";
+      return chosenAdverb = " is not ";
+
+    default:
+      console.error("Error in adverb rating breakdown");
+      if (ratingType === "vibes") return chosenAdverb = " has great ";
+      chosenAdverb = " is very ";
+  }
+  return chosenAdverb;
+}
+
+
+
 // add asynchronous await -> if needed
-export function ClubRtgBreakdown({}) {
-  const checkUserRtgUrl = `${process.env.REACT_APP_SERVER_URL}/clubRating/check`;
+export function ClubRtgBreakdown({width, height}) {
   // LATER: More refined coloring system
   const clubData = useSelector((state) => state.clubData);
   const clubRating = useSelector((state) => state.globalRatings);
@@ -93,17 +120,11 @@ export function ClubRtgBreakdown({}) {
   });
 
     useEffect(() => {
-        // if (clubData.name !== undefined) {
-        // api
-        // .get(checkUserRtgUrl, {
-        //     params: {clubName: clubData.name}
-        // })
-        // .then((response) => {
-        //     const hasUserRating= response.data.hasUserRating;
+        // need to increase quota -> prevent spamming
         if (clubRating.numUserRatings > 0) {
             
             const vibesColor = getRGBColors(clubRating.Vibes);
-            const intensityColor = getRGBColors(clubRating.Intensity);
+            const intensityColor = getRGBColors(clubRating.Intensity, "intensity");
             const popularityColor = getRGBColors(clubRating.Clout);
             const inclusivityColor = getRGBColors(clubRating.Inclusivity);
 
@@ -128,10 +149,6 @@ export function ClubRtgBreakdown({}) {
                 inclusivity: {rating: "NEW", color: lightblue}
             });
         }
-        // })
-        // .catch((error) => {
-        //     console.log("Error occurred: ", error);
-        // });
     }, [clubData.name, clubRating]);
     // clubData, clubRating
 
@@ -140,28 +157,46 @@ export function ClubRtgBreakdown({}) {
       <div>
         <h2>Breakdown</h2>
       </div>
-      <div className="rtg-collection">
-        <SingleRating
-          rgbColor={ratingBreakdown.vibes.color}
-          singleRating={ratingBreakdown.vibes.rating}
-          labeling="Good Vibes: "
-        />
-        <SingleRating
-          rgbColor={ratingBreakdown.intensity.color}
-          singleRating={ratingBreakdown.intensity.rating}
-          labeling="Intensity: "
-        />
-        <SingleRating
-          rgbColor={ratingBreakdown.popularity.color}
-          singleRating={ratingBreakdown.popularity.rating}
-          labeling="Popularity: "
-        />
-        <SingleRating
-          rgbColor={ratingBreakdown.inclusivity.color}
-          singleRating={ratingBreakdown.inclusivity.rating}
-          labeling="Inclusivity: "
-        />
-      </div>
+      {clubData.numUserRatings > 0 &&
+        <div className="rtg-collection">
+          <SingleRating
+            rgbColor={{vibesColor: ratingBreakdown.vibes.color,
+              popularityColor: ratingBreakdown.popularity.color,
+              inclusiveColor: ratingBreakdown.inclusivity.color,
+              intensityColor: ratingBreakdown.intensity.color}}
+            adverb={{vibesAdverb: adverbSelector(ratingBreakdown.vibes.rating, "vibes"),
+                    popularAdverb: adverbSelector(ratingBreakdown.popularity.rating, "popular"),
+                    inclusiveAdverb: adverbSelector(ratingBreakdown.inclusivity.rating, "inclusive"),
+                    intenseAdverb: adverbSelector(ratingBreakdown.intensity.rating, "intense")}}
+            labeling={{vibesLabel: "vibes",
+                      popularLabel: "popular",
+                      inclusiveLabel: "inclusive",
+                      intensityLabel: "intensive"}}
+          />
+          {/* <SingleRating
+            rgbColor={ratingBreakdown.intensity.color}
+            adverb={adverbSelector(ratingBreakdown.intensity.rating, "intense")}
+            labeling="intense"
+          />
+          <SingleRating
+            rgbColor={ratingBreakdown.popularity.color}
+            adverb={adverbSelector(ratingBreakdown.popularity.rating, "popular")}
+            labeling="popular"
+          />
+          <SingleRating
+            rgbColor={ratingBreakdown.inclusivity.color}
+            adverb={adverbSelector(ratingBreakdown.inclusivity.rating, "inclusive")}
+            labeling="inclusive"
+          /> */}
+        </div>
+      }
+      {
+        clubData.numUserRatings === 0 && 
+        <div className="no-rtg-breakdown">
+          <div>Nothing</div>
+          <div>to see here!</div>
+        </div>
+      }
     </BreakdownBubble>
   );
 }

@@ -4,7 +4,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/verify/:netid", async (req, res) => {
+router.get("/verify/:netid", verifyToken, async (req, res) => {
     // connection and get collection
     const db = conn.getDb();
     const usersCollection = await db.collection("users");

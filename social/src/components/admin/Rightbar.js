@@ -3,6 +3,7 @@ import api from "../auth/api";
 import { useNavigate } from "react-router-dom";
 import ModalComponent from "./Modal";
 import Button from "react-bootstrap/esm/Button";
+import Row from "react-bootstrap/esm/Row";
 import "./admin.css";
 
 const Rightbar = ({ state }) => {
@@ -76,6 +77,14 @@ const Rightbar = ({ state }) => {
     const newOfficersList = [...officers, officerFormValues];
     // console.log(newOfficersList);
 
+    // Check for duplicate officers in the new officer
+    const officerNetidValues = newOfficersList.map(obj => obj["netid"]);
+    const hasDuplicate = new Set(officerNetidValues).size !== officerNetidValues.length;
+    if (hasDuplicate) {
+      alert("There is already a officer title given to this netid."
+        + "Please delete that position before assigning a new title.")
+      return;
+    }
     // if netid is not in users database, send alert and return
     api
       .get(`users/verify/${officerFormValues.netid}`)
@@ -126,23 +135,23 @@ const Rightbar = ({ state }) => {
       });
   }
 
-    function onSubmitDescriptionForm(e) {
+  function onSubmitDescriptionForm(e) {
     e.preventDefault();
     const descriptionToSubmit = {
-        description: newDescription,
+      description: newDescription,
     };
 
     api
-        .post(`clubs/club/description/update/${state.activeClub}`, descriptionToSubmit) 
-        .then((res) => {
-            alert("description submitted!");
-            setDescription(newDescription);
-            setNewDescription("");
-        })
-        .catch((err) => {
-            alert(err);
-        });
-    }
+      .post(`clubs/club/description/update/${state.activeClub}`, descriptionToSubmit)
+      .then((res) => {
+        alert("description submitted!");
+        setDescription(newDescription);
+        setNewDescription("");
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
 
 
   useEffect(() => {
@@ -195,8 +204,10 @@ const Rightbar = ({ state }) => {
     }
     // Put the officer info to the Officers Object
   }, [state.activeClub]);
+  // looks like Modal is already responsive -> not going to touch that
   return (
     <>
+      {/* for editing the club description modal */}
       {isDescriptionModal && (
         <ModalComponent
           isModal={isDescriptionModal}
@@ -223,8 +234,9 @@ const Rightbar = ({ state }) => {
                 <button
                   type="submit"
                   // disabled={(Object.keys(officerFormValues).length === 0) ? true : false}
+                  // change to orange button if you can
                   className="btn btn-success float-end"
-                  // disabled={state.activeClub ? false : true}
+                // disabled={state.activeClub ? false : true}
                 >
                   Submit
                 </button>
@@ -233,6 +245,8 @@ const Rightbar = ({ state }) => {
           }
         />
       )}
+
+      {/* this is for editing the officers modal */}
       {isOfficersModal && (
         <ModalComponent
           isModal={isOfficersModal}
@@ -275,7 +289,7 @@ const Rightbar = ({ state }) => {
                       : false
                   }
                   className="btn btn-success float-end"
-                  // disabled={state.activeClub ? false : true}
+                // disabled={state.activeClub ? false : true}
                 >
                   Submit
                 </button>
@@ -284,6 +298,7 @@ const Rightbar = ({ state }) => {
           }
         />
       )}
+      {/* this is for editing the announcment modal */}
       {isAnnouncementModal && (
         <ModalComponent
           isModal={isAnnouncementModal}
@@ -311,7 +326,7 @@ const Rightbar = ({ state }) => {
                   type="submit"
                   // disabled={(Object.keys(officerFormValues).length === 0) ? true : false}
                   className="btn btn-success float-end"
-                  // disabled={state.activeClub ? false : true}
+                // disabled={state.activeClub ? false : true}
                 >
                   Submit
                 </button>
@@ -320,17 +335,22 @@ const Rightbar = ({ state }) => {
           }
         />
       )}
-      <div className="rightbar">
-        <div className="announcement-section">
+{/*----------------------------------------------------------------------------------------------- */}
+      {/* Here is the beginning of the right bar */}
+      {/* rightbar is removed -> netids in admin section no longer stacked */}
+      {/* announcement section announcement announcement title announcement title announcement edit */}
+      <div>
+        <Row className="right-sidebar-info">
           {officers.length !== 0 && (
-            <div className="announcement">
-              <div className="announcement-title">
+            <div>
+              <div>
                 <h3> Club Description </h3>
               </div>
-              <div className="announcement-text">
-                <p>{description}</p>
+              <div>
+                <p class="fw-bold fs-6">{description}</p>
+                {/* <p>The sun was shining on the sea, shining with all its might: it did its very best to make the billows smooth and bright. And this was odd, because it was the middle of the night. The moon was shining sulkily, because she thought the sun had got no business to be there after the day was done.</p> */}
               </div>
-              <div className="announcement-edit">
+              <div>
                 {
                   <Button className="orange-button"
                     onClick={() => {
@@ -344,18 +364,19 @@ const Rightbar = ({ state }) => {
               <br></br>
             </div>
           )}
-        </div>
+        </Row>
         {/* announcements section */}
-        <div className="announcement-section">
+        <Row className="right-sidebar-announce">
           {officers.length !== 0 && (
-            <div className="announcement">
-              <div className="announcement-title">
+            <div>
+              <div>
                 <h3> Club Announcement </h3>
               </div>
-              <div className="announcement-text">
-                <p>{announcement}</p>
+              <div>
+                <p class="fw-bold fs-6">{announcement}</p>
+                {/* <p>The sun was shining on the sea, shining with all its might: it did its very best to make the billows smooth and bright. And this was odd, because it was the middle of the night. The moon was shining sulkily, because she thought the sun had got no business to be there after the day was done.</p> */}
               </div>
-              <div className="announcement-edit">
+              <div>
                 {
                   <Button className="orange-button"
                     onClick={() => {
@@ -369,39 +390,38 @@ const Rightbar = ({ state }) => {
               <br></br>
             </div>
           )}
-        </div>
+        </Row>
         {/* Officers Section */}
-        <div className="officer-section">
-          <div className="officer-display">
+        <Row className="right-sidebar-admin">
             {officers.length !== 0 && (
-              <div className="announcement-title">
+              <div>
                 <h3> Club Admin </h3>
               </div>
             )}
-            {officers &&
-              officers.map((officer, index) => (
-                <div key={index} className="listrow">
-                  <span> {officer.title}</span>&nbsp;&nbsp;
-                  <span> {officer.netid}</span>
-                  <button onClick={() => handleRemoveOfficer(index)}>
-                    <strong>Remove</strong>
-                  </button>
-                </div>
-              ))}
-          </div>
-          <div className="officer-add">
-            {state.activeClub && (
-              <Button className="orange-button"
-                onClick={() => {
-                  setOfficersModal(true);
-                }}
-              >
-                {" "}
-                Add Officer
-              </Button>
-            )}
-          </div>
-        </div>
+            {/* removing listrow */}
+            {/* we have a key props thing going on */}
+            <div className="admin-members-collection">
+                {officers &&
+                officers.map((officer, index) => (
+                  <div key={index} class="mb-3">
+                    <div> {officer.netid}</div>
+                    <div> {officer.title}</div>
+                    {officers.length > 1 &&
+                    <button className="orange-oval-text"onClick={() => handleRemoveOfficer(index)}>
+                      <strong>Remove</strong>
+                    </button>
+                    }
+                  </div>
+                ))}
+            </div>
+            <div>
+                {state.activeClub && (
+                  <Button className="orange-button" onClick={() => {setOfficersModal(true);}}>
+                    Add Officer
+                  </Button>
+                )}
+            </div>
+        </Row>
       </div>
     </>
   );

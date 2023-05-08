@@ -18,6 +18,7 @@
 }
 
 .announcementText {
+    font-weight: bold;
     position: relative;
     display: flex;
     margin: auto;

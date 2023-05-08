@@ -5,8 +5,6 @@ import MainPage from "../mainpage/MainPage";
 import { useSelector } from "react-redux";
 import PostList from "../post/PostList";
 import UserRating from "../ratings/UserRating";
-import { useMediaQuery } from "react-responsive";
-import { FaSearch, FaBars, FaStar } from "react-icons/fa";
 import api from "../auth/api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -49,16 +47,14 @@ export default function HomePage() {
   useEffect(() => {
     console.log("I am at homepage, about to send verification request");
 
-    api.get("/auth/verify");
+    api
+      .get("/auth/verify")
 
-    // .then((res) => {
-    // })
-    // .catch((err) => {
-    //   if (err.response.status === 403 || 401) {
-    //     console.log(err);
-    //     navigate("/signup");
-    //   }
-    // });
+      .then((res) => {})
+      .catch((err) => {
+          console.log(err);
+        navigate("/login");
+      });
   }, [localStorage.getItem("ACCESS_TOKEN")]);
 
 
@@ -102,7 +98,7 @@ export default function HomePage() {
               // zIndex: 1,
             }}
           >
-            <Navigation width="300" height="400" />
+            <Navigation width="300px" height="400px" />
           </div>
           <div
             style={{
@@ -132,42 +128,43 @@ export default function HomePage() {
             )}
           </div>
         </>
-       
+
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
           }}
-        > {!clubData.name && (
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              position: "fixed",
-              top: 1,
-              left: 0,
-              right: 0,
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              margin: "auto",
-              textAlign: "center",
-            }}
-          >
-            {user && (
-              <h1
-                style={{
-                  fontSize: "2.5rem",
-                  color: "#333",
-                  fontWeight: "bold",
-                  marginBottom: "1rem",
-                }}
-              >
-                Hello, {user}!
-              </h1>
-            )}
-            
+        >
+          {!clubData.name && (
+            <div
+              style={{
+                flex: 1,
+                display: "flex",
+                position: "fixed",
+                top: 1,
+                left: 0,
+                right: 0,
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                margin: "auto",
+                textAlign: "center",
+              }}
+            >
+              {user && (
+                <h1
+                  style={{
+                    fontSize: "2.5rem",
+                    color: "#333",
+                    fontWeight: "bold",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  Hello, {user}!
+                </h1>
+              )}
+
               <div>
                 <h1
                   style={{
@@ -200,8 +197,7 @@ export default function HomePage() {
                   </h1>
                 </div>
               </div>
-        
-          </div>
+            </div>
           )}
           <div
             style={{

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import api from "../auth/api";
 import "./superadmin.css";
-
+import { Container, Row, Col, Button } from "react-bootstrap";
+import Navigation from "../navigation/Navigation";
 export default function SuperAdminInterface() {
   const [clubs, setClubs] = useState([]);
   const [whitelisted, setWhitelisted] = useState(false);
@@ -9,7 +11,8 @@ export default function SuperAdminInterface() {
   const [rerenderCount, setRerenderCount] = useState(0);
 
   useEffect(() => {
-    axios
+    // get all clubs from backend that requested approval
+    api
       .get(`${process.env.REACT_APP_SERVER_URL}/clubCreation`)
       .then((res) => {
         setClubs(res.data);
@@ -19,10 +22,9 @@ export default function SuperAdminInterface() {
       });
 
     // check if user is whitelisted
-    axios
+    api
       .get(
-        `${
-          process.env.REACT_APP_SERVER_URL
+        `${process.env.REACT_APP_SERVER_URL
         }/auth/whitelist/${localStorage.getItem("netid")}`
       )
       .then((res) => {
@@ -33,34 +35,53 @@ export default function SuperAdminInterface() {
       });
   }, []);
 
-  useEffect(() => {});
+  // rerender when club status changes
+  useEffect(() => { }, [rerenderCount]);
 
+  /*
+    Handles the action of accepting a club
+
+    @param club: the club object
+    @param index: the index of the club in the clubs array
+
+    @return: none
+
+  */
   const handleAccept = (club, index) => {
-    // set club status to accepted
-    axios
+    // set club status to accepted in backend
+    api
       .post(
-        `${process.env.REACT_APP_SERVER_URL}/clubCreation/a/${
-          club.name
+        `${process.env.REACT_APP_SERVER_URL}/clubCreation/a/${club.name
         }/${localStorage.getItem("netid")}`
       )
       .then((res) => {
-        console.log("club accepted");
+        // console.log("club accepted");
       })
       .catch((err) => {
-        console.log("club not accepted");
+        console.error("club not accepted");
       });
 
+    // set status of clubs in state and trigger rerender
     clubs[index]["status"] = "Accepted";
-
     setRerenderCount(rerenderCount + 1);
   };
 
+  /*
+    Handles the action of declining a club
+
+    @param club: the club object
+    @param index: the index of the club in the clubs array
+
+    @return: none
+  
+  */
   const handleDecline = (club, index) => {
-    // set club status to declined
-    axios
-      .post(
-        `${process.env.REACT_APP_SERVER_URL}/clubCreation/d/${club.name}`
-      )
+    // set club status to declined in backend
+    // removing club.name from url
+    api
+      .post(`${process.env.REACT_APP_SERVER_URL}/clubCreation/d`, {
+        clubName: club.name,
+      })
       .then((res) => {
         console.log("club declined");
       })
@@ -68,8 +89,9 @@ export default function SuperAdminInterface() {
         console.log("club not declined");
       });
 
-    clubs[index]["status"] = "Declined";
 
+    // set status of clubs in state and trigger rerender
+    clubs[index]["status"] = "Declined";
     setRerenderCount(rerenderCount + 1);
   };
 
@@ -77,89 +99,96 @@ export default function SuperAdminInterface() {
 
   if (whitelisted) {
     return (
-      <div className="superadmin">
+      <Container fluid className="superadmin">
         <h1 className="superadmin__title">Super Admin Interface</h1>
-        <div className="superadmin__clubs">
-          {clubs.map((club, index) => {
-            return (
-              <div className="superadmin__club" key={index}>
-                <div className="superadmin__club__title">
-                  Club Name:
-                </div>
-                <div className="superadmin__club__name">
-                  {club.name}
-                </div>
+        <Row>
+          <Container className="superadmin__clubs">
+            {clubs.map((club, index) => {
+              return (
+                <Container className="superadmin__club" key={index}>
+                  <div className="superadmin__club__title">
+                    Club Name:
+                  </div>
+                  <div className="superadmin__club__info">
+                    {club.name}
+                  </div>
 
-                <div className="superadmin__club__title">
-                  Description:
-                </div>
-                <div className="superadmin__club__description">
-                  {club.description}
-                </div>
+                  <div className="superadmin__club__title">
+                    Description:
+                  </div>
+                  <div className="superadmin__club__info">
+                    {club.description}
+                  </div>
 
-                <div className="superadmin__club__title">
-                  Leadership:
-                </div>
-                <div className="superadmin__club__leadership">
-                  {club.positionInClub}: {club.applicantName}
-                </div>
+                  <div className="superadmin__club__title">
+                    Leadership:
+                  </div>
+                  <div className="superadmin__club__info">
+                    {club.positionInClub}: {club.applicantName}
+                  </div>
 
-                <div className="superadmin__club__title">Email:</div>
-                <div className="superadmin__club__email">
-                  {club.email}
-                </div>
+                  <div className="superadmin__club__title">Email:</div>
+                  <div className="superadmin__club__info">
+                    {club.email}
+                  </div>
 
-                <div className="superadmin__club__title">
-                  Certificate Link:
-                </div>
-                <div className="superadmin__club__certificateLink">
-                  {club.certificateLink}
-                </div>
+                  <div className="superadmin__club__title">
+                    Certificate Link:
+                  </div>
+                  <div className="superadmin__club__info">
+                    {club.certificateLink}
+                  </div>
 
-                <div className="superadmin__club__title">
-                  Additional Info:
-                </div>
-                <div className="superadmin__club__addInfo">
-                  {club.addInfo}
-                </div>
+                  <div className="superadmin__club__title">
+                    Additional Info:
+                  </div>
+                  <div className="superadmin__club__info">
+                    {club.addInfo}
+                  </div>
 
-                <div className="superadmin__club__title">Status:</div>
-                <div className="superadmin__club__status">
-                  {club.status}
-                </div>
+                  <div className="superadmin__club__title">Status:</div>
+                  <div className="superadmin__club__info">
+                    {club.status}
+                  </div>
 
-                {club.status === "pending" && (
-                  <>
-                    <button
-                      style={{ marginRight: "10px" }}
+                  {club.status === "pending" && (
+                    <>
+                      <Button
+                        style={{ marginRight: "10px" }}
+                        className="superadmin__club__button"
+                        onClick={() => handleAccept(club, index)}
+                      >
+                        Accept
+                      </Button>
+                      <Button
+                        style={{ marginLeft: "10px" }}
+                        className="superadmin__club__button"
+                        onClick={() => handleDecline(club, index)}
+                      >
+                        Decline
+                      </Button>
+                    </>
+                  )}
+
+                  {club.status === "declined" && (
+                    <Button
                       className="superadmin__club__button"
-                      onClick={() => handleAccept(club, index)}
+                      onClick={() => handleAccept(club)}
                     >
                       Accept
-                    </button>
-                    <button
-                      style={{ marginLeft: "10px" }}
-                      className="superadmin__club__button"
-                      onClick={() => handleDecline(club, index)}
-                    >
-                      Decline
-                    </button>
-                  </>
-                )}
-
-                {club.status === "declined" && (
-                  <button
-                    className="superadmin__club__button"
-                    onClick={() => handleAccept(club)}
-                  >
-                    Accept
-                  </button>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
+                    </Button>
+                  )}
+                </Container>
+              );
+            })}
+          </Container>
+        </Row>
+        <Row>
+          <Container className="navigation-bar">
+            <Navigation width="100%" height="30%" />
+          </Container>
+        </Row>
+      </Container>
     );
   } else {
     // return html that says user is not allowed to access this page
@@ -167,7 +196,7 @@ export default function SuperAdminInterface() {
       <div className="superadmin">
         <div className="superadmin__clubs">
           <div className="superadmin__club">
-            <div className="superadmin__club__title">
+            <div className="superadmin__club__info">
               You are not allowed to access this page
             </div>
           </div>
