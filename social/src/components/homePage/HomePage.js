@@ -65,7 +65,6 @@ export default function HomePage() {
   return(
     <>
       <HomePageMin clubName={clubData.name} user={user}>
-        {/* {clubData.name && (<MainPage></MainPage>)} */}
         {clubData.name && (<PostList></PostList>)}
       </HomePageMin>
     </>

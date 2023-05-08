@@ -1,7 +1,7 @@
 .post-bubble {
     color: black;
     background-color: rgb(255 252 237);
-    margin: auto auto;
+    /* margin: auto auto; */
     /* width: 48rem; */
     border-radius: 0.5rem;
     --tw-bg-opacity: 1;

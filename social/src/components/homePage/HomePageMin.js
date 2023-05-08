@@ -141,7 +141,7 @@ export default function HomePageMin({children, clubName, user}){
                     size='lg'
                     centered={true}
                 >
-                    <Modal.Body className=''>
+                    <Modal.Body className="nav">
                         <Navigation/>
                     </Modal.Body>
                 </Modal>
@@ -152,7 +152,7 @@ export default function HomePageMin({children, clubName, user}){
                     size='lg'
                     centered={true}
                 >
-                    <Modal.Body className=''>
+                    <Modal.Body className="rtg-bubble" >
                         {clubName && <UserRating/>}
                     </Modal.Body>
                 </Modal>

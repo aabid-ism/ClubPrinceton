@@ -7,10 +7,22 @@
     overflow-y: auto;
 }  */
 
+.main-and-rating {
+    position: relative;
+}
+
+.main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .open-search-button {
     /* max-width: 80%; */
     border-radius: 15px !important;
-    min-width: 60%;
+    min-width: 70%;
+    background-color: #a7a7a7c9 !important;
     /* position: fixed;
     top: 0;
     left: 0;
@@ -20,7 +32,7 @@
 
 .toggle-button {
     border-radius: 15px !important;
-    background-color: #a39b95 !important;
+    background-color: #a7a7a7 !important;
     
 }
 

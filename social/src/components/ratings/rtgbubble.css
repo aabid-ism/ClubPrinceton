@@ -5,11 +5,12 @@ Refactor CSS ->
 .rtg-bubble {
     color: black;
     background-color: #FFE4CC;
-    margin: auto auto;
+    /* margin: auto auto; */
     /* width: 20rem; */
     border-radius: 0.5rem;
     --tw-bg-opacity: 1;
-    box-shadow: 5px 5px 10px rgb(199, 199, 199);
+    /* box-shadow: 5px 5px 10px rgb(199, 199, 199); */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding: 0.75rem;
 
     /*this is for positioning the ratings bubble

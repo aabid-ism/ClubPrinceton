@@ -12,6 +12,7 @@ import {
 } from "./PostHeader.js";
 import CommentList from "../comments/CommentList";
 import { PostComments } from "./PostInteractions";
+import { Container } from "react-bootstrap";
 
 
 function PostContent({ props }) {
@@ -27,7 +28,7 @@ function PostContent({ props }) {
 
 function PostBubble({ children}) {
   return (
-    <div
+    <Container
       className="post-bubble"
       // style={{
       //   width: width,
@@ -37,7 +38,7 @@ function PostBubble({ children}) {
       // }}
     >
       {children}
-    </div>
+    </Container>
   );
 }
 

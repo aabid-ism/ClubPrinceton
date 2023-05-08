@@ -19,7 +19,7 @@ function Navigation(props) {
 
 
   return (
-    <div className="nav" style={{ width: `${props.width}px`, height: `${props.height}px` }}>
+    <div >
       <ul className="nav-list">
         <li>
           <a href="/" className="nav-link orange-oval-text">
