@@ -171,7 +171,18 @@
 
 .left-sidebar-col {
   background-color: lightgreen;
+}
 
+/* .my-clubs-collection {
+
+} */
+
+@media (max-width: 992px) {
+  .my-clubs-collection {
+    height: 300px;
+    overflow-y: auto;
+    
+  }
 }
 
 .middle-form-col {

@@ -12,7 +12,7 @@ function Sidebar({ state, dispatchActiveClub }) {
       </div>
       {/* render club list using clubs that the netid is an admin of */}
       {/* we can use react bootstrap stack here for every button instead of a UL*/}
-      <div>
+      <div className='my-clubs-collection'>
         {/* <ul> */}
           {state.clubs?.map((club, index) => (
             <div>
@@ -25,6 +25,42 @@ function Sidebar({ state, dispatchActiveClub }) {
             </Button>
             </div>
           ))}
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
+          <div>The quick brown fox jumps over the lazy dog.</div>
         {/* </ul> */}
       </div>
     </div>
