@@ -171,6 +171,8 @@
 
 .left-sidebar-col {
   background-color: lightgreen;
+  text-align: center;
+  background-color: #FFE4CC;
 }
 
 /* .my-clubs-collection {
@@ -248,6 +250,7 @@
 /* no club selected page */
 .initial-clublist {
   background-color: #FFE4CC;
+  text-align: center;
 }
 
 .initial-welcome {

@@ -154,7 +154,7 @@ function AdminInterface() {
                     <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
                 </Col>
                 {/* Main Page with Form and Delete-Posts widget */}
-                <Col className="middle-form-col" lg={6}>
+                <Col className="middle-form-col" lg={8}>
                     
                     <Row lg>
                         {state.activeClub &&
