@@ -76,6 +76,14 @@ const Rightbar = ({ state }) => {
     const newOfficersList = [...officers, officerFormValues];
     // console.log(newOfficersList);
 
+    // Check for duplicate officers in the new officer
+    const officerNetidValues = newOfficersList.map(obj => obj["netid"]);
+    const hasDuplicate = new Set(officerNetidValues).size !== officerNetidValues.length;
+    if (hasDuplicate) {
+      alert("There is already a officer title given to this netid."
+        + "Please delete that position before assigning a new title.")
+      return;
+    }
     // if netid is not in users database, send alert and return
     api
       .get(`users/verify/${officerFormValues.netid}`)
@@ -126,23 +134,23 @@ const Rightbar = ({ state }) => {
       });
   }
 
-    function onSubmitDescriptionForm(e) {
+  function onSubmitDescriptionForm(e) {
     e.preventDefault();
     const descriptionToSubmit = {
-        description: newDescription,
+      description: newDescription,
     };
 
     api
-        .post(`clubs/club/description/update/${state.activeClub}`, descriptionToSubmit) 
-        .then((res) => {
-            alert("description submitted!");
-            setDescription(newDescription);
-            setNewDescription("");
-        })
-        .catch((err) => {
-            alert(err);
-        });
-    }
+      .post(`clubs/club/description/update/${state.activeClub}`, descriptionToSubmit)
+      .then((res) => {
+        alert("description submitted!");
+        setDescription(newDescription);
+        setNewDescription("");
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
 
 
   useEffect(() => {
@@ -224,7 +232,7 @@ const Rightbar = ({ state }) => {
                   type="submit"
                   // disabled={(Object.keys(officerFormValues).length === 0) ? true : false}
                   className="btn btn-success float-end"
-                  // disabled={state.activeClub ? false : true}
+                // disabled={state.activeClub ? false : true}
                 >
                   Submit
                 </button>
@@ -275,7 +283,7 @@ const Rightbar = ({ state }) => {
                       : false
                   }
                   className="btn btn-success float-end"
-                  // disabled={state.activeClub ? false : true}
+                // disabled={state.activeClub ? false : true}
                 >
                   Submit
                 </button>
@@ -311,7 +319,7 @@ const Rightbar = ({ state }) => {
                   type="submit"
                   // disabled={(Object.keys(officerFormValues).length === 0) ? true : false}
                   className="btn btn-success float-end"
-                  // disabled={state.activeClub ? false : true}
+                // disabled={state.activeClub ? false : true}
                 >
                   Submit
                 </button>
