@@ -395,11 +395,11 @@ const Rightbar = ({ state }) => {
             <div className="admin-members-collection">
                 {officers &&
                 officers.map((officer, index) => (
-                  <div key={index}>
-                    <span> {officer.title}</span>&nbsp;&nbsp;
-                    <span> {officer.netid}</span>
+                  <div key={index} class="mb-3">
+                    <div> {officer.netid}</div>
+                    <div> {officer.title}</div>
                     {officers.length > 1 &&
-                    <button onClick={() => handleRemoveOfficer(index)}>
+                    <button className="orange-oval-text"onClick={() => handleRemoveOfficer(index)}>
                       <strong>Remove</strong>
                     </button>
                     }

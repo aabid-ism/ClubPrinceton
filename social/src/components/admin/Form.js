@@ -147,7 +147,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                     {/* IMAGE UPLOAD */}
                     {/* {state.isSubmitted && state.missingValues.image && <div> <p style={{ color: "red" }}> Please upload a file!</p></div>} */}
                     <div className="mb-3">
-                        <label htmlFor="image_uploads" class="fw-bold">Choose image to upload (PNG & JPG ONLY)</label>
+                        <label htmlFor="image_uploads" class="fw-bold">Choose image to upload (PNG & JPG/JPEG ONLY)</label>
                         <input id="image_uploads"
                             type="file"
                             className="form-control"
