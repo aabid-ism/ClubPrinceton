@@ -339,8 +339,8 @@ const Rightbar = ({ state }) => {
                 <h3> Club Description </h3>
               </div>
               <div>
-                <p>{description}</p>
-                <p>The sun was shining on the sea, shining with all its might: it did its very best to make the billows smooth and bright. And this was odd, because it was the middle of the night. The moon was shining sulkily, because she thought the sun had got no business to be there after the day was done.</p>
+                <p class="fw-bold fs-6">{description}</p>
+                {/* <p>The sun was shining on the sea, shining with all its might: it did its very best to make the billows smooth and bright. And this was odd, because it was the middle of the night. The moon was shining sulkily, because she thought the sun had got no business to be there after the day was done.</p> */}
               </div>
               <div>
                 {
@@ -365,8 +365,8 @@ const Rightbar = ({ state }) => {
                 <h3> Club Announcement </h3>
               </div>
               <div>
-                <p>{announcement}</p>
-                <p>The sun was shining on the sea, shining with all its might: it did its very best to make the billows smooth and bright. And this was odd, because it was the middle of the night. The moon was shining sulkily, because she thought the sun had got no business to be there after the day was done.</p>
+                <p class="fw-bold fs-6">{announcement}</p>
+                {/* <p>The sun was shining on the sea, shining with all its might: it did its very best to make the billows smooth and bright. And this was odd, because it was the middle of the night. The moon was shining sulkily, because she thought the sun had got no business to be there after the day was done.</p> */}
               </div>
               <div>
                 {
@@ -398,21 +398,17 @@ const Rightbar = ({ state }) => {
                   <div key={index}>
                     <span> {officer.title}</span>&nbsp;&nbsp;
                     <span> {officer.netid}</span>
+                    {officers.length > 1 &&
                     <button onClick={() => handleRemoveOfficer(index)}>
                       <strong>Remove</strong>
                     </button>
-                    <div>The quick brown fox jumps over the lazy dog</div>
-                    <div>The quick brown fox jumps over the lazy dog</div>
-                    <div>The quick brown fox jumps over the lazy dog</div>
-                    <div>The quick brown fox jumps over the lazy dog</div>
-                    <div>The quick brown fox jumps over the lazy dog</div>
+                    }
                   </div>
                 ))}
               </div>
               <div>
               {state.activeClub && (
                 <Button className="orange-button" onClick={() => {setOfficersModal(true);}}>
-                  {/* {" "} */}
                   Add Officer
                 </Button>
               )}

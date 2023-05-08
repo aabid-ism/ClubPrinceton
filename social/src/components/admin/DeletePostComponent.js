@@ -48,34 +48,18 @@ const DeletePostComponent = ({ state }) => {
     // removed container
     return (
             <div>
-            <h3>Delete Previous Posts</h3>
+            <h2>Delete Previous Posts</h2>
             <div className='delete-posts-collection'>
             {posts?.map((post, index) => (
                 <div>
                 <Row key={post.id}>
-                    <span>{post.title}</span>
+                    <span><strong>{post.title}</strong></span>
                     <span>{formatDateTime(post.created_at)}</span>
                     <span><Button className="orange-button" onClick={() => { deletePost(post._id) }}>Delete</Button></span>
                 </Row>
                 <br />
                 </div>
             ))}
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
-                <div>The quick brown fox jumps over the lazy dog.</div>
             </div>
             </div>
     )

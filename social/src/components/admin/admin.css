@@ -132,6 +132,7 @@
     background-color: #FF9230 !important;
     color: white !important;
     border-color: #FF9230 !important;
+    font-weight: bold !important;
   }
 
 
@@ -222,10 +223,12 @@
 
 .middle-delete-posts-row {
   background-color: lightsalmon;
+  text-align: center;
 }
 
 .right-sidebar-col {
   background-color: lightskyblue;
+  text-align: center;
 }
 
 .right-sidebar-info {
@@ -245,6 +248,7 @@
 
 .full-height {
   height: 100vh;
+  background-color: #F7D7A1;
 }
 
 /* no club selected page */
