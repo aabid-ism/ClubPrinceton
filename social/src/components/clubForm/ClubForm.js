@@ -151,6 +151,8 @@ const ClubForm = () => {
                   </strong>
                 </Form.Text>
               </Form.Group>
+            </Col>
+            <Col>
               <Form.Group controlId="clubInfo">
                 <Form.Label>Club Description:</Form.Label>
                 <Form.Control
@@ -260,9 +262,9 @@ const ClubForm = () => {
             </Col>
           </Row>
           <Row className="justify-content-center">
-              <Button className="popup-btn form-btn submit" type="submit">
-                <strong>Click Here to Submit!</strong>
-              </Button>
+            <Button className="popup-btn form-btn submit" type="submit">
+              <strong>Click Here to Submit!</strong>
+            </Button>
           </Row>
         </Container>
       </Form>
