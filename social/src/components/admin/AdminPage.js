@@ -132,28 +132,14 @@ function AdminInterface() {
             {/* refactor into separate file later */}
             {/* fixed="top" */}
             <AdminNavBar />
-            {/*     
-                            <Col className="left-sidebar-col">
-                    <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
-                </Col>
-                    <Row lg="12">
-                    {!state.activeClub && 
-                    <div>
-                        <h1>Welcome to ClubPrinceton for Admin!</h1>
-                        <h5>If you are a registered administrator for a club page,
-                            please select your club on the left sidebar.</h5>
-                    </div>
-                    }
-                    </Row> */}
-            {/* Left Sidebar */}
 
             {
                 !state.activeClub &&
                 <Row className='full-height'>
-                    <Col lg={4} className="initial-clublist">
+                    <Col lg={2} className="initial-clublist">
                         <Sidebar state={state} dispatchActiveClub={dispatchActiveClub} />
                     </Col>
-                    <Col lg={8} className="initial-welcome d-flex align-items-center justify-content-center flex-column">
+                    <Col lg={10} className="initial-welcome d-flex align-items-center justify-content-center flex-column">
                         <h1>Welcome to ClubPrinceton for Admin</h1>
                         <div className="text-center mb-3">
                         <h3>If you are a registered administrator for a club page, please select your club page in the My Clubs section.</h3>

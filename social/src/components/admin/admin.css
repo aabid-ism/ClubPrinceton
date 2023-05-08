@@ -193,7 +193,7 @@
     overflow-y: auto;
   }
   .initial-welcome {
-    height: 70%;
+    height: 72%;
 
   }
 }
@@ -247,9 +247,21 @@
 
 /* no club selected page */
 .initial-clublist {
-  background-color: lightblue;
+  background-color: #FFE4CC;
 }
 
 .initial-welcome {
-  background-color: lightcoral;
+  background-color: #FFFCED;
+}
+
+.orange-oval-text:hover {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #FFE4CC;
+  outline: none;
+  background-color: orange;
+}
+
+.navbar-color {
+  background-color: #F7D7A1 !important;
 }
