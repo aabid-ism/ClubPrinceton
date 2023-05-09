@@ -16,7 +16,6 @@ function HeaderInfo({ children }){
     );
 }
 
-// TODO: change the button to actually do something useful
 function OptionButton({ props }){
     return (
         <div className="headerOption">

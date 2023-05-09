@@ -7,9 +7,6 @@ button {
   .on button{
     color: orange;
   }
-  .off {
-    color: gray;
-  }
 
 .rtg-form {
   text-align: center;

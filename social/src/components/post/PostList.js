@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import Post from "./Post";
 import "./Posts.css";
-import axios from "axios";
 import api from "../auth/api";
 import { useSelector } from "react-redux";
 
 const url = `${process.env.REACT_APP_SERVER_URL}/posts`;
+/* 
+    The post list component.
+    Allows for dynamic loading of posts and subset loading of posts for
+    viewing on a specific club page.
+    @param props: the props passed to the component
+    @return the PostList component
+*/
 
-export default function PostList({props}) {
+export default function PostList({ props }) {
   const clubData = useSelector((state) => state.clubData);
   const [postListData, setPostListData] = useState([]);
 
@@ -19,7 +25,6 @@ export default function PostList({props}) {
   }, [setPostListData, clubData]);
 
   // dynamic post loading
-  // possible TODO: pass id and do additional request, rather than time
   const loadPosts = async (event) => {
     console.log("Attempting to Load Posts!");
     console.log(postListData[postListData.length - 1]);
@@ -60,16 +65,12 @@ export default function PostList({props}) {
             ).toLocaleDateString(),
             image_url: postData.image_url,
           };
-          return (
-            <Post
-              props={postProps}
-              key={postData._id}
-            />
-          );
-          // return (<pre key={postData._id}>{JSON.stringify(postData, null, 2)}</pre>)
+          return <Post props={postProps} key={postData._id} />;
         })}
 
-        <center><button onClick={loadPosts}>See More Posts</button></center>
+        <center>
+          <button onClick={loadPosts}>See More Posts</button>
+        </center>
       </div>
     </div>
   );

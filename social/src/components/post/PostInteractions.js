@@ -10,7 +10,11 @@ function PostComments({ children }) {
         </div>
     );
 }
-
+/* 
+    The post metrics component.
+    @param props: the props passed to the component with the metrics data
+    @return the PostMetrics component with the metrics data
+*/
 function PostMetrics({ props }) {
     return (
         <div className="postMetricBar">
@@ -32,6 +36,12 @@ function PostMetrics({ props }) {
     );
 }
 
+
+/* 
+    The post comment component.
+    @param props: the props passed to the component with the comment data
+    @return the PostComment component with the comment data
+*/
 function PersonalComment({ LOGO, postId }) {
     function handleKeyDown(event) {
         if (event.key === 'Enter') {

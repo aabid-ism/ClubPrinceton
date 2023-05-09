@@ -7,7 +7,7 @@ import Announce from '../announcement/Announce';
 import Navigation from "../navigation/Navigation";
 import UserRating from '../ratings/UserRating';
 import { OvrRating } from '../clubRating/OvrRating';
-import { FaSearch, FaBars, FaCheck, FaStar } from 'react-icons/fa';
+import { FaSearch, FaBars, FaStar } from 'react-icons/fa';
 import { ClubRtgBreakdown } from '../clubRating/ClubRtgBreakdown';
 
 
