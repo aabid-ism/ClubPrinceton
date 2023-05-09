@@ -2,6 +2,7 @@ import Comment from "./Comment";
 import './Comment.css'
 import { useEffect, useState, useRef } from "react";
 import api from "../auth/api";
+import PLACEHOLDER_IMAGE from './placeholder_personal_image.jpg'
 
 const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
 
@@ -93,10 +94,18 @@ function PersonalComment({ postId, list}) {
         }
     }
     // console.log(localStorage.getItem("profilepic"))
+
+    let profile_photo;
+    try {
+        const profile_pic = localStorage.getItem("profilepic");
+        profile_photo = profile_pic;
+    } catch (e) {
+        profile_photo = PLACEHOLDER_IMAGE;
+    }
     return (
         <div className="your-comment">
             <div className="your-icon">
-                <img src={localStorage.getItem("profilepic")} alt=""></img>
+                <img src={profile_photo} alt="Profile"></img>
             </div>
             <input 
                 type="text" 

@@ -10,28 +10,6 @@ import { OvrRating } from '../clubRating/OvrRating';
 import { FaSearch, FaBars, FaCheck, FaStar } from 'react-icons/fa';
 import { ClubRtgBreakdown } from '../clubRating/ClubRtgBreakdown';
 
-function LandingPage({user}){
-    return(
-        <div>
-            <Container fluid className="landing-page">
-                
-                <Row>
-                    <Col sm={3}>
-                    </Col>
-                    <Col sm={6}>
-                        <Welcome user={user}/>
-                        <div className='search-bar-landing'>
-                            <SearchBar />
-                        </div>
-                    </Col>
-                    <Col sm={3}>
-                    </Col>
-                </Row>
-            </Container>
-        </div> 
-    );
-}
-
 export default function HomePageMin({children, clubName, user}){
     const [showRatingBar, setShowRatingBar] = useState(false);
     const [showLandingNav, setShowLandingNav] = useState(false);
@@ -136,9 +114,13 @@ export default function HomePageMin({children, clubName, user}){
                     size='lg'
                     centered={true}
                 >
-                    <Modal.Body className="rtg-bubble" >
-                        {clubName && <UserRating/>}
-                    </Modal.Body>
+                    <div className="rtg-bubble">
+                        <Modal.Header closeButton>
+                        </Modal.Header>
+                        <Modal.Body  >
+                            {clubName && <UserRating/>}
+                        </Modal.Body>
+                    </div>
                 </Modal>
             </Container>
         </div>
@@ -218,9 +200,13 @@ function NavModal({}){
                 size='lg'
                 centered={true}
             >
-                <Modal.Body className="nav">
-                    <Navigation/>
-                </Modal.Body>
+                <div className="nav">
+                    <Modal.Header closeButton>
+                    </Modal.Header>
+                    <Modal.Body >
+                        <Navigation/>
+                    </Modal.Body>
+                </div>
             </Modal>
         </>
     );
@@ -251,9 +237,13 @@ function SearchModal({clubName}){
         size='lg'
         centered={true}
         >
-        <Modal.Body className='search-bar'>
-            <SearchBar />
-        </Modal.Body>
+        <div className='search-bar'>
+            <Modal.Header closeButton>
+            </Modal.Header>
+            <Modal.Body>
+                <SearchBar />
+            </Modal.Body>
+        </div>
         </Modal>
     </>);
 }

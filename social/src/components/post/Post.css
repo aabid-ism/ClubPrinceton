@@ -11,12 +11,14 @@
 
 .post-caption-text {
     padding: 10px 0;
+    word-wrap: break-word;
 }
 
 @media (min-width: 768px) {
     .post-caption-text {
         padding: 10px 0;
         font-size: 1.25rem;
+        word-wrap: break-word;
     }
 }
 
@@ -40,15 +42,6 @@
     padding: 1rem;
 }
 
-/*Post Header*/
-.postHeader {
-    display:grid;
-    grid-template-areas: 
-        "content optionButton";
-    grid-template-columns:  3fr 0.5fr; 
-    /* min-height: 2rem; */
-}
-
 .headerIcon {
     grid-area: icon;
     max-height: 100px;
@@ -68,14 +61,12 @@
     justify-content: end;
 }
 
-img {
-    max-width:100%;
-    max-height:100%;
-}
-
 .postTitle h2{
     font-weight: bold;
-    /* font-size:x-large; */
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 100%;
+
 }
 
 .postTimelineInfo {
@@ -110,9 +101,11 @@ img {
 
 .post-image {
     border-radius: 0.5rem;
-    /* max-width: 100%; */
+    max-width: 80%;
+    object-fit: fill;
 }
 
 .post-image-wrapper {
-    max-width: 20vw;
+    display: flex;
+    justify-content: center;
 }

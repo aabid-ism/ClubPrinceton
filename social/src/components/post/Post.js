@@ -19,7 +19,7 @@ function PostContent({ props }) {
   return (<div className="postContent">
       {props.image_url !== '' ? 
       <div className="post-image-wrapper">
-          <img src={img_url} alt=""/>
+          <img className="post-image" src={img_url} alt=""/>
       </div> 
       : 
       <></>}

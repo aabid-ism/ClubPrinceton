@@ -83,7 +83,7 @@ export default function Comment({ postId, props }) {
                     {`${commentInfo} (${props.commenter_netId})`}:
                 </div>
                 <div className="commentText">
-                    {props.data}
+                    <p>{props.data}</p>
                 </div>
             </div>
 
