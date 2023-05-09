@@ -6,7 +6,7 @@ import PLACEHOLDER_IMAGE from './placeholder_personal_image.jpg'
 
 const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
 
-export default function CommentList({ props }){
+export default function CommentList({ props }) {
     // this state array should be modifiable via context or passing down when PersonalComment edits
     const [commentListData, setCommentListData] = useState([])
 
@@ -20,58 +20,58 @@ export default function CommentList({ props }){
     //   });
 
     useEffect(() => {
-        if (props.comments !== undefined){
+        if (props.comments !== undefined) {
             setCommentListData(props.comments);
         }
     }, [setCommentListData, props])
 
     const loadCommentList = async (event) => {
         let oldest;
-        if (commentListData[commentListData.length - 1] !== undefined){
+        if (commentListData[commentListData.length - 1] !== undefined) {
             oldest = commentListData[commentListData.length - 1].created_at;
         }
         else {
             oldest = '';
         }
         api
-        .get(`${url}/load/${props.postId}?oldestTime=${oldest}`)
-        .then((response) => {
-            const data = response.data;
-            setCommentListData([...commentListData, ...data]);
-        })
-        .catch((error) => {
-            console.log("Error occurred: ", error);
-        });
+            .get(`${url}/load/${props.postId}?oldestTime=${oldest}`)
+            .then((response) => {
+                const data = response.data;
+                setCommentListData([...commentListData, ...data]);
+            })
+            .catch((error) => {
+                console.log("Error occurred: ", error);
+            });
     }
-       
+
     return (
         <>
             <div className="comments" >
                 <div>
                     {
-                    commentListData.length !== 0 ?
-                    commentListData.map((commentData) => {
-                            // console.log(commentData)
-                            return (<Comment postId={props.postId }props={commentData} key={commentData._id}/>)
-                        }) :
-                    <center><h5>No Comments Yet!</h5></center>
+                        commentListData.length !== 0 ?
+                            commentListData.map((commentData) => {
+                                // console.log(commentData)
+                                return (<Comment postId={props.postId} props={commentData} key={commentData._id} />)
+                            }) :
+                            <center><h5>No Comments Yet!</h5></center>
                     }
                 </div>
-                
+
                 {commentListData.length > 4 ?
-                    <button onClick={loadCommentList}>See Comments!</button>:
+                    <button onClick={loadCommentList}>See Comments!</button> :
                     <></>}
             </div>
-            <PersonalComment postId={props.postId} list={[commentListData, setCommentListData]}/>
+            <PersonalComment postId={props.postId} list={[commentListData, setCommentListData]} />
         </>
     );
 }
 
-function PersonalComment({ postId, list}) {
+function PersonalComment({ postId, list }) {
     const [listData, updateListData] = list;
-    function handleKeyDown(event){
-        if (event.key === 'Enter'){
-            if (event.target.value !== ''){
+    function handleKeyDown(event) {
+        if (event.key === 'Enter') {
+            if (event.target.value !== '') {
                 console.log("Attempting to comment")
                 const commentData = {
                     data: event.target.value,
@@ -80,14 +80,14 @@ function PersonalComment({ postId, list}) {
                 }
                 console.log(event.target.value);
                 api
-                .post(`${url}/create`, commentData)
-                .then((response) => {
-                    const data = response.data;
-                    updateListData([data, ...listData])
-                })
-                .catch((error) => {
-                    console.log("Error occurred: ", error);
-                });
+                    .post(`${url}/create`, commentData)
+                    .then((response) => {
+                        const data = response.data;
+                        updateListData([data, ...listData])
+                    })
+                    .catch((error) => {
+                        console.log("Error occurred: ", error);
+                    });
                 // clear out the comment
                 event.target.value = '';
             }
@@ -95,21 +95,21 @@ function PersonalComment({ postId, list}) {
     }
     // console.log(localStorage.getItem("profilepic"))
 
-    let profile_photo;
-    try {
-        const profile_pic = localStorage.getItem("profilepic");
-        profile_photo = profile_pic;
-    } catch (e) {
-        profile_photo = PLACEHOLDER_IMAGE;
-    }
+    // let profile_photo;
+    // try {
+    //     const profile_pic = localStorage.getItem("profilepic");
+    //     profile_photo = profile_pic;
+    // } catch (e) {
+    //     profile_photo = PLACEHOLDER_IMAGE;
+    // }
     return (
         <div className="your-comment">
             <div className="your-icon">
-                <img src={profile_photo} alt="Profile"></img>
+                <img src={localStorage.getItem("profilepic") || PLACEHOLDER_IMAGE} alt="Profile"></img>
             </div>
-            <input 
-                type="text" 
-                className="your-comment-text" 
+            <input
+                type="text"
+                className="your-comment-text"
                 placeholder='Type Comment! (Press "Enter" to Send)'
                 onKeyDown={handleKeyDown}
                 maxLength={40}
