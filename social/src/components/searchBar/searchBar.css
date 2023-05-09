@@ -20,13 +20,14 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
   /* align-items: center; */
   max-height: 40vh;
   /* overflow-y: auto; */
   padding: 10px;
 }
 
-input[type="text"] {
+.search-input-text input[type="text"] {
   width: 100%;
   font-size: 16px;
   padding: 10px;
@@ -34,6 +35,7 @@ input[type="text"] {
   border-radius: 5px;
   margin-bottom: 10px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  
 }
 
 p {

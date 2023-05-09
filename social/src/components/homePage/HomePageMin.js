@@ -148,12 +148,10 @@ export default function HomePageMin({children, clubName, user}){
 function Welcome({ user }){
     return (
         <>
-            {/* <div>
+            <div className='club-pton-welcome'>
                 <h1
                 style={{
-                    fontSize: "3.5rem",
                     color: "#2c3e50",
-                    fontWeight: "bold",
                     marginRight: "10px",
                 }}
                 >
@@ -162,24 +160,20 @@ function Welcome({ user }){
                 <div style={{ display: "flex", flexDirection: "row" }}>
                     <h1
                         style={{
-                        fontSize: "3.5rem",
                         color: "orange",
-                        fontWeight: "bold",
                         }}
                     >
                         Club
                     </h1>
                     <h1
                         style={{
-                        fontSize: "3.5rem",
                         color: "#2c3e50",
-                        fontWeight: "bold",
                         }}
                     >
                         Princeton!
                     </h1>
                 </div>
-            </div> */}
+            </div>
             {user && (
             <h1
                 style={{
@@ -246,7 +240,9 @@ function SearchModal({clubName}){
             >
             <div className='d-flex justify-content-center align-items-center'>
                 <FaSearch className="mr-2"/>
-                {clubName !== undefined ? formatTitle(clubName, 10) : "Search"}
+                <div className='top-search-text'>
+                    {clubName !== undefined ? formatTitle(clubName, 20) : "Search"}
+                </div>
             </div>
         </Button>
         <Modal className='search-modal'

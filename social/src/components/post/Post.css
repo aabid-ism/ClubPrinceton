@@ -7,14 +7,24 @@
     --tw-bg-opacity: 1;
     box-shadow: 5px 5px 10px rgb(199, 199, 199);
     padding: 0.75rem;
-    
 }
 
+.post-caption-text {
+    padding: 10px 0;
+}
+
+@media (min-width: 768px) {
+    .post-caption-text {
+        padding: 10px 0;
+        font-size: 1.25rem;
+    }
+}
 
 .postContent {
     overflow-y: auto;
-    min-height: 4rem;
+    /* min-height: 4rem; */
     border-radius: 0.5rem;
+    padding: 0px 20px;
 }
 
 .postMetric {
@@ -34,9 +44,9 @@
 .postHeader {
     display:grid;
     grid-template-areas: 
-        " content optionButton";
+        "content optionButton";
     grid-template-columns:  3fr 0.5fr; 
-    min-height: 2rem;
+    /* min-height: 2rem; */
 }
 
 .headerIcon {
@@ -65,7 +75,7 @@ img {
 
 .postTitle h2{
     font-weight: bold;
-    /* font-size:x-large */
+    /* font-size:x-large; */
 }
 
 .postTimelineInfo {

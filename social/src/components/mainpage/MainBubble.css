@@ -73,19 +73,25 @@
 @media (max-width: 767px) {
     .main-bubble h1 {
         font-size: 2rem;
+        text-align: center;
     }
     
     .main-bubble p {
         font-weight: bold;
+        font-size: 1rem;
+        text-align: center;
     }
 }
 
 @media (min-width: 768px) {
     .main-bubble h1 {
         font-size: 3rem;
+        text-align: center;
     }
     
     .main-bubble p {
         font-weight: bold;
+        font-size: 1.25rem;
+        text-align: center;
     }
 }

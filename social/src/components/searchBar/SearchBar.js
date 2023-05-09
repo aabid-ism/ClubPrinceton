@@ -87,10 +87,10 @@ function SearchBar(props) {
   return (
     <div
     >
-      <div>
+      <div className='search-input-text'>
         <input
           type="text"
-          placeholder="Search..."
+          placeholder="Search for a club!"
           onChange={handleSearchTermChange}
           autoFocus={true}
         />

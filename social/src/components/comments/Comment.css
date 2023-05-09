@@ -38,7 +38,7 @@
 
 .comments {
     overflow-y: auto;
-    height: 20rem;
+    max-height: 15rem;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -47,10 +47,23 @@
 
 .your-comment{
     display: grid;
-    padding: 20px;
+    padding: 1rem;
     grid-template-areas: 
         "your-icon your-comment-text";
-    grid-template-columns: 1fr 8fr; 
+    grid-template-columns: 0fr 8fr; 
     align-items: center;
+    column-gap: 10px;
 }
+
+.your-comment-text input::placeholder {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+@media (max-width: 768px){
+    .your-comment-text {
+        font-size: 0.65rem;
+    }
+}
+
 

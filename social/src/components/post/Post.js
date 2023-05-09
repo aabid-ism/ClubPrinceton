@@ -17,13 +17,15 @@ function PostContent({ props }) {
   const img_url = `https://${process.env.REACT_APP_AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/images/${props.image_url}`;
   // console.log(img_url)
   return (<div className="postContent">
-    {props.image_url !== '' ? 
-    <div className="post-image-wrapper">
-        <img src={img_url} alt=""/>
-    </div> 
-    : 
-    <></>}
-    {props.content}
+      {props.image_url !== '' ? 
+      <div className="post-image-wrapper">
+          <img src={img_url} alt=""/>
+      </div> 
+      : 
+      <></>}
+      <div className="post-caption-text">
+        {props.content}
+      </div>
     </div>);
 }
 

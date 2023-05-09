@@ -4,6 +4,7 @@ import "./Posts.css";
 import axios from "axios";
 import api from "../auth/api";
 import { useSelector } from "react-redux";
+import { Container } from "react-bootstrap";
 
 const url = `${process.env.REACT_APP_SERVER_URL}/posts`;
 
@@ -47,8 +48,9 @@ export default function PostList({props}) {
   // otherwise render nothing
   return (
     <div className="posts">
-      <div>
-        {postListData.map((postData) => {
+        {
+        postListData.length !== 0 ?
+        postListData.map((postData) => {
           const postProps = {
             caption: postData.caption,
             creator: postData.netId,
@@ -66,11 +68,16 @@ export default function PostList({props}) {
               key={postData._id}
             />
           );
-          // return (<pre key={postData._id}>{JSON.stringify(postData, null, 2)}</pre>)
-        })}
-
-        <center><button onClick={loadPosts}>See More Posts</button></center>
-      </div>
+          
+        }) 
+        :
+        <center><h3>No Posts Yet!</h3></center>
+        }
+        {postListData.length > 4 ?
+          <center><button onClick={loadPosts}>See More Posts</button></center>
+          :
+          <></>
+          }
     </div>
   );
 }

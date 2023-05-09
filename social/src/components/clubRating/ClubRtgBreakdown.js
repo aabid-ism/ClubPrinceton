@@ -155,7 +155,9 @@ export function ClubRtgBreakdown({width, height}) {
   return (
     <BreakdownBubble>
       <div>
-        <h2>Breakdown</h2>
+        <center>
+          <h1>Breakdown</h1>
+        </center>
       </div>
       {clubData.numUserRatings > 0 &&
         <div className="rtg-collection">
@@ -171,7 +173,7 @@ export function ClubRtgBreakdown({width, height}) {
             labeling={{vibesLabel: "vibes",
                       popularLabel: "popular",
                       inclusiveLabel: "inclusive",
-                      intensityLabel: "intensive"}}
+                      intensityLabel: "intense"}}
           />
           {/* <SingleRating
             rgbColor={ratingBreakdown.intensity.color}
@@ -193,8 +195,7 @@ export function ClubRtgBreakdown({width, height}) {
       {
         clubData.numUserRatings === 0 && 
         <div className="no-rtg-breakdown">
-          <div>Nothing</div>
-          <div>to see here!</div>
+          <div>Nothing to see here!</div>
         </div>
       }
     </BreakdownBubble>
