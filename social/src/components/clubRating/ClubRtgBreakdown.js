@@ -202,7 +202,12 @@ export function ClubRtgBreakdown({ width, height }) {
           <h1>Breakdown</h1>
         </center>
       </div>
-      {clubData.numUserRatings > 3 && (
+      {clubRating.numUserRatings <= 3 && (
+        <div className="no-breakdown">
+          Nothing to see here!
+        </div>
+      )}
+      {clubRating.numUserRatings > 3 && (
         <div className="rtg-collection">
           <SingleRating
             rgbColor={{

@@ -55,6 +55,11 @@
     place-items: center;
 }
 
+.no-breakdown {
+    color: lightblue;
+    font-weight: bold;
+}
+
 .rtg-breakdown-group {
     display: flex;
     position: fixed;
