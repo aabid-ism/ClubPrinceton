@@ -22,7 +22,7 @@ router.get("/", verifyToken, async (req, res) => {
 // posts an accepted club to the clubCreation database
 // makes club requester an admin member in users collection
 // adds accepted club to the clubs database
-router.post("/a/:name/:netid", async (req, res) => {
+router.post("/a/:name", async (req, res) => {
   try {
     const db = conn.getDb();
     const collection = await db.collection("clubCreation");
@@ -30,19 +30,20 @@ router.post("/a/:name/:netid", async (req, res) => {
     if (!club) {
       return res.status(404).send("Club not found");
     }
+    applicantNetid = club.requesterID;
     await collection.updateOne(
       { name: req.params.name },
       { $set: { status: "accepted" } }
     );
 
     // add club under admin_clubs field in users collection
-    const collection1 = db.collection("users");
-    const user = await collection1.findOne({ netid: req.params.netid });
+    const usersCollection = db.collection("users");
+    const user = await usersCollection.findOne({ netid: applicantNetid });
     if (!user) {
       return res.status(404).send("User not found");
     }
-    await collection1.updateOne(
-      { netid: req.params.netid },
+    await usersCollection.updateOne(
+      { netid: applicantNetid },
       { $push: { admin_clubs: req.params.name } }
     );
 
@@ -50,9 +51,8 @@ router.post("/a/:name/:netid", async (req, res) => {
     const clubData = getClubData(club);
     // new club data in clubs collection is now accepted
     clubData.status = "accepted";
-    console.log("to be inserted club data: " + JSON.stringify(clubData));
-    const collection2 = db.collection("clubs");
-    const result = await collection2.insertOne(clubData);
+    const clubsCollection = db.collection("clubs");
+    const result = await clubsCollection.insertOne(clubData);
     res.send("Club accepted").status(200);
   }
   catch (err) {

@@ -61,7 +61,7 @@ export default function SuperAdminInterface() {
     api
       .post(
         `${process.env.REACT_APP_SERVER_URL}/clubCreation/a/${club.name
-        }/${localStorage.getItem("netid")}`
+        }`
       )
       .then((res) => {
         // console.log("club accepted");
