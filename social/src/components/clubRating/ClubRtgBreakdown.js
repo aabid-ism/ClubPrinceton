@@ -36,7 +36,7 @@ function roundHundreth(value) {
 // @param: singleRating -> single rating value
 // @param: ratingType -> type of rating
 // @return: object with red, green, blue values
-function getRGBColors(singleRating, ratingType = null) {
+function getRGBColors(singleRating, ratingType) {
   // error -> should not enter here
   if (singleRating < 1) {
     console.error("Rating factor of Club Rating is less than one");
@@ -131,7 +131,6 @@ const adverbSelector = (singleRtg, ratingType) => {
       return (chosenAdverb = " is not ");
 
     default:
-      console.error("Error in adverb rating breakdown");
       if (ratingType === "vibes") return (chosenAdverb = " has great ");
       chosenAdverb = " is very ";
   }
@@ -159,15 +158,12 @@ export function ClubRtgBreakdown({ width, height }) {
 
   // calculate the color and overall rating for each rating factor
   useEffect(() => {
-    // need to increase quota -> prevent spamming
-    if (clubRating.numUserRatings > 0) {
-      const vibesColor = getRGBColors(clubRating.Vibes);
-      const intensityColor = getRGBColors(
-        clubRating.Intensity,
-        "intensity"
-      );
-      const popularityColor = getRGBColors(clubRating.Clout);
-      const inclusivityColor = getRGBColors(clubRating.Inclusivity);
+    // won't display club rating until 3 unique users have rated the club
+    if (clubRating.numUserRatings > 3) {
+      const vibesColor = getRGBColors(clubRating.Vibes, "vibes");
+      const intensityColor = getRGBColors(clubRating.Intensity,"intensity");
+      const popularityColor = getRGBColors(clubRating.Clout, "clout");
+      const inclusivityColor = getRGBColors(clubRating.Inclusivity, "inclusivity");
 
       const vibesRating = roundHundreth(clubRating.Vibes);
       const intensityRating = roundHundreth(clubRating.Intensity);
@@ -206,7 +202,7 @@ export function ClubRtgBreakdown({ width, height }) {
           <h1>Breakdown</h1>
         </center>
       </div>
-      {clubData.numUserRatings > 0 && (
+      {clubData.numUserRatings > 3 && (
         <div className="rtg-collection">
           <SingleRating
             rgbColor={{

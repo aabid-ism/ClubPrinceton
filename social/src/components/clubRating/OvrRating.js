@@ -54,9 +54,8 @@ export function OvrRating() {
 
 
     useEffect(() => {
-        // increase this to > 5 later -> spamming measure
-        if (clubRating.numUserRatings > 0) {
-            console.log("I expect to be here after update!!")
+        // won't display club rating until 3 unique users have rated the club
+        if (clubRating.numUserRatings > 3) {
             const newClubRating = getRGBColors(clubRating);
             setOverallRating(newClubRating);
         }
