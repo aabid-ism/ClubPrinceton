@@ -270,7 +270,7 @@ function UserRating(props) {
                   transitionDuration: "0.4s",
                 }}
               >
-                Submit a Rating
+                Click to Start Rating!
               </button>
             )}
             {currentlyRating && (
