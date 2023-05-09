@@ -11,7 +11,7 @@ import {
   Navbar,
   NavDropdown,
 } from "react-bootstrap";
-import NavBar from "./NavBar";
+import NavBar from "./NavBar.js";
 
 /* 
   SuperAdminInterface component for the super admin interface.

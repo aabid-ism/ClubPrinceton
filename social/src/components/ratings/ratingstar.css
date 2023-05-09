@@ -1,13 +1,15 @@
 button {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-  }
-  .on button{
-    color: orange;
-  }
-
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.on button {
+  color: orange;
+}
+.off {
+  color: gray;
+}
 .rtg-form {
   text-align: center;
 }
