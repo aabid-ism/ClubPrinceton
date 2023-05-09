@@ -100,12 +100,12 @@ router.post("/signup", async (req, res) => {
 
 router.get("/verify", verifyToken, (req, res) => {
   console.log("Successfully Verified Access Token!");
-  return res.status(200);
+  return res.status(200).send("Successfully Authenticated!");
 });
 
 router.get("/refresh-token", verifyToken, (req, res) => {
   console.log("Successfully Verified Access Token!");
-  return res.status(200);
+  return res.status(200).send("Successfully Authenticated!");
 });
 
 

@@ -229,6 +229,7 @@ const Rightbar = ({ state }) => {
                     onChange={handleDescriptionChange}
                     placeholder="Insert New Description..."
                     aria-describedby="text"
+                    maxLength={150}
                   />
                 </div>
                 <button
@@ -268,6 +269,7 @@ const Rightbar = ({ state }) => {
                     onChange={handleOfficerInputChange}
                     placeholder="Insert Officer Title..."
                     aria-describedby="text"
+                    maxLength={20}
                   />
                 </div>
                 <div className="mb-3">
@@ -279,6 +281,7 @@ const Rightbar = ({ state }) => {
                     onChange={handleOfficerInputChange}
                     placeholder="Insert Officer netid..."
                     aria-describedby="text"
+                    maxLength={10}
                   />
                 </div>
                 <button
@@ -320,6 +323,7 @@ const Rightbar = ({ state }) => {
                     onChange={handleAnnouncementChange}
                     placeholder="Insert New Announcement..."
                     aria-describedby="text"
+                    maxLength={50}
                   />
                 </div>
                 <button
@@ -335,7 +339,7 @@ const Rightbar = ({ state }) => {
           }
         />
       )}
-{/*----------------------------------------------------------------------------------------------- */}
+      {/*----------------------------------------------------------------------------------------------- */}
       {/* Here is the beginning of the right bar */}
       {/* rightbar is removed -> netids in admin section no longer stacked */}
       {/* announcement section announcement announcement title announcement title announcement edit */}
@@ -374,7 +378,6 @@ const Rightbar = ({ state }) => {
               </div>
               <div>
                 <p class="fw-bold fs-6">{announcement}</p>
-                {/* <p>The sun was shining on the sea, shining with all its might: it did its very best to make the billows smooth and bright. And this was odd, because it was the middle of the night. The moon was shining sulkily, because she thought the sun had got no business to be there after the day was done.</p> */}
               </div>
               <div>
                 {
@@ -393,34 +396,34 @@ const Rightbar = ({ state }) => {
         </Row>
         {/* Officers Section */}
         <Row className="right-sidebar-admin">
-            {officers.length !== 0 && (
-              <div>
-                <h3> Club Admin </h3>
-              </div>
-            )}
-            {/* removing listrow */}
-            {/* we have a key props thing going on */}
-            <div className="admin-members-collection">
-                {officers &&
-                officers.map((officer, index) => (
-                  <div key={index} class="mb-3">
-                    <div> {officer.netid}</div>
-                    <div> {officer.title}</div>
-                    {officers.length > 1 &&
-                    <button className="orange-oval-text"onClick={() => handleRemoveOfficer(index)}>
+          {officers.length !== 0 && (
+            <div>
+              <h3> Club Admin </h3>
+            </div>
+          )}
+          {/* removing listrow */}
+          {/* we have a key props thing going on */}
+          <div className="admin-members-collection">
+            {officers &&
+              officers.map((officer, index) => (
+                <div key={index} class="mb-3">
+                  <div> {officer.netid}</div>
+                  <div> {officer.title}</div>
+                  {officers.length > 1 &&
+                    <button className="orange-oval-text" onClick={() => handleRemoveOfficer(index)}>
                       <strong>Remove</strong>
                     </button>
-                    }
-                  </div>
-                ))}
-            </div>
-            <div>
-                {state.activeClub && (
-                  <Button className="orange-button" onClick={() => {setOfficersModal(true);}}>
-                    Add Officer
-                  </Button>
-                )}
-            </div>
+                  }
+                </div>
+              ))}
+          </div>
+          <div>
+            {state.activeClub && (
+              <Button className="orange-button" onClick={() => { setOfficersModal(true); }}>
+                Add Officer
+              </Button>
+            )}
+          </div>
         </Row>
       </div>
     </>

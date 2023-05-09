@@ -130,6 +130,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                                     value={state.inputs.title}
                                     placeholder="Insert Title..."
                                     aria-describedby="text"
+                                    maxLength={40}
                                     onChange={(e) => dispatchTitle(e.target.value)}
                                 />
                             </div>
@@ -141,6 +142,7 @@ function Form({ state, dispatchFile, dispatchCaption, dispatchTitle, dispatchCle
                                 name="caption"
                                 value={state.inputs.caption}
                                 onChange={(e) => dispatchCaption(e.target.value)}
+                                maxLength={150}
                                 rows="6"
                                 cols="50" >
                             </textarea>
