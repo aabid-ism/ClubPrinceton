@@ -27,10 +27,11 @@ router.post("/a/:name", async (req, res) => {
     const db = conn.getDb();
     const collection = await db.collection("clubCreation");
     const club = await collection.findOne({ name: req.params.name });
+
     if (!club) {
       return res.status(404).send("Club not found");
     }
-    applicantNetid = club.requesterID;
+    const applicantNetid = club.requesterID;
     await collection.updateOne(
       { name: req.params.name },
       { $set: { status: "accepted" } }
