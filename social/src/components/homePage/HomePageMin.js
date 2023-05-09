@@ -7,9 +7,13 @@ import Announce from '../announcement/Announce';
 import Navigation from "../navigation/Navigation";
 import UserRating from '../ratings/UserRating';
 import { OvrRating } from '../clubRating/OvrRating';
-import { FaSearch, FaBars, FaCheck, FaStar } from 'react-icons/fa';
+import { FaSearch, FaBars, FaStar } from 'react-icons/fa';
 import { ClubRtgBreakdown } from '../clubRating/ClubRtgBreakdown';
 
+/* Home page for the website
+    @param - none
+    @return - home page
+*/
 export default function HomePageMin({children, clubName, user}){
     const [showRatingBar, setShowRatingBar] = useState(false);
     const [showLandingNav, setShowLandingNav] = useState(false);
@@ -131,6 +135,10 @@ export default function HomePageMin({children, clubName, user}){
     );
 }
 
+/* Welcome message for the user
+    @param - none
+    @return - welcome message
+*/
 function Welcome({ user }){
     return (
         <>
@@ -175,7 +183,10 @@ function Welcome({ user }){
         </>
     )
 }
-
+/* Navigation modal for the website
+    @param - none
+    @return - navigation modal
+*/
 function NavModal({}){
     const [showNavBar, setShowNavBar] = useState(false);
     const handleNavClose = () => {setShowNavBar(false)};
@@ -216,6 +227,10 @@ function NavModal({}){
     );
 }
 
+/* Search modal for the website
+    @param - props containing club name
+    @return - search modal
+*/
 function SearchModal({clubName}){
     const [showSearchBar, setShowSearchBar] = useState(false);
     const handleSearchClose = () => {setShowSearchBar(false)};

@@ -2,18 +2,26 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
+// initial state of the store
 const initialState = {
   results: [],
   numResults: 0,
   clubData: {},
   currentRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
   previousRatings: { Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
-  globalRatings: { numUserRatings: 0, Clout: 0, Vibes: 0, Inclusivity: 0, Intensity: 0 },
+  globalRatings: {
+    numUserRatings: 0,
+    Clout: 0,
+    Vibes: 0,
+    Inclusivity: 0,
+    Intensity: 0,
+  },
   currentlyRating: false,
   // checks if the club has been rated so far
   hasOneUserRtg: false,
 };
 
+// reducer for the store
 const reducer = (state = initialState, action) => {
   console.log("Current state:", state, "Action:", action);
   switch (action.type) {
@@ -33,12 +41,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         hasOneUserRtg: action.payload.hasOneUserRtg,
       };
-    // case "SET_USER":
-    //   return {
-    //     ...state,
-    //     user: action.payload.user,
-    //   };
-    // number of user ratings for a club is also a parameter in global ratings
     case "SET_GLOBAL_RATINGS":
       return {
         ...state,
@@ -83,13 +85,13 @@ const reducer = (state = initialState, action) => {
           Inclusivity: 0,
           Intensity: 0,
         },
-        // currentlyRating: false,
       };
     default:
       return state;
   }
 };
 
+// create store with thunk middleware and reducer
 const store = createStore(
   reducer,
   composeWithDevTools(applyMiddleware(thunk))

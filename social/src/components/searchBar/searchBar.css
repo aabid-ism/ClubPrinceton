@@ -1,6 +1,4 @@
 .search-bar {
-  /* width: 100%;
-  height: 100%; */
   background-color: #ffe4cc;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -8,22 +6,16 @@
   flex-direction: column;
   max-height: 50vh;
   overflow-y: auto;
-  /* align-items: center; */
-  /* padding: 20px; bootstrap container modal handles*/ 
 }
 
 .search-bar-landing {
-  /* width: 100%;
-  height: 100%; */
   background-color: #ffe4cc;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  /* align-items: center; */
   max-height: 40vh;
-  /* overflow-y: auto; */
   padding: 10px;
 }
 

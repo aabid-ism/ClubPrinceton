@@ -4,10 +4,16 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import "./ratingstar.css";
 import api from "../auth/api";
-
+import SingleRating from "./SingleRating";
 const url = `${process.env.REACT_APP_SERVER_URL}/ratings`;
 
-// user rating component, bottom right of club page
+/*
+  The user rating component. 
+  Contains the form for the user to rate a club.
+  @param props: the props passed to the component. This shall contain
+                 the width and height of the component
+  @return the UserRating component
+*/
 function UserRating(props) {
   // get relevent data from redux store
   const clubData = useSelector((state) => state.clubData);
@@ -18,7 +24,9 @@ function UserRating(props) {
   const user = localStorage.getItem("user")?.replaceAll(/['"]+/g, "");
   const dispatch = useDispatch();
 
-  // get and set previous ratings
+  // get previous ratings from backend and dispatch to redux store
+  // everytime the user submits a rating, the previous rating is updated
+  // the global rating of a club changes, or the user selects a new club
   useEffect(() => {
     if (clubData.name) {
       api
@@ -41,7 +49,6 @@ function UserRating(props) {
     currentlyRating,
     currentRatings,
   ]);
-  // removing currentlyRating from useEffect here
 
   // if clubData changes, reset all ratings
   useEffect(() => {
@@ -50,8 +57,7 @@ function UserRating(props) {
     });
   }, [clubData]);
 
-  //submit the rating held in currentRatings
-  // made this an async/await function
+  // submit rating to backend and update global rating of club in database
   function handleSubmitRating(event) {
     // add club name and user to currentRatings
     console.log("submitting rating");
@@ -64,6 +70,7 @@ function UserRating(props) {
     const hasNonZeroValues = Object.values(currentRatings).every(
       (value) => value !== 0
     );
+    // if not, alert the user and return
     if (!hasNonZeroValues) {
       alert("Please provide a rating for all categories.");
       dispatchCurrentlyRating();
@@ -73,7 +80,7 @@ function UserRating(props) {
     // send currentRatings to backend if windows confirm returns true
     const submit = window.confirm(
       "Are you sure you want to submit this rating? You can change it later."
-    )
+    );
     if (submit) {
       const updatedClubRating = {
         numUserRatings: -1,
@@ -82,43 +89,50 @@ function UserRating(props) {
         Intensity: 1,
         Inclusivity: 1,
       };
-      const ratingFactors = ["Vibes", "Clout", "Intensity", "Inclusivity"];
+      const ratingFactors = [
+        "Vibes",
+        "Clout",
+        "Intensity",
+        "Inclusivity",
+      ];
       if (previousRatings.Vibes === 0) {
         // adding a new user rating to new overall average
         // need to do this because the initialization for club rating in the database is set to 1
         if (globalRatings.numUserRatings === 0) {
           updatedClubRating.numUserRatings = 1;
-          ratingFactors.forEach(rating => { updatedClubRating[rating] = currentRatings[rating] });
+          ratingFactors.forEach((rating) => {
+            updatedClubRating[rating] = currentRatings[rating];
+          });
           // console.log("Finished my assignments");
-        }
-        else {
+        } else {
           // adding a new user rating for a club that has been previously rated
-          updatedClubRating.numUserRatings = globalRatings.numUserRatings + 1;
+          updatedClubRating.numUserRatings =
+            globalRatings.numUserRatings + 1;
 
-          ratingFactors.forEach(rating => {
-            updatedClubRating[rating] = (
-              globalRatings[rating] * globalRatings.numUserRatings + currentRatings[rating]) /
-              (globalRatings.numUserRatings + 1)
-          }
-          );
+          ratingFactors.forEach((rating) => {
+            updatedClubRating[rating] =
+              (globalRatings[rating] * globalRatings.numUserRatings +
+                currentRatings[rating]) /
+              (globalRatings.numUserRatings + 1);
+          });
         }
-      }
-      else {
+      } else {
         // updating a previous user rating to new overall average
         updatedClubRating.numUserRatings = globalRatings.numUserRatings;
 
-        ratingFactors.forEach(rating => {
-          updatedClubRating[rating] = (
+        ratingFactors.forEach((rating) => {
+          updatedClubRating[rating] =
             (globalRatings[rating] * globalRatings.numUserRatings -
-              previousRatings[rating] + currentRatings[rating])
-            / globalRatings.numUserRatings)
+              previousRatings[rating] +
+              currentRatings[rating]) /
+            globalRatings.numUserRatings;
         });
       }
-
+      // post request to backend to update club rating
       api
         .post(`${url}/${clubData.name}/${user}`, {
           currentUserRatings: currentRatings,
-          updatedClubRating: updatedClubRating
+          updatedClubRating: updatedClubRating,
         })
         .then((response) => {
           alert("Rating Submitted Successfully!");
@@ -130,10 +144,9 @@ function UserRating(props) {
         .catch((error) => {
           console.error(error);
         });
-    }
-    else {
-      // if the user cancels, reset the state of currentRatings to what it was before the user made any changes
-
+    } else {
+      // if the user cancels, reset the state of currentRatings to what it
+      // was before the user made any changes
       dispatch({
         type: "SET_CURRENTLY_RATING",
         payload: { currentlyRating: true },
@@ -142,7 +155,7 @@ function UserRating(props) {
       return;
     }
 
-    // after pressing submit 
+    // after pressing submit
     // set previousRatings to currentRatings
     dispatch({
       type: "SET_PREVIOUS_RATINGS",
@@ -168,7 +181,7 @@ function UserRating(props) {
       type: "SET_CURRENTLY_RATING",
       payload: { currentlyRating: false },
     });
-
+    // reset currentRatings to 0
     dispatch({
       type: "SET_CURRENT_RATINGS_ALL",
       payload: {
@@ -184,11 +197,9 @@ function UserRating(props) {
 
   return (
     <RatingsBubble>
-      <form
-        className="rtg-form"
-      >
-        <div >
-          <div >
+      <form className="rtg-form">
+        <div>
+          <div>
             {!currentlyRating && clubData.name && (
               <strong> Your rating for {clubData.name}</strong>
             )}
@@ -197,7 +208,7 @@ function UserRating(props) {
             )}
           </div>
           <br></br>
-          <div >
+          <div>
             <label>
               <div>Good Vibes</div>
               <SingleRating type="Vibes"></SingleRating>
@@ -217,7 +228,7 @@ function UserRating(props) {
             <SingleRating type="Inclusivity"></SingleRating>
           </div>
           <br></br>
-          <div >
+          <div>
             {!currentlyRating && previousRatings["Vibes"] > 0 && (
               <button
                 className="rating-button"
@@ -312,67 +323,5 @@ function UserRating(props) {
     </RatingsBubble>
   );
 }
-
-// this needs to be refactored into a separate file -> UserRating component is too long
-const SingleRating = (props) => {
-  const { type } = props;
-  const clubData = useSelector((state) => state.clubData);
-  const currentRatings = useSelector((state) => state.currentRatings);
-  const previousRatings = useSelector((state) => state.previousRatings);
-  const currentlyRating = useSelector((state) => state.currentlyRating);
-  const [hover, setHover] = useState(0);
-  const [rating, setRating] = useState(0);
-
-  useEffect(() => {
-    if (currentlyRating) {
-      setRating(currentRatings[type] || 0);
-    } else {
-      setRating(previousRatings[type] || 0);
-    }
-    setHover(rating);
-  }, [
-    clubData,
-    currentRatings,
-    currentlyRating,
-    previousRatings,
-    type,
-  ]);
-
-  const dispatch = useDispatch();
-
-  function handleRating(index) {
-    if (currentlyRating) {
-      setRating(index);
-      dispatch({
-        type: "SET_CURRENT_RATINGS",
-        payload: { type: type, rating: index },
-      });
-    }
-  }
-
-  return (
-    <div className="star-rating">
-      {[...Array(5)].map((star, index) => {
-        index += 1;
-        return (
-          <button
-            type="button"
-            key={index}
-            className={index <= (hover || rating) ? "on" : "off"}
-            onClick={() => handleRating(index)}
-            onMouseEnter={() => {
-              if (currentlyRating) setHover(index);
-            }}
-            onMouseLeave={() => {
-              if (currentlyRating) setHover(rating);
-            }}
-          >
-            <span className="star">&#9733;</span>
-          </button>
-        );
-      })}
-    </div>
-  );
-};
 
 export default UserRating;

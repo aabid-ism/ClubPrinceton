@@ -4,6 +4,13 @@ import express from "express";
 
 const router = express.Router();
 
+/* 
+    @route GET /users/verify/:netid
+    @desc verify that a user exists
+    @access with verification token
+    @returns 200 if user exists, 400 if user does not exist
+
+*/
 router.get("/verify/:netid", verifyToken, async (req, res) => {
     // connection and get collection
     const db = conn.getDb();
@@ -26,4 +33,5 @@ router.get("/verify/:netid", verifyToken, async (req, res) => {
         res.sendStatus(400);
     }
 });
+
 export default router;

@@ -4,7 +4,13 @@ import verifyToken from "../jwt.js";
 
 const router = express.Router();
 
-// endpoint to get a rating from the database
+/* 
+    @route GET /ratings/:name
+    @desc get a club's rating
+    @access with verification token
+    @returns 200 with ratings object if club exists, 404 if club 
+    does not exist
+*/
 router.get("/:name", verifyToken, async (req, res) => {
   const db = conn.getDb();
   const collection = await db.collection("clubs");
@@ -31,7 +37,12 @@ router.get("/:name", verifyToken, async (req, res) => {
   }
 });
 
-// endpoint to add a rating to the database
+/*
+    @route POST /ratings/:name/:username
+    @desc update or insert a club's rating from a specific user
+    @access with verification token
+    @returns 200 if club exists, 404 if club does not exist
+*/
 router.post("/:name/:username", verifyToken, async (req, res) => {
   // need to have zero ratings error handling here!
   const db = conn.getDb();
@@ -57,17 +68,21 @@ router.post("/:name/:username", verifyToken, async (req, res) => {
   const clubCollection = await db.collection("clubs");
   if (!result) {
     // no previous rating found, insert new rating
-    const insertResult = await ratingsCollection.insertOne(currentUserRatings);
+    const insertResult = await ratingsCollection.insertOne(
+      currentUserRatings
+    );
 
     // if no previous rating found -> then we want to update the clubs collection's numUserRatings
     // parameter -> allows for easy average calculation on the frontend for automatic rendering
     await clubCollection.updateOne(
       { name: req.params.name },
-      { $set: { numUserRatings: req.body.updatedClubRating.numUserRatings } }
+      {
+        $set: {
+          numUserRatings: req.body.updatedClubRating.numUserRatings,
+        },
+      }
     );
-
-  }
-  else {
+  } else {
     // previous rating found, update rating
     await ratingsCollection.updateOne(
       { club: req.params.name, user: req.params.username },
@@ -75,47 +90,28 @@ router.post("/:name/:username", verifyToken, async (req, res) => {
     );
   }
 
-  // update the overall rating of the club
-  // const ag = [
-  //   {
-  //     $match: { club: req.params.name }, // match clubs with the given name
-  //   },
-  //   {
-  //     $group: {
-  //       _id: null,
-  //       Vibes: { $avg: "$Vibes" },
-  //       Clout: { $avg: "$Clout" },
-  //       Inclusivity: { $avg: "$Inclusivity" },
-  //       Intensity: { $avg: "$Intensity" },
-  //     },
-  //   },
-  // ];
-
-  // const allRatings = await ratingsCollection.aggregate(ag).toArray();
-
-  // if (allRatings.length === 0) {
-  //   // no ratings found for the club
-  //   return res.status(404).send({ message: "Club not found" });
-  // }
-
-  // const avgRating = allRatings[0];
-
-  // update only the rating field of the club
-  // console.log(avgRating);
+  // update the club's rating
   try {
     const clubResult = await clubCollection.updateOne(
       { name: req.params.name },
-      { $set: { rating: newClubRating } },
+      { $set: { rating: newClubRating } }
     );
     console.log(clubResult);
     res.status(200).send(clubResult);
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err);
     res.status(500).send({ message: "Error updating club rating" });
   }
 });
 
+/*
+
+    @route GET /ratings/:club/:user
+    @desc get a club's rating from a specific user
+    @access with verification token
+    @returns 200 with ratings object if club exists, 404 if club
+    does not exist
+*/
 
 router.get("/:club/:user", verifyToken, async (req, res) => {
   const db = conn.getDb();
@@ -129,7 +125,6 @@ router.get("/:club/:user", verifyToken, async (req, res) => {
       $match: { club: query, user: user }, // match clubs with the given name
     },
     {
-      // changed to all zeroes? -> ask Roy
       $project: {
         _id: 0,
         Vibes: 1,
@@ -142,8 +137,7 @@ router.get("/:club/:user", verifyToken, async (req, res) => {
 
   // run pipeline
   var result = await collection.aggregate(agg).toArray();
-  // print results
-  // console.log(result);
+
   result = result[0];
 
   if (
@@ -155,7 +149,6 @@ router.get("/:club/:user", verifyToken, async (req, res) => {
     result = { Vibes: 0, Clout: 0, Inclusivity: 0, Intensity: 0 };
   }
 
-  // console.log(result);
   res.send(result).status(200);
 });
 

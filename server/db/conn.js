@@ -5,6 +5,7 @@ let db;
 
 const uri = process.env.ATLAS_URI || "";
 
+// connect to the database
 const client = new MongoClient(uri,
   {
     useNewUrlParser: true, useUnifiedTopology: true,
@@ -23,32 +24,3 @@ export default {
     return db;
   }
 }
-
-
-// async function run() {
-
-//   const uri = process.env.ATLAS_URI || "";
-//   const client = new MongoClient(uri,
-//     { useNewUrlParser: true, useUnifiedTopology: true,
-//       serverApi: ServerApiVersion.v1 });
-
-//   try {
-//     // Connect the client to the server (optional starting in v4.7)
-//     // console.log("trying to connect to mongodb...");
-//     // await client.connect();
-//     // console.log("connected!");
-//     // Establish and verify connection
-//     conn = await client.connect();
-//     db = conn.db("clubPrinceton");
-//     console.log("loaded database!");
-//     console.log("Connected successfully to server");
-//     client.connect()
-//   } finally {
-//     // Ensures that the client will close when you finish/error
-//     await client.close();
-//   }
-// }
-
-// run().catch(console.dir);
-
-// module.exports = db;
