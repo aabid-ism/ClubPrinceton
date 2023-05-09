@@ -32,19 +32,6 @@ function PostContent({ props }) {
     </div>);
 }
 
-  return (
-    <div className="postContent">
-      {props.image_url !== "" ? (
-        <div className="post-image-wrapper">
-          <img src={img_url} alt="" />
-        </div>
-      ) : (
-        <></>
-      )}
-      {props.content}
-    </div>
-  );
-}
 
 function PostBubble({ children }) {
   return <Container className="post-bubble">{children}</Container>;

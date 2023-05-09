@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./searchBar.css";
 import api from "../auth/api";
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 const url = `${process.env.REACT_APP_SERVER_URL}/clubs`;
 const MAX_TITLE_LENGTH = 40;
 

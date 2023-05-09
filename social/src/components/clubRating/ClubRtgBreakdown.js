@@ -223,18 +223,7 @@ export function ClubRtgBreakdown({ width, height }) {
                       inclusiveLabel: "inclusive",
                       intensityLabel: "intense"}}
           />
-          {/* <SingleRating
-            rgbColor={ratingBreakdown.intensity.color}
-            adverb={adverbSelector(ratingBreakdown.intensity.rating, "intense")}
-            labeling="intense"
-          />
-        </div>
-      )}
-      {clubData.numUserRatings === 0 && (
-        <div className="no-rtg-breakdown">
-          <div>Nothing to see here!</div>
-        </div>
-      )}
-    </BreakdownBubble>
-  );
+        </div>)
+        }
+    </BreakdownBubble>);
 }
