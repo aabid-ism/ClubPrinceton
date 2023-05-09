@@ -202,7 +202,9 @@ export function ClubRtgBreakdown({ width, height }) {
   return (
     <BreakdownBubble>
       <div>
-        <h2>Breakdown</h2>
+        <center>
+          <h1>Breakdown</h1>
+        </center>
       </div>
       {clubData.numUserRatings > 0 && (
         <div className="rtg-collection">
@@ -211,39 +213,26 @@ export function ClubRtgBreakdown({ width, height }) {
               vibesColor: ratingBreakdown.vibes.color,
               popularityColor: ratingBreakdown.popularity.color,
               inclusiveColor: ratingBreakdown.inclusivity.color,
-              intensityColor: ratingBreakdown.intensity.color,
-            }}
-            adverb={{
-              vibesAdverb: adverbSelector(
-                ratingBreakdown.vibes.rating,
-                "vibes"
-              ),
-              popularAdverb: adverbSelector(
-                ratingBreakdown.popularity.rating,
-                "popular"
-              ),
-              inclusiveAdverb: adverbSelector(
-                ratingBreakdown.inclusivity.rating,
-                "inclusive"
-              ),
-              intenseAdverb: adverbSelector(
-                ratingBreakdown.intensity.rating,
-                "intense"
-              ),
-            }}
-            labeling={{
-              vibesLabel: "vibes",
-              popularLabel: "popular",
-              inclusiveLabel: "inclusive",
-              intensityLabel: "intensive",
-            }}
+              intensityColor: ratingBreakdown.intensity.color}}
+            adverb={{vibesAdverb: adverbSelector(ratingBreakdown.vibes.rating, "vibes"),
+                    popularAdverb: adverbSelector(ratingBreakdown.popularity.rating, "popular"),
+                    inclusiveAdverb: adverbSelector(ratingBreakdown.inclusivity.rating, "inclusive"),
+                    intenseAdverb: adverbSelector(ratingBreakdown.intensity.rating, "intense")}}
+            labeling={{vibesLabel: "vibes",
+                      popularLabel: "popular",
+                      inclusiveLabel: "inclusive",
+                      intensityLabel: "intense"}}
+          />
+          {/* <SingleRating
+            rgbColor={ratingBreakdown.intensity.color}
+            adverb={adverbSelector(ratingBreakdown.intensity.rating, "intense")}
+            labeling="intense"
           />
         </div>
       )}
       {clubData.numUserRatings === 0 && (
         <div className="no-rtg-breakdown">
-          <div>Nothing</div>
-          <div>to see here!</div>
+          <div>Nothing to see here!</div>
         </div>
       )}
     </BreakdownBubble>

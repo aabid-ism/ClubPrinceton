@@ -5,6 +5,7 @@
         color: black;
         /* font-weight: bold; */
         font-size: 0.9rem;
+        word-wrap: break-word;
     }
 
     .commenter-text {
@@ -16,8 +17,11 @@
 @media (min-width: 768px) {
     .commentText {
         color: black;
-        /*   */
         font-size: 1.1rem;
+    }
+
+    .commentText p {
+        word-wrap: break-word;
     }
 
     .commenter-text {
@@ -27,9 +31,7 @@
 }
 
 
-.comment {
-    display: flex;
-    justify-content: space-between;
+.comment { 
     border-radius: 0.5rem;
     border-color: rgb(228, 224, 210);
     border-width: 0.2rem;
@@ -38,7 +40,7 @@
 
 .comments {
     overflow-y: auto;
-    height: 20rem;
+    max-height: 15rem;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -47,10 +49,23 @@
 
 .your-comment{
     display: grid;
-    padding: 20px;
+    padding: 1rem;
     grid-template-areas: 
         "your-icon your-comment-text";
-    grid-template-columns: 1fr 8fr; 
+    grid-template-columns: 0fr 8fr; 
     align-items: center;
+    column-gap: 10px;
 }
+
+.your-comment-text input::placeholder {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+@media (max-width: 768px){
+    .your-comment-text {
+        font-size: 0.65rem;
+    }
+}
+
 

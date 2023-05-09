@@ -4,38 +4,38 @@ import { useEffect, useState, useRef } from 'react';
 import api from '../auth/api';
 
 const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
-// TODO: needs to actually update database with likes
-function Like({ commentId, postId, netId, priorLikes, priorLikeStatus }) {
-    const [isLiked, toggleLike] = useState(priorLikeStatus);
-    function handleLike(event) {
-        toggleLike(!isLiked);
-        const likeData = {
-            netId: netId,
-            commentId: commentId,
-            postId: postId,
-            likeAmount: isLiked ? -1 : 1
-        }
-        api
-            .post(`${url}/like/`, likeData)
-            .then((response) => {
-                const data = response.data;
-                console.log(data)
-            })// the returned comment
-            .catch((error) => {
-                console.log("Error occurred: ", error);
-            });
-    }
-    return (
-        <div>
-            <button onClick={handleLike}>
-                {isLiked ? <FaHeart /> : <FaRegHeart />}
-            </button>
-            <p>
-                {isLiked ? priorLikes + 1 : priorLikes}
-            </p>
-        </div>
-    );
-}
+
+// function Like({ commentId, postId, netId, priorLikes, priorLikeStatus }) {
+//     const [isLiked, toggleLike] = useState(priorLikeStatus);
+//     function handleLike(event) {
+//         toggleLike(!isLiked);
+//         const likeData = {
+//             netId: netId,
+//             commentId: commentId,
+//             postId: postId,
+//             likeAmount: isLiked ? -1 : 1
+//         }
+//         api
+//             .post(`${url}/like/`, likeData)
+//             .then((response) => {
+//                 const data = response.data;
+//                 console.log(data)
+//             })// the returned comment
+//             .catch((error) => {
+//                 console.log("Error occurred: ", error);
+//             });
+//     }
+//     return (
+//         <div>
+//             <button onClick={handleLike}>
+//                 {isLiked ? <FaHeart /> : <FaRegHeart />}
+//             </button>
+//             <p>
+//                 {isLiked ? priorLikes + 1 : priorLikes}
+//             </p>
+//         </div>
+//     );
+// }
 
 // TODO: Make a request for whether the post was liked by a certain user
 export default function Comment({ postId, props }) {
@@ -56,13 +56,6 @@ export default function Comment({ postId, props }) {
                 }
                 console.log("Error occurred: ", error);
             });
-
-        // try {
-        //     let response = await api.get(like_info_string);
-        //     return response.data;
-        // } catch (error) {
-        //     console.log("Error occurred: ", error);
-        // }
     }
     const [commentInfo, setCommentInfo] = useState("Loading")
     const getName = async () => {
@@ -90,7 +83,7 @@ export default function Comment({ postId, props }) {
                     {`${commentInfo} (${props.commenter_netId})`}:
                 </div>
                 <div className="commentText">
-                    {props.data}
+                    <p>{props.data}</p>
                 </div>
             </div>
 

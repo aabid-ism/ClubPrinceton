@@ -55,6 +55,30 @@
   row-gap: 1.5rem;
 }
 
-.announce-rating {
-  row-gap: 1rem;
+.announce-rating{
+    row-gap: 1rem;
 }
+
+
+/* Welcome text */
+
+@media (min-width: 768px) {
+    .club-pton-welcome h1 {
+        font-size: 4rem !important;
+        font-weight: bold;
+    }
+    
+    
+}
+
+@media (max-width: 767px) {
+    .club-pton-welcome h1 {
+        font-size: 2rem !important;
+        
+    }
+
+    .top-search-text {
+        font-size: 0.9rem;
+    }
+}
+

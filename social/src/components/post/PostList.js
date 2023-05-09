@@ -3,6 +3,7 @@ import Post from "./Post";
 import "./Posts.css";
 import api from "../auth/api";
 import { useSelector } from "react-redux";
+import { Container } from "react-bootstrap";
 
 const url = `${process.env.REACT_APP_SERVER_URL}/posts`;
 /* 
@@ -52,8 +53,9 @@ export default function PostList({ props }) {
   // otherwise render nothing
   return (
     <div className="posts">
-      <div>
-        {postListData.map((postData) => {
+        {
+        postListData.length !== 0 ?
+        postListData.map((postData) => {
           const postProps = {
             caption: postData.caption,
             creator: postData.netId,
@@ -65,13 +67,22 @@ export default function PostList({ props }) {
             ).toLocaleDateString(),
             image_url: postData.image_url,
           };
-          return <Post props={postProps} key={postData._id} />;
-        })}
-
-        <center>
-          <button onClick={loadPosts}>See More Posts</button>
-        </center>
-      </div>
+          return (
+            <Post
+              props={postProps}
+              key={postData._id}
+            />
+          );
+          
+        }) 
+        :
+        <center><h3>No Posts Yet!</h3></center>
+        }
+        {postListData.length > 4 ?
+          <center><button onClick={loadPosts}>See More Posts</button></center>
+          :
+          <></>
+          }
     </div>
   );
 }

@@ -43,7 +43,9 @@
 
     display: grid;
     height: 100%; */
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     /* z-index: 20; */
 }
 
@@ -62,9 +64,7 @@
 .no-rtg-breakdown {
     font-weight: bold;
     color: lightblue;
-    font-size: 40px;
-    position: relative;
-    top: -20px;
+    /* font-size: 40px; */
 }
 
 .rtg-breakdown-text {

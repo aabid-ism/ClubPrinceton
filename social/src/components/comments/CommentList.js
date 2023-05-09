@@ -2,6 +2,7 @@ import Comment from "./Comment";
 import './Comment.css'
 import { useEffect, useState, useRef } from "react";
 import api from "../auth/api";
+import PLACEHOLDER_IMAGE from './placeholder_personal_image.jpg'
 
 const url = `${process.env.REACT_APP_SERVER_URL}/comments`;
 
@@ -44,21 +45,25 @@ export default function CommentList({ props }){
     }
        
     return (
-        <div>
+        <>
             <div className="comments" >
                 <div>
                     {
+                    commentListData.length !== 0 ?
                     commentListData.map((commentData) => {
                             // console.log(commentData)
                             return (<Comment postId={props.postId }props={commentData} key={commentData._id}/>)
-                        })
+                        }) :
+                    <center><h5>No Comments Yet!</h5></center>
                     }
                 </div>
                 
-                <button onClick={loadCommentList}>See Comments!</button>
+                {commentListData.length > 4 ?
+                    <button onClick={loadCommentList}>See Comments!</button>:
+                    <></>}
             </div>
             <PersonalComment postId={props.postId} list={[commentListData, setCommentListData]}/>
-        </div>
+        </>
     );
 }
 
@@ -88,19 +93,27 @@ function PersonalComment({ postId, list}) {
             }
         }
     }
-    console.log(localStorage.getItem("profilepic"))
+    // console.log(localStorage.getItem("profilepic"))
+
+    let profile_photo;
+    try {
+        const profile_pic = localStorage.getItem("profilepic");
+        profile_photo = profile_pic;
+    } catch (e) {
+        profile_photo = PLACEHOLDER_IMAGE;
+    }
     return (
         <div className="your-comment">
             <div className="your-icon">
-                <img src={localStorage.getItem("profilepic")} alt=""></img>
+                <img src={profile_photo} alt="Profile"></img>
             </div>
-            <div>
-                <input 
-                    type="text" 
-                    className="your-comment-text" 
-                    placeholder='Add a Comment... (Press "Enter" to Send)'
-                    onKeyDown={handleKeyDown}
-                ></input>
-            </div>
+            <input 
+                type="text" 
+                className="your-comment-text" 
+                placeholder='Type Comment! (Press "Enter" to Send)'
+                onKeyDown={handleKeyDown}
+                maxLength={40}
+            ></input>
+
         </div>);
 }

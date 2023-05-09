@@ -10,7 +10,6 @@ import { OvrRating } from '../clubRating/OvrRating';
 import { FaSearch, FaBars, FaStar } from 'react-icons/fa';
 import { ClubRtgBreakdown } from '../clubRating/ClubRtgBreakdown';
 
-
 /* Home page for the website
     @param - none
     @return - home page
@@ -57,9 +56,13 @@ export default function HomePageMin({children, clubName, user}){
                     size='lg'
                     centered={true}
                 >
-                    <Modal.Body className="nav">
+                    <div className="nav">
+                    <Modal.Header closeButton>
+                    </Modal.Header>
+                    <Modal.Body >
                         <Navigation/>
                     </Modal.Body>
+                </div>
                 </Modal>
         </Container>
         :
@@ -119,9 +122,13 @@ export default function HomePageMin({children, clubName, user}){
                     size='lg'
                     centered={true}
                 >
-                    <Modal.Body className="rtg-bubble" >
-                        {clubName && <UserRating/>}
-                    </Modal.Body>
+                    <div className="rtg-bubble">
+                        <Modal.Header closeButton>
+                        </Modal.Header>
+                        <Modal.Body  >
+                            {clubName && <UserRating/>}
+                        </Modal.Body>
+                    </div>
                 </Modal>
             </Container>
         </div>
@@ -135,7 +142,32 @@ export default function HomePageMin({children, clubName, user}){
 function Welcome({ user }){
     return (
         <>
- 
+            <div className='club-pton-welcome'>
+                <h1
+                style={{
+                    color: "#2c3e50",
+                    marginRight: "10px",
+                }}
+                >
+                Welcome to
+                </h1>
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                    <h1
+                        style={{
+                        color: "orange",
+                        }}
+                    >
+                        Club
+                    </h1>
+                    <h1
+                        style={{
+                        color: "#2c3e50",
+                        }}
+                    >
+                        Princeton!
+                    </h1>
+                </div>
+            </div>
             {user && (
             <h1
                 style={{
@@ -183,9 +215,13 @@ function NavModal({}){
                 size='lg'
                 centered={true}
             >
-                <Modal.Body className="nav">
-                    <Navigation/>
-                </Modal.Body>
+                <div className="nav">
+                    <Modal.Header closeButton>
+                    </Modal.Header>
+                    <Modal.Body >
+                        <Navigation/>
+                    </Modal.Body>
+                </div>
             </Modal>
         </>
     );
@@ -209,7 +245,9 @@ function SearchModal({clubName}){
             >
             <div className='d-flex justify-content-center align-items-center'>
                 <FaSearch className="mr-2"/>
-                {clubName !== undefined ? formatTitle(clubName, 10) : "Search"}
+                <div className='top-search-text'>
+                    {clubName !== undefined ? formatTitle(clubName, 20) : "Search"}
+                </div>
             </div>
         </Button>
         <Modal className='search-modal'
@@ -218,9 +256,13 @@ function SearchModal({clubName}){
         size='lg'
         centered={true}
         >
-        <Modal.Body className='search-bar'>
-            <SearchBar />
-        </Modal.Body>
+        <div className='search-bar'>
+            <Modal.Header closeButton>
+            </Modal.Header>
+            <Modal.Body>
+                <SearchBar />
+            </Modal.Body>
+        </div>
         </Modal>
     </>);
 }
