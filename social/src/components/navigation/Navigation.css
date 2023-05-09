@@ -1,45 +1,39 @@
 .nav {
-    background-color: #FFE4CC;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .nav-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .nav-link {
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    text-decoration: none;
-    margin: 10px;
-  }
+  background-color: #ffe4cc;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .nav-submit-club-text {
-    cursor: pointer;
-  }
-  
-  .nav-icon {
-    color: #999999;
-    margin-right: 10px;
-    font-size: 24px;
-  }
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-  .orange-oval-text:hover {
-    text-align: center;
-    border-radius: 10px;
-    background-color: #FFE4CC;
-    outline: none;
-    background-color: orange;
+.nav-link {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 10px;
+}
+
+.nav-submit-club-text {
+  cursor: pointer;
+}
+
+.orange-oval-text:hover {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #ffe4cc;
+  outline: none;
+  background-color: orange;
 }

@@ -8,7 +8,6 @@ import api from '../auth/api';
 import Container from 'react-bootstrap/esm/Container';
 import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
-import { Navbar, NavDropdown, Nav } from 'react-bootstrap';
 import AdminNavBar from './AdminNavbar';
 // state of the initial input fields
 const initialState = {
@@ -22,6 +21,14 @@ const initialState = {
     },
     isSubmitted: false
 }
+// reducer function for the admin interface
+// handles all the actions that can be performed on the admin interface
+// actions include: setting the clubs that a user is allowed to administer, setting the active club,
+// setting the caption, setting the title, setting the file, setting the missing values boolean,
+// clearing the form, and setting the isSubmitted boolean
+// @param state: the current state of the admin interface
+// @param action: the action that is being performed on the admin interface
+// @return the new state of the admin interface
 
 function reducer(state, action) {
     switch (action.type) {
@@ -90,6 +97,11 @@ function reducer(state, action) {
         default: return state
     }
 }
+
+/* 
+    The admin interface component.
+    @return the AdminInterface component
+*/
 
 function AdminInterface() {
     const [state, dispatch] = useReducer(reducer, initialState);

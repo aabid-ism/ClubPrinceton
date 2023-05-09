@@ -4,20 +4,21 @@
   justify-content: center;
   align-items: center;
   height: 100vh; /* Set height to 100% of viewport height */
-  background-color: #FFF8E5;
+  background-color: #fff8e5;
 }
 
 .superadmin__clubs {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
+
   width: 700px; /* set fixed width */
-  height: calc(100vh - 20rem); /* set height to 100% of viewport height minus the height of the header and footer */
+  height: calc(
+    100vh - 20rem
+  ); /* set height to 100% of viewport height minus the height of the header and footer */
   overflow-y: auto; /* add vertical scroll */
   overflow-x: auto;
 }
-
 
 .superadmin__club {
   background-color: #f2f2f2;
@@ -30,15 +31,7 @@
   text-align: center;
 }
 
-
-
 .superadmin__club__title {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.superadmin__club__name {
-  font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
@@ -51,7 +44,7 @@
   margin-bottom: 0.5rem;
 }
 
-.superadmin__club__info span{
+.superadmin__club__info span {
   margin-right: 0.5rem;
 }
 
