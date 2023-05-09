@@ -1,58 +1,57 @@
-// Signup.jsx
 import { useState } from "react";
 import React, { useEffect } from "react";
 
-// import { Link } from "react-router-dom";
-// import useFetch from "../hooks/useFetch/UseFetch";
 import { useNavigate } from "react-router-dom";
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
 const Login = () => {
-  // const { handleGoogle, loading, error } = useFetch(
-  //     `${process.env.REACT_APP_SERVER_URL}/auth/signup`
-  // );
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+  // Handle Google response on successful sign in
+  const handleGoogle = async (response) => {
+    setLoading(true);
+    setError("");
+    fetch(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ credential: response.credential }),
+    })
+      .then((res) => {
+        setLoading(false);
+        return res.json();
+      })
+      .then((data) => {
+        if (data?.user) {
+          localStorage.setItem(
+            "user",
+            JSON.stringify(data?.user.firstName)
+          );
+          const parts = data?.user.email.split("@");
+          localStorage.setItem("netid", parts[0]);
+          localStorage.setItem("profilepic", data?.user.picture);
+          localStorage.setItem(
+            "ACCESS_TOKEN",
+            JSON.stringify(data?.user.ACCESS_TOKEN)
+          );
 
-    const handleGoogle = async (response) => {
-        setLoading(true);
-        setError("");
-        fetch(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ credential: response.credential }),
-        })
-            .then((res) => {
-                setLoading(false);
-                return res.json();
-            })
-            .then((data) => {
-                if (data?.user) {
-                    localStorage.setItem("user", JSON.stringify(data?.user.firstName));
-                    const parts = data?.user.email.split("@");
-                    localStorage.setItem("netid", parts[0]);
-                    localStorage.setItem("profilepic", data?.user.picture);
-                    localStorage.setItem("ACCESS_TOKEN", JSON.stringify(data?.user.ACCESS_TOKEN));
-
-                    // window.location.reload();
-                }
-                else {
-                    throw new Error(data?.message || data);
-                }
-            })
-            .then(() => {
-                if (localStorage.getItem("ACCESS_TOKEN")) {
-                    navigate("/");
-                }
-            })
-            .catch((error) => {
-                setError(error?.message);
-            });
-    };
+          // window.location.reload();
+        } else {
+          throw new Error(data?.message || data);
+        }
+      })
+      .then(() => {
+        if (localStorage.getItem("ACCESS_TOKEN")) {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        setError(error?.message);
+      });
+  };
 
   useEffect(() => {
     /* checking if global google object exists in window. 
@@ -94,36 +93,35 @@ const Login = () => {
       }, 100);
     };
   }, [error]);
-
-    return (
-        <>
-            <header >
-                <center>
-                    <h1>Welcome to Club Princeton!</h1>
-                    <h2>Sign in to continue</h2>
-                </center>
-
-            </header>
-            <main
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    alignItems: "center",
-                }}
-            >
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                {loading ? (
-                    <div>Loading....</div>
-                ) : (
-                    <div id="signUpDiv" data-text="signup_with"></div>
-                )}
-                
-            </main>
-            <footer></footer>
-        </>
-    );
-
+  return (
+    <div
+      className="d-flex flex-column min-vh-100 justify-content-center align-items-center bg-light text-dark"
+      style={{ backgroundColor: "#FFF8E5" }}
+    >
+      <header className="text-center mb-4">
+        <h1 className="display-4">Welcome to Club Princeton!</h1>
+        <p className="lead">Sign in to continue</p>
+      </header>
+      <main className="d-flex flex-column align-items-center justify-content-center text-center">
+        {error && <p className="text-danger">{error}</p>}
+        {loading ? (
+          <div className="spinner-border text-primary" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        ) : (
+          <div
+            id="signUpDiv"
+            className="p-5 bg-white border rounded"
+          ></div>
+        )}
+      </main>
+      <footer className="text-center mt-4">
+        <p className="text-muted">
+          &copy; {new Date().getFullYear()} Club Princeton
+        </p>
+      </footer>
+    </div>
+  );
 };
 
 export default Login;

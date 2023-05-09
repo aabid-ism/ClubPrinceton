@@ -3,14 +3,17 @@ import "./Navigation.css";
 import { useNavigate } from "react-router-dom";
 import PopUpBtn from "../clubForm/PopUpBtn";
 
-function Navigation(props) {
+/* Navigation bar for the website 
+  @param - none
+  @return - navigation bar
+*/
+function Navigation() {
+
   const navigate = useNavigate();
 
-  const handleClick = (event) => {
-    // Handle the click event here
+  // logout the user
+  const handleLogout = (event) => {
     localStorage.clear();
-    // navigate("/signup");
-
   }
 
 
@@ -33,7 +36,7 @@ function Navigation(props) {
           </div>
         </li>
 
-        <li onClick={handleClick}>
+        <li onClick={handleLogout}>
           <a href="/" className="nav-link orange-oval-text">
             Logout
           </a>

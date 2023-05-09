@@ -1,15 +1,29 @@
 import React from "react";
-import { Navbar, Nav} from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 
-function NavBar(props) {
+/*
+  NavBar component for the super admin interface. 
+  Contains links to home page, admin page, and logout button.
+  To be positioned on top of the page.
 
+  @param: none
+  @return: NavBar component
+  
+*/
+
+function NavBar() {
+  // logout function
   const handleClick = (event) => {
     localStorage.clear();
   };
 
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="/" className="orange-oval-text home-link" style={{margin: "10px"}}>
+      <Navbar.Brand
+        href="/"
+        className="orange-oval-text home-link"
+        style={{ margin: "10px" }}
+      >
         Home
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />

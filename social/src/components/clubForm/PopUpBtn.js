@@ -1,33 +1,23 @@
-import React, {useState} from "react";
-import ClubForm from "./ClubForm";
+import React from "react";
 import "./clubform.css";
-import Navigation from "../navigation/Navigation";
 import { useNavigate } from "react-router-dom";
 
+/* Button for the pop up form
+    @param - none
+    @return - button for the pop up form
+*/
 function PopUpBtn() {
-    const navigate = useNavigate();
-    // will be given a state from popup button via props
-    // need to build a secondary popup message
-    // const [popped, setPopped] = useState(false);
+  const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate("/clubform");
-    };
+  const handleClick = () => {
+    navigate("/clubform");
+  };
 
-    return (
-        <div>
-            <div onClick={handleClick}>
-                Submit Your Club
-            </div>
-            {/* {popped ? <ClubForm toggle={togglePop}/> : null} */}
-        </div>
-    );
-
-
-
-
-
-
+  return (
+    <div>
+      <div onClick={handleClick}>Submit Your Club</div>
+    </div>
+  );
 }
 
 export default PopUpBtn;

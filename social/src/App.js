@@ -8,9 +8,9 @@ import store from "./store";
 import { Provider } from "react-redux";
 import Announce from "./components/announcement/Announce";
 
+// the main app component
 function App() {
   return (
-    // <React.StrictMode>
     <Provider store={store}>
       <HomePage></HomePage>
     </Provider>
