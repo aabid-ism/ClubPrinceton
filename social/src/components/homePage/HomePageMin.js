@@ -10,28 +10,11 @@ import { OvrRating } from '../clubRating/OvrRating';
 import { FaSearch, FaBars, FaCheck, FaStar } from 'react-icons/fa';
 import { ClubRtgBreakdown } from '../clubRating/ClubRtgBreakdown';
 
-function LandingPage({user}){
-    return(
-        <div>
-            <Container fluid className="landing-page">
-                
-                <Row>
-                    <Col sm={3}>
-                    </Col>
-                    <Col sm={6}>
-                        <Welcome user={user}/>
-                        <div className='search-bar-landing'>
-                            <SearchBar />
-                        </div>
-                    </Col>
-                    <Col sm={3}>
-                    </Col>
-                </Row>
-            </Container>
-        </div> 
-    );
-}
 
+/* Home page for the website
+    @param - none
+    @return - home page
+*/
 export default function HomePageMin({children, clubName, user}){
     const [showRatingBar, setShowRatingBar] = useState(false);
     const [showLandingNav, setShowLandingNav] = useState(false);
@@ -145,41 +128,14 @@ export default function HomePageMin({children, clubName, user}){
     );
 }
 
+/* Welcome message for the user
+    @param - none
+    @return - welcome message
+*/
 function Welcome({ user }){
     return (
         <>
-            {/* <div>
-                <h1
-                style={{
-                    fontSize: "3.5rem",
-                    color: "#2c3e50",
-                    fontWeight: "bold",
-                    marginRight: "10px",
-                }}
-                >
-                Welcome to
-                </h1>
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                    <h1
-                        style={{
-                        fontSize: "3.5rem",
-                        color: "orange",
-                        fontWeight: "bold",
-                        }}
-                    >
-                        Club
-                    </h1>
-                    <h1
-                        style={{
-                        fontSize: "3.5rem",
-                        color: "#2c3e50",
-                        fontWeight: "bold",
-                        }}
-                    >
-                        Princeton!
-                    </h1>
-                </div>
-            </div> */}
+ 
             {user && (
             <h1
                 style={{
@@ -195,7 +151,10 @@ function Welcome({ user }){
         </>
     )
 }
-
+/* Navigation modal for the website
+    @param - none
+    @return - navigation modal
+*/
 function NavModal({}){
     const [showNavBar, setShowNavBar] = useState(false);
     const handleNavClose = () => {setShowNavBar(false)};
@@ -232,6 +191,10 @@ function NavModal({}){
     );
 }
 
+/* Search modal for the website
+    @param - props containing club name
+    @return - search modal
+*/
 function SearchModal({clubName}){
     const [showSearchBar, setShowSearchBar] = useState(false);
     const handleSearchClose = () => {setShowSearchBar(false)};
