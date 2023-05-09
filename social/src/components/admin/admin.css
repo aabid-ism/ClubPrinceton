@@ -200,7 +200,7 @@
   }
   .admin-members-collection {
     justify-content: center;
-    height: 200px;
+    max-height: 200px;
     overflow-y: auto;
   }
   .initial-welcome {

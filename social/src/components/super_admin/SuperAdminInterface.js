@@ -59,16 +59,13 @@ export default function SuperAdminInterface() {
   const handleAccept = (club, index) => {
     // set club status to accepted in backend
     api
-      .post(
-        `${process.env.REACT_APP_SERVER_URL}/clubCreation/a/${club.name
-        }/${localStorage.getItem("netid")}`
-      )
-      .then((res) => {
+    .post(`${process.env.REACT_APP_SERVER_URL}/clubCreation/a/${club.name}`)
+    .then((res) => {
         // console.log("club accepted");
-      })
-      .catch((err) => {
+    })
+    .catch((err) => {
         console.error("club not accepted");
-      });
+    });
 
     // set status of clubs in state and trigger rerender
     clubs[index]["status"] = "Accepted";
@@ -88,9 +85,7 @@ export default function SuperAdminInterface() {
     // set club status to declined in backend
     // removing club.name from url
     api
-      .post(`${process.env.REACT_APP_SERVER_URL}/clubCreation/d`, {
-        clubName: club.name,
-      })
+      .post(`${process.env.REACT_APP_SERVER_URL}/clubCreation/d/${club.name}`)
       .then((res) => {
         console.log("club declined");
       })

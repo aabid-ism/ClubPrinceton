@@ -378,7 +378,6 @@ const Rightbar = ({ state }) => {
               </div>
               <div>
                 <p class="fw-bold fs-6">{announcement}</p>
-                {/* <p>The sun was shining on the sea, shining with all its might: it did its very best to make the billows smooth and bright. And this was odd, because it was the middle of the night. The moon was shining sulkily, because she thought the sun had got no business to be there after the day was done.</p> */}
               </div>
               <div>
                 {
