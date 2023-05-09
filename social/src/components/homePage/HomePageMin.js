@@ -52,9 +52,13 @@ export default function HomePageMin({children, clubName, user}){
                     size='lg'
                     centered={true}
                 >
-                    <Modal.Body className="nav">
+                    <div className="nav">
+                    <Modal.Header closeButton>
+                    </Modal.Header>
+                    <Modal.Body >
                         <Navigation/>
                     </Modal.Body>
+                </div>
                 </Modal>
         </Container>
         :
