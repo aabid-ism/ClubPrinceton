@@ -25,9 +25,12 @@ router.get("/a/:name", verifyToken, async (req, res) => {
   ];
 
   // run pipeline
-  const result = await collection.aggregate(agg).toArray();
+  // const result = await collection.aggregate(agg).toArray();
   // print results
-
+  // const result = await collection.find({}).limit(50).toArray();
+  const result = await collection.findOne(
+    { name: "IgniteSTEM" }
+  );
   res.send(result).status(200);
 });
 
@@ -104,16 +107,18 @@ router.get("/:name", verifyToken, async (req, res) => {
   // console.log(query);
   // const result = await collection.findOne(query);
 
-  const agg = [
-    { $search: { autocomplete: { query: query, path: "name" } } },
-    { $limit: 20 },
-    { $project: { _id: 0, name: 1 } },
-  ];
+  // const agg = [
+  //   { $search: { autocomplete: { query: query, path: "name" } } },
+  //   { $limit: 20 },
+  //   { $project: { _id: 0, name: 1 } },
+  // ];
   // run pipeline
-  const result = await collection.aggregate(agg).toArray();
+  // const result = await collection.aggregate(agg).toArray();
+  // const results = await collection.find(query);
+  const results = await collection.find({}).toArray();
   // print results
   // await result.forEach((doc) => console.log(doc));
-
+  const result = results.map(obj => obj.name);
   res.send(result).status(200);
 });
 
@@ -149,7 +154,7 @@ router.post("/club/officers/update/:club", verifyToken, async (req, res) => {
     const officer = new_officers[new_officers.length - 1];
     await users_collection.updateOne(
       { netid: officer.netid },
-      { $push: { admin_clubs: clubName } }  
+      { $push: { admin_clubs: clubName } }
     )
   } else {
     let officer_to_drop;

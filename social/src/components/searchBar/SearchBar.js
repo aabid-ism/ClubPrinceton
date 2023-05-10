@@ -53,6 +53,7 @@ function SearchBar(props) {
       searchTimeout = setTimeout(async () => {
         try {
           const response = await api.get(`${url}/${searchWord}`);
+          console.log(`response is ${response.data}`);
           const data = response.data;
           dispatch({
             type: "SET_RESULTS",
@@ -77,7 +78,7 @@ function SearchBar(props) {
     api
       .get(`/clubs/a/${club.name}`)
       .then((response) => {
-        const data = response.data[0];
+        const data = response.data;
 
         dispatch({
           type: "RESET_RATINGS",
