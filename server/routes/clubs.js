@@ -139,16 +139,37 @@ router.post("/club/officers/update/:club", verifyToken, async (req, res) => {
   const db = conn.getDb();
   const clubName = req.params.club;
   const club_collection = await db.collection("clubs");
+  const users_collection = await db.collection("users");
 
-  // TODO: check whether the netid is a valid, registered user
+  const club = await club_collection.findOne({ name: clubName })
+  const prior_officers = club.officers;
+  const new_officers = req.body;
 
+  if (prior_officers.length < new_officers.length) {
+    const officer = new_officers[new_officers.length - 1];
+    await users_collection.updateOne(
+      { netid: officer.netid },
+      { $push: { admin_clubs: clubName } }  
+    )
+  } else {
+    let officer_to_drop;
+    prior_officers.map((officer, index) => {
+      if (officer !== new_officers[index]) {
+        officer_to_drop = officer;
+      }
+    });
+    // console.log(officer_to_drop);
+    await users_collection.updateOne(
+      { netid: officer_to_drop.netid },
+      { $pull: { admin_clubs: clubName } }
+    )
+  }
 
   // update the officers field of the club in the club connection
-  // console.log(req.body);
   club_collection.updateOne(
     { name: clubName },
     // [{ $set: { posts: { $concatArrays: ["$posts", [post_document_to_insert]] } } }]
-    [{ $set: { officers: req.body } }]
+    [{ $set: { officers: new_officers } }]
   )
 
   res.send().status(200);
